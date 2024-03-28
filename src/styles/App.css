@@ -1,0 +1,49 @@
+@import url(./libraries.css);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .dropDown-option {
+    @apply relative flex w-full cursor-pointer items-center  gap-3 overflow-hidden rounded-md bg-background-primary px-3 py-2 font-medium text-text-secondary transition-colors duration-200  hover:bg-background-secondary hover:text-text-primary;
+
+    & span {
+      @apply flex-1;
+    }
+    & > svg {
+      @apply w-5 text-start text-lg;
+    }
+    &.small {
+      @apply px-2 py-1 text-xs;
+    }
+    &.current {
+      @apply bg-primary text-white;
+    }
+    &:not(.disabled).delete {
+      @apply hover:bg-red-500 hover:text-white;
+    }
+    &.disabled {
+      @apply cursor-default bg-background-disabled text-text-disabled;
+    }
+  }
+  .icon-button {
+    @apply flex h-8 w-8 items-center justify-center rounded-[4px]  p-1 transition-colors duration-200 disabled:bg-background-disabled
+      disabled:text-text-disabled;
+
+    &:not(:disabled).active {
+      @apply bg-primary  text-white;
+    }
+    &:not(:disabled).not-active {
+      @apply bg-background-secondary text-text-tertiary hover:bg-background-tertiary;
+    }
+
+    &.small {
+      @apply h-7 w-7;
+      & i,
+      & svg {
+        @apply text-sm;
+      }
+    }
+  }
+}
+
