@@ -39,6 +39,15 @@
   color-scheme: auto;
 }
 
+body {
+  font-family: "Lexend Deca", sans-serif;
+  @apply h-[100dvh] overflow-hidden bg-background-primary !important;
+}
+
+#root {
+  @apply flex h-full bg-background-primary p-2;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   @apply h-[2px] w-[3px];
