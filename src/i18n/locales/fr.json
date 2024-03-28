@@ -1,3 +1,17 @@
 {
-    "openModal": "Ouvrir la fenêtre modale"
+    "languages": {
+        "en": " Anglais",
+        "fr": "Français"
+    },
+    "app": {
+        "sidebar": {
+            "overview": "Vue d'ensemble",
+            "interns": "Stagiaires",
+            "teams": "Équipes",
+            "supervisors": "Encadrants",
+            "absences": "Absences",
+            "settings": "Paramètres",
+            "logout": "Déconnexion"
+        }
+    }
 }

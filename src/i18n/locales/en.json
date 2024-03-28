@@ -1,3 +1,17 @@
 {
-    "openModal": "Open Modal"
+    "languages": {
+        "en": "English",
+        "fr": "French"
+    },
+    "app": {
+        "sidebar": {
+            "overview": "Overview",
+            "interns": "Interns",
+            "teams": "Teams",
+            "supervisors": "Supervisors",
+            "absences": "Absences",
+            "settings": "Settings",
+            "logout": "Logout"
+        }
+    }
 }

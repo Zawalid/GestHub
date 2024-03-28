@@ -10,10 +10,10 @@ import "./styles/index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {/* <Provider store={store}> */}
-    <I18nextProvider i18n={i18n}>
-      <App />
-      {/* </Provider> */}
-    </I18nextProvider>
+    <Provider store={store}>
+      <I18nextProvider i18n={i18n}>
+        <App />
+      </I18nextProvider>
+    </Provider>
   </React.StrictMode>
 );
