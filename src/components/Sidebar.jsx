@@ -31,7 +31,7 @@ export default function Sidebar() {
   const [isExpanded, setIsExpanded] = useState(
     window.matchMedia("(min-width: 1024px)").matches
   );
-  const role = useSelector((state) => state.app.user?.role);
+  const role = useSelector((state) => state.user?.role);
 
   const { t } = useTranslation();
 

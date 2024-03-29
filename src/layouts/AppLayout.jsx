@@ -2,12 +2,14 @@ import { Outlet } from "react-router-dom";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import Sidebar from "../components/Sidebar";
+import Settings from "../components/shared/settings/Settings";
 
 export default function AppLayout() {
   return (
     <div className="flex ">
       <Sidebar />
       <Main />
+      <Settings isOpen={true} />
     </div>
   );
 }

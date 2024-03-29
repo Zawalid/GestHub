@@ -1,10 +1,10 @@
 import { PiMoonStars, PiSunDim, PiLaptop } from "react-icons/pi";
 import { DropDown } from "./ui";
 import { useDispatch, useSelector } from "react-redux";
-import { changeTheme } from "../app/appReducer";
+import { changeTheme } from "../app/reducer";
 
 export function ThemeSwitcher() {
-  const { theme } = useSelector((state) => state.app);
+  const { theme } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const icons = {
