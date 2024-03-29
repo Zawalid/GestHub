@@ -1,8 +1,9 @@
 import Tippy from "@tippyjs/react";
 import { SearchInput } from "./SearchInput";
+import { IoChevronDownOutline } from "react-icons/io5";
 
 const defaultOptions = {
-  className: "  overflow-auto  max-h-[200px]",
+  className: "overflow-auto  max-h-[200px]",
   placement: "bottom-end",
   trigger: "click",
   shouldCloseOnClick: true,
@@ -82,10 +83,11 @@ function SearchBar({ placeholder, value, onChange }) {
   );
 }
 
-function Toggler({ children }) {
+function Toggler({ children, icon }) {
   return (
-    <div className='flex w-36 hover:bg-background-tertiary transition-colors duration-200 cursor-pointer items-center justify-between rounded-lg border border-border  bg-background-secondary p-2 text-start  text-sm text-text-secondary  focus:outline-none'>
+    <div className="flex min-w-28 hover:bg-background-tertiary transition-colors duration-200 cursor-pointer items-center justify-between rounded-lg border border-border  bg-background-secondary p-2 text-start  text-sm text-text-secondary  focus:outline-none">
       {children}
+      {icon || <IoChevronDownOutline className="text-text-tertiary" />}
     </div>
   );
 }

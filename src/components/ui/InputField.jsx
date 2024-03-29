@@ -1,7 +1,7 @@
 import Tippy from "@tippyjs/react";
 import { forwardRef } from "react";
 import { MdError } from "react-icons/md";
-import { IoMailOutline, IoKeyOutline, IoSearchOutline } from "react-icons/io5";
+import { IoMailOutline, IoKeyOutline, IoSearchOutline,IoCalendarNumberOutline  } from "react-icons/io5";
 import { FiPhone } from "react-icons/fi";
 import { LiaIdCard } from "react-icons/lia";
 import { MdDriveFileRenameOutline } from "react-icons/md";
@@ -31,13 +31,13 @@ const icons = {
   password: <IoKeyOutline />,
   phone: <FiPhone />,
   CIN : <LiaIdCard />,
-  firstName : <MdDriveFileRenameOutline />,
-  lastName : <MdDriveFileRenameOutline />,
+  text : <MdDriveFileRenameOutline />,
+  date : <IoCalendarNumberOutline  />
 };
 
 export const InputField = forwardRef(
   ({ className, errorMessage, name, label, children, ...props }, ref) => {
-    const icon = icons[name];
+    const icon = icons[name] || icons[props.type]
     const cls = `${icon ? "pl-9" : "pl-4"} ${
       name === "search" ? "pr-8" : ""
     } ${className} `;
