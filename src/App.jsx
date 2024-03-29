@@ -17,6 +17,7 @@ import {
   Supervisors,
   Teams,
   NotFound,
+  HomePage,
 } from "./pages";
 import { useSelector } from "react-redux";
 import { ROUTES } from "./utils/constants";
@@ -37,9 +38,7 @@ export default function App() {
     <>
       <Router>
         <Routes>
-          {/* Home Page Routes */}
-          {/* <Route path="/" element={<HomePage />} /> */}
-
+          <Route path="/" element={<HomePage />}/>
           <Route path="app" element={<AppLayout />}>
             <Route index element={<Navigate to="/app/overview" />} />
             {/* Routes of every role */}

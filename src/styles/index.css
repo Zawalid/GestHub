@@ -40,6 +40,9 @@
     --primary-hover: #8a4e2c;
   }
 
+  --secondary:#1d4ed8;
+  --secondary-hover:#163fae;
+
   color-scheme: light dark;
 }
 
@@ -49,7 +52,7 @@
 
 body {
   font-family: "Lexend Deca", sans-serif;
-  @apply h-[100dvh] overflow-hidden bg-background-primary !important;
+  @apply h-[100dvh] bg-background-primary !important;
 }
 
 #root {

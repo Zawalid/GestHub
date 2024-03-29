@@ -1,7 +1,7 @@
 import { SocialMedia } from "../ui/SocialMedia";
 import { Logo } from "../ui/logo";
 
-export default function Footer() {
+export  function Footer() {
   return (
     <footer className='relative flex mt-auto items-center justify-center gap-6  border-t shadow-md border-border bg-background-primary px-5 py-3'>
          <SocialMedia /> 

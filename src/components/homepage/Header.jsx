@@ -2,15 +2,21 @@ import Tippy from '@tippyjs/react';
 import { NavLink, useHref } from 'react-router-dom';
 import { FaChevronDown } from 'react-icons/fa6';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import { LuMoonStar, LuSun } from 'react-icons/lu';
+import {ThemeSwitcher} from '../ThemeSwitcher'
+import {LanguageSwitcher} from '../LanguageSwitcher'
 import { Logo } from '../ui/logo';
 import { routes } from '../../utils/constants';
 import { MobileHeader } from './MobileHeader';
 import { useEffect, useState } from 'react';
+import { AuthSwitcher } from '../AuthSwitcher';
+import { Modal } from '../ui';
+import Login from '../auth/Login';
+
 // import { useDarkMode } from '../contexts/DarkModeContext';
 
-export default function Header() {
+export  function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSignInOpen, setIsSignInOpen] = useState(false);
   const currentPath = useHref().split('/')[1];
   // const { isDarkMode, toggleDarkMode } = useDarkMode();
 
@@ -24,18 +30,18 @@ export default function Header() {
       <Links />
 
       <div className='flex items-center gap-4'>
-        {/* <button
-          onClick={toggleDarkMode}
-          className='text-xl text-text-primary transition-colors duration-300 hover:text-text-tertiary'
-        >
-          {isDarkMode ? <LuSun /> : <LuMoonStar />}
-        </button> */}
+        <ThemeSwitcher/>
+        <LanguageSwitcher/>
+        <AuthSwitcher setIsSignInOpen={setIsSignInOpen} />
+       
         <button onClick={() => setIsMobileMenuOpen(true)} className='lg:hidden'>
           <RxHamburgerMenu className='text-xl text-text-primary transition-colors duration-300 hover:text-text-tertiary ' />
         </button>
       </div>
 
       <MobileHeader isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
+      <Login isSignInOpen={isSignInOpen} setIsSignInOpen={setIsSignInOpen} />
+     
     </header>
   );
 }
@@ -48,7 +54,7 @@ function Links() {
       {routes.map((route) => (
         <NavLink key={route.label} to={route.path}>
           <DropDown paths={route.nested || []}>
-            <li className='relative flex items-center gap-3 font-semibold text-text-secondary transition-colors duration-300 before:absolute before:-bottom-2 before:left-1/2 before:h-[2px] before:w-full before:-translate-x-1/2 before:scale-0 before:bg-text-tertiary before:transition-transform before:duration-500 hover:text-text-tertiary hover:before:scale-100'>
+            <li className='relative flex items-center gap-3 font-semibold text-text-secondary transition-colors duration-300 before:absolute before:-bottom-[30px] before:left-1/2 before:h-[1px] before:w-full before:-translate-x-1/2 before:scale-0 before:bg-text-tertiary before:transition-transform before:duration-500 hover:text-text-tertiary hover:before:scale-100'>
               <span>{route.label}</span>
               {route.nested && <FaChevronDown />}
             </li>
