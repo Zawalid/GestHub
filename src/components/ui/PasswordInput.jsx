@@ -15,10 +15,7 @@ export const PasswordInput = forwardRef(({ ...props }, ref) => {
         <button
           type="button"
           className="absolute right-1.5 top-1/2 z-10 -translate-y-1/2 text-lg transition-transform duration-300 text-text-tertiary"
-          onClick={() =>
-            // props.value &&
-            setShowPassword(!showPassword)
-          }
+          onClick={() => props.value && setShowPassword(!showPassword)}
         >
           {showPassword ? (
             <PiEyeClosedLight size={20} />

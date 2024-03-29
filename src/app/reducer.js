@@ -12,8 +12,12 @@ const initialState = {
   theme: getTheme(),
   user: {
     role: "admin",
-    name: "John Doe",
+    firstName: "John",
+    lastName: "Doe",
     email: "john.doe@gmail.com",
+    image: null,
+    phone : '0682828882',
+    CIN : "A123456",
   },
 };
 
