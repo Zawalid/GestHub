@@ -19,6 +19,8 @@
     --text-disabled: #bbbbbb;
     --text-placeholder: #e1e1e0;
     --border: rgba(0, 0, 0, 0.1);
+    --primary: #ffae5c;
+    --primary-hover: #cc8a3e;
   }
 
   /** Dark Mode */
@@ -34,11 +36,15 @@
     --text-disabled: #444444;
     --text-placeholder: #373737;
     --border: rgba(255, 255, 255, 0.1);
+    --primary: #b5753e;
+    --primary-hover: #8a4e2c;
   }
 
-  --primary: #6366f1;
-  --primary-hover: #4f46e5;
-  color-scheme: auto;
+  color-scheme: light dark;
+}
+
+* {
+  @apply box-border list-none;
 }
 
 body {
@@ -48,6 +54,12 @@ body {
 
 #root {
   @apply flex h-full bg-background-primary p-2;
+}
+
+html.theme-transition {
+  * {
+    @apply transition-colors duration-200 !important;
+  }
 }
 
 /* Scrollbar */

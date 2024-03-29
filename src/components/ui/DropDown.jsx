@@ -2,7 +2,7 @@ import Tippy from "@tippyjs/react";
 import { SearchInput } from "./SearchInput";
 
 const defaultOptions = {
-  className: "w-36  overflow-auto  max-h-[200px]",
+  className: "  overflow-auto  max-h-[200px]",
   placement: "bottom-end",
   trigger: "click",
   shouldCloseOnClick: true,

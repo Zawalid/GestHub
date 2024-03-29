@@ -1,7 +1,7 @@
 import Tippy from "@tippyjs/react";
 import { forwardRef } from "react";
 import { MdError } from "react-icons/md";
-import { IoIosSearch, IoMdKey, IoMdMail } from "react-icons/io";
+import { IoMailOutline, IoKeyOutline, IoSearchOutline } from "react-icons/io5";
 
 export function ErrorTooltip({ message, className }) {
   if (!message) return null;
@@ -23,15 +23,15 @@ export function ErrorTooltip({ message, className }) {
 }
 
 const icons = {
-  search: <IoIosSearch />,
-  email: <IoMdMail />,
-  password: <IoMdKey />,
+  search: <IoSearchOutline />,
+  email: <IoMailOutline />,
+  password: <IoKeyOutline />,
 };
 
 export const InputField = forwardRef(
   ({ className, errorMessage, name, label, children, ...props }, ref) => {
     const icon = icons[name];
-    const cls = `${icon ? "pl-8" : "pl-4"} ${
+    const cls = `${icon ? "pl-9" : "pl-4"} ${
       name === "search" ? "pr-8" : ""
     } ${className} `;
 
@@ -44,15 +44,15 @@ export const InputField = forwardRef(
           <ErrorTooltip message={errorMessage} />
         </div>
 
-        <div className="relative w-full ">
+        <div className="relative overflow-hidden rounded-lg border border-border w-full ">
           {icon && (
-            <span className="absolute left-1.5 top-1/2 z-10 -translate-y-1/2 text-lg text-text-tertiary duration-300">
+            <span className="bg-background-tertiary h-full w-7 grid place-content-center absolute left-0 z-10 text-text-tertiary duration-300">
               {icon}
             </span>
           )}
           <input
             type={props.type || "text"}
-            className={`w-full rounded-lg border border-border bg-background-secondary py-1.5  font-medium text-text-primary outline-none text-sm placeholder:text-sm ${cls}`}
+            className={`w-full  bg-background-secondary py-2  text-text-primary outline-none text-sm placeholder:text-sm ${cls}`}
             {...props}
             ref={ref}
           />
