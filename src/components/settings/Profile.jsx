@@ -1,7 +1,8 @@
 import { Controller } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { IoChevronDownOutline } from "react-icons/io5";
 import { Tab } from "./Tab";
-import { InputField } from "../ui";
+import { DropDown, InputField } from "../ui";
 import { UploadImage } from "./UploadImage";
 import { useReactHookForm } from "../../hooks/useReactHookForm";
 
@@ -22,7 +23,7 @@ export default function Profile() {
     defaultValues: {
       image: {
         src: user.image,
-        file : null,
+        file: null,
       },
       firstName: user.firstName,
       lastName: user.lastName,
@@ -60,6 +61,7 @@ export default function Profile() {
       <div className="space-y-5">
         <div>
           <h3 className="mb-3 font-bold text-text-secondary">Image</h3>
+          {/* Image */}
           <UploadImage
             onChange={(image) =>
               setValue("image", image, { shouldDirty: true })
@@ -68,6 +70,7 @@ export default function Profile() {
             disabled={isLoading || isSubmitting}
           />
         </div>
+        {/* firstName */}
         <Controller
           name="firstName"
           control={control}
@@ -84,6 +87,7 @@ export default function Profile() {
             },
           }}
         />
+        {/* lastName */}
         <Controller
           name="lastName"
           control={control}
@@ -98,6 +102,7 @@ export default function Profile() {
             },
           }}
         />
+        {/* email */}
         <Controller
           name="email"
           control={control}
@@ -114,6 +119,7 @@ export default function Profile() {
             },
           }}
         />
+        {/* phone */}
         <Controller
           name="phone"
           control={control}
@@ -133,6 +139,7 @@ export default function Profile() {
             },
           }}
         />
+        {/* CIN */}
         <Controller
           name="CIN"
           control={control}
@@ -151,6 +158,35 @@ export default function Profile() {
             },
           }}
         />
+        {/* sex */}
+        {/* <div className=" flex gap-5 items-center">
+          <label className="font-medium text-text-tertiary text-sm">Sex</label>
+          <DropDown
+            toggler={
+              <DropDown.Toggler>
+                <span>Male</span>
+                <IoChevronDownOutline />
+              </DropDown.Toggler>
+            }
+            options={{ className: "w-48" }}
+          >
+            {["Male", "Female"].map((sex) => (
+              <DropDown.Option
+                key={sex}
+                // isCurrent={value === weekStartsOn}
+                onClick={() => setValue("sex", sex, { shouldDirty: true })}
+              >
+                <span>{sex}</span>
+              </DropDown.Option>
+            ))}
+          </DropDown>
+
+          <Controller
+            control={control}
+            name="sex"
+            render={({ field }) => <input {...field} type="hidden" />}
+          />
+        </div> */}
       </div>
     </Tab>
   );

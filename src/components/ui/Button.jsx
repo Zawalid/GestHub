@@ -27,7 +27,7 @@ export function Button({
 
   return (
     <button
-      className={`mt-auto transition-colors duration-300 flex justify-center font-medium ${className} ${sizes[size]} ${
+      className={`transition-colors duration-300 flex justify-center font-medium ${className} ${sizes[size]} ${
         disabled ? variations.disabled : variations[type]
       }`}
       disabled={disabled}
