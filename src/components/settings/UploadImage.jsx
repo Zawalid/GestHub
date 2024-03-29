@@ -7,7 +7,7 @@ import {
 } from "use-file-picker/validators";
 import { toast } from "sonner";
 import { Controller, useWatch } from "react-hook-form";
-import { Button } from "../../ui";
+import { Button } from "../ui";
 
 export function UploadImage({ control, onChange, disabled }) {
   const image = useWatch({ control, name: "image" }) || {};
@@ -40,7 +40,7 @@ export function UploadImage({ control, onChange, disabled }) {
     <div className="flex items-center gap-5">
       <img
         className="h-28 w-28 rounded-full border border-border text-center text-xs text-text-tertiary "
-        src={image?.src}
+        src={image?.src || '/images/default-profile.jpg'}
         alt="profile image"
       />
       <div>

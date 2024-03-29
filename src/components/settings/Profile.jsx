@@ -1,22 +1,28 @@
-import { Controller, useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { Tab } from "./Tab";
-import { InputField } from "../../ui";
+import { InputField } from "../ui";
 import { UploadImage } from "./UploadImage";
+import { useReactHookForm } from "../../hooks/useReactHookForm";
 
 export default function Profile() {
   const user = useSelector((state) => state.user) || {};
 
   const {
-    handleSubmit,
-    reset,
-    formState: { isDirty: isUpdated, errors, isLoading, isSubmitting, isValid },
     control,
+    isUpdated,
+    isLoading,
+    isSubmitting,
+    isValid,
+    errors,
     setValue,
-  } = useForm({
+    onSubmit,
+    onCancel,
+  } = useReactHookForm({
     defaultValues: {
       image: {
         src: user.image,
+        file : null,
       },
       firstName: user.firstName,
       lastName: user.lastName,
@@ -24,6 +30,7 @@ export default function Profile() {
       phone: user.phone,
       CIN: user.CIN,
     },
+    submit: (data) => console.log(data),
     mode: "onChange",
   });
 
@@ -41,22 +48,11 @@ export default function Profile() {
   return (
     <Tab
       saveButton={{
-        onClick: handleSubmit((data) => {
-          console.log(data);
-        }),
+        onClick: onSubmit,
         disabled: !isUpdated || !isValid,
       }}
       cancelButton={{
-        onClick: () =>
-          reset({
-            image: {
-              src: user.image,
-            },
-            name: user.name,
-            email: user.email,
-            phone: user.phone,
-            CIN: user.CIN,
-          }),
+        onClick: onCancel,
         disabled: !isUpdated || !isValid,
       }}
       control={control}
@@ -113,7 +109,7 @@ export default function Profile() {
           rules={{
             required: "Please enter your email address",
             pattern: {
-              value: /^\+212[5-7]\d{8}$/,
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
               message: "Invalid email address",
             },
           }}

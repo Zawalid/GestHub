@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { DevTool } from "@hookform/devtools";
-import { Button } from "../../ui";
+import { Button } from "../ui";
 
 export function Tab({ children, saveButton, cancelButton, control }) {
   const parent = useRef(null);

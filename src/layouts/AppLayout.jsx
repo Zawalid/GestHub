@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import Sidebar from "../components/Sidebar";
-import Settings from "../components/shared/settings/Settings";
+import Settings from "../components/settings/Settings";
 
 export default function AppLayout() {
   return (

@@ -1,6 +1,6 @@
 import { cloneElement } from "react";
 import { PiGear, PiLockKey, PiUserCircle } from "react-icons/pi";
-import { Overlay } from "../../ui/Modal";
+import { Overlay } from "../ui/Modal";
 
 export function Panel({ isOpen, onClose, currentTab, setCurrentTab }) {
   return (

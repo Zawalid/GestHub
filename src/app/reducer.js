@@ -16,7 +16,7 @@ const initialState = {
     lastName: "Doe",
     email: "john.doe@gmail.com",
     image: null,
-    phone : +212600000000,
+    phone : '0682828882',
     CIN : "A123456",
   },
 };

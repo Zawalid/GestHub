@@ -3,7 +3,7 @@ import { PiArrowRight, PiX } from "react-icons/pi";
 import { Panel } from "./Panel";
 import Password from "./Password";
 import Profile from "./Profile";
-import { Modal } from "../../ui";
+import { Modal } from "../ui";
 
 export default function Settings({ isOpen, onClose }) {
   const [currentTab, setCurrentTab] = useState("profile");
