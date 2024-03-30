@@ -1,7 +1,12 @@
 import Tippy from "@tippyjs/react";
 import { forwardRef } from "react";
 import { MdError } from "react-icons/md";
-import { IoMailOutline, IoKeyOutline, IoSearchOutline,IoCalendarNumberOutline  } from "react-icons/io5";
+import {
+  IoMailOutline,
+  IoKeyOutline,
+  IoSearchOutline,
+  IoCalendarNumberOutline,
+} from "react-icons/io5";
 import { FiPhone } from "react-icons/fi";
 import { LiaIdCard } from "react-icons/lia";
 import { MdDriveFileRenameOutline } from "react-icons/md";
@@ -30,21 +35,21 @@ const icons = {
   email: <IoMailOutline />,
   password: <IoKeyOutline />,
   phone: <FiPhone />,
-  CIN : <LiaIdCard />,
-  text : <MdDriveFileRenameOutline />,
-  date : <IoCalendarNumberOutline  />
+  CIN: <LiaIdCard />,
+  text: <MdDriveFileRenameOutline />,
+  date: <IoCalendarNumberOutline />,
 };
 
 export const InputField = forwardRef(
   ({ className, errorMessage, name, label, children, ...props }, ref) => {
-    const icon = icons[name] || icons[props.type]
+    const icon = icons[name] || icons[props.type];
     const cls = `${icon ? "pl-9" : "pl-4"} ${
       name === "search" ? "pr-8" : ""
     } ${className} `;
 
     return (
       <div>
-        <div className="flex mb-1 gap-2 items-center">
+        <div className="flex mb-1.5 gap-2 items-center">
           <label className="font-medium text-text-tertiary text-sm">
             {label}
           </label>
@@ -59,9 +64,9 @@ export const InputField = forwardRef(
           )}
           <input
             type={props.type || "text"}
-            className={`w-full  bg-background-secondary py-2  text-text-primary outline-none text-sm placeholder:text-sm ${cls}`}
-            {...props}
+            className={`w-full  bg-background-secondary py-2 pr-2 text-text-primary outline-none text-sm placeholder:text-sm ${cls}`}
             ref={ref}
+            {...props}
           />
           {children}
         </div>

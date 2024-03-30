@@ -10,6 +10,7 @@ export const PasswordInput = forwardRef(({ ...props }, ref) => {
         type={showPassword ? "text" : "password"}
         name="password"
         {...props}
+        placeholder="••••••••••••"
         ref={ref}
       >
         <button

@@ -21,7 +21,7 @@ export function useReactHookForm({ defaultValues, submit, mode }) {
     setValue,
     watch,
   } = useForm({
-    defaultValues: defaultValues,
+    defaultValues,
     mode: mode || "onSubmit",
   });
 
