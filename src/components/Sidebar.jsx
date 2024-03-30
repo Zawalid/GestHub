@@ -27,7 +27,7 @@ const routesIcons = {
   absences: <FaCalendarCheck />,
 };
 
-export default function Sidebar() {
+export default function Sidebar({ openSettings }) {
   const [isExpanded, setIsExpanded] = useState(
     window.matchMedia("(min-width: 1024px)").matches
   );
@@ -90,7 +90,10 @@ export default function Sidebar() {
 
       <div className="mt-auto">
         <div className="flex items-center justify-between">
-          <button className="w-full sidebar_element group">
+          <button
+            className="w-full sidebar_element group"
+            onClick={openSettings}
+          >
             <FiSettings />
             <span
               className={`text-sm capitalize text-text-secondary ${

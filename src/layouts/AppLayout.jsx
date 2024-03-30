@@ -3,13 +3,18 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import Sidebar from "../components/Sidebar";
 import Settings from "../components/settings/Settings";
+import { useState } from "react";
 
 export default function AppLayout() {
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   return (
     <div className="flex ">
-      <Sidebar />
+      <Sidebar openSettings={() => setIsSettingsOpen(true)} />
       <Main />
-      <Settings isOpen={true} />
+      <Settings
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+      />
     </div>
   );
 }

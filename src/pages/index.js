@@ -4,3 +4,4 @@ export { Supervisors } from "./Supervisors";
 export { Teams } from "./Teams";
 export { Absences } from "./Absences";
 export { NotFound } from "./NotFound";
+export { HomePage } from "./HomePage";

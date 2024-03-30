@@ -5,7 +5,7 @@
     },
     "app": {
         "sidebar": {
-            "overview": "Vue d'ensemble",
+            "overview": "Acceuil",
             "interns": "Stagiaires",
             "teams": "Équipes",
             "supervisors": "Encadrants",
