@@ -9,17 +9,14 @@ import { routes } from '../../utils/constants';
 import { MobileHeader } from './MobileHeader';
 import { useEffect, useState } from 'react';
 import { AuthSwitcher } from '../AuthSwitcher';
-import { Modal } from '../ui';
 import Login from '../auth/Login';
-
-// import { useDarkMode } from '../contexts/DarkModeContext';
+import { useTranslation } from "react-i18next";
 
 export  function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const currentPath = useHref().split('/')[1];
-  // const { isDarkMode, toggleDarkMode } = useDarkMode();
-
+  const {t}= useTranslation()
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [currentPath]);
@@ -49,13 +46,14 @@ export  function Header() {
 // Links
 
 function Links() {
+  const {t}=useTranslation()
   return (
     <ul className='hidden gap-8 lg:flex lg:flex-1 lg:justify-center '>
       {routes.map((route) => (
         <NavLink key={route.label} to={route.path}>
           <DropDown paths={route.nested || []}>
             <li className='relative flex items-center gap-3 font-semibold text-text-secondary transition-colors duration-300 before:absolute before:-bottom-[30px] before:left-1/2 before:h-[1px] before:w-full before:-translate-x-1/2 before:scale-0 before:bg-text-tertiary before:transition-transform before:duration-500 hover:text-text-tertiary hover:before:scale-100'>
-              <span>{route.label}</span>
+              <span>{t(`header.navbar.${route.label}`) }</span>
               {route.nested && <FaChevronDown />}
             </li>
           </DropDown>

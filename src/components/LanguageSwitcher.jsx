@@ -10,13 +10,13 @@ export function LanguageSwitcher() {
       toggler={<IoLanguageOutline />}
       togglerClassName="icon-button not-active"
     >
-      {["en", "fr"].map((lang) => (
+      {["en", "fr","ar"].map((lang) => (
         <DropDown.Option
           key={lang}
           onClick={() => i18n.changeLanguage(lang)}
           isCurrent={i18n.language === lang}
         >
-          <span>{t(`languages.${lang}`)}</span>
+          <span>{t(`header.languages.${lang}`)}</span>
         </DropDown.Option>
       ))}
     </DropDown>

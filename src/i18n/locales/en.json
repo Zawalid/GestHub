@@ -1,8 +1,47 @@
 {
-    "languages": {
-        "en": "English",
-        "fr": "French"
+    "header": {
+    "navbar": {
+      "home": "Home",
+      "offers": "Offers",
+      "about": "About Us"
     },
+    "auth": {
+      "login": "Login",
+      "signup": "Sign Up"
+    },
+    "theme": {
+      "dark": "Dark",
+      "light": "Light",
+      "system": "System"
+    },
+    "languages": {
+      "en": "English",
+      "fr": "French",
+      "ar": "Arabic"
+    }
+  },
+   "auth": {
+    "login": {
+      "title": "Login",
+      "email": {
+        "label": "Email Address",
+        "placeholder": "Enter your email"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      },
+      "submit": "Login"
+    }
+  },
+  "hero": {
+    "title1": "Find an",
+    "title2": "Internship",
+    "title3": "Matching Your Interests and Skills",
+    "paragraph": "Kickstart your career with an internship that matches your passion. Find your ideal opportunity.",
+    "placeholder": "Search for an internship",
+    "categories": "Categories"
+  },
     "app": {
         "sidebar": {
             "overview": "Overview",

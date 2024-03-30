@@ -5,7 +5,7 @@ import { FaChevronDown } from 'react-icons/fa6';
 import { Logo } from '../ui/logo';
 import { routes } from '../../utils/constants';
 import { SocialMedia } from '../ui/SocialMedia';
-
+import {useTranslation} from 'react-i18next'
 export function   MobileHeader({ isOpen, onClose }) {
    const ref = useRef();
   useEffect(() => {
@@ -65,11 +65,12 @@ function Links() {
   );
 }
 function Link({ route }) {
+  const {t}=useTranslation()
   const [isExpanded, setIsExpanded] = useState(false);
   return (
     <li key={route.label}>
       <div className='flex  items-center justify-between border-b border-border py-3 pl-5 font-semibold text-text-primary transition-colors duration-300 hover:text-text-tertiary'>
-        <L to={route.path}>{route.label}</L>
+        <L to={route.path}>{t(`header.navbar.${route.label}`)}</L>
         {route.nested && (
           <button
             className='border-l border-border px-4'

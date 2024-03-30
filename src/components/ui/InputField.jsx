@@ -2,6 +2,9 @@ import Tippy from "@tippyjs/react";
 import { forwardRef } from "react";
 import { MdError } from "react-icons/md";
 import { IoMailOutline, IoKeyOutline, IoSearchOutline } from "react-icons/io5";
+import { FiPhone } from "react-icons/fi";
+import { LiaIdCard } from "react-icons/lia";
+import { MdDriveFileRenameOutline } from "react-icons/md";
 
 export function ErrorTooltip({ message, className }) {
   if (!message) return null;
@@ -26,6 +29,10 @@ const icons = {
   search: <IoSearchOutline />,
   email: <IoMailOutline />,
   password: <IoKeyOutline />,
+  phone: <FiPhone />,
+  CIN : <LiaIdCard />,
+  firstName : <MdDriveFileRenameOutline />,
+  lastName : <MdDriveFileRenameOutline />,
 };
 
 export const InputField = forwardRef(
@@ -37,7 +44,7 @@ export const InputField = forwardRef(
 
     return (
       <div>
-        <div className="flex mb-1 justify-between items-center">
+        <div className="flex mb-1 gap-2 items-center">
           <label className="font-medium text-text-tertiary text-sm">
             {label}
           </label>

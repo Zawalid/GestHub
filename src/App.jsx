@@ -32,7 +32,7 @@ const routesElements = {
 
 export default function App() {
   const theme = useTheme();
-  const role = useSelector((state) => state.app.user?.role);
+  const role = useSelector((state) => state.user?.role);
 
   return (
     <>

@@ -4,7 +4,7 @@ export const ROUTES = {
   supervisor: ["overview", "interns", "teams", "absences"],
 };
 export const routes = [
-  { label: "Home", path: "home" },
-  { label: "Offers", path: "home" },
-  { label: "About", path: "home" }
+  { label: "home", path: "home" },
+  { label: "offers", path: "home" },
+  { label: "about", path: "home" }
 ];

@@ -21,5 +21,21 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      const newUtilities = {
+        ".child-padding": {
+          "> *": {
+            paddingInline: "1.25rem",
+          },
+          "@media (min-width: 640px)": {
+            "> *": {
+              paddingInline: "2rem",
+            },
+          },
+        },
+      };
+      addUtilities(newUtilities);
+    },
+  ],
 };

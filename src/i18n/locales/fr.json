@@ -1,8 +1,47 @@
 {
-    "languages": {
-        "en": " Anglais",
-        "fr": "Français"
+    "header":{
+        "navbar":{
+            "home":"Principale",
+            "offers":"Offers",
+            "About":"à propos"
+        },
+        "auth":{
+            "login":"S'autentifier",
+            "signup":"S'inscrire"
+        },
+        "theme":{
+            "dark":"Sombre",
+            "light":"Lumière",
+            "system":"Système"
+        },
+        "languages": {
+            "en": " Anglais",
+            "fr": "Français",
+            "ar":"عربي"
+        }
     },
+    "hero":{
+      "title1":"Trouver un",  
+      "title2":"Stage ",  
+      "title3":"Avec vos intérêts et vos capacités",  
+      "paragraph":"Lancez votre carrière avec un stage qui correspond à votre passion. Trouvez votre opportunité idéale" ,
+      "placeholder":"cherchez un stage",
+      "categories":"Catégories"
+    },
+    "auth": {
+        "login": {
+            "title": "Connexion",  
+            "email": {
+                "label": "Adresse e-mail",  
+                "placeholder": "Entrez votre adresse e-mail"  
+            },
+            "password": {
+                "label": "Mot de passe",  
+                "placeholder": "Entrez votre mot de passe"  
+            },
+            "submit": "Se connecter"
+        }
+  },
     "app": {
         "sidebar": {
             "overview": "Vue d'ensemble",
