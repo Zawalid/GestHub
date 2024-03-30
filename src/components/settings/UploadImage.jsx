@@ -39,7 +39,7 @@ export function UploadImage({ control, onChange, disabled }) {
   return (
     <div className="flex items-center gap-5">
       <img
-        className="h-28 w-28 rounded-full border border-border text-center text-xs text-text-tertiary "
+        className="h-28 w-28 object-cover rounded-full border border-border text-center text-xs text-text-tertiary "
         src={image?.src || '/images/default-profile.jpg'}
         alt="profile image"
       />

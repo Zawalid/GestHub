@@ -30,7 +30,8 @@
     },
     "auth": {
         "login": {
-            "title": "Connexion",  
+            "title1": "Bienvenue à",
+            "title2": "MenStage", 
             "email": {
                 "label": "Adresse e-mail",  
                 "placeholder": "Entrez votre adresse e-mail"  
@@ -44,7 +45,7 @@
   },
     "app": {
         "sidebar": {
-            "overview": "Vue d'ensemble",
+            "overview": "Acceuil",
             "interns": "Stagiaires",
             "teams": "Équipes",
             "supervisors": "Encadrants",

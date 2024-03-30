@@ -22,7 +22,8 @@
   },
    "auth": {
     "login": {
-      "title": "Login",
+      "title1": "Welcome To ",
+      "title2": "MenStage",
       "email": {
         "label": "Email Address",
         "placeholder": "Enter your email"
