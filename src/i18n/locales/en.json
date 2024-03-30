@@ -7,7 +7,7 @@
     },
     "auth": {
       "login": "Login",
-      "signup": "Sign Up"
+      "register": "Sign Up"
     },
     "theme": {
       "dark": "Dark",

@@ -11,10 +11,12 @@ import { useEffect, useState } from "react";
 import { AuthSwitcher } from "../AuthSwitcher";
 import Login from "../auth/Login";
 import { useTranslation } from "react-i18next";
+import Register from "../auth/Register";
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const currentPath = useHref().split("/")[1];
 
   useEffect(() => {
@@ -29,7 +31,7 @@ export function Header() {
       <div className="flex items-center gap-4">
         <ThemeSwitcher />
         <LanguageSwitcher />
-        <AuthSwitcher setIsSignInOpen={setIsSignInOpen} />
+        <AuthSwitcher setIsRegisterOpen={setIsRegisterOpen} setIsSignInOpen={setIsSignInOpen} />
 
         <button onClick={() => setIsMobileMenuOpen(true)} className="lg:hidden">
           <RxHamburgerMenu className="text-xl text-text-primary transition-colors duration-300 hover:text-text-tertiary " />
@@ -42,6 +44,7 @@ export function Header() {
       />
 
       <Login isOpen={isSignInOpen} onClose={() => setIsSignInOpen(false)} />
+      <Register isOpen={isRegisterOpen} onClose={() => setIsRegisterOpen(false)} />
     </header>
   );
 }

@@ -4,30 +4,29 @@ import { Button, Modal } from "../ui";
 import { useTranslation } from "react-i18next";
 
 function Login({ isOpen, onClose }) {
-    const {t} =useTranslation()
-  const {
-    formOption: { onSubmit },
-    FormInputs,
-  } = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-    fields: [
-      {
-        name: "email",
-        type: "email",
-        label: t('auth.login.email.label'),
-      },
-      {
-        name: "password",
-        type: "password",
-        label: t('auth.login.password.label'),
-      },
-    ],
-    submit: (data) => console.log(data),
-    gridLayout: false,
-  });
+const {t} =useTranslation()
+    const { formOption: { onSubmit },
+        FormInputs, } = useForm({
+            defaultValues:
+            {
+                email: "",
+                password: "",
+            } ,
+            fields: [
+            {
+                name: "email",
+                type: "email",
+                label: t('auth.login.email.label'),
+            },
+            {
+                name: "password",
+                type: "password",
+                label: t('auth.login.password.label'),
+            },
+            ],
+            submit: (data) => console.log(data),
+            gridLayout: false,
+        });
   return (
     <Modal isOpen={isOpen} className={"w-full h-full md:w-1/2  md:h-fit"}>
       <div className="relative flex flex-col  p-10 space-y-4 ">
