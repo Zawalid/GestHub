@@ -5,6 +5,8 @@ export default {
     extend: {
       colors: {
         primary: "var(--primary)",
+        secondary: "var(--secondary)",
+        "secondary-hover": "var(--secondary-hover)",
         "primary-hover": "var(--primary-hover)",
         "background-primary": "var(--background-primary)",
         "background-secondary": "var(--background-secondary)",
