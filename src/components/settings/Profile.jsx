@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Tab } from "./Tab";
 import { DropDown } from "../ui";
 import { UploadImage } from "./UploadImage";
-import { useForm } from "../useForm";
+import { useForm } from "../../hooks/useForm";
 
 export default function Profile() {
   const user = useSelector((state) => state.user) || {};

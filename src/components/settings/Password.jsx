@@ -1,5 +1,5 @@
 import { Tab } from "./Tab";
-import { useForm } from "../useForm";
+import { useForm } from "../../hooks/useForm";
 
 export default function Password() {
   const { formOption, FormInputs } = useForm({

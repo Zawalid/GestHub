@@ -1,7 +1,7 @@
 import { Controller } from "react-hook-form";
-import { InputField } from "./ui";
+import { InputField } from "../components/ui";
 import { useForm as useF } from "react-hook-form";
-import { PasswordInput } from "./ui/PasswordInput";
+import { PasswordInput } from "../components/ui/PasswordInput";
 import { forwardRef } from "react";
 
 const rules = {
@@ -20,8 +20,7 @@ const rules = {
   },
   password: {
     pattern: {
-      value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-      message:
+      value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\W]{8,}$/,      message:
         "Password must contain at least 8 characters, one uppercase letter, one lowercase letter and one number",
     },
   },
