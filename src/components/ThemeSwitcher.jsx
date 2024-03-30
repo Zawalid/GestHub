@@ -1,12 +1,13 @@
 import { PiMoonStars, PiSunDim, PiLaptop } from "react-icons/pi";
-import { DropDown } from "./ui";
+import { Button, DropDown } from "./ui";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTheme } from "../app/reducer";
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
+
 export function ThemeSwitcher() {
-  const theme  = useSelector((state) => state.theme);
+  const theme = useSelector((state) => state.theme);
   const dispatch = useDispatch();
-  const {t}=useTranslation()
+  const { t } = useTranslation();
   const icons = {
     dark: <PiMoonStars size={18} />,
     light: <PiSunDim size={18} />,
@@ -14,7 +15,7 @@ export function ThemeSwitcher() {
   };
 
   return (
-    <DropDown toggler={icons[theme]} togglerClassName="icon-button not-active">
+    <DropDown toggler={<Button shape="icon">{icons[theme]}</Button>}>
       {Object.keys(icons).map((icon) => (
         <DropDown.Option
           key={icon}

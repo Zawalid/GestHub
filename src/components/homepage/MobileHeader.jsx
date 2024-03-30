@@ -6,6 +6,7 @@ import { routes } from "../../utils/constants";
 import { SocialMedia } from "../ui/SocialMedia";
 import { useTranslation } from "react-i18next";
 import { PiX } from "react-icons/pi";
+import { Button } from "../ui";
 export function MobileHeader({ isOpen, onClose }) {
   const ref = useRef();
   useEffect(() => {
@@ -41,12 +42,9 @@ export function MobileHeader({ isOpen, onClose }) {
       >
         <div className="flex items-center justify-between  px-5 pt-5">
           <Logo className="w-20" />
-          <button
-            className="icon-button  not-active small text-text-tertiary"
-            onClick={onClose}
-          >
+          <Button onClick={onClose} shape="icon" state='transparent' size="small">
             <PiX />
-          </button>
+          </Button>
         </div>
         <Links />
         <div className="mt-auto grid grid-cols-5 border-t border-border p-2">

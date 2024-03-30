@@ -18,6 +18,7 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
 import { ROUTES } from "../utils/constants";
+import { Button } from "./ui";
 
 const routesIcons = {
   overview: <BiSolidDashboard />,
@@ -49,7 +50,7 @@ export default function Sidebar({ openSettings }) {
 
   return (
     <aside
-      className={`flex flex-col overflow-hidden transition-[width] py-5 duration-500 gap-8 bg-background-secondary ${
+      className={`flex row-span-2 flex-col overflow-hidden transition-[width] py-5 duration-500 gap-8 bg-background-secondary ${
         isExpanded ? "w-[250px] px-3 " : "w-14 px-2"
       }`}
     >
@@ -61,10 +62,9 @@ export default function Sidebar({ openSettings }) {
             isExpanded ? "scale-100 w-28" : "w-0 scale-0"
           }`}
         />
-        <button
-          className={`icon-button self-center not-active ${
-            isExpanded ? "" : "mx-auto"
-          }`}
+        <Button
+          shape="icon"
+          className={`self-center not-active ${isExpanded ? "" : "mx-auto"}`}
           onClick={() => setIsExpanded(!isExpanded)}
         >
           {isExpanded ? (
@@ -72,7 +72,7 @@ export default function Sidebar({ openSettings }) {
           ) : (
             <BsLayoutSidebarInsetReverse />
           )}
-        </button>
+        </Button>
       </div>
       <ul className="space-y-1">
         {ROUTES[role].map((route) => (

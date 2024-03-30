@@ -79,7 +79,7 @@
   @apply bg-background-secondary font-medium text-text-tertiary border text-xs border-border rounded-lg !important;
 }
 .tippy-box:is([data-theme~="bubbleMenu"], [data-theme~="custom"]) {
-  @apply p-2;
+  @apply p-1;
 }
 
 /* Tooltip arrow */

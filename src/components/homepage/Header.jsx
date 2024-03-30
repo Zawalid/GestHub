@@ -12,6 +12,7 @@ import { AuthSwitcher } from "../AuthSwitcher";
 import Login from "../auth/Login";
 import { useTranslation } from "react-i18next";
 import Register from "../auth/Register";
+import { Button } from "../ui";
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -36,12 +37,13 @@ export function Header() {
           setIsSignInOpen={setIsSignInOpen}
         />
 
-        <button
+        <Button
+          shape="icon"
           onClick={() => setIsMobileMenuOpen(true)}
-          className="icon-button not-active lg:hidden"
+          className="lg:hidden"
         >
           <RxHamburgerMenu />
-        </button>
+        </Button>
       </div>
 
       <MobileHeader

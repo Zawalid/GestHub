@@ -1,6 +1,7 @@
 import Tippy from "@tippyjs/react";
 import { SearchInput } from "./SearchInput";
 import { IoChevronDownOutline } from "react-icons/io5";
+import { cn } from "../../utils/helpers";
 
 const defaultOptions = {
   className: "overflow-auto  max-h-[200px]",
@@ -19,11 +20,11 @@ export function DropDown({
 }) {
   return (
     <Tippy
-      content={<ul className="grid gap-1 p-2">{children}</ul>}
-      className={
-        "dropdown rounded-md border border-border bg-background-primary p-0 shadow-md " +
-        (options?.className || defaultOptions.className)
-      }
+      content={<ul className="grid gap-1 p-1">{children}</ul>}
+      className={cn(
+        "dropdown rounded-md border border-border bg-background-primary p-0 shadow-md",
+        options?.className || defaultOptions.className
+      )}
       theme="light"
       trigger={options?.trigger || defaultOptions.trigger}
       interactive={true}
@@ -59,10 +60,14 @@ function Option({
 }) {
   return (
     <li
-      className={`dropDown-option ${size} ${className} ${
-        isDeleteButton ? "delete" : " "
-      } ${isCurrent ? "current" : ""} ${disabled ? "disabled" : ""}
-        `}
+      className={cn(
+        "dropDown-option",
+        size,
+        isDeleteButton && "delete",
+        isCurrent && "current",
+        className,
+        disabled && "disabled"
+      )}
       onClick={() => disabled || onClick?.()}
       id={id}
     >
@@ -83,9 +88,14 @@ function SearchBar({ placeholder, value, onChange }) {
   );
 }
 
-function Toggler({ children, icon }) {
+function Toggler({ children, icon, className = "" }) {
   return (
-    <div className="flex min-w-28 hover:bg-background-tertiary transition-colors duration-200 cursor-pointer items-center justify-between rounded-lg border border-border  bg-background-secondary p-2 text-start  text-sm text-text-secondary  focus:outline-none">
+    <div
+      className={cn(
+        "flex min-w-28 hover:bg-background-tertiary transition-colors duration-200 cursor-pointer items-center justify-between rounded-lg border border-border  bg-background-secondary p-2 text-start  text-sm text-text-secondary  focus:outline-none",
+        className
+      )}
+    >
       {children}
       {icon || <IoChevronDownOutline className="text-text-tertiary" />}
     </div>

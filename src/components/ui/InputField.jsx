@@ -10,7 +10,7 @@ import {
 import { FiPhone } from "react-icons/fi";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import { BiSolidCity } from "react-icons/bi";
-
+import { cn } from "../../utils/helpers";
 
 export function ErrorTooltip({ message, className }) {
   if (!message) return null;
@@ -44,18 +44,17 @@ const icons = {
 export const InputField = forwardRef(
   ({ className, errorMessage, name, label, children, ...props }, ref) => {
     const icon = icons[name] || icons[props.type];
-    const cls = `${icon ? "pl-9" : "pl-4"} ${
-      name === "search" ? "pr-8" : ""
-    } ${className} `;
 
     return (
-      <div>
-        <div className="flex mb-1.5 gap-2 items-center">
-          <label className="font-medium text-text-tertiary text-sm">
-            {label}
-          </label>
-          <ErrorTooltip message={errorMessage} />
-        </div>
+      <div className="space-y-1.5">
+        {label && (
+          <div className="flex gap-2 items-center">
+            <label className="font-medium text-text-tertiary text-sm">
+              {label}
+            </label>
+            <ErrorTooltip message={errorMessage} />
+          </div>
+        )}
 
         <div className="relative overflow-hidden rounded-lg border border-border w-full ">
           {icon && (
@@ -65,7 +64,12 @@ export const InputField = forwardRef(
           )}
           <input
             type={props.type || "text"}
-            className={`w-full  bg-background-secondary py-2 pr-2 text-text-primary outline-none text-sm placeholder:text-sm ${cls}`}
+            className={cn(
+              "w-full bg-background-secondary py-1.5 pr-2 text-text-primary outline-none text-sm placeholder:text-sm",
+              icon ? "pl-9" : "pl-4",
+              name === "search" && "pr-8",
+              className
+            )}
             ref={ref}
             {...props}
           />

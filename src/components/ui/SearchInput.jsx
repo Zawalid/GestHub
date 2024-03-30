@@ -2,7 +2,7 @@ import { useState } from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 import { InputField } from "./InputField";
 
-export function SearchInput({ placeholder, query, onChange }) {
+export function SearchInput({ placeholder, query, onChange, className = "" }) {
   const [searchQuery, setSearchQuery] = useState(query || "");
 
   return (
@@ -11,7 +11,7 @@ export function SearchInput({ placeholder, query, onChange }) {
         e.preventDefault();
         onChange(searchQuery);
       }}
-      className="relative w-full"
+      className={`relative ${className} `}
     >
       <div className="relative">
         <InputField

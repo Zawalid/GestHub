@@ -30,12 +30,12 @@
       @apply flex-1;
     }
 
-    &>svg {
+    & > svg {
       @apply w-5 text-start text-lg;
     }
 
     &.small {
-      @apply px-2 py-1 text-xs;
+      @apply px-1.5 py-1 text-xs;
     }
 
     &.current {
@@ -51,26 +51,6 @@
     }
   }
 
-  .icon-button {
-    @apply flex h-8 w-8 items-center justify-center rounded-[4px] p-1 transition-colors duration-200 disabled:bg-background-disabled disabled:text-text-disabled;
-
-    &:not(:disabled).active {
-      @apply bg-primary text-white;
-    }
-
-    &:not(:disabled).not-active {
-      @apply bg-background-secondary text-text-tertiary hover:bg-background-tertiary;
-    }
-
-    &.small {
-      @apply h-7 w-7;
-
-      & i,
-      & svg {
-        @apply text-sm;
-      }
-    }
-  }
 }
 
 #themeToggler div {

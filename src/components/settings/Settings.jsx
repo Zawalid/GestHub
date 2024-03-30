@@ -5,7 +5,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Panel } from "./Panel";
 import Password from "./Password";
 import Profile from "./Profile";
-import { Modal } from "../ui";
+import { Button, Modal } from "../ui";
 
 export default function Settings({ isOpen, onClose }) {
   const [currentTab, setCurrentTab] = useState("profile");
@@ -28,18 +28,16 @@ export default function Settings({ isOpen, onClose }) {
           {currentTab}
         </h3>
         <div className="flex gap-2">
-          <button
-            className="icon-button not-active small  sm:hidden"
+          <Button
+            className="sm:hidden" shape='icon'
+            size="small"
             onClick={() => setIsPanelOpen(!isPanelOpen)}
           >
             <PiArrowRight className={isPanelOpen ? "rotate-180" : ""} />
-          </button>
-          <button
-            className="icon-button  not-active small text-text-tertiary"
-            onClick={onClose}
-          >
+          </Button>
+          <Button className="sm:hidden" shape='icon' size="small" onClick={onClose}>
             <PiX />
-          </button>
+          </Button>
         </div>
       </div>
       <Panel

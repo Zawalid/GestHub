@@ -1,4 +1,4 @@
-import { DropDown } from "./ui";
+import { Button, DropDown } from "./ui";
 import { useTranslation } from "react-i18next";
 import { IoLanguageOutline } from "react-icons/io5";
 
@@ -7,10 +7,13 @@ export function LanguageSwitcher() {
 
   return (
     <DropDown
-      toggler={<IoLanguageOutline />}
-      togglerClassName="icon-button not-active"
+      toggler={
+        <Button shape="icon">
+          <IoLanguageOutline />
+        </Button>
+      }
     >
-      {["en", "fr","ar"].map((lang) => (
+      {["en", "fr", "ar"].map((lang) => (
         <DropDown.Option
           key={lang}
           onClick={() => i18n.changeLanguage(lang)}
