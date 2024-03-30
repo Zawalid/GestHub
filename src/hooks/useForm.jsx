@@ -20,14 +20,9 @@ const rules = {
   },
   password: {
     pattern: {
-      value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\W]{8,}$/,      message:
+      value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\W]{8,}$/,
+      message:
         "Password must contain at least 8 characters, one uppercase letter, one lowercase letter and one number",
-    },
-  },
-  CIN: {
-    pattern: {
-      value: /^[A-Za-z]{1,2}\d{5,6}$/,
-      message: "Invalid CIN",
     },
   },
 };
@@ -80,7 +75,7 @@ export function useForm({ fields, defaultValues, submit, gridLayout = true }) {
       onCancel,
       watch,
     },
-    FormInputs: () => (
+    FormInputs: ({ children }) => (
       <div
         className={`grid gap-y-3 gap-x-5 ${
           gridLayout ? " md:grid-cols-2" : ""
@@ -109,6 +104,7 @@ export function useForm({ fields, defaultValues, submit, gridLayout = true }) {
             />
           );
         })}
+        {children}
       </div>
     ),
   };

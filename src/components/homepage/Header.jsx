@@ -31,10 +31,16 @@ export function Header() {
       <div className="flex items-center gap-4">
         <ThemeSwitcher />
         <LanguageSwitcher />
-        <AuthSwitcher setIsRegisterOpen={setIsRegisterOpen} setIsSignInOpen={setIsSignInOpen} />
+        <AuthSwitcher
+          setIsRegisterOpen={setIsRegisterOpen}
+          setIsSignInOpen={setIsSignInOpen}
+        />
 
-        <button onClick={() => setIsMobileMenuOpen(true)} className="lg:hidden">
-          <RxHamburgerMenu className="text-xl text-text-primary transition-colors duration-300 hover:text-text-tertiary " />
+        <button
+          onClick={() => setIsMobileMenuOpen(true)}
+          className="icon-button not-active lg:hidden"
+        >
+          <RxHamburgerMenu />
         </button>
       </div>
 
@@ -44,7 +50,10 @@ export function Header() {
       />
 
       <Login isOpen={isSignInOpen} onClose={() => setIsSignInOpen(false)} />
-      <Register isOpen={isRegisterOpen} onClose={() => setIsRegisterOpen(false)} />
+      <Register
+        isOpen={isRegisterOpen}
+        onClose={() => setIsRegisterOpen(false)}
+      />
     </header>
   );
 }
@@ -52,14 +61,14 @@ export function Header() {
 // Links
 
 function Links() {
-  const {t}=useTranslation()
+  const { t } = useTranslation();
   return (
     <ul className="hidden gap-8 lg:flex lg:flex-1 lg:justify-center ">
       {routes.map((route) => (
         <NavLink key={route.label} to={route.path}>
           <DropDown paths={route.nested || []}>
             <li className="relative flex items-center gap-3 font-semibold text-text-secondary transition-colors duration-300 before:absolute before:-bottom-[30px] before:left-1/2 before:h-[1px] before:w-full before:-translate-x-1/2 before:scale-0 before:bg-text-tertiary before:transition-transform before:duration-500 hover:text-text-tertiary hover:before:scale-100">
-              <span>{t(`header.navbar.${route.label}`) }</span>
+              <span>{t(`header.navbar.${route.label}`)}</span>
               {route.nested && <FaChevronDown />}
             </li>
           </DropDown>

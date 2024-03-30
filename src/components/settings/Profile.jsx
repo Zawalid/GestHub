@@ -2,7 +2,7 @@ import { Controller } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { Tab } from "./Tab";
 import { DropDown } from "../ui";
-import { UploadImage } from "./UploadImage";
+import { ProfileImage } from "./ProfileImage";
 import { useForm } from "../../hooks/useForm";
 
 export default function Profile() {
@@ -18,7 +18,6 @@ export default function Profile() {
       lastName: user.lastName,
       email: user.email,
       phone: user.phone,
-      CIN: user.CIN,
       birthday: user.birthday,
       sex: user.sex,
     },
@@ -41,10 +40,6 @@ export default function Profile() {
         label: "Phone Number",
       },
       {
-        name: "CIN",
-        label: "CIN",
-      },
-      {
         name: "birthday",
         type: "date",
         label: "Birthday",
@@ -52,7 +47,6 @@ export default function Profile() {
     ],
     submit: (data) => console.log(data),
   });
-
 
   const {
     control,
@@ -81,7 +75,7 @@ export default function Profile() {
       <div className="space-y-5">
         <div>
           <h3 className="mb-3 font-bold text-text-secondary">Image</h3>
-          <UploadImage
+          <ProfileImage
             onChange={(image) =>
               setValue("image", image, { shouldDirty: true })
             }
@@ -90,36 +84,37 @@ export default function Profile() {
           />
         </div>
 
-        <FormInputs />
+        <FormInputs>
+          <div className=" flex flex-col gap-1.5">
+            <label className="font-medium text-text-tertiary text-sm">
+              Sex
+            </label>
+            <DropDown
+              toggler={
+                <DropDown.Toggler>
+                  <span className="capitalize">{watch("sex")}</span>
+                </DropDown.Toggler>
+              }
+              options={{ className: "w-40" }}
+            >
+              {["male", "female"].map((sex) => (
+                <DropDown.Option
+                  key={sex}
+                  isCurrent={sex === watch("sex")}
+                  onClick={() => setValue("sex", sex, { shouldDirty: true })}
+                >
+                  <span className="capitalize">{sex}</span>
+                </DropDown.Option>
+              ))}
+            </DropDown>
 
-        <div className=" flex flex-col gap-1.5">
-          <label className="font-medium text-text-tertiary text-sm">Sex</label>
-          <DropDown
-            toggler={
-              <DropDown.Toggler>
-                <span className="capitalize">{watch("sex")}</span>
-              </DropDown.Toggler>
-            }
-            options={{ className: "w-28" }}
-            togglerClassName="w-fit"
-          >
-            {["male", "female"].map((sex) => (
-              <DropDown.Option
-                key={sex}
-                isCurrent={sex === watch("sex")}
-                onClick={() => setValue("sex", sex, { shouldDirty: true })}
-              >
-                <span className="capitalize">{sex}</span>
-              </DropDown.Option>
-            ))}
-          </DropDown>
-
-          <Controller
-            control={control}
-            name="sex"
-            render={({ field }) => <input {...field} type="hidden" />}
-          />
-        </div>
+            <Controller
+              control={control}
+              name="sex"
+              render={({ field }) => <input {...field} type="hidden" />}
+            />
+          </div>
+        </FormInputs>
       </div>
     </Tab>
   );

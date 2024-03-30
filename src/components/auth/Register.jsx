@@ -29,7 +29,7 @@ function Register({ isOpen, onClose }) {
         label: "Phone Number",
       },
       {
-        name: "City",
+        name: "city",
         label: "City",
       },
       {

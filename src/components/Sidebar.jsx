@@ -32,8 +32,11 @@ export default function Sidebar({ openSettings }) {
     window.matchMedia("(min-width: 1024px)").matches
   );
   const role = useSelector((state) => state.user?.role);
-
   const { t } = useTranslation();
+
+  const spanClass = `transition-transform origin-left duration-500 text-sm text-text-secondary ${
+    isExpanded ? "scale-100" : "scale-0"
+  }`;
 
   useEffect(() => {
     const onresize = () =>
@@ -46,7 +49,7 @@ export default function Sidebar({ openSettings }) {
 
   return (
     <aside
-      className={`flex flex-col overflow-hidden transition-[width] py-5 duration-500 gap-8 bg-background-secondary rounded-xl ${
+      className={`flex flex-col overflow-hidden transition-[width] py-5 duration-500 gap-8 bg-background-secondary ${
         isExpanded ? "w-[250px] px-3 " : "w-14 px-2"
       }`}
     >
@@ -76,13 +79,7 @@ export default function Sidebar({ openSettings }) {
           <li key={route}>
             <NavLink to={`/app/${route}`} className="sidebar_element group">
               {routesIcons[route]}
-              <span
-                className={`text-sm text-text-secondary ${
-                  isExpanded ? "inline" : "hidden"
-                }`}
-              >
-                {t(`app.sidebar.${route}`)}
-              </span>
+              <span className={spanClass}>{t(`app.sidebar.${route}`)}</span>
             </NavLink>
           </li>
         ))}
@@ -95,13 +92,7 @@ export default function Sidebar({ openSettings }) {
             onClick={openSettings}
           >
             <FiSettings />
-            <span
-              className={`text-sm capitalize text-text-secondary ${
-                isExpanded ? "inline" : "hidden"
-              }`}
-            >
-              {t("app.sidebar.settings")}
-            </span>
+            <span className={spanClass}>{t("app.sidebar.settings")}</span>
           </button>
           <div className="flex items-center gap-1">
             <ThemeSwitcher />
@@ -110,13 +101,7 @@ export default function Sidebar({ openSettings }) {
         </div>
         <button className="w-full sidebar_element group">
           <FiLogOut />
-          <span
-            className={`text-sm capitalize text-text-secondary ${
-              isExpanded ? "inline" : "hidden"
-            }`}
-          >
-            {t("app.sidebar.logout")}
-          </span>
+          <span className={spanClass}>{t("app.sidebar.logout")}</span>
         </button>
       </div>
     </aside>

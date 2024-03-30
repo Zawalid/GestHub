@@ -8,8 +8,9 @@ import {
   IoCalendarNumberOutline,
 } from "react-icons/io5";
 import { FiPhone } from "react-icons/fi";
-import { LiaIdCard } from "react-icons/lia";
 import { MdDriveFileRenameOutline } from "react-icons/md";
+import { BiSolidCity } from "react-icons/bi";
+
 
 export function ErrorTooltip({ message, className }) {
   if (!message) return null;
@@ -35,9 +36,9 @@ const icons = {
   email: <IoMailOutline />,
   password: <IoKeyOutline />,
   phone: <FiPhone />,
-  CIN: <LiaIdCard />,
   text: <MdDriveFileRenameOutline />,
   date: <IoCalendarNumberOutline />,
+  city: <BiSolidCity />,
 };
 
 export const InputField = forwardRef(

@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { Controller, useWatch } from "react-hook-form";
 import { Button } from "../ui";
 
-export function UploadImage({ control, onChange, disabled }) {
+export function ProfileImage({ control, onChange, disabled }) {
   const image = useWatch({ control, name: "image" }) || {};
   const { openFilePicker } = useFilePicker({
     accept: [".png", ".jpg"],
@@ -24,6 +24,7 @@ export function UploadImage({ control, onChange, disabled }) {
       }),
     ],
     onFilesRejected: ({ errors }) => {
+      console.log(errors);
       errors.forEach((error) => {
         toast.error(getErrorMessage(error.name));
       });
@@ -37,17 +38,17 @@ export function UploadImage({ control, onChange, disabled }) {
   });
 
   return (
-    <div className="flex items-center gap-5">
+    <div className="grid grid-cols-[7rem_auto] items-center gap-5">
       <img
         className="h-28 w-28 object-cover rounded-full border border-border text-center text-xs text-text-tertiary "
-        src={image?.src || '/images/default-profile.jpg'}
+        src={image?.src || "/images/default-profile.jpg"}
         alt="profile image"
       />
       <div>
         <div className="flex flex-wrap gap-x-5 gap-y-2">
           <Button
             type="outline"
-            className="flex-1"
+            className="flex-1 min-w-[132px]"
             disabled={disabled}
             onClick={openFilePicker}
           >
@@ -55,6 +56,7 @@ export function UploadImage({ control, onChange, disabled }) {
           </Button>
           <Button
             type="delete"
+            className="flex-1 min-w-[132px]"
             disabled={disabled || !image.src}
             onClick={() => onChange({ src: null, file: null })}
           >
@@ -88,6 +90,8 @@ function getErrorMessage(name) {
       return "Image must be at least 100x100 px";
     case "FileSizeError":
       return "Image must be at most 10 MB";
+    case "FileAmountLimitError":
+      return "Only one image is allowed";
     default:
       return "Something went wrong";
   }

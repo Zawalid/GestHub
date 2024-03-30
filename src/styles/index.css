@@ -56,7 +56,7 @@ body {
 }
 
 #root {
-  @apply flex h-full bg-background-primary p-2;
+  @apply flex h-full bg-background-primary
 }
 
 html.theme-transition {
