@@ -2,6 +2,7 @@ import { PiX } from "react-icons/pi";
 import { useForm } from "../../hooks/useForm";
 import { Button, Modal } from "../ui";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 function Login({ isOpen, onClose,openRegister }) {
   const { t } = useTranslation();
@@ -48,7 +49,9 @@ function Login({ isOpen, onClose,openRegister }) {
             onClose(false);
             openRegister(true)
         }} >Vous navez pas de compte</p>
-        <Button className={'self-end my-4'} onClick={onSubmit}>{t("auth.login.submit")}</Button>
+        <Link to='/app'>
+          <Button className={'self-end my-4'} onClick={onSubmit}>{t("auth.login.submit")}</Button>
+        </Link>
       </div>
     </Modal>
   );
