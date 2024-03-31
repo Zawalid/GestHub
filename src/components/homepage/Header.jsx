@@ -51,7 +51,7 @@ export function Header() {
         onClose={() => setIsMobileMenuOpen(false)}
       />
 
-      <Login isOpen={isSignInOpen} onClose={() => setIsSignInOpen(false)} />
+      <Login isOpen={isSignInOpen} openRegister={setIsRegisterOpen} onClose={setIsSignInOpen} />
       <Register
         isOpen={isRegisterOpen}
         onClose={() => setIsRegisterOpen(false)}

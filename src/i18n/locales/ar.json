@@ -41,7 +41,45 @@
         "placeholder": "أدخل كلمة المرور الخاصة بك"  
       },
       "submit": "تسجيل الدخول"  
-    }
+    },
+    "register":{
+  "title1": "مرحبا بكم في",
+  "title2": "التدريب",
+  "email": {
+    "label": "بريدك الالكتروني",
+    "placeholder": "أدخل البريد الالكتروني الخاص بك"
+  },
+  "firstName": {
+    "label": "الاسم الأول",
+    "placeholder": "أدخل الاسم الأول"
+  },
+  "lastName": {
+    "label": "الاسم الأخير",
+    "placeholder": "أدخل الاسم الأخير"
+  },
+  "phone": {
+    "label": "رقم هاتفك",
+    "placeholder": "أدخل رقم هاتفك"
+  },
+  "birthday": {
+    "label": "تاريخ الميلاد",
+    "placeholder": "أدخل تاريخ ميلادك"
+  },
+  "city": {
+    "label": "المدينة",
+    "placeholder": "أدخل مدينتك"
+  },
+  "password": {
+    "label": "كلمة المرور",
+    "placeholder": "أدخل كلمة المرور"
+  },
+  "confirmePassword": {
+    "label": "تأكيد كلمة المرور",
+    "placeholder": "أعد كتابة كلمة المرور"
+  },
+  "submit": "تسجيل"
+}
+
   },
    "app": {
     "sidebar": {

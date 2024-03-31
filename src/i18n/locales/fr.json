@@ -41,7 +41,45 @@
                 "placeholder": "Entrez votre mot de passe"  
             },
             "submit": "Se connecter"
-        }
+        },
+        "register":{
+  "title1": "Bienvenue à",
+  "title2": "Stage",
+  "email": {
+    "label": "Votre e-mail",
+    "placeholder": "Entrez votre adresse e-mail"
+  },
+  "firstName": {
+    "label": "Prénom",
+    "placeholder": "Entrez votre prénom"
+  },
+  "lastName": {
+    "label": "Nom",
+    "placeholder": "Entrez votre nom"
+  },
+  "phone": {
+    "label": "Votre numéro de téléphone",
+    "placeholder": "Entrez votre numéro de téléphone"
+  },
+  "birthday": {
+    "label": "Anniversaire",
+    "placeholder": "Entrez votre date de naissance"
+  },
+  "city": {
+    "label": "Ville",
+    "placeholder": "Entrez votre ville"
+  },
+  "password": {
+    "label": "Mot de passe",
+    "placeholder": "Entrez votre mot de passe"
+  },
+  "confirmePassword": {
+    "label": "Confirmer le mot de passe",
+    "placeholder": "Confirmez votre mot de passe"
+  },
+  "submit": "S'inscrire"
+}
+
   },
     "app": {
         "sidebar": {
