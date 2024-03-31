@@ -16,46 +16,46 @@ function Register({ isOpen, onClose }) {
     fields: [
       {
         name: "firstName",
-        label: "First Name",
+        label:  t('auth.register.firstName.label') ,
       },
       {
         name: "lastName",
-        label: "Last Name",
+        label:  t('auth.register.lastName.label') ,
       },
       {
         name: "email",
         type: "email",
-        label: "Email Address",
+        label:  t('auth.register.email.label') ,
       },
       {
         name: "phone",
-        label: "Phone Number",
+        label:  t('auth.register.phone.label') ,
       },
       {
         name: "city",
-        label: "City",
+        label:  t('auth.register.city.label') ,
       },
       {
         name: "birthday",
         type: "date",
-        label: "Birthday",
+        label:  t('auth.register.birthday.label') ,
       },
       {
-        name: "newPassword",
+        name: "password",
         type: "password",
-        label: "New Password",
+        label:  t('auth.register.password.label') ,
       },
       {
         name: "confirmPassword",
         type: "password",
-        label: "Confirm Password",
+        label:  t('auth.register.confirmePassword.label') ,
       },
     ],
     submit: (data) => console.log(data),
     gridLayout: true,
   });
   return (
-    <Modal isOpen={isOpen} className={"w-full h-full md:w-3/4  md:h-fit"}>
+    <Modal isOpen={isOpen} className={"w-full overflow-auto h-full md:w-3/4  md:h-fit"}>
       <div className="relative flex flex-col  p-10 space-y-4 ">
         <Button
           className="absolute right-2 top-2"
@@ -70,7 +70,7 @@ function Register({ isOpen, onClose }) {
           <span className="text-secondary">{t("auth.login.title2")}</span>
         </h1>
         <FormInputs />
-        <Button onClick={onSubmit}>{t("auth.login.submit")}</Button>
+        <Button className={'self-end'} onClick={onSubmit}>{t("auth.register.submit")}</Button>
       </div>
     </Modal>
   );

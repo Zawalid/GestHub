@@ -33,6 +33,43 @@
         "placeholder": "Enter your password"
       },
       "submit": "Login"
+    },
+     "register":{
+      "title1":"Welcome To ",
+      "title2":"Internship",
+      "email": {
+        "label": "Your Email",  
+        "placeholder": "Your Email" 
+      },
+      "firstName": {
+        "label": "First Name",  
+        "placeholder": "First Name " 
+      },
+      "lastName": {
+        "label": "Last Name",  
+        "placeholder": "First Name   " 
+      },
+      "phone": {
+        "label": "Your Phone Number",  
+        "placeholder": "" 
+      },
+      "birthday": {
+        "label": "Birthday",  
+        "placeholder": "" 
+      },
+      "city": {
+        "label": "City",  
+        "placeholder": "" 
+      },
+      "password": {
+        "label": "Password ",  
+        "placeholder": ""  
+      },
+      "confirmePassword": {
+        "label": "Confirme Password",  
+        "placeholder": "" 
+      },
+      "submit": "register" 
     }
   },
   "hero": {

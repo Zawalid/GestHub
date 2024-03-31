@@ -25,7 +25,7 @@ export function Header() {
   }, [currentPath]);
 
   return (
-    <header className="flex items-center justify-between  border-b border-border bg-background-primary p-5 shadow-md">
+    <header className="flex items-center justify-between  bg-background-secondary p-5 lg:px-20 shadow-md">
       <Logo className="w-20" />
       <Links />
 
@@ -51,7 +51,7 @@ export function Header() {
         onClose={() => setIsMobileMenuOpen(false)}
       />
 
-      <Login isOpen={isSignInOpen} onClose={() => setIsSignInOpen(false)} />
+      <Login isOpen={isSignInOpen} openRegister={setIsRegisterOpen} onClose={setIsSignInOpen} />
       <Register
         isOpen={isRegisterOpen}
         onClose={() => setIsRegisterOpen(false)}
