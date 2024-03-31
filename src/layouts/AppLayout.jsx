@@ -12,7 +12,7 @@ export default function AppLayout() {
   return (
     <div className="w-full flex">
       <Sidebar openSettings={() => setIsSettingsOpen(true)} />
-      <div className="flex-1 overflow-hidden px-5 py-3 flex flex-col gap-6">
+      <div className="flex-1 overflow-hidden px-3 sm:px-5 py-3 flex flex-col gap-6">
         <AppBar />
         <Main />
       </div>
@@ -28,7 +28,7 @@ function Main() {
   const [parent] = useAutoAnimate({ duration: 300 });
 
   return (
-    <main className="flex-1 overflow-x-hidden pr-3 overflow-y-auto bg-background-primary" ref={parent}>
+    <main className="flex-1 overflow-x-hidden pr-1 sm:pr-3 overflow-y-auto bg-background-primary" ref={parent}>
       <Outlet />
     </main>
   );

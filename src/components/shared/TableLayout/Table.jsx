@@ -9,26 +9,27 @@ import {
 } from "react-icons/io5";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import { FaSort } from "react-icons/fa6";
-import { Button } from "./Button";
-import { DropDown } from "./DropDown";
+import { Button, DropDown } from "../../ui";
+import { useContext } from "react";
+import { TableContext } from "./TableLayout";
 
-export function Table({ columns, rows }) {
-  const [parent] = useAutoAnimate({ duration: 500 });
-  return (
-    <table className="w-full whitespace-nowrap overflow-x-auto  text-left">
-      <thead className="bg-background-secondary ">
-        <tr>
-          {columns.map((title) => (
-            <Th key={title}>{title}</Th>
-          ))}
-          <Th hide={true} name="Actions" />
-        </tr>
-      </thead>
-      <tbody
-        className="text-sm font-medium divide-y divide-border text-text-primary"
-        ref={parent}
-      >
-        {rows.map((row, i) => (
+//* Table
+export function Table() {
+  const { columns, rows } = useContext(TableContext);
+  const [parent] = useAutoAnimate({ duration: 300 });
+
+  const render = () => {
+    if (rows.length === 0)
+      return (
+        <tbody className="flex absolute h-[88%] w-full items-center justify-center text-text-tertiary">
+          <tr>
+            <td>No results found</td>
+          </tr>
+        </tbody>
+      );
+    return (
+      <tbody className="text-sm h-fit font-medium divide-y divide-border text-text-primary">
+        {rows?.map((row, i) => (
           <tr key={i}>
             {Object.values(row).map((v) => (
               <Tr key={v} name={v} />
@@ -37,10 +38,25 @@ export function Table({ columns, rows }) {
           </tr>
         ))}
       </tbody>
-    </table>
+    );
+  };
+
+  return (
+    <div className="relative flex-1 overflow-x-auto">
+      <table className="w-full whitespace-nowrap overflow-x-auto  text-left">
+        <thead className="bg-background-secondary ">
+          <tr>
+            {columns.map((title) => (
+              <Th key={title}>{title}</Th>
+            ))}
+            <Th hide={true} name="Actions" />
+          </tr>
+        </thead>
+        {render()}
+      </table>
+    </div>
   );
 }
-
 function Th({ children, hide }) {
   return (
     <th scope="col" className="p-2">
@@ -74,7 +90,6 @@ function Th({ children, hide }) {
     </th>
   );
 }
-
 function Tr({ name, hide }) {
   return (
     <td className="px-6 py-4 ">
