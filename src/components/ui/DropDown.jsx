@@ -2,6 +2,7 @@ import Tippy from "@tippyjs/react";
 import { SearchInput } from "./SearchInput";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { cn } from "../../utils/helpers";
+import { cloneElement, forwardRef } from "react";
 
 const defaultOptions = {
   className: "overflow-auto  max-h-[200px]",
@@ -18,9 +19,15 @@ export function DropDown({
   onOpen,
   onClose,
 }) {
+  const buttonProps = {
+    onClick: (e) => e?.stopPropagation(),
+    className: togglerClassName,
+    disabled: togglerDisabled,
+  };
+
   return (
     <Tippy
-      content={<ul className="grid gap-1 p-1">{children}</ul>}
+      content={<ul className="grid gap-1 p-1.5">{children}</ul>}
       className={cn(
         "dropdown rounded-md border border-border bg-background-primary p-0 shadow-md",
         options?.className || defaultOptions.className
@@ -37,13 +44,11 @@ export function DropDown({
       }}
       onHidden={onClose}
     >
-      <button
-        onClick={(e) => e.stopPropagation()}
-        className={togglerClassName}
-        disabled={togglerDisabled}
-      >
-        {toggler}
-      </button>
+      {["Button", "Toggler"].includes(toggler.type.displayName) ? (
+        cloneElement(toggler, buttonProps)
+      ) : (
+        <button {...buttonProps}>{toggler}</button>
+      )}
     </Tippy>
   );
 }
@@ -88,19 +93,21 @@ function SearchBar({ placeholder, value, onChange }) {
   );
 }
 
-function Toggler({ children, icon, className = "" }) {
+const Toggler = forwardRef(({ children, icon, className = "" }, ref) => {
   return (
-    <div
+    <button
       className={cn(
         "flex min-w-28 hover:bg-background-tertiary transition-colors duration-200 cursor-pointer items-center justify-between rounded-lg border border-border  bg-background-secondary p-2 text-start  text-sm text-text-secondary  focus:outline-none",
         className
       )}
+      ref={ref}
     >
       {children}
       {icon || <IoChevronDownOutline className="text-text-tertiary" />}
-    </div>
+    </button>
   );
-}
+});
+Toggler.displayName = "Toggler";
 
 function Title({ children }) {
   return <span className="text-sm text-text-tertiary">{children}</span>;

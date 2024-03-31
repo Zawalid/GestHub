@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Table } from "./Table";
 import { Search } from "./Search";
@@ -6,6 +6,7 @@ import { Filter } from "./Filter";
 import { View } from "./View";
 import { Pagination } from "./Pagination";
 import { Download } from "./Download";
+import { PAGE_LIMIT } from "../../../utils/constants";
 
 const interns = [
   {
@@ -14,7 +15,7 @@ const interns = [
     lastName: "Doe",
     email: "john.doe@example.com",
     phone: "123-456-7890",
-    sex: "Male",
+    gender: "Male",
     birthday: "1990-01-01",
   },
   {
@@ -23,7 +24,7 @@ const interns = [
     lastName: "Smith",
     email: "jane.smith@example.com",
     phone: "098-765-4321",
-    sex: "Female",
+    gender: "Female",
     birthday: "1992-02-02",
   },
   {
@@ -32,7 +33,7 @@ const interns = [
     lastName: "Johnson",
     email: "bob.johnson@example.com",
     phone: "111-222-3333",
-    sex: "Male",
+    gender: "Male",
     birthday: "1993-03-03",
   },
   {
@@ -41,7 +42,7 @@ const interns = [
     lastName: "Williams",
     email: "alice.williams@example.com",
     phone: "444-555-6666",
-    sex: "Female",
+    gender: "Female",
     birthday: "1994-04-04",
   },
   {
@@ -50,7 +51,7 @@ const interns = [
     lastName: "Brown",
     email: "charlie.brown@example.com",
     phone: "777-888-9999",
-    sex: "Male",
+    gender: "Male",
     birthday: "1995-05-05",
   },
   {
@@ -59,7 +60,7 @@ const interns = [
     lastName: "Davis",
     email: "emily.davis@example.com",
     phone: "000-111-2222",
-    sex: "Female",
+    gender: "Female",
     birthday: "1996-06-06",
   },
   {
@@ -68,7 +69,7 @@ const interns = [
     lastName: "Miller",
     email: "frank.miller@example.com",
     phone: "333-444-5555",
-    sex: "Male",
+    gender: "Male",
     birthday: "1997-07-07",
   },
   {
@@ -77,7 +78,7 @@ const interns = [
     lastName: "Wilson",
     email: "grace.wilson@example.com",
     phone: "666-777-8888",
-    sex: "Female",
+    gender: "Female",
     birthday: "1998-08-08",
   },
   {
@@ -86,7 +87,7 @@ const interns = [
     lastName: "Moore",
     email: "harry.moore@example.com",
     phone: "999-000-1111",
-    sex: "Male",
+    gender: "Male",
     birthday: "1999-09-09",
   },
   {
@@ -95,23 +96,63 @@ const interns = [
     lastName: "Taylor",
     email: "ivy.taylor@example.com",
     phone: "222-333-4444",
-    sex: "Female",
+    gender: "Female",
     birthday: "2000-10-10",
   },
 ];
 
+Array.prototype.search = function (query) {
+  if (!query) return this;
+
+  return this.filter((el) => {
+    const valueToSearch = `${el?.firstName} ${el?.lastName} ${el?.email}`;
+
+    return valueToSearch
+      ?.trim()
+      .toLowerCase()
+      .includes(query?.trim().toLowerCase());
+  });
+};
+
+Array.prototype.paginate = function (page, limit) {
+  const start = (page - 1) * limit;
+  const end = page * limit;
+
+  return this.slice(start, end);
+};
+
+Array.prototype.customFilter = function (filters) {
+  const conditions = Object.keys(filters).map((key) => ({
+    field: key,
+    value: filters[key].filter((v) => v.checked).map((v) => v.value),
+  }));
+
+  return this.filter((el) =>
+    conditions.some((c) => c.value.includes(el[c.field]))
+  );
+};
+
 export const TableContext = createContext();
-
-const LIMIT = 5
-
 export function TableLayout({ children }) {
+  const [filters, setFilters] = useState({
+    gender: [
+      { value: "Male", checked: true },
+      { value: "Female", checked: true },
+    ],
+    status: [
+      { value: "Active", checked: true },
+      { value: "Inactive", checked: true },
+    ],
+  });
+
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("s") || "";
   const page = Number(searchParams.get("page")) || 1;
 
-  const rows = interns?.search(query).paginate(page, LIMIT);
-  const totalItems = interns?.search(query).length;
-  const totalPages = Math.ceil(totalItems / LIMIT);
+  const rows = interns?.search(query).customFilter(filters);
+
+  const totalItems = rows.length;
+  const totalPages = Math.ceil(totalItems / PAGE_LIMIT);
 
   const onSearch = (query) => {
     if (query) {
@@ -134,6 +175,8 @@ export function TableLayout({ children }) {
     setSearchParams(searchParams);
   };
 
+  const onFilter = (filter) => setFilters((prev) => ({ ...prev, ...filter }));
+
   return (
     <TableContext.Provider
       value={{
@@ -144,10 +187,10 @@ export function TableLayout({ children }) {
           "Last Name",
           "Email",
           "Phone",
-          "Sex",
+          "Gender",
           "Birthday",
         ],
-        rows,
+        rows: rows.paginate(page, PAGE_LIMIT),
         // search
         query,
         onSearch,
@@ -155,9 +198,11 @@ export function TableLayout({ children }) {
         totalItems,
         totalPages,
         page,
-        limit: LIMIT,
         onNextPage,
         onPrevPage,
+        // filter
+        filters,
+        onFilter,
       }}
     >
       {children}

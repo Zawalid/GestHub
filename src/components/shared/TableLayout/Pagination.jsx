@@ -1,17 +1,12 @@
 import { useContext } from "react";
 import { TableContext } from "./TableLayout";
 import { Button } from "../../ui";
+import { PAGE_LIMIT } from "../../../utils/constants";
 
-//* Pagination
-Array.prototype.paginate = function (page, limit) {
-  const start = (page - 1) * limit;
-  const end = page * limit;
 
-  return this.slice(start, end);
-};
 
 export function Pagination() {
-  const { totalItems, totalPages, page, limit, onNextPage, onPrevPage } =
+  const { totalItems, totalPages, page, onNextPage, onPrevPage } =
     useContext(TableContext);
 
   if (totalItems === 0) return null;
@@ -20,10 +15,10 @@ export function Pagination() {
     <div className="flex gap-3 flex-col sm:flex-row px-6 py-2 sm:items-center border-t border-border mt-auto justify-between">
       <p className="text-xs overflow-auto text-center sm:text-start">
         <Span>Showing</Span>
-        <Span variable>{page * limit - limit + 1}</Span>
+        <Span variable>{page * PAGE_LIMIT - PAGE_LIMIT + 1}</Span>
         <Span>to</Span>
         <Span variable>
-          {page * limit > totalItems ? totalItems : page * limit}
+          {page * PAGE_LIMIT > totalItems ? totalItems : page * PAGE_LIMIT}
         </Span>
         <Span>of</Span>
         <Span variable>{totalItems}</Span>

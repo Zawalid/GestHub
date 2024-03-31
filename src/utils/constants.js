@@ -8,3 +8,6 @@ export const routes = [
   { label: "offers", path: "home" },
   { label: "about", path: "home" }
 ];
+
+
+export const PAGE_LIMIT = 5;

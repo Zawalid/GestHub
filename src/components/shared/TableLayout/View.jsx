@@ -3,7 +3,6 @@ import { TableContext } from "./TableLayout";
 import { BsTable } from "react-icons/bs";
 import { Button, CheckBox, DropDown } from "../../ui";
 
-//* View
 export function View() {
   const { columns } = useContext(TableContext);
   return (
@@ -18,7 +17,7 @@ export function View() {
       {columns.map((key) => (
         <DropDown.Option key={key} className="justify-between">
           {key}
-          <CheckBox checked={true} />
+          <CheckBox  />
         </DropDown.Option>
       ))}
     </DropDown>

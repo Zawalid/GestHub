@@ -13,7 +13,6 @@ import { Button, DropDown } from "../../ui";
 import { useContext } from "react";
 import { TableContext } from "./TableLayout";
 
-//* Table
 export function Table() {
   const { columns, rows } = useContext(TableContext);
   const [parent] = useAutoAnimate({ duration: 300 });
@@ -28,7 +27,7 @@ export function Table() {
         </tbody>
       );
     return (
-      <tbody className="text-sm h-fit font-medium divide-y divide-border text-text-primary">
+      <tbody className="text-sm h-fit font-medium divide-y divide-border text-text-primary" >
         {rows?.map((row, i) => (
           <tr key={i}>
             {Object.values(row).map((v) => (
