@@ -101,6 +101,32 @@ const interns = [
   },
 ];
 
+const csvConfig = {
+  filename: "Interns",
+  columnHeaders: [
+    { key: "id", displayLabel: "ID" },
+    { key: "firstName", displayLabel: "First Name" },
+    { key: "lastName", displayLabel: "Last Name" },
+    { key: "email", displayLabel: "Email" },
+    { key: "phone", displayLabel: "Phone" },
+    { key: "gender", displayLabel: "Gender" },
+    { key: "birthday", displayLabel: "Birthday" },
+  ],
+};
+
+const pdfConfig = {
+  filename: "Interns.pdf",
+  tableHeaders: [
+    "ID",
+    "First Name",
+    "Last Name",
+    "Email",
+    "Phone",
+    "Gender",
+    "Birthday",
+  ],
+};
+
 //* Methods
 Array.prototype.search = function (query) {
   if (!query) return this;
@@ -230,34 +256,36 @@ export function TableLayout({ children }) {
     setSearchParams(searchParams);
   };
 
+  const context = {
+    // table
+    data: interns,
+    columns,
+    rows: rows.paginate(page, PAGE_LIMIT),
+    // search
+    query,
+    onSearch,
+    // pagination
+    totalItems,
+    totalPages,
+    page,
+    onNextPage,
+    onPrevPage,
+    // filter
+    filters,
+    onFilter,
+    // view
+    onChangeView,
+    // sort
+    sortBy,
+    direction,
+    onSort,
+    // download
+    csvConfig,
+    pdfConfig,
+  };
+
   return (
-    <TableContext.Provider
-      value={{
-        // table
-        columns,
-        rows: rows.paginate(page, PAGE_LIMIT),
-        // search
-        query,
-        onSearch,
-        // pagination
-        totalItems,
-        totalPages,
-        page,
-        onNextPage,
-        onPrevPage,
-        // filter
-        filters,
-        onFilter,
-        // view
-        onChangeView,
-        // sort
-        sortBy,
-        direction,
-        onSort,
-      }}
-    >
-      {children}
-    </TableContext.Provider>
+    <TableContext.Provider value={context}>{children}</TableContext.Provider>
   );
 }
 
