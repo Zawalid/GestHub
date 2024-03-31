@@ -19,7 +19,7 @@ export default function Profile() {
       email: user.email,
       phone: user.phone,
       birthday: user.birthday,
-      sex: user.sex,
+      gender: user.gender,
     },
     fields: [
       {
@@ -87,30 +87,30 @@ export default function Profile() {
         <FormInputs>
           <div className=" flex flex-col gap-1.5">
             <label className="font-medium text-text-tertiary text-sm">
-              Sex
+              Gender
             </label>
             <DropDown
               toggler={
                 <DropDown.Toggler>
-                  <span className="capitalize">{watch("sex")}</span>
+                  <span className="capitalize">{watch("gender")}</span>
                 </DropDown.Toggler>
               }
               options={{ className: "w-40" }}
             >
-              {["male", "female"].map((sex) => (
+              {["male", "female"].map((gender) => (
                 <DropDown.Option
-                  key={sex}
-                  isCurrent={sex === watch("sex")}
-                  onClick={() => setValue("sex", sex, { shouldDirty: true })}
+                  key={gender}
+                  isCurrent={gender === watch("gender")}
+                  onClick={() => setValue("gender", gender, { shouldDirty: true })}
                 >
-                  <span className="capitalize">{sex}</span>
+                  <span className="capitalize">{gender}</span>
                 </DropDown.Option>
               ))}
             </DropDown>
 
             <Controller
               control={control}
-              name="sex"
+              name="gender"
               render={({ field }) => <input {...field} type="hidden" />}
             />
           </div>

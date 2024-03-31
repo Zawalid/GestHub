@@ -1,6 +1,7 @@
 import { FaSpinner } from "react-icons/fa6";
 import { cn } from "../../utils/helpers";
 import { tv } from "tailwind-variants";
+import { forwardRef } from "react";
 
 const button = tv({
   base: "transition-colors duration-300 flex font-medium",
@@ -59,45 +60,53 @@ const button = tv({
   ],
 });
 
-export function Button({
-  children,
-  isLoading,
-  disabled,
-  onClick,
-  className,
-  type,
-  size,
-  color,
-  state,
-  display,
-  shape,
-}) {
-  return (
-    <button
-      className={cn(
-        button({
-          color,
-          state: disabled ? "disabled" : state,
-          type,
-          size,
-          shape,
-          display,
-        }),
-        className
-      )}
-      disabled={state === "disabled"}
-      onClick={() => state !== "disabled" && onClick?.()}
-    >
-      {isLoading ? (
-        <div className="flex items-center gap-3 text-white">
-          <FaSpinner className="animate-spin" />
-          <span>{`${children.split(" ")[0]}ing ${
-            children.split(" ")[1]
-          }...`}</span>
-        </div>
-      ) : (
-        children
-      )}
-    </button>
-  );
-}
+export const Button = forwardRef(
+  (
+    {
+      children,
+      isLoading,
+      disabled,
+      onClick,
+      className,
+      type,
+      size,
+      color,
+      state,
+      display,
+      shape,
+    },
+    ref
+  ) => {
+    return (
+      <button
+        className={cn(
+          button({
+            color,
+            state: disabled ? "disabled" : state,
+            type,
+            size,
+            shape,
+            display,
+          }),
+          className
+        )}
+        ref={ref}
+        disabled={state === "disabled"}
+        onClick={() => state !== "disabled" && onClick?.()}
+      >
+        {isLoading ? (
+          <div className="flex items-center gap-3 text-white">
+            <FaSpinner className="animate-spin" />
+            <span>{`${children.split(" ")[0]}ing ${
+              children.split(" ")[1]
+            }...`}</span>
+          </div>
+        ) : (
+          children
+        )}
+      </button>
+    );
+  }
+);
+
+Button.displayName = "Button";
