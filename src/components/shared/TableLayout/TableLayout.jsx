@@ -134,6 +134,15 @@ Array.prototype.customFilter = function (filters) {
 
 export const TableContext = createContext();
 export function TableLayout({ children }) {
+  const [columns, setColumns] = useState([
+    { key: "ID", label: "ID", visible: true },
+    { key: "firstName", label: "First Name", visible: true },
+    { key: "lastName", label: "Last Name", visible: true },
+    { key: "email", label: "Email", visible: true },
+    { key: "phone", label: "Phone", visible: true },
+    { key: "gender", label: "Gender", visible: true },
+    { key: "birthday", label: "Birthday", visible: true },
+  ]);
   const [filters, setFilters] = useState({
     gender: [
       { value: "Male", checked: true },
@@ -144,13 +153,11 @@ export function TableLayout({ children }) {
       { value: "Inactive", checked: true },
     ],
   });
-
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("s") || "";
   const page = Number(searchParams.get("page")) || 1;
 
   const rows = interns?.search(query).customFilter(filters);
-
   const totalItems = rows.length;
   const totalPages = Math.ceil(totalItems / PAGE_LIMIT);
 
@@ -177,19 +184,13 @@ export function TableLayout({ children }) {
 
   const onFilter = (filter) => setFilters((prev) => ({ ...prev, ...filter }));
 
+  const onChangeView = (columns) => setColumns(columns);
+
   return (
     <TableContext.Provider
       value={{
         // table
-        columns: [
-          "ID",
-          "First Name",
-          "Last Name",
-          "Email",
-          "Phone",
-          "Gender",
-          "Birthday",
-        ],
+        columns,
         rows: rows.paginate(page, PAGE_LIMIT),
         // search
         query,
@@ -203,6 +204,8 @@ export function TableLayout({ children }) {
         // filter
         filters,
         onFilter,
+        // view
+        onChangeView,
       }}
     >
       {children}

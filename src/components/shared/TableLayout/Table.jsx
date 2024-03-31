@@ -27,13 +27,15 @@ export function Table() {
         </tbody>
       );
     return (
-      <tbody className="text-sm h-fit font-medium divide-y divide-border text-text-primary" >
+      <tbody className="text-sm h-fit font-medium divide-y divide-border text-text-primary">
         {rows?.map((row, i) => (
           <tr key={i}>
-            {Object.values(row).map((v) => (
-              <Tr key={v} name={v} />
-            ))}
-            <Tr hide={true} name="Actions" />
+            {columns
+              .filter((c) => c.visible)
+              .map((v) => (
+                <Tr key={row[v.key]}>{row[v.key]}</Tr>
+              ))}
+            <Tr hide={true} />
           </tr>
         ))}
       </tbody>
@@ -45,10 +47,12 @@ export function Table() {
       <table className="w-full whitespace-nowrap overflow-x-auto  text-left">
         <thead className="bg-background-secondary ">
           <tr>
-            {columns.map((title) => (
-              <Th key={title}>{title}</Th>
-            ))}
-            <Th hide={true} name="Actions" />
+            {columns
+              .filter((c) => c.visible)
+              .map(({ label }) => (
+                <Th key={label}>{label}</Th>
+              ))}
+            <Th hide={true} />
           </tr>
         </thead>
         {render()}
@@ -89,7 +93,7 @@ function Th({ children, hide }) {
     </th>
   );
 }
-function Tr({ name, hide }) {
+function Tr({ children, hide }) {
   return (
     <td className="px-6 py-4 ">
       {hide ? (
@@ -115,7 +119,7 @@ function Tr({ name, hide }) {
           </DropDown.Option>
         </DropDown>
       ) : (
-        name
+        children
       )}
     </td>
   );
