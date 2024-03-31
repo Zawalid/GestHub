@@ -1,17 +1,15 @@
-import { SearchInput } from "./ui";
 
 export default function AppBar() {
   return (
-    <div className="flex justify-between gap-5 items-center">
+    <div className="flex justify-between gap-8 items-center">
       <UserInfo />
-      <SearchInput placeholder="Search..." className="flex-1" />
     </div>
   );
 }
 
 function UserInfo() {
   return (
-    <div className="flex flex-[2] gap-3 items-center">
+    <div className="flex gap-3 items-center">
       <img
         className="h-8 w-8 object-cover rounded-full border-2 border-border text-center text-xs text-text-tertiary "
         src="/images/default-profile.jpg"
