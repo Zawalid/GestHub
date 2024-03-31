@@ -1,20 +1,17 @@
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import {
-  IoArrowDownOutline,
-  IoArrowUpOutline,
   IoEllipsisHorizontalSharp,
   IoEyeOutline,
-  IoEyeOffOutline,
   IoTrashOutline,
 } from "react-icons/io5";
 import { MdDriveFileRenameOutline } from "react-icons/md";
-import { FaSort } from "react-icons/fa6";
 import { Button, DropDown } from "../../ui";
-import { useContext } from "react";
-import { TableContext } from "./TableLayout";
+import { Sort } from "./Sort";
+import { formatToCamelCase } from "../../../utils/helpers";
+import { useTable } from ".";
 
 export function Table() {
-  const { columns, rows } = useContext(TableContext);
+  const { columns, rows } = useTable();
   const [parent] = useAutoAnimate({ duration: 300 });
 
   const render = () => {
@@ -33,7 +30,7 @@ export function Table() {
             {columns
               .filter((c) => c.visible)
               .map((v) => (
-                <Tr key={row[v.key]}>{row[v.key]}</Tr>
+                <Tr key={row[v.label]}>{row[formatToCamelCase(v.label)]}</Tr>
               ))}
             <Tr hide={true} />
           </tr>
@@ -50,7 +47,7 @@ export function Table() {
             {columns
               .filter((c) => c.visible)
               .map(({ label }) => (
-                <Th key={label}>{label}</Th>
+                <Th key={label} column={label} />
               ))}
             <Th hide={true} />
           </tr>
@@ -60,36 +57,10 @@ export function Table() {
     </div>
   );
 }
-function Th({ children, hide }) {
+function Th({ column, hide }) {
   return (
     <th scope="col" className="p-2">
-      {hide ? (
-        <span className="sr-only">Edit</span>
-      ) : (
-        <DropDown
-          toggler={
-            <Button color="tertiary" type="transparent" display="with-icon">
-              {children}
-              <FaSort size={12} />
-            </Button>
-          }
-          options={{ placement: "bottom-end", className: "w-28 text-xs" }}
-        >
-          <DropDown.Option>
-            <IoArrowUpOutline />
-            Asc
-          </DropDown.Option>
-          <DropDown.Option>
-            <IoArrowDownOutline />
-            Desc
-          </DropDown.Option>
-          <DropDown.Divider />
-          <DropDown.Option>
-            <IoEyeOffOutline />
-            Hide
-          </DropDown.Option>
-        </DropDown>
-      )}
+      {hide ? <span className="sr-only">Edit</span> : <Sort column={column} />}
     </th>
   );
 }

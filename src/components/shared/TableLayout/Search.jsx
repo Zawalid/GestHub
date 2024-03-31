@@ -1,10 +1,10 @@
 import { SearchInput } from "../../ui";
-import { useContext } from "react";
-import { TableContext } from "./TableLayout";
+import { useTable } from ".";
+
 
 
 export function Search() {
-  const { query, onSearch } = useContext(TableContext);
+  const { query, onSearch } = useTable()
 
   return (
     <SearchInput

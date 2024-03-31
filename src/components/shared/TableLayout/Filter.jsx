@@ -1,13 +1,12 @@
 import { IoFilter } from "react-icons/io5";
 import { Button, CheckBox, DropDown } from "../../ui";
-import { TableContext } from "./TableLayout";
-import { useContext } from "react";
+import { useTable } from ".";
 
 const toggleChecked = (filter, value) =>
   filter.map((f) => (f.value === value ? { ...f, checked: !f.checked } : f));
 
 export function Filter() {
-  const { filters, onFilter } = useContext(TableContext);
+  const { filters, onFilter } = useTable();
 
   return (
     <DropDown

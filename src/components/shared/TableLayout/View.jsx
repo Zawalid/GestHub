@@ -1,10 +1,10 @@
-import { useContext } from "react";
-import { TableContext } from "./TableLayout";
+import { useTable } from ".";
+
 import { BsTable } from "react-icons/bs";
 import { Button, CheckBox, DropDown } from "../../ui";
 
 export function View() {
-  const { columns, onChangeView } = useContext(TableContext);
+  const { columns, onChangeView } = useTable();
   return (
     <DropDown
       toggler={
@@ -15,20 +15,11 @@ export function View() {
       options={{ className: "w-40", shouldCloseOnClick: false }}
     >
       {columns
-        .filter((c) => c.label !== "ID")
+        .filter((c) => c.label !== "id")
         .map(({ label, visible }) => (
           <DropDown.Option key={label} className="justify-between">
             {label}
-            <CheckBox
-              checked={visible}
-              onChange={() =>
-                onChangeView(
-                  columns.map((c) =>
-                    c.label === label ? { ...c, visible: !visible } : c
-                  )
-                )
-              }
-            />
+            <CheckBox checked={visible} onChange={() => onChangeView(label)} />
           </DropDown.Option>
         ))}
     </DropDown>

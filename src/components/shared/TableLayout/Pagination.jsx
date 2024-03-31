@@ -1,13 +1,9 @@
-import { useContext } from "react";
-import { TableContext } from "./TableLayout";
+import { useTable } from ".";
 import { Button } from "../../ui";
 import { PAGE_LIMIT } from "../../../utils/constants";
 
-
-
 export function Pagination() {
-  const { totalItems, totalPages, page, onNextPage, onPrevPage } =
-    useContext(TableContext);
+  const { totalItems, totalPages, page, onNextPage, onPrevPage } = useTable();
 
   if (totalItems === 0) return null;
 
