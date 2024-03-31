@@ -45,18 +45,18 @@ export function ProfileImage({ control, onChange, disabled }) {
         alt="profile image"
       />
       <div>
-        <div className="flex flex-wrap gap-x-5 gap-y-2">
+        <div className="flex w-fit flex-wrap gap-x-5 gap-y-2">
           <Button
             type="outline"
-            className="flex-1 min-w-[132px]"
+            className="flex-1 min-w-[132px] md:min-w-max"
             disabled={disabled}
             onClick={openFilePicker}
           >
             Change Image
           </Button>
           <Button
-            type="delete"
-            className="flex-1 min-w-[132px]"
+            color="delete"
+            className="flex-1 min-w-[132px] md:min-w-max"
             disabled={disabled || !image.src}
             onClick={() => onChange({ src: null, file: null })}
           >

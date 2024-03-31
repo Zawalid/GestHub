@@ -7,7 +7,7 @@ export function Tab({ children, saveButton, cancelButton, control }) {
       <div className="flex-1 overflow-auto">{children}</div>
       <div className="flex  justify-end gap-3">
         {cancelButton && (
-          <Button type="cancel" {...cancelButton}>
+          <Button color="tertiary" {...cancelButton}>
             Cancel
           </Button>
         )}

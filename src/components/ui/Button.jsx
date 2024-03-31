@@ -27,13 +27,12 @@ const button = tv({
       icon: "h-8 w-8 items-center justify-center rounded-[4px] p-1 bg-background-secondary text-text-tertiary hover:bg-background-tertiary",
     },
     display: {
-      "with-icon": "gap-4 items-center",
+      "with-icon": "gap-3 items-center",
       centered: "justify-center",
     },
     state: {
-      cancel:
-        "bg-background-secondary text-text-secondary  hover:bg-background-tertiary",
-      disabled: "bg-background-disabled text-text-disabled",
+      disabled:
+        "bg-background-disabled cursor-not-allowed hover:bg-background-disabled text-text-disabled",
       active: "bg-primary text-white hover:bg-primary",
     },
   },
@@ -56,13 +55,14 @@ const button = tv({
     { color: "delete", type: "outline", className: "hover:bg-red-600 " },
     { shape: "icon", size: "small", className: "h-6 w-6 text-sm" },
     { shape: "icon", size: "large", className: "text-xl w-10 h-10" },
-    { shape: "icon", type: "transparent",className : "bg-transparent" },
+    { shape: "icon", type: "transparent", className: "bg-transparent" },
   ],
 });
 
 export function Button({
   children,
   isLoading,
+  disabled,
   onClick,
   className,
   type,
@@ -75,7 +75,14 @@ export function Button({
   return (
     <button
       className={cn(
-        button({ color, state, type, size, shape, display }),
+        button({
+          color,
+          state: disabled ? "disabled" : state,
+          type,
+          size,
+          shape,
+          display,
+        }),
         className
       )}
       disabled={state === "disabled"}
