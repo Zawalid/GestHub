@@ -1,4 +1,3 @@
-import { PiX } from "react-icons/pi";
 import { useForm } from "../../hooks/useForm";
 import { Button, Modal } from "../ui";
 import { useTranslation } from "react-i18next";
@@ -55,16 +54,9 @@ function Register({ isOpen, onClose }) {
     gridLayout: true,
   });
   return (
-    <Modal isOpen={isOpen} className={"w-full overflow-auto h-full md:w-3/4  md:h-fit"}>
+    <Modal isOpen={isOpen} className={"w-full overflow-auto h-full md:w-3/4  md:h-fit"} onClose={onClose} closeButton={true}>
       <div className="relative flex flex-col  p-10 space-y-4 ">
-        <Button
-          className="absolute right-2 top-2"
-          onClick={onClose}
-          shape="icon"
-          size="small"
-        >
-          <PiX />
-        </Button>
+        
         <h1 className="text-text-primary text-4xl">
           {t("auth.login.title1")}{" "}
           <span className="text-secondary">{t("auth.login.title2")}</span>

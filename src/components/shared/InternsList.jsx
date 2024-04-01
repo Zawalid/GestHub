@@ -1,6 +1,3 @@
-import { FaPlus } from "react-icons/fa6";
-
-import { Button } from "../ui";
 import { TableLayout } from "./TableLayout";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
@@ -20,10 +17,7 @@ export default function InternsList() {
           </div>
           <div className="flex justify-between items-center gap-3">
             <TableLayout.Download />
-            <Button display="with-icon">
-              <FaPlus />
-              New Intern
-            </Button>
+            <TableLayout.NewRecord />
           </div>
         </div>
         <div

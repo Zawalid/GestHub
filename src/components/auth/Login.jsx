@@ -1,4 +1,3 @@
-import { PiX } from "react-icons/pi";
 import { useForm } from "../../hooks/useForm";
 import { Button, Modal } from "../ui";
 import { useTranslation } from "react-i18next";
@@ -30,16 +29,12 @@ function Login({ isOpen, onClose,openRegister }) {
     gridLayout: false,
   });
   return (
-    <Modal isOpen={isOpen} className={"w-full pt-10 md:pt-0 h-full md:w-3/4 lg:w-1/2  md:h-fit"}>
-      <div className="relative flex flex-col  p-10">
-        <Button
-          className="absolute right-2 top-2"
-          onClick={onClose}
-          shape="icon"
-          size="small"
-        >
-          <PiX />
-        </Button>
+    <Modal isOpen={isOpen} onClose={onClose} className={"w-full pt-10 md:pt-0 h-full md:w-3/4 lg:w-1/2  md:h-fit"}
+      closeButton={true}
+    >
+      <div className="relative flex flex-col  p-10"
+      >
+        
         <h1 className="text-text-primary text-4xl my-10">
           {t("auth.login.title1")}{" "}
           <span className="text-secondary">{t("auth.login.title2")}</span>

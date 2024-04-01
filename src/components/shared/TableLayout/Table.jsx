@@ -26,14 +26,15 @@ export function Table() {
       );
     return (
       <tbody className="text-sm h-fit font-medium divide-y divide-border text-text-primary">
-        {rows?.map((row, i) => (
-          <tr key={i}>
+        {rows?.map((row) => (
+          <tr key={row.id}>
             {columns
               .filter((c) => c.visible)
-              .map((v) => (
-                <Tr key={row[v.label]}>{row[formatToCamelCase(v.label)]}</Tr>
-              ))}
-            <Tr hide={true} />
+              .map((v) => {
+                const label = row[formatToCamelCase(v.label)];
+                return <Td key={label}>{label}</Td>;
+              })}
+            <Td hide={true} />
           </tr>
         ))}
       </tbody>
@@ -65,11 +66,12 @@ function Th({ column, hide }) {
     </th>
   );
 }
-function Tr({ children, hide }) {
+function Td({ children, hide }) {
   return (
-    <td className="px-6 py-4 ">
+    <td className={`px-6 py-4 ${children ? "" : "text-center"}`}>
       {hide ? (
         <DropDown
+          key={children}
           toggler={
             <Button shape="icon">
               <IoEllipsisHorizontalSharp />
@@ -91,7 +93,7 @@ function Tr({ children, hide }) {
           </DropDown.Option>
         </DropDown>
       ) : (
-        children
+        children || "-"
       )}
     </td>
   );
