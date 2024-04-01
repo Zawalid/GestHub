@@ -70,7 +70,7 @@ function OfferCard({ offer }) {
         <div className="flex justify-between">
           <span className="text-sm font-bold">{date}</span>
           <Button
-            onClick={() => toLocalStorage(id, "offers")}
+            onClick={() => toLocalStorage("offers",id)}
             color={"secondary"}
             shape={"icon"}
             size={"small"}

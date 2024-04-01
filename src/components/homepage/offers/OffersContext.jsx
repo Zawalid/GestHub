@@ -1,5 +1,5 @@
 const ofers = [
-  {
+  {id:1,
     exp: "Expert",
     secteur: "devloppemnt",
     title: "devlopper backend",
@@ -8,7 +8,7 @@ const ofers = [
     date: "12/12/2023",
     ville: "rabat",
   },
-  {
+  {id:3,
     exp: "intermediate",
     secteur: "devloppemnt",
     title: "devlopper frontend",
@@ -17,7 +17,7 @@ const ofers = [
     date: "12/12/2023",
     ville: "sale",
   },
-  {
+  {id:4,
     exp: "debutant",
     secteur: "devops",
     title: "engineer devops",
@@ -26,7 +26,7 @@ const ofers = [
     date: "12/12/2023",
     ville: "rabat",
   },
-  {
+  {id:5,
     exp: "Expert",
     secteur: "testing",
     title: "testeur ",
