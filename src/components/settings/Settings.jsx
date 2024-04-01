@@ -21,7 +21,7 @@ export default function Settings({ isOpen, onClose }) {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      className="relative h-full w-full overflow-hidden sm:flex-row md:h-[90%] md:w-5/6 md:border lg:w-3/4"
+      className="sm:flex-row md:h-[90%] md:w-5/6 md:border lg:w-3/4"
     >
       <div className="absolute z-10 left-0 top-0 flex w-full justify-between border-b border-border bg-background-primary px-5 py-2 sm:left-[200px] sm:w-[calc(100%-200px)]">
         <h3 className="text-lg font-bold capitalize text-text-primary sm:text-xl">

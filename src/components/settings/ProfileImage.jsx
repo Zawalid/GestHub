@@ -1,41 +1,10 @@
-import { useFilePicker } from "use-file-picker";
-import {
-  FileAmountLimitValidator,
-  FileTypeValidator,
-  FileSizeValidator,
-  ImageDimensionsValidator,
-} from "use-file-picker/validators";
-import { toast } from "sonner";
 import { Controller, useWatch } from "react-hook-form";
 import { Button } from "../ui";
+import { useUploadImage } from "@/hooks/useUploadImage";
 
 export function ProfileImage({ control, onChange, disabled }) {
   const image = useWatch({ control, name: "image" }) || {};
-  const { openFilePicker } = useFilePicker({
-    accept: [".png", ".jpg"],
-    readAs: "DataURL",
-    validators: [
-      new FileAmountLimitValidator({ max: 1 }),
-      new FileTypeValidator(["jpg", "png"]),
-      new FileSizeValidator({ maxFileSize: 10 * 1024 * 1024 /* 10 MB */ }),
-      new ImageDimensionsValidator({
-        minHeight: 100,
-        minWidth: 100,
-      }),
-    ],
-    onFilesRejected: ({ errors }) => {
-      console.log(errors);
-      errors.forEach((error) => {
-        toast.error(getErrorMessage(error.name));
-      });
-    },
-    onFilesSuccessfullySelected: ({ plainFiles, filesContent }) => {
-      onChange({
-        src: filesContent[0].content,
-        file: plainFiles[0],
-      });
-    },
-  });
+  const { openFilePicker } = useUploadImage({ onChange });
 
   return (
     <div className="grid grid-cols-[7rem_auto] items-center gap-5">
@@ -80,19 +49,4 @@ export function ProfileImage({ control, onChange, disabled }) {
       />
     </div>
   );
-}
-
-function getErrorMessage(name) {
-  switch (name) {
-    case "FileTypeError":
-      return "Only JPG and PNG are allowed";
-    case "ImageDimensionError":
-      return "Image must be at least 100x100 px";
-    case "FileSizeError":
-      return "Image must be at most 10 MB";
-    case "FileAmountLimitError":
-      return "Only one image is allowed";
-    default:
-      return "Something went wrong";
-  }
 }

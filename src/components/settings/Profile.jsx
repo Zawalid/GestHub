@@ -1,9 +1,7 @@
-import { Controller } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { Tab } from "./Tab";
-import { DropDown } from "../ui";
 import { ProfileImage } from "./ProfileImage";
-import { useForm } from "../../hooks/useForm";
+import { useForm } from "@/hooks/useForm";
+import { ModalFormLayout } from "@/layouts/ModalFormLayout";
 
 export default function Profile() {
   const user = useSelector((state) => state.user) || {};
@@ -19,7 +17,6 @@ export default function Profile() {
       email: user.email,
       phone: user.phone,
       birthday: user.birthday,
-      gender: user.gender,
     },
     fields: [
       {
@@ -57,12 +54,11 @@ export default function Profile() {
     setValue,
     onSubmit,
     onCancel,
-    watch,
   } = formOption;
 
   return (
-    <Tab
-      saveButton={{
+    <ModalFormLayout
+      submitButton={{
         onClick: onSubmit,
         disabled: !isUpdated || !isValid,
       }}
@@ -84,38 +80,8 @@ export default function Profile() {
           />
         </div>
 
-        <FormInputs>
-          <div className=" flex flex-col gap-1.5">
-            <label className="font-medium text-text-tertiary text-sm">
-              Gender
-            </label>
-            <DropDown
-              toggler={
-                <DropDown.Toggler>
-                  <span className="capitalize">{watch("gender")}</span>
-                </DropDown.Toggler>
-              }
-              options={{ className: "w-40" }}
-            >
-              {["male", "female"].map((gender) => (
-                <DropDown.Option
-                  key={gender}
-                  isCurrent={gender === watch("gender")}
-                  onClick={() => setValue("gender", gender, { shouldDirty: true })}
-                >
-                  <span className="capitalize">{gender}</span>
-                </DropDown.Option>
-              ))}
-            </DropDown>
-
-            <Controller
-              control={control}
-              name="gender"
-              render={({ field }) => <input {...field} type="hidden" />}
-            />
-          </div>
-        </FormInputs>
+        <FormInputs/>
       </div>
-    </Tab>
+    </ModalFormLayout>
   );
 }

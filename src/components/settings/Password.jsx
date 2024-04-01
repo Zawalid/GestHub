@@ -1,5 +1,5 @@
-import { Tab } from "./Tab";
-import { useForm } from "../../hooks/useForm";
+import { useForm } from "@/hooks/useForm";
+import { ModalFormLayout } from "@/layouts/ModalFormLayout";
 
 export default function Password() {
   const { formOption, FormInputs } = useForm({
@@ -23,6 +23,8 @@ export default function Password() {
         name: "confirmNewPassword",
         type: "password",
         label: "Confirm New Password",
+        confirmPassword: true,
+        passwordField: "newPassword",
       },
     ],
     submit: (data) => console.log(data),
@@ -33,8 +35,8 @@ export default function Password() {
     formOption;
 
   return (
-    <Tab
-      saveButton={{
+    <ModalFormLayout
+      submitButton={{
         text: "Change Password",
         onClick: onSubmit,
         disabled: !isUpdated || !isValid || isSubmitting,
@@ -46,6 +48,6 @@ export default function Password() {
       control={control}
     >
       <FormInputs />
-    </Tab>
+    </ModalFormLayout>
   );
 }

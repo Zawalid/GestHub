@@ -1,4 +1,4 @@
-import { useAutoAnimate } from "@formkit/auto-animate/react";
+// import { useAutoAnimate } from "@formkit/auto-animate/react";
 import {
   IoEllipsisHorizontalSharp,
   IoEyeOutline,
@@ -13,7 +13,7 @@ import { useTable } from ".";
 
 export function Table() {
   const { columns, rows } = useTable();
-  const [parent] = useAutoAnimate({ duration: 300 });
+  // const [parent] = useAutoAnimate({ duration: 300 });
 
   const render = () => {
     if (rows.length === 0)
@@ -26,15 +26,12 @@ export function Table() {
       );
     return (
       <tbody className="text-sm h-fit font-medium divide-y divide-border text-text-primary">
-        {rows?.map((row, i) => (
-          <tr key={i}>
-            {columns
-              .filter((c) => c.visible)
-              .map((v) => (
-                <Tr key={row[v.label]}>{row[formatToCamelCase(v.label)]}</Tr>
-              ))}
-            <Tr hide={true} />
-          </tr>
+        {rows.map((row) => (
+          <Row
+            key={row.id}
+            row={row}
+            visibleColumns={columns.filter((c) => c.visible)}
+          />
         ))}
       </tbody>
     );
@@ -48,9 +45,9 @@ export function Table() {
             {columns
               .filter((c) => c.visible)
               .map(({ label }) => (
-                <Th key={label} column={label} />
+                <Column key={label} column={label} />
               ))}
-            <Th hide={true} />
+            <Column hide={true} />
           </tr>
         </thead>
         {render()}
@@ -58,17 +55,24 @@ export function Table() {
     </div>
   );
 }
-function Th({ column, hide }) {
+function Column({ column, hide }) {
   return (
     <th scope="col" className="p-2">
       {hide ? <span className="sr-only">Edit</span> : <Sort column={column} />}
     </th>
   );
 }
-function Tr({ children, hide }) {
+function Row({ row, visibleColumns }) {
+  const { showForm, onUpdate, onDelete, confirmDelete } = useTable();
+
   return (
-    <td className="px-6 py-4 ">
-      {hide ? (
+    <tr>
+      {visibleColumns.map((col) => (
+        <td key={col.label} className="px-6 py-4">
+          {row[formatToCamelCase(col.label)]}
+        </td>
+      ))}
+      <td className="px-6 py-4">
         <DropDown
           toggler={
             <Button shape="icon">
@@ -81,18 +85,35 @@ function Tr({ children, hide }) {
             <IoEyeOutline />
             View
           </DropDown.Option>
-          <DropDown.Option>
+          <DropDown.Option
+            onClick={() =>
+              showForm({
+                defaultValues: row,
+                onSubmit: (data) => onUpdate(row.id, data),
+                submitButtonText: "Save Changes",
+                heading: `Update Intern #${row.id}`,
+                isOpen: true,
+              })
+            }
+          >
             <MdDriveFileRenameOutline />
             Edit
           </DropDown.Option>
-          <DropDown.Option>
+          <DropDown.Option
+            onClick={() =>
+              confirmDelete({
+                isOpen: true,
+                title: "Delete Intern",
+                message: "Are you sure you want to delete this intern ?",
+                onConfirm: () => onDelete(row.id),
+              })
+            }
+          >
             <IoTrashOutline />
             Delete
           </DropDown.Option>
         </DropDown>
-      ) : (
-        children
-      )}
-    </td>
+      </td>
+    </tr>
   );
 }

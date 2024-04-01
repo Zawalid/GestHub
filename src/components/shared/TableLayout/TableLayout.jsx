@@ -7,99 +7,10 @@ import { View } from "./View";
 import { Pagination } from "./Pagination";
 import { Download } from "./Download";
 import { PAGE_LIMIT } from "../../../utils/constants";
-
-const interns = [
-  {
-    id: 1,
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@example.com",
-    phone: "123-456-7890",
-    birthday: "1990-01-01",
-    duration: 60,
-  },
-  {
-    id: 2,
-    firstName: "Jane",
-    lastName: "Smith",
-    email: "jane.smith@example.com",
-    phone: "098-765-4321",
-    birthday: "1992-02-02",
-    duration: 60,
-  },
-  {
-    id: 3,
-    firstName: "Bob",
-    lastName: "Johnson",
-    email: "bob.johnson@example.com",
-    phone: "111-222-3333",
-    birthday: "1993-03-03",
-    duration: 60,
-  },
-  {
-    id: 4,
-    firstName: "Alice",
-    lastName: "Williams",
-    email: "alice.williams@example.com",
-    phone: "444-555-6666",
-    birthday: "1994-04-04",
-    duration: 60,
-  },
-  {
-    id: 5,
-    firstName: "Charlie",
-    lastName: "Brown",
-    email: "charlie.brown@example.com",
-    phone: "777-888-9999",
-    birthday: "1995-05-05",
-    duration: 60,
-  },
-  {
-    id: 6,
-    firstName: "Emily",
-    lastName: "Davis",
-    email: "emily.davis@example.com",
-    phone: "000-111-2222",
-    birthday: "1996-06-06",
-    duration: 60,
-  },
-  {
-    id: 7,
-    firstName: "Frank",
-    lastName: "Miller",
-    email: "frank.miller@example.com",
-    phone: "333-444-5555",
-    birthday: "1997-07-07",
-    duration: 60,
-  },
-  {
-    id: 8,
-    firstName: "Grace",
-    lastName: "Wilson",
-    email: "grace.wilson@example.com",
-    phone: "666-777-8888",
-    birthday: "1998-08-08",
-    duration: 60,
-  },
-  {
-    id: 9,
-    firstName: "Harry",
-    lastName: "Moore",
-    email: "harry.moore@example.com",
-    phone: "999-000-1111",
-    birthday: "1999-09-09",
-    duration: 60,
-  },
-  {
-    id: 10,
-    firstName: "Ivy",
-    lastName: "Taylor",
-    email: "ivy.taylor@example.com",
-    phone: "222-333-4444",
-    birthday: "2000-10-10",
-    duration: 60,
-  },
-];
+import { TableRecord } from "./TableRecord";
+import { FaPlus } from "react-icons/fa6";
+import { Button, ConfirmationModal } from "@/components/ui";
+import { useTable } from ".";
 
 const csvConfig = {
   filename: "Interns",
@@ -109,22 +20,13 @@ const csvConfig = {
     { key: "lastName", displayLabel: "Last Name" },
     { key: "email", displayLabel: "Email" },
     { key: "phone", displayLabel: "Phone" },
-    { key: "duration", displayLabel: "Duration" },
     { key: "birthday", displayLabel: "Birthday" },
   ],
 };
 
 const pdfConfig = {
   filename: "Interns.pdf",
-  tableHeaders: [
-    "ID",
-    "First Name",
-    "Last Name",
-    "Email",
-    "Phone",
-    "Duration",
-    "Birthday",
-  ],
+  tableHeaders: ["ID", "First Name", "Last Name", "Email", "Phone", "Birthday"],
 };
 
 //* Methods
@@ -180,6 +82,88 @@ Array.prototype.customSort = function (sortBy, direction) {
 
 export const TableContext = createContext();
 export function TableLayout({ children }) {
+  const [data, setData] = useState([
+    {
+      id: 1,
+      firstName: "John",
+      lastName: "Doe",
+      email: "john.doe@example.com",
+      phone: "123-456-7890",
+      birthday: "1990-01-01",
+    },
+    {
+      id: 2,
+      firstName: "Jane",
+      lastName: "Smith",
+      email: "jane.smith@example.com",
+      phone: "098-765-4321",
+      birthday: "1992-02-02",
+    },
+    {
+      id: 3,
+      firstName: "Bob",
+      lastName: "Johnson",
+      email: "bob.johnson@example.com",
+      phone: "111-222-3333",
+      birthday: "1993-03-03",
+    },
+    {
+      id: 4,
+      firstName: "Alice",
+      lastName: "Williams",
+      email: "alice.williams@example.com",
+      phone: "444-555-6666",
+      birthday: "1994-04-04",
+    },
+    {
+      id: 5,
+      firstName: "Charlie",
+      lastName: "Brown",
+      email: "charlie.brown@example.com",
+      phone: "777-888-9999",
+      birthday: "1995-05-05",
+    },
+    {
+      id: 6,
+      firstName: "Emily",
+      lastName: "Davis",
+      email: "emily.davis@example.com",
+      phone: "000-111-2222",
+      birthday: "1996-06-06",
+    },
+    {
+      id: 7,
+      firstName: "Frank",
+      lastName: "Miller",
+      email: "frank.miller@example.com",
+      phone: "333-444-5555",
+      birthday: "1997-07-07",
+    },
+    {
+      id: 8,
+      firstName: "Grace",
+      lastName: "Wilson",
+      email: "grace.wilson@example.com",
+      phone: "666-777-8888",
+      birthday: "1998-08-08",
+    },
+    {
+      id: 9,
+      firstName: "Harry",
+      lastName: "Moore",
+      email: "harry.moore@example.com",
+      phone: "999-000-1111",
+      birthday: "1999-09-09",
+    },
+    {
+      id: 10,
+      firstName: "Ivy",
+      lastName: "Taylor",
+      email: "ivy.taylor@example.com",
+      phone: "222-333-4444",
+      birthday: "2000-10-10",
+    },
+  ]);
   const [columns, setColumns] = useState([
     { label: "id", visible: true },
     { label: "First Name", visible: true },
@@ -187,7 +171,6 @@ export function TableLayout({ children }) {
     { label: "Email", visible: true },
     { label: "Phone", visible: true },
     { label: "Birthday", visible: true },
-    { label: "Duration", visible: true },
   ]);
   const [filters, setFilters] = useState({
     // status: [
@@ -195,13 +178,80 @@ export function TableLayout({ children }) {
     //   { value: "Inactive", checked: true },
     // ],
   });
+  const [formOptions, setFormOptions] = useState({
+    defaultValues: {},
+    fields: [
+      {
+        name: "firstName",
+        label: "First Name",
+      },
+      {
+        name: "lastName",
+        label: "Last Name",
+      },
+      {
+        name: "email",
+        type: "email",
+        label: "Email Address",
+      },
+      {
+        name: "phone",
+        label: "Phone Number",
+      },
+      {
+        name: "birthday",
+        label: "Birthday",
+        type: "date",
+      },
+      {
+        name: "password",
+        type: "password",
+        label: " Password",
+      },
+      {
+        name: "confirmPassword",
+        type: "password",
+        label: "Confirm  Password",
+        confirmPassword: true,
+        passwordField: "password",
+      },
+    ],
+    onSubmit: () => {},
+    close: () => {
+      setFormOptions((prev) => ({
+        ...prev,
+        isOpen: false,
+        defaultValues: {},
+        heading: "",
+        submitButtonText: "",
+      }));
+    },
+    resetToDefault: true,
+    submitButtonText: "",
+    heading: "",
+    isOpen: false,
+  });
+  const [confirmOptions, setConfirmOptions] = useState({
+    isOpen: false,
+    message: "",
+    title: "",
+    confirmText: "Delete",
+    onConfirm: () => {},
+    onCancel: () =>
+      setConfirmOptions((prev) => ({
+        ...prev,
+        isOpen: false,
+        message: "",
+        title: "",
+      })),
+  });
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("search") || "";
   const page = Number(searchParams.get("page")) || 1;
   const sortBy = searchParams.get("sort") || "id";
   const direction = searchParams.get("dir") || "asc";
 
-  const rows = interns
+  const rows = data
     ?.search(query)
     .customFilter(filters)
     .customSort(sortBy, direction);
@@ -216,6 +266,31 @@ export function TableLayout({ children }) {
     }
     setSearchParams(searchParams);
   }, [direction, page, searchParams, sortBy, setSearchParams]);
+
+  const onAdd = (record) => {
+    const id = data.at(-1).id + 1;
+    setData((prev) => [...prev, { id, ...record }]);
+  };
+
+  const onUpdate = (id, record) => {
+    setData((prev) => prev.map((r) => (r.id === id ? record : r)));
+  };
+
+  const onDelete = (id) => setData((prev) => prev.filter((r) => r.id !== id));
+
+  const showForm = (options) => {
+    setFormOptions((prev) => ({ ...prev, ...options }));
+  };
+  const confirmDelete = (options) => {
+    setConfirmOptions((prev) => ({
+      ...prev,
+      ...options,
+      onConfirm: () => {
+        options.onConfirm();
+        prev.onCancel();
+      },
+    }));
+  };
 
   const onSearch = (query) => {
     if (query) {
@@ -255,8 +330,12 @@ export function TableLayout({ children }) {
   };
 
   const context = {
+    // data
+    data,
+    onAdd,
+    onUpdate,
+    onDelete,
     // table
-    data: interns,
     columns,
     rows: rows.paginate(page, PAGE_LIMIT),
     // search
@@ -280,11 +359,49 @@ export function TableLayout({ children }) {
     // download
     csvConfig,
     pdfConfig,
+    // other
+    formOptions,
+    showForm,
+    confirmOptions,
+    confirmDelete,
   };
 
   return (
     <TableContext.Provider value={context}>{children}</TableContext.Provider>
   );
+}
+
+function NewRecord() {
+  const { onAdd, showForm } = useTable();
+
+  return (
+    <Button
+      display="with-icon"
+      onClick={() =>
+        showForm({
+          isOpen: true,
+          onSubmit: onAdd,
+          heading: "Add New Intern",
+          submitButtonText: "Add Intern",
+          defaultValues: {
+            firstName: "",
+            lastName: "",
+            email: "",
+            phone: "",
+            birthday: "",
+          },
+        })
+      }
+    >
+      <FaPlus />
+      New Intern
+    </Button>
+  );
+}
+
+function DeleteConfirmation() {
+  const { confirmOptions } = useTable();
+  return <ConfirmationModal {...confirmOptions} />;
 }
 
 TableLayout.Table = Table;
@@ -293,3 +410,6 @@ TableLayout.Filter = Filter;
 TableLayout.View = View;
 TableLayout.Download = Download;
 TableLayout.Pagination = Pagination;
+TableLayout.NewRecord = NewRecord;
+TableLayout.TableRecord = TableRecord;
+TableLayout.DeleteConfirmation = DeleteConfirmation;

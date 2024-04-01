@@ -37,13 +37,14 @@ export function useForm({ fields, defaultValues, submit, gridLayout = true }) {
     watch,
   } = useF({
     defaultValues,
-    mode: "onChange",
+    mode: "all",
   });
 
-  const onSubmit = () => {
+  const onSubmit = (callback, { resetToDefault = false }) => {
     handleSubmit((data) => {
       submit(data);
-      reset(data);
+      reset(resetToDefault ? defaultValues : data);
+      callback?.(data);
     })();
   };
   const onCancel = (callback) => {
@@ -51,12 +52,16 @@ export function useForm({ fields, defaultValues, submit, gridLayout = true }) {
     callback?.(defaultValues);
   };
 
-  const getRules = (name, type, fieldRules) => {
+  const getRules = (name, type, fieldRules, confirmPassword, passwordField) => {
     return {
       required: `Please enter your ${name}`,
       ...(rules[name] && rules[name]),
       ...(rules[type] && rules[type]),
       ...(fieldRules && fieldRules),
+      ...(confirmPassword && {
+        validate: (pass) =>
+          pass === watch(passwordField) || "Passwords don't match",
+      }),
     };
   };
 
@@ -82,7 +87,15 @@ export function useForm({ fields, defaultValues, submit, gridLayout = true }) {
         } `}
       >
         {fields.map((field) => {
-          const { name, type, rules, label, placeholder } = field;
+          const {
+            name,
+            type,
+            rules,
+            label,
+            placeholder,
+            confirmPassword,
+            passwordField,
+          } = field;
           return (
             <Controller
               key={name}
@@ -100,7 +113,13 @@ export function useForm({ fields, defaultValues, submit, gridLayout = true }) {
                   {...field}
                 />
               )}
-              rules={getRules(name, type, rules)}
+              rules={getRules(
+                name,
+                type,
+                rules,
+                confirmPassword,
+                passwordField
+              )}
             />
           );
         })}
