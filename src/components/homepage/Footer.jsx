@@ -1,5 +1,4 @@
 import { SocialMedia } from "../ui/SocialMedia";
-import { Logo } from "../ui/logo";
 
 export  function Footer() {
   return (
