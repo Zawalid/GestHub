@@ -1,8 +1,14 @@
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { ThemeSwitcher } from "./ThemeSwitcher";
 
 export default function AppBar() {
   return (
     <div className="flex justify-between gap-8 items-center">
       <UserInfo />
+      <div className="flex gap-3">
+        <ThemeSwitcher />
+        <LanguageSwitcher />
+      </div>
     </div>
   );
 }

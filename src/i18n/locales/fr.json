@@ -88,6 +88,9 @@
             "teams": "Équipes",
             "supervisors": "Encadrants",
             "absences": "Absences",
+            "offers": "Offres",
+            "demands": "Demandes",
+            "projects" : "Projects",
             "settings": "Paramètres",
             "logout": "Déconnexion"
         }

@@ -1,15 +1,15 @@
 import Tippy from "@tippyjs/react";
 import { forwardRef } from "react";
-import { MdError } from "react-icons/md";
 import {
   IoMailOutline,
   IoKeyOutline,
   IoSearchOutline,
   IoCalendarNumberOutline,
-} from "react-icons/io5";
-import { FiPhone } from "react-icons/fi";
-import { MdDriveFileRenameOutline } from "react-icons/md";
-import { BiSolidCity } from "react-icons/bi";
+  FiPhone,
+  MdDriveFileRenameOutline,
+  BiSolidCity,
+  MdError
+} from "./Icons";
 import { cn } from "../../utils/helpers";
 
 export function ErrorTooltip({ message, className }) {

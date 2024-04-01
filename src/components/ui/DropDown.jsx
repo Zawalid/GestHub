@@ -1,8 +1,8 @@
 import Tippy from "@tippyjs/react";
-import { SearchInput } from "./SearchInput";
-import { IoChevronDownOutline } from "react-icons/io5";
-import { cn } from "../../utils/helpers";
 import { cloneElement, forwardRef } from "react";
+import { SearchInput } from "./SearchInput";
+import { IoChevronDownOutline } from "./Icons";
+import { cn } from "../../utils/helpers";
 
 const defaultOptions = {
   className: "overflow-auto  max-h-[200px]",

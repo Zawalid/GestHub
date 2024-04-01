@@ -2,8 +2,8 @@ import {
   IoArrowUpOutline,
   IoArrowDownOutline,
   IoEyeOffOutline,
-} from "react-icons/io5";
-import { FaSort } from "react-icons/fa6";
+  FaSort,
+} from "../../ui/Icons";
 
 import { Button, DropDown } from "../../ui";
 import { formatToCamelCase } from "../../../utils/helpers";

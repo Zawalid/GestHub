@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { PiArrowRight, PiX } from "react-icons/pi";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
+import { PiArrowRight, PiX } from "../ui/Icons";
 import { Panel } from "./Panel";
 import Password from "./Password";
 import Profile from "./Profile";
@@ -29,13 +29,19 @@ export default function Settings({ isOpen, onClose }) {
         </h3>
         <div className="flex gap-2">
           <Button
-            className="sm:hidden" shape='icon'
+            className="sm:hidden"
+            shape="icon"
             size="small"
             onClick={() => setIsPanelOpen(!isPanelOpen)}
           >
             <PiArrowRight className={isPanelOpen ? "rotate-180" : ""} />
           </Button>
-          <Button className="sm:hidden" shape='icon' size="small" onClick={onClose}>
+          <Button
+            className="sm:hidden"
+            shape="icon"
+            size="small"
+            onClick={onClose}
+          >
             <PiX />
           </Button>
         </div>

@@ -1,8 +1,7 @@
 import { mkConfig, generateCsv, download } from "export-to-csv";
-import { jsPDF } from "jspdf"; //or use your library of choice here
+import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
-import { MdDownload } from "react-icons/md";
-import { PiFilePdf, PiFileCsv } from "react-icons/pi";
+import { MdDownload, PiFilePdf, PiFileCsv } from "../../ui/Icons";
 import { Button, DropDown } from "../../ui";
 import { useTable } from ".";
 

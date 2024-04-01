@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { HiMiniXMark } from "react-icons/hi2";
+import { HiMiniXMark } from "./Icons";
 import { InputField } from "./InputField";
 
 export function SearchInput({ placeholder, query, onChange, className = "" }) {

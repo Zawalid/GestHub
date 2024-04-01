@@ -8,6 +8,7 @@ const toggleChecked = (filter, value) =>
 export function Filter() {
   const { filters, onFilter } = useTable();
 
+
   return (
     <DropDown
       toggler={
@@ -19,6 +20,7 @@ export function Filter() {
         className: "w-40",
         shouldCloseOnClick: false,
       }}
+      togglerDisabled={!filters.length}
     >
       {Object.keys(filters).map((key, i) => (
         <>

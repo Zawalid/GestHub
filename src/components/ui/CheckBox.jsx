@@ -1,4 +1,4 @@
-import { PiCheckBold } from "react-icons/pi";
+import { PiCheckBold } from "./Icons";
 
 export function CheckBox({ checked, onChange, className = "", ...props }) {
   return (

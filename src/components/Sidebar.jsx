@@ -3,29 +3,33 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import { BiSolidDashboard } from "react-icons/bi";
-import { BsFillPeopleFill } from "react-icons/bs";
-import { RiTeamFill } from "react-icons/ri";
-import { FaChalkboardTeacher } from "react-icons/fa";
-import { FaCalendarCheck } from "react-icons/fa6";
-import { FiLogOut, FiSettings } from "react-icons/fi";
 import {
+  BiSolidDashboard,
   BsLayoutSidebarInset,
   BsLayoutSidebarInsetReverse,
-} from "react-icons/bs";
-
-import { ThemeSwitcher } from "./ThemeSwitcher";
-import { LanguageSwitcher } from "./LanguageSwitcher";
+  BsPeople,
+  FiLogOut,
+  IoSettingsOutline ,
+  IoBriefcaseOutline,
+  IoDocumentsOutline,
+  IoHomeOutline,
+  LiaUserTieSolid,
+  LuCalendarX,
+  RiTeamLine,
+} from "./ui/Icons";
 
 import { ROUTES } from "../utils/constants";
 import { Button } from "./ui";
 
 const routesIcons = {
-  overview: <BiSolidDashboard />,
-  interns: <BsFillPeopleFill />,
-  teams: <RiTeamFill />,
-  supervisors: <FaChalkboardTeacher />,
-  absences: <FaCalendarCheck />,
+  overview: <IoHomeOutline />,
+  interns: <BsPeople />,
+  teams: <RiTeamLine />,
+  supervisors: <LiaUserTieSolid />,
+  absences: <LuCalendarX />,
+  offers: <IoBriefcaseOutline />,
+  demands: <IoDocumentsOutline />,
+  projects: <BiSolidDashboard />,
 };
 
 export default function Sidebar({ openSettings }) {
@@ -36,7 +40,7 @@ export default function Sidebar({ openSettings }) {
   const { t } = useTranslation();
 
   const spanClass = `transition-transform origin-left duration-500 text-sm text-text-secondary ${
-    isExpanded ? "scale-100" : "scale-0"
+    isExpanded ? "md:scale-100" : "scale-0"
   }`;
 
   useEffect(() => {
@@ -50,8 +54,8 @@ export default function Sidebar({ openSettings }) {
 
   return (
     <aside
-      className={`flex row-span-2 flex-col overflow-hidden transition-[width] py-5 duration-500 gap-8 bg-background-secondary ${
-        isExpanded ? "w-[250px] px-3 " : "w-14 px-2"
+      className={`flex top-0 z-[15] h-full row-span-2 flex-col overflow-hidden transition-[width] py-5 duration-500 gap-8 fixed md:relative bg-background-secondary ${
+        isExpanded ? "md:w-[250px]  w-full px-3" : "w-14 px-2"
       }`}
     >
       <div className="flex items-center justify-between ">
@@ -86,19 +90,10 @@ export default function Sidebar({ openSettings }) {
       </ul>
 
       <div className="mt-auto">
-        <div className="flex items-center justify-between">
-          <button
-            className="w-full sidebar_element group"
-            onClick={openSettings}
-          >
-            <FiSettings />
-            <span className={spanClass}>{t("app.sidebar.settings")}</span>
-          </button>
-          <div className="flex items-center gap-1">
-            <ThemeSwitcher />
-            <LanguageSwitcher />
-          </div>
-        </div>
+        <button className="w-full sidebar_element group" onClick={openSettings}>
+          <IoSettingsOutline  />
+          <span className={spanClass}>{t("app.sidebar.settings")}</span>
+        </button>
         <button className="w-full sidebar_element group">
           <FiLogOut />
           <span className={spanClass}>{t("app.sidebar.logout")}</span>

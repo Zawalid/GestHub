@@ -1,5 +1,5 @@
 import { forwardRef, useState } from "react";
-import { PiEyeLight, PiEyeClosedLight } from "react-icons/pi";
+import { PiEyeLight, PiEyeClosedLight } from "./Icons";
 import { InputField } from "./InputField";
 
 export const PasswordInput = forwardRef(({ ...props }, ref) => {

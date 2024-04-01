@@ -1,7 +1,7 @@
-import { FaSpinner } from "react-icons/fa6";
+import { forwardRef } from "react";
+import { FaSpinner } from "./Icons";
 import { cn } from "../../utils/helpers";
 import { tv } from "tailwind-variants";
-import { forwardRef } from "react";
 
 const button = tv({
   base: "transition-colors duration-300 flex font-medium",
@@ -91,7 +91,7 @@ export const Button = forwardRef(
           className
         )}
         ref={ref}
-        disabled={state === "disabled"}
+        disabled={disabled}
         onClick={() => state !== "disabled" && onClick?.()}
       >
         {isLoading ? (

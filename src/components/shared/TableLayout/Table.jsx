@@ -3,8 +3,9 @@ import {
   IoEllipsisHorizontalSharp,
   IoEyeOutline,
   IoTrashOutline,
-} from "react-icons/io5";
-import { MdDriveFileRenameOutline } from "react-icons/md";
+  MdDriveFileRenameOutline,
+} from "../../ui/Icons";
+
 import { Button, DropDown } from "../../ui";
 import { Sort } from "./Sort";
 import { formatToCamelCase } from "../../../utils/helpers";

@@ -1,7 +1,7 @@
 export const ROUTES = {
-  admin: ["overview", "supervisors", "interns", "teams", "absences"],
+  admin: ["overview", "supervisors", "interns", "teams", "absences","offers","demands"],
+  supervisor: ["overview", "interns", "teams", "absences","projects"],
   intern: ["overview", "absences"],
-  supervisor: ["overview", "interns", "teams", "absences"],
 };
 export const routes = [
   { label: "home", path: "home" },

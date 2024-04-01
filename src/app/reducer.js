@@ -17,7 +17,6 @@ const initialState = {
     email: "john.doe@gmail.com",
     image: null,
     phone : '0682828882',
-    gender : 'male',
     birthday : '1998-12-12'
   },
 };

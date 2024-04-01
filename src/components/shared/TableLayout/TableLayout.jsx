@@ -15,8 +15,8 @@ const interns = [
     lastName: "Doe",
     email: "john.doe@example.com",
     phone: "123-456-7890",
-    gender: "Male",
     birthday: "1990-01-01",
+    duration: 60,
   },
   {
     id: 2,
@@ -24,8 +24,8 @@ const interns = [
     lastName: "Smith",
     email: "jane.smith@example.com",
     phone: "098-765-4321",
-    gender: "Female",
     birthday: "1992-02-02",
+    duration: 60,
   },
   {
     id: 3,
@@ -33,8 +33,8 @@ const interns = [
     lastName: "Johnson",
     email: "bob.johnson@example.com",
     phone: "111-222-3333",
-    gender: "Male",
     birthday: "1993-03-03",
+    duration: 60,
   },
   {
     id: 4,
@@ -42,8 +42,8 @@ const interns = [
     lastName: "Williams",
     email: "alice.williams@example.com",
     phone: "444-555-6666",
-    gender: "Female",
     birthday: "1994-04-04",
+    duration: 60,
   },
   {
     id: 5,
@@ -51,8 +51,8 @@ const interns = [
     lastName: "Brown",
     email: "charlie.brown@example.com",
     phone: "777-888-9999",
-    gender: "Male",
     birthday: "1995-05-05",
+    duration: 60,
   },
   {
     id: 6,
@@ -60,8 +60,8 @@ const interns = [
     lastName: "Davis",
     email: "emily.davis@example.com",
     phone: "000-111-2222",
-    gender: "Female",
     birthday: "1996-06-06",
+    duration: 60,
   },
   {
     id: 7,
@@ -69,8 +69,8 @@ const interns = [
     lastName: "Miller",
     email: "frank.miller@example.com",
     phone: "333-444-5555",
-    gender: "Male",
     birthday: "1997-07-07",
+    duration: 60,
   },
   {
     id: 8,
@@ -78,8 +78,8 @@ const interns = [
     lastName: "Wilson",
     email: "grace.wilson@example.com",
     phone: "666-777-8888",
-    gender: "Female",
     birthday: "1998-08-08",
+    duration: 60,
   },
   {
     id: 9,
@@ -87,8 +87,8 @@ const interns = [
     lastName: "Moore",
     email: "harry.moore@example.com",
     phone: "999-000-1111",
-    gender: "Male",
     birthday: "1999-09-09",
+    duration: 60,
   },
   {
     id: 10,
@@ -96,8 +96,8 @@ const interns = [
     lastName: "Taylor",
     email: "ivy.taylor@example.com",
     phone: "222-333-4444",
-    gender: "Female",
     birthday: "2000-10-10",
+    duration: 60,
   },
 ];
 
@@ -109,7 +109,7 @@ const csvConfig = {
     { key: "lastName", displayLabel: "Last Name" },
     { key: "email", displayLabel: "Email" },
     { key: "phone", displayLabel: "Phone" },
-    { key: "gender", displayLabel: "Gender" },
+    { key: "duration", displayLabel: "Duration" },
     { key: "birthday", displayLabel: "Birthday" },
   ],
 };
@@ -122,7 +122,7 @@ const pdfConfig = {
     "Last Name",
     "Email",
     "Phone",
-    "Gender",
+    "Duration",
     "Birthday",
   ],
 };
@@ -154,6 +154,8 @@ Array.prototype.customFilter = function (filters) {
     value: filters[key].filter((v) => v.checked).map((v) => v.value),
   }));
 
+  if (!conditions.length) return this;
+
   return this.filter((el) =>
     conditions.some((c) => c.value.includes(el[c.field]))
   );
@@ -184,18 +186,14 @@ export function TableLayout({ children }) {
     { label: "Last Name", visible: true },
     { label: "Email", visible: true },
     { label: "Phone", visible: true },
-    { label: "Gender", visible: true },
     { label: "Birthday", visible: true },
+    { label: "Duration", visible: true },
   ]);
   const [filters, setFilters] = useState({
-    gender: [
-      { value: "Male", checked: true },
-      { value: "Female", checked: true },
-    ],
-    status: [
-      { value: "Active", checked: true },
-      { value: "Inactive", checked: true },
-    ],
+    // status: [
+    //   { value: "Active", checked: true },
+    //   { value: "Inactive", checked: true },
+    // ],
   });
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("search") || "";

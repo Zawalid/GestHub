@@ -1,5 +1,5 @@
 {
-    "header": {
+  "header": {
     "navbar": {
       "home": "Home",
       "offers": "Offers",
@@ -20,7 +20,7 @@
       "ar": "Arabic"
     }
   },
-   "auth": {
+  "auth": {
     "login": {
       "title1": "Welcome To ",
       "title2": "MenStage",
@@ -34,42 +34,42 @@
       },
       "submit": "Login"
     },
-     "register":{
-      "title1":"Welcome To ",
-      "title2":"Internship",
+    "register": {
+      "title1": "Welcome To ",
+      "title2": "Internship",
       "email": {
-        "label": "Your Email",  
-        "placeholder": "Your Email" 
+        "label": "Your Email",
+        "placeholder": "Your Email"
       },
       "firstName": {
-        "label": "First Name",  
-        "placeholder": "First Name " 
+        "label": "First Name",
+        "placeholder": "First Name "
       },
       "lastName": {
-        "label": "Last Name",  
-        "placeholder": "First Name   " 
+        "label": "Last Name",
+        "placeholder": "First Name   "
       },
       "phone": {
-        "label": "Your Phone Number",  
-        "placeholder": "" 
+        "label": "Your Phone Number",
+        "placeholder": ""
       },
       "birthday": {
-        "label": "Birthday",  
-        "placeholder": "" 
+        "label": "Birthday",
+        "placeholder": ""
       },
       "city": {
-        "label": "City",  
-        "placeholder": "" 
+        "label": "City",
+        "placeholder": ""
       },
       "password": {
-        "label": "Password ",  
-        "placeholder": ""  
+        "label": "Password ",
+        "placeholder": ""
       },
       "confirmePassword": {
-        "label": "Confirme Password",  
-        "placeholder": "" 
+        "label": "Confirme Password",
+        "placeholder": ""
       },
-      "submit": "register" 
+      "submit": "register"
     }
   },
   "hero": {
@@ -80,15 +80,18 @@
     "placeholder": "Search for an internship",
     "categories": "Categories"
   },
-    "app": {
-        "sidebar": {
-            "overview": "Overview",
-            "interns": "Interns",
-            "teams": "Teams",
-            "supervisors": "Supervisors",
-            "absences": "Absences",
-            "settings": "Settings",
-            "logout": "Logout"
-        }
+  "app": {
+    "sidebar": {
+      "overview": "Overview",
+      "interns": "Interns",
+      "teams": "Teams",
+      "supervisors": "Supervisors",
+      "absences": "Absences",
+      "offers": "Offers",
+      "demands": "Demands",
+      "projects" : "Projects",
+      "settings": "Settings",
+      "logout": "Logout"
     }
+  }
 }
