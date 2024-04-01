@@ -1,4 +1,5 @@
-import { CiLocationOn } from "react-icons/ci";
+import { useState, useEffect } from "react";
+import { CiLocationOn, CiFilter } from "react-icons/ci";
 import { Button, CheckBox, DropDown, SearchInput } from "../../ui";
 import { IoFilter } from "react-icons/io5";
 import { FaSortAmountDown, FaSortAmountUpAlt, FaSort } from "react-icons/fa";
@@ -9,40 +10,49 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { MdError } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 import { setToUrl } from "../../../hooks/useToUrl";
+import { IoIosArrowDown } from "react-icons/io";
+import { BiTagAlt } from "react-icons/bi";
+import { toLocalStorage } from "@/hooks/useLocalStorageState";
+
 function Offers() {
   const { t } = useTranslation();
   const [parent] = useAutoAnimate({ duration: 300 });
   const { offers, searchParams, setSearchParams, query } = useOffer();
 
   return (
-    <div className="p-4 md:p-10 py-10 md:px-20 lg:px-32 bg-background-secondary">
+    <div className=" py-10  bg-background-secondary">
       <h1 className="text-text-primary font-bold text-3xl w-fit pb-4">
         Offres de stage recentes
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-[auto,auto] gap-3 my-3">
-        <SearchInput
-          onChange={(query) =>
-            setToUrl("search", query, searchParams, setSearchParams)
-          }
-          query={query}
-          placeholder={t("hero.placeholder")}
-        />
-        <div className="flex gap-2 w-full justify-end md:justify-start">
-          <Filter />
-          <Sort />
+      <div className="grid gap-4 md:me-4 h-full grid-cols-1 md:grid-cols-[auto,1fr]">
+        <FilterAside className={"hidden md:flex"} />
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-[auto,auto] gap-3 ">
+            <SearchInput
+              onChange={(query) =>
+                setToUrl("search", query, searchParams, setSearchParams)
+              }
+              query={query}
+              placeholder={t("hero.placeholder")}
+            />
+            <div className="flex gap-2 w-full justify-end md:justify-start md:hidden">
+              <FilterDropDown />
+              <Sort />
+            </div>
+          </div>
+          <div
+            ref={parent}
+            className="text-text-primary grid grid-cols-1 md:grid-cols-2  gap-4 my-5"
+          >
+            {offers?.map((e, i) => (
+              <OfferCard key={i} offer={e} />
+            ))}
+          </div>
         </div>
       </div>
-      <div
-        ref={parent}
-        className="text-text-primary grid grid-cols-1 md:grid-cols-3  gap-4 my-5"
-      >
-        {offers?.map((e, i) => (
-          <OfferCard key={i} offer={e} />
-        ))}
-      </div>
+
       {offers.length == 0 && (
         <div className="w-full h-32 flex justify-center items-center font-bold text-xl text-red-600">
-          
           No offers available <MdError />
         </div>
       )}
@@ -53,33 +63,44 @@ function Offers() {
 export default Offers;
 
 function OfferCard({ offer }) {
-  const { title, description, date, ville, exp, secteur } = offer;
+  const { id,title, description, date, ville, exp, secteur } = offer;
   return (
-    <div className=" relative border border-border rounded-md shadow-md  space-y-2">
-      <p className=" p-3 rounded-t-md  text-text-secondary font-bold bg-primary capitalize">
-        {title}
-      </p>
-      <div className="p-5">
-        <span className=" text-sm absolute z-10 top-[90%] left-0 px-3 text-text-secondary">
-          {date}
+    <div className="group  p-1 h-max border border-border rounded-xl shadow-md  space-y-2 capitalize">
+      <div className=" group-hover:scale-[1.01] transition duration-300 bg-background-tertiary rounded-xl p-4 space-y-2">
+        <div className="flex justify-between">
+          <span className="text-sm font-bold">{date}</span>
+          <Button
+            onClick={() => toLocalStorage(id, "offers")}
+            color={"secondary"}
+            shape={"icon"}
+            size={"small"}
+          >
+            <BiTagAlt className=" -rotate-90 text-text-primary" />
+          </Button>
+        </div>
+        <div className="flex flex-col">
+          <span className=" text-text-secondary">DSI</span>
+          <span className=" text-xl">{title}</span>
+        </div>
+        <div className="flex flex-wrap gap-2 text-sm text-secondary">
+          <span className=" px-2 p-1 rounded-2xl bg-secondary text-text-placeholder ">
+            {exp}
+          </span>
+          <span className=" px-2 p-1 rounded-2xl bg-secondary text-text-placeholder">
+            {secteur}
+          </span>
+        </div>
+      </div>
+      <div className="flex justify-between px-5 p-2">
+        <span className=" text-text-secondary flex items-center gap-2">
+          <CiLocationOn className="text-text-primary" /> {ville}
         </span>
-        <p>{description.slice(0, 100)}...</p>
-        <div className="text-text-secondary text-sm flex gap-2 my-2 capitalize">
-          <p className="flex items-center gap-2">
-            <CiLocationOn className="text-xlg" />
-            {ville}
-          </p>
-          <p className="flex items-center gap-2">{exp}</p>
-          <p className="flex items-center gap-2">{secteur}</p>
-        </div>
-        <div className="flex justify-end">
-          <span className="  px-1 rounded-[px] text-xs font-bold"> 6 mois</span>
-        </div>
+        <Button size={"small"}>Postuler</Button>
       </div>
     </div>
   );
 }
-function Filter() {
+function FilterDropDown() {
   const {
     secteurs,
     exp,
@@ -164,6 +185,83 @@ function Filter() {
     </DropDown>
   );
 }
+function FilterAside({ className }) {
+  const [sectIsOpen, setsectIsOpen] = useState(true);
+  const [expIsOpen, setexpIsOpen] = useState(true);
+  const {
+    secteurs,
+    exp,
+    setFilterdSect,
+    setFilterdExp,
+    toggleChecked,
+    selectAllSect,
+  } = useOffer();
+  return (
+    <div
+      className={`flex flex-col shadow-xl text-text-primary border border-border rounded-tr-lg capitalize ${className}`}
+    >
+      <h1 className="flex items-center gap-3 text-xl font-bold bg-background-tertiary text-text-primary p-1 rounded-tr-lg ">
+        <CiFilter /> Filter
+      </h1>
+      <div className="">
+        <div
+          className="flex items-center border-y border-border justify-between hover:bg-background-tertiary p-2 pe-4  gap-2 text-sm font-bold cursor-pointer"
+          onClick={() => setsectIsOpen((e) => !e)}
+        >
+          Secteur
+          <IoIosArrowDown />
+        </div>
+        <div
+          className=" px-3 text-text-secondary overflow-hidden transition-[height] flex flex-col justify-around  duration-500"
+          style={{
+            height: sectIsOpen ? `${[...secteurs].length * 30}px` : "0px",
+          }}
+        >
+          {[...secteurs].map((sect) => (
+            <span
+              disabled={selectAllSect}
+              key={sect}
+              className="flex items-center gap-2 justify-between"
+            >
+              {sect}
+              <CheckBox
+                disabled={selectAllSect}
+                onClick={(e) =>
+                  !selectAllSect && toggleChecked(e, sect, setFilterdSect)
+                }
+              />
+            </span>
+          ))}
+        </div>
+
+        <div
+          className="flex items-center border-y border-border justify-between p-2 pe-4 hover:bg-background-tertiary gap-2 text-sm font-bold cursor-pointer"
+          onClick={() => setexpIsOpen((e) => !e)}
+        >
+          Experience
+          <IoIosArrowDown />
+        </div>
+        <div
+          className=" px-3 text-text-secondary overflow-hidden transition-[height] flex flex-col justify-around  duration-500"
+          style={{
+            height: expIsOpen ? `${[...exp].length * 30}px` : "0px",
+          }}
+        >
+          {[...exp].map((exp) => (
+            <span key={exp} className="flex items-center gap-2 justify-between">
+              {exp}
+              <CheckBox
+                className="border-text-primary"
+                onClick={(e) => toggleChecked(e, exp, setFilterdExp)}
+              />
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Sort() {
   return (
     <DropDown

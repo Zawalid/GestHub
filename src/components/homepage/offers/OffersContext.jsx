@@ -109,14 +109,13 @@ function OffersProvider({ children }) {
     query.length > 2
       ? setOffers((e) =>
           e.filter((e) =>
-            (e.title+e.description)
+            (e.title + e.description)
               .trim()
               .toLocaleLowerCase()
               .includes(query.trim().toLocaleLowerCase())
           )
         )
-          : setOffers(ofers);
-      console.log(query)
+      : setOffers(ofers);
     return setOffers((e) => e);
   }, [query]);
 
