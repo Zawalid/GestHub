@@ -25,7 +25,9 @@ export default function InternsList() {
           ref={parent}
         >
           <TableLayout.Table />
+          <TableLayout.TableRecord />
           <TableLayout.Pagination />
+          <TableLayout.DeleteConfirmation />
         </div>
       </TableLayout>
     </div>

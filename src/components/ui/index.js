@@ -5,4 +5,4 @@ export { InputField } from "./InputField";
 export { Modal } from "./Modal";
 export { SearchInput } from "./SearchInput";
 export { Switch } from "./Switch";
-export { TableLayout } from "../shared/TableLayout/TableLayout";
+export { ConfirmationModal } from "./ConfirmationModal";

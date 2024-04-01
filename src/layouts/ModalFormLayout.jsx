@@ -3,7 +3,7 @@ import { DevTool } from "@hookform/devtools";
 
 export function ModalFormLayout({
   children,
-  saveButton,
+  submitButton,
   cancelButton,
   control,
 }) {
@@ -16,7 +16,7 @@ export function ModalFormLayout({
             {cancelButton.text || "Cancel"}
           </Button>
         )}
-        <Button {...saveButton}>{saveButton.text || "Save Changes"}</Button>
+        <Button {...submitButton}>{submitButton.text || "Save Changes"}</Button>
       </div>
 
       {control && <DevTool control={control} />}

@@ -37,3 +37,7 @@
         Discussions
 
         
+
+# Todo
+
+- [] Add ErrorBoundary

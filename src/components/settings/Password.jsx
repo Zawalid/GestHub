@@ -36,7 +36,7 @@ export default function Password() {
 
   return (
     <ModalFormLayout
-      saveButton={{
+      submitButton={{
         text: "Change Password",
         onClick: onSubmit,
         disabled: !isUpdated || !isValid || isSubmitting,

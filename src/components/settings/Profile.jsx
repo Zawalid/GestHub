@@ -58,7 +58,7 @@ export default function Profile() {
 
   return (
     <ModalFormLayout
-      saveButton={{
+      submitButton={{
         onClick: onSubmit,
         disabled: !isUpdated || !isValid,
       }}

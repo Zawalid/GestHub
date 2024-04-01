@@ -11,7 +11,7 @@ const button = tv({
       secondary: "bg-secondary text-white hover:bg-secondary-hover",
       tertiary:
         "bg-background-secondary text-text-primary hover:bg-background-tertiary",
-      delete: "bg-red-500 text-white hover:bg-red-600",
+      delete: "bg-red-600 text-white hover:bg-red-700",
     },
     size: {
       small: "px-2 py-1.5 text-xs rounded-md",
@@ -53,7 +53,7 @@ const button = tv({
       type: "outline",
       className: "hover:bg-secondary hover:text-white",
     },
-    { color: "delete", type: "outline", className: "hover:bg-red-600 " },
+    { color: "delete", type: "outline", className: "hover:bg-red-700 " },
     { shape: "icon", size: "small", className: "h-6 w-6 text-sm" },
     { shape: "icon", size: "large", className: "text-xl w-10 h-10" },
     { shape: "icon", type: "transparent", className: "bg-transparent" },

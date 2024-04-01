@@ -37,7 +37,7 @@ export function useForm({ fields, defaultValues, submit, gridLayout = true }) {
     watch,
   } = useF({
     defaultValues,
-    mode: "onChange",
+    mode: "all",
   });
 
   const onSubmit = (callback, { resetToDefault = false }) => {
