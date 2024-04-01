@@ -1,9 +1,7 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { useSelector } from "react-redux";
 import { Toaster } from "sonner";
 import { FaSpinner } from "react-icons/fa6";
 import { useTheme } from "./hooks/useTheme";
@@ -19,8 +17,10 @@ import {
   NotFound,
   HomePage,
 } from "./pages";
-import { useSelector } from "react-redux";
 import { ROUTES } from "./utils/constants";
+
+
+const queryClient = new QueryClient();
 
 const routesElements = {
   overview: <Overview />,
@@ -35,10 +35,11 @@ export default function App() {
   const role = useSelector((state) => state.user?.role);
 
   return (
-    <>
-      <Router>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />}/>
+          <Route path="/" element={<HomePage />} />
           <Route path="app" element={<AppLayout />}>
             <Route index element={<Navigate to="/app/overview" />} />
             {/* Routes of every role */}
@@ -52,7 +53,7 @@ export default function App() {
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </Router>
+      </BrowserRouter>
 
       <Toaster
         icons={{
@@ -67,6 +68,6 @@ export default function App() {
           duration: 2000,
         }}
       />
-    </>
+    </QueryClientProvider>
   );
 }

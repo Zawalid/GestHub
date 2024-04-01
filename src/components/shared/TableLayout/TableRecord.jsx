@@ -31,7 +31,7 @@ export function TableRecord() {
       closeOnBlur={false}
     >
       <div className="flex items-center">
-        <h1 className="text-2xl mb-6">{heading}</h1>
+        <h1 className="text-text-primary font-bold text-2xl mb-6">{heading}</h1>
       </div>
       <ModalFormLayout
         submitButton={{

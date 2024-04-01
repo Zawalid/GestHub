@@ -41,12 +41,14 @@ export function Sort({ column }) {
         {icons.desc}
         Desc
       </DropDown.Option>
-      <DropDown.Divider />
       {column === "id" || (
-        <DropDown.Option onClick={() => onChangeView(column)}>
-          <IoEyeOffOutline />
-          Hide
-        </DropDown.Option>
+        <>
+          <DropDown.Divider />
+          <DropDown.Option onClick={() => onChangeView(column)}>
+            <IoEyeOffOutline />
+            Hide
+          </DropDown.Option>
+        </>
       )}
     </DropDown>
   );
