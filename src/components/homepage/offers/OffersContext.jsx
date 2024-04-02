@@ -1,5 +1,6 @@
 const ofers = [
-  {id:1,
+  {
+    id: 1,
     exp: "Expert",
     secteur: "devloppemnt",
     title: "devlopper backend",
@@ -8,7 +9,8 @@ const ofers = [
     date: "12/12/2023",
     ville: "rabat",
   },
-  {id:3,
+  {
+    id: 3,
     exp: "intermediate",
     secteur: "devloppemnt",
     title: "devlopper frontend",
@@ -17,7 +19,8 @@ const ofers = [
     date: "12/12/2023",
     ville: "sale",
   },
-  {id:4,
+  {
+    id: 4,
     exp: "debutant",
     secteur: "devops",
     title: "engineer devops",
@@ -26,7 +29,8 @@ const ofers = [
     date: "12/12/2023",
     ville: "rabat",
   },
-  {id:5,
+  {
+    id: 5,
     exp: "Expert",
     secteur: "testing",
     title: "testeur ",
@@ -39,10 +43,15 @@ const ofers = [
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { createContext, useContext } from "react";
+import { toLocalStorage } from "@/hooks/useLocalStorageState";
 const OffersContext = createContext();
 
 function OffersProvider({ children }) {
   const [offers, setOffers] = useState(ofers);
+  const [storedoffers, setStoredOffers] = useState(
+    toLocalStorage("offers").items
+  );
+  const [isShowStor, setisShowStor] = useState(false);
   const secteurs = new Set(ofers.map((e) => e.secteur));
   const exp = new Set(ofers.map((e) => e.exp));
   const [filterdSect, setFilterdSect] = useState([]);
@@ -53,6 +62,9 @@ function OffersProvider({ children }) {
   const query = searchParams.get("search") || "";
   const value = {
     offers,
+    storedoffers,
+    toggelStoredOffer,
+    showStored,
     secteurs,
     exp,
     setFilterdSect,
@@ -84,6 +96,7 @@ function OffersProvider({ children }) {
   }
   //filter effect
   useEffect(() => {
+    if (isShowStor) return;
     if (filterdExp.length == 0) {
       setOffers(ofers);
     }
@@ -103,7 +116,7 @@ function OffersProvider({ children }) {
         )
       );
     }
-  }, [filterdSect, filterdExp]);
+  }, [filterdSect, filterdExp,isShowStor]);
   //search effect
   useEffect(() => {
     query.length > 2
@@ -118,7 +131,26 @@ function OffersProvider({ children }) {
       : setOffers(ofers);
     return setOffers((e) => e);
   }, [query]);
-
+  // add to & remove from local storage
+  function toggelStoredOffer(id) {
+    if (storedoffers.includes(id)) {
+      toLocalStorage("offers", id, id);
+      setStoredOffers((e) => e.filter((e) => e !== id));
+    } else {
+      toLocalStorage("offers", id);
+      setStoredOffers((e) => [...e, id]);
+    }
+  }
+  //show stored offers
+  function showStored(e) {
+    if (e.target.checked) {
+      setisShowStor(true);
+      setOffers(ofers.filter((e) => storedoffers.includes(e.id)));
+    } else {
+      setisShowStor(false);
+      setOffers(ofers);
+    }
+  }
   return (
     <OffersContext.Provider value={value}>{children}</OffersContext.Provider>
   );
