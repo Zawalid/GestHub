@@ -1,39 +1,43 @@
 const ofers = [
-  {id:1,
+  {
+    id: 1,
     exp: "Expert",
     secteur: "devloppemnt",
     title: "devlopper backend",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
-    date: "12/12/2023",
+    date: new Date(2024, 3, 2),
     ville: "rabat",
   },
-  {id:3,
+  {
+    id: 3,
     exp: "intermediate",
     secteur: "devloppemnt",
     title: "devlopper frontend",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
-    date: "12/12/2023",
+    date: new Date(2024, 3, 4),
     ville: "sale",
   },
-  {id:4,
+  {
+    id: 4,
     exp: "debutant",
     secteur: "devops",
     title: "engineer devops",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
-    date: "12/12/2023",
+    date: new Date(2024, 3, 30),
     ville: "rabat",
   },
-  {id:5,
+  {
+    id: 5,
     exp: "Expert",
     secteur: "testing",
     title: "testeur ",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
-    date: "12/12/2023",
-    ville: "rabat",
+    date: new Date(2024, 8, 2),
+    ville: "Casablanca",
   },
 ];
 import { useState, useEffect } from "react";
@@ -61,6 +65,7 @@ function OffersProvider({ children }) {
     storedoffers,
     toggelStoredOffer,
     showStored,
+    filterByDate,
     secteurs,
     exp,
     setFilterdSect,
@@ -112,7 +117,7 @@ function OffersProvider({ children }) {
         )
       );
     }
-  }, [filterdSect, filterdExp,isShowStor]);
+  }, [filterdSect, filterdExp, isShowStor]);
   //search effect
   useEffect(() => {
     query.length > 2
@@ -127,6 +132,35 @@ function OffersProvider({ children }) {
       : setOffers(ofers);
     return setOffers((e) => e);
   }, [query]);
+  //Filter Offers by date
+  function filterByDate(e, date) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (date === "today" && e.target.checked) {
+      setOffers((e) =>
+        e.filter((offer) => offer.date.getTime() === today.getTime())
+      );
+    } else if (date === "thisWeek" && e.target.checked) {
+      today.setDate(today.getDate() - today.getDay());
+      const weekEnd = new Date(today.getTime() + 6 * 24 * 60 * 60 * 1000);
+      setOffers((e) =>
+        e.filter(
+          (offer) =>
+            offer.date.getTime() >= today && offer.date.getTime() <= weekEnd
+        )
+      );
+    } else if (date === "thisMonth" && e.target.checked) {
+        setOffers((e) =>
+        e.filter(
+          (offer) =>
+            offer.date.getFullYear() === today.getFullYear() &&
+            offer.date.getMonth() === today.getMonth()
+        )
+      );
+    } else {
+        setOffers(ofers);
+    }
+  }
   // add to & remove from local storage
   function toggelStoredOffer(id) {
     if (storedoffers.includes(id)) {
@@ -147,6 +181,7 @@ function OffersProvider({ children }) {
       setOffers(ofers);
     }
   }
+
   return (
     <OffersContext.Provider value={value}>{children}</OffersContext.Provider>
   );

@@ -14,6 +14,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { BiTagAlt } from "react-icons/bi";
 import { PiSquaresFourBold, PiTagChevronFill } from "react-icons/pi";
 import Shade from "@/components/ui/shade";
+import { formatTime } from "@/utils/helpers";
 
 function Offers() {
   const { t } = useTranslation();
@@ -26,7 +27,7 @@ function Offers() {
         Offres de stage recentes
       </h1>
       <div className="grid gap-4 md:me-4 grid-cols-1 md:grid-cols-[auto,1fr]">
-        <FilterAside className={"hidden md:flex"} />
+        <FilterAside className="hidden md:flex" />
         <div className="">
           <div className="flex justify-between gap-2 ">
             <SearchInput
@@ -54,7 +55,7 @@ function Offers() {
           {offers.length > 0 ? (
             <div
               ref={parent}
-              className={` max-h-screen overflow-y-auto p-1 py-4 text-text-primary grid grid-cols-1 md:grid-cols-${card} lg:grid-cols-${card} transition-all duration-200  gap-4 my-5`}
+              className={` max-h-screen overflow-y-auto p-1 text-text-primary grid grid-cols-1 md:grid-cols-${card} transition-all duration-200  gap-4 my-5`}
             >
               {offers?.map((e, i) => (
                 <OfferCard key={i} offer={e} />
@@ -85,7 +86,9 @@ function OfferCard({ offer }) {
     <div className="hover:scale-[1.01] transition duration-300   p-1 h-max border border-border rounded-xl shadow-md  space-y-2 capitalize">
       <div className=" bg-background-tertiary rounded-xl p-4 space-y-4">
         <div className="flex justify-between">
-          <span className="text-sm font-bold">{date}</span>
+          <span className="text-sm font-bold">
+            {formatTime(date.getTime())}
+          </span>
           <Button
             onClick={() => toggelStoredOffer(id)}
             color={"secondary"}
@@ -206,18 +209,25 @@ function FilterDropDown() {
 }
 function FilterAside({ className }) {
   const [sectIsOpen, setsectIsOpen] = useState(true);
+  const [datesIsOpen, setdatesIsOpen] = useState(true);
   const [expIsOpen, setexpIsOpen] = useState(true);
+  const dates = [
+    { name: "today", action: "today" },
+    { name: "This Week", action: "thisWeek" },
+    { name: "This Month", action: "thisMonth" },
+  ];
   const {
     secteurs,
     exp,
     setFilterdSect,
     setFilterdExp,
+    filterByDate,
     showStored,
     toggleChecked,
   } = useOffer();
   return (
     <div
-      className={`flex max-h-screen flex-col shadow-xl text-text-primary border border-border rounded-r-lg capitalize ${className}`}
+      className={`flex min-h-screen flex-col shadow-xl text-text-primary border border-border rounded-r-lg capitalize ${className}`}
     >
       <h1 className="flex items-center gap-3 text-xl font-bold bg-background-tertiary text-text-primary p-1 rounded-tr-lg ">
         <CiFilter /> Filter
@@ -227,6 +237,34 @@ function FilterAside({ className }) {
           Saved
           <CheckBox onClick={(e) => showStored(e)} />
         </div>
+
+        <div
+          className="flex items-center border-y border-border justify-between p-2 pe-4 hover:bg-background-tertiary gap-2 text-sm font-bold cursor-pointer"
+          onClick={() => setdatesIsOpen((e) => !e)}
+        >
+          Date
+          <IoIosArrowDown />
+        </div>
+        <div
+          className=" px-3 text-text-secondary overflow-hidden transition-[height] flex flex-col justify-around  duration-500"
+          style={{
+            height: datesIsOpen ? `${[...dates].length * 30}px` : "0px",
+          }}
+        >
+          {[...dates].map((date) => (
+            <span
+              key={date}
+              className="flex items-center gap-2 justify-between"
+            >
+              {date.name}
+              <CheckBox
+                className="border-text-primary"
+                onClick={(e) => filterByDate(e, date.action)}
+              />
+            </span>
+          ))}
+        </div>
+
         <div
           className="flex items-center border-y border-border justify-between hover:bg-background-tertiary p-2 pe-4  gap-2 text-sm font-bold cursor-pointer"
           onClick={() => setsectIsOpen((e) => !e)}
