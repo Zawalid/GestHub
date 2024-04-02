@@ -34,16 +34,21 @@ const exportAsPdf = (data, config) => {
 
 //* Download
 export function Download() {
-  const { data, csvConfig, pdfConfig } = useTable();
+  const { data, csvConfig, pdfConfig, isLoading } = useTable();
 
   return (
     <DropDown
       toggler={
-        <Button display="with-icon" type="outline" color="tertiary">
+        <Button
+          display="with-icon"
+          type="outline"
+          color="tertiary"
+        >
           <MdDownload />
           Download
         </Button>
       }
+      togglerDisabled={isLoading}
       options={{
         className: "w-40",
       }}

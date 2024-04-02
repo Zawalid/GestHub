@@ -1,22 +1,43 @@
 // import { useAutoAnimate } from "@formkit/auto-animate/react";
-import {
-  IoEllipsisHorizontalSharp,
-  IoEyeOutline,
-  IoTrashOutline,
-  MdDriveFileRenameOutline,
-} from "../../ui/Icons";
+import { cloneElement, useRef } from "react";
 
-import { Button, DropDown } from "../../ui";
 import { Sort } from "./Sort";
-import { formatToCamelCase } from "../../../utils/helpers";
+import { formatToCamelCase } from "@/utils/helpers";
 import { useTable } from ".";
 
-export function Table() {
-  const { columns, rows } = useTable();
+export function Table({ actions }) {
+  const { columns, rows, isLoading, error } = useTable();
+  const table = useRef();
   // const [parent] = useAutoAnimate({ duration: 300 });
 
   const render = () => {
-    if (rows.length === 0)
+    if (isLoading) {
+      const tableHeight = table.current?.getBoundingClientRect().height;
+      const skeletonHeight = 40;
+      const theadHeight = table.current
+        ?.querySelector("thead")
+        .getBoundingClientRect().height;
+
+      const length = Math.floor((tableHeight - theadHeight) / skeletonHeight);
+      return (
+        <tbody>
+          {Array.from({ length }).map((_, i) => (
+            <Skeleton key={i} columns={columns} />
+          ))}
+        </tbody>
+      );
+    }
+    if (error)
+      return (
+        <tbody className="flex absolute h-[88%] w-full items-center justify-center text-text-tertiary">
+          <tr>
+            <td>
+              {error.message || "Something went wrong! Please try again."}
+            </td>
+          </tr>
+        </tbody>
+      );
+    if (rows?.length === 0)
       return (
         <tbody className="flex absolute h-[88%] w-full items-center justify-center text-text-tertiary">
           <tr>
@@ -26,11 +47,12 @@ export function Table() {
       );
     return (
       <tbody className="text-sm h-fit font-medium divide-y divide-border text-text-primary">
-        {rows.map((row) => (
+        {rows?.map((row) => (
           <Row
             key={row.id}
             row={row}
             visibleColumns={columns.filter((c) => c.visible)}
+            actions={actions}
           />
         ))}
       </tbody>
@@ -38,8 +60,11 @@ export function Table() {
   };
 
   return (
-    <div className="relative flex-1 overflow-x-auto">
-      <table className="w-full whitespace-nowrap overflow-x-auto  text-left">
+    <div className="relative flex-1 overflow-x-auto" ref={table}>
+      <table
+        cellPadding={3}
+        className="w-full whitespace-nowrap overflow-x-auto  text-left"
+      >
         <thead className="bg-background-secondary ">
           <tr>
             {columns
@@ -62,9 +87,7 @@ function Column({ column, hide }) {
     </th>
   );
 }
-function Row({ row, visibleColumns }) {
-  const { showForm, onUpdate, onDelete, confirmDelete } = useTable();
-
+function Row({ row, visibleColumns, actions }) {
   return (
     <tr>
       {visibleColumns.map((col) => (
@@ -72,47 +95,23 @@ function Row({ row, visibleColumns }) {
           {row[formatToCamelCase(col.label)]}
         </td>
       ))}
-      <td className="px-6 py-4">
-        <DropDown
-          toggler={
-            <Button shape="icon">
-              <IoEllipsisHorizontalSharp />
-            </Button>
-          }
-          options={{ placement: "bottom-end" }}
-        >
-          <DropDown.Option>
-            <IoEyeOutline />
-            View
-          </DropDown.Option>
-          <DropDown.Option
-            onClick={() =>
-              showForm({
-                defaultValues: row,
-                onSubmit: (data) => onUpdate(row.id, data),
-                submitButtonText: "Save Changes",
-                heading: `Update Intern #${row.id}`,
-                isOpen: true,
-              })
-            }
-          >
-            <MdDriveFileRenameOutline />
-            Edit
-          </DropDown.Option>
-          <DropDown.Option
-            onClick={() =>
-              confirmDelete({
-                isOpen: true,
-                title: "Delete Intern",
-                message: "Are you sure you want to delete this intern ?",
-                onConfirm: () => onDelete(row.id),
-              })
-            }
-          >
-            <IoTrashOutline />
-            Delete
-          </DropDown.Option>
-        </DropDown>
+      <td className="px-6 py-4">{cloneElement(actions, { row })}</td>
+    </tr>
+  );
+}
+
+function Skeleton({ columns }) {
+  return (
+    <tr className="animate-pulse">
+      {columns
+        .filter((c) => c.visible)
+        .map(({ label }) => (
+          <td key={label}>
+            <div className="bg-background-secondary px-6 py-4 rounded-md"></div>
+          </td>
+        ))}
+      <td>
+        <div className="bg-background-secondary px-6 py-4 rounded-md"></div>
       </td>
     </tr>
   );

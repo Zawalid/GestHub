@@ -1,22 +1,14 @@
-import axios from "axios";
+import { axiosFetch } from ".";
 
-export const getAllInterns = async () => {
-  try {
-    const response = await axios.get(import.meta.env.VITE_API_URL + "/interns");
-    console.log(response);
-    return response.data;
-  } catch (e) {
-    console.log(e);
-  }
-};
+export const getAllInterns = async () => await axiosFetch("interns");
 
-export const getIntern = async (id) => {
-  try {
-    const response = await axios.get(
-      import.meta.env.VITE_API_URL + `/interns/${id}`
-    );
-    return response.data;
-  } catch (e) {
-    console.log(e);
-  }
-};
+export const getIntern = async (id) => await axiosFetch(`interns/${id}`);
+
+export const addIntern = async (data) =>
+  await axiosFetch("interns", "POST", data);
+
+export const updateIntern = async (id, data) =>
+  await axiosFetch(`interns/${id}`, "PUT", data);
+
+export const deleteIntern = async (id) =>
+  await axiosFetch(`interns/${id}`, "DELETE");

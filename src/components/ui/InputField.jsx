@@ -8,9 +8,20 @@ import {
   FiPhone,
   MdDriveFileRenameOutline,
   BiSolidCity,
-  MdError
+  MdError,
 } from "./Icons";
 import { cn } from "../../utils/helpers";
+import { tv } from "tailwind-variants";
+
+const input = tv({
+  base: "w-full pl-4 disabled:bg-background-disabled disabled:text-text-disabled disabled:placeholder:text-text-disabled disabled:cursor-not-allowed transition-colors  duration-300 bg-background-secondary py-1.5 pr-2 text-text-primary outline-none text-sm placeholder:text-sm",
+  variants: {
+    type: {
+      icon: "pl-9",
+      search: "pr-8",
+    },
+  },
+});
 
 export function ErrorTooltip({ message, className }) {
   if (!message) return null;
@@ -65,13 +76,14 @@ export const InputField = forwardRef(
           <input
             type={props.type || "text"}
             className={cn(
-              "w-full bg-background-secondary py-1.5 pr-2 text-text-primary outline-none text-sm placeholder:text-sm",
-              icon ? "pl-9" : "pl-4",
-              name === "search" && "pr-8",
+              input({
+                type: icon ? "icon" : name === "search" ? "search" : null,
+              }),
               className
             )}
             ref={ref}
             {...props}
+            value={props.value || ""}
           />
           {children}
         </div>

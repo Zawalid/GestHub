@@ -11,23 +11,7 @@ import { TableRecord } from "./TableRecord";
 import { FaPlus } from "react-icons/fa6";
 import { Button, ConfirmationModal } from "@/components/ui";
 import { useTable } from ".";
-
-const csvConfig = {
-  filename: "Interns",
-  columnHeaders: [
-    { key: "id", displayLabel: "ID" },
-    { key: "firstName", displayLabel: "First Name" },
-    { key: "lastName", displayLabel: "Last Name" },
-    { key: "email", displayLabel: "Email" },
-    { key: "phone", displayLabel: "Phone" },
-    { key: "birthday", displayLabel: "Birthday" },
-  ],
-};
-
-const pdfConfig = {
-  filename: "Interns.pdf",
-  tableHeaders: ["ID", "First Name", "Last Name", "Email", "Phone", "Birthday"],
-};
+import { Actions } from "./Actions";
 
 //* Methods
 Array.prototype.search = function (query) {
@@ -51,6 +35,8 @@ Array.prototype.paginate = function (page, limit) {
 };
 
 Array.prototype.customFilter = function (filters) {
+  if (!filters) return this;
+
   const conditions = Object.keys(filters).map((key) => ({
     field: key,
     value: filters[key].filter((v) => v.checked).map((v) => v.value),
@@ -81,170 +67,31 @@ Array.prototype.customSort = function (sortBy, direction) {
 };
 
 export const TableContext = createContext();
-export function TableLayout({ children }) {
-  const [data, setData] = useState([
-    {
-      id: 1,
-      firstName: "John",
-      lastName: "Doe",
-      email: "john.doe@example.com",
-      phone: "123-456-7890",
-      birthday: "1990-01-01",
-    },
-    {
-      id: 2,
-      firstName: "Jane",
-      lastName: "Smith",
-      email: "jane.smith@example.com",
-      phone: "098-765-4321",
-      birthday: "1992-02-02",
-    },
-    {
-      id: 3,
-      firstName: "Bob",
-      lastName: "Johnson",
-      email: "bob.johnson@example.com",
-      phone: "111-222-3333",
-      birthday: "1993-03-03",
-    },
-    {
-      id: 4,
-      firstName: "Alice",
-      lastName: "Williams",
-      email: "alice.williams@example.com",
-      phone: "444-555-6666",
-      birthday: "1994-04-04",
-    },
-    {
-      id: 5,
-      firstName: "Charlie",
-      lastName: "Brown",
-      email: "charlie.brown@example.com",
-      phone: "777-888-9999",
-      birthday: "1995-05-05",
-    },
-    {
-      id: 6,
-      firstName: "Emily",
-      lastName: "Davis",
-      email: "emily.davis@example.com",
-      phone: "000-111-2222",
-      birthday: "1996-06-06",
-    },
-    {
-      id: 7,
-      firstName: "Frank",
-      lastName: "Miller",
-      email: "frank.miller@example.com",
-      phone: "333-444-5555",
-      birthday: "1997-07-07",
-    },
-    {
-      id: 8,
-      firstName: "Grace",
-      lastName: "Wilson",
-      email: "grace.wilson@example.com",
-      phone: "666-777-8888",
-      birthday: "1998-08-08",
-    },
-    {
-      id: 9,
-      firstName: "Harry",
-      lastName: "Moore",
-      email: "harry.moore@example.com",
-      phone: "999-000-1111",
-      birthday: "1999-09-09",
-    },
-    {
-      id: 10,
-      firstName: "Ivy",
-      lastName: "Taylor",
-      email: "ivy.taylor@example.com",
-      phone: "222-333-4444",
-      birthday: "2000-10-10",
-    },
-  ]);
-  const [columns, setColumns] = useState([
-    { label: "id", visible: true },
-    { label: "First Name", visible: true },
-    { label: "Last Name", visible: true },
-    { label: "Email", visible: true },
-    { label: "Phone", visible: true },
-    { label: "Birthday", visible: true },
-  ]);
-  const [filters, setFilters] = useState({
+export function TableLayout({
+  children,
+  data: tableData,
+  isLoading,
+  error,
+  columns: tableColumns,
+  filters: tableFilters,
+  formOptions: tableFormOptions,
+  confirmOptions: tableConfirmOptions,
+  csvConfig,
+  pdfConfig,
+}) {
+  const [data, setData] = useState(tableData);
+  const [columns, setColumns] = useState(tableColumns);
+  const [filters, setFilters] = useState(
+    tableFilters
+    // {
     // status: [
     //   { value: "Active", checked: true },
     //   { value: "Inactive", checked: true },
     // ],
-  });
-  const [formOptions, setFormOptions] = useState({
-    defaultValues: {},
-    fields: [
-      {
-        name: "firstName",
-        label: "First Name",
-      },
-      {
-        name: "lastName",
-        label: "Last Name",
-      },
-      {
-        name: "email",
-        type: "email",
-        label: "Email Address",
-      },
-      {
-        name: "phone",
-        label: "Phone Number",
-      },
-      {
-        name: "birthday",
-        label: "Birthday",
-        type: "date",
-      },
-      {
-        name: "password",
-        type: "password",
-        label: " Password",
-      },
-      {
-        name: "confirmPassword",
-        type: "password",
-        label: "Confirm  Password",
-        confirmPassword: true,
-        passwordField: "password",
-      },
-    ],
-    onSubmit: () => {},
-    close: () => {
-      setFormOptions((prev) => ({
-        ...prev,
-        isOpen: false,
-        defaultValues: {},
-        heading: "",
-        submitButtonText: "",
-      }));
-    },
-    resetToDefault: true,
-    submitButtonText: "",
-    heading: "",
-    isOpen: false,
-  });
-  const [confirmOptions, setConfirmOptions] = useState({
-    isOpen: false,
-    message: "",
-    title: "",
-    confirmText: "Delete",
-    onConfirm: () => {},
-    onCancel: () =>
-      setConfirmOptions((prev) => ({
-        ...prev,
-        isOpen: false,
-        message: "",
-        title: "",
-      })),
-  });
+    // }
+  );
+  const [formOptions, setFormOptions] = useState(tableFormOptions);
+  const [confirmOptions, setConfirmOptions] = useState(tableConfirmOptions);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("search") || "";
   const page = Number(searchParams.get("page")) || 1;
@@ -255,8 +102,12 @@ export function TableLayout({ children }) {
     ?.search(query)
     .customFilter(filters)
     .customSort(sortBy, direction);
-  const totalItems = rows.length;
+  const totalItems = rows?.length;
   const totalPages = Math.ceil(totalItems / PAGE_LIMIT);
+
+  useEffect(() => {
+    setData(tableData);
+  }, [tableData]);
 
   useEffect(() => {
     if (page === 1) searchParams.delete("page");
@@ -267,27 +118,39 @@ export function TableLayout({ children }) {
     setSearchParams(searchParams);
   }, [direction, page, searchParams, sortBy, setSearchParams]);
 
-  const onAdd = (record) => {
-    const id = data.at(-1).id + 1;
-    setData((prev) => [...prev, { id, ...record }]);
-  };
-
-  const onUpdate = (id, record) => {
-    setData((prev) => prev.map((r) => (r.id === id ? record : r)));
-  };
-
-  const onDelete = (id) => setData((prev) => prev.filter((r) => r.id !== id));
+  
 
   const showForm = (options) => {
-    setFormOptions((prev) => ({ ...prev, ...options }));
+    setFormOptions((prev) => ({
+      ...prev,
+      ...options,
+      close: () => {
+        setFormOptions((prev) => ({
+          ...prev,
+          isOpen: false,
+          defaultValues: {},
+          heading: "",
+          submitButtonText: "",
+        }));
+      },
+    }));
   };
   const confirmDelete = (options) => {
+    const onCancel = () => {
+      setConfirmOptions((prev) => ({
+        ...prev,
+        isOpen: false,
+        message: "",
+        title: "",
+      }));
+    };
     setConfirmOptions((prev) => ({
       ...prev,
       ...options,
+      onCancel,
       onConfirm: () => {
         options.onConfirm();
-        prev.onCancel();
+        onCancel();
       },
     }));
   };
@@ -332,12 +195,11 @@ export function TableLayout({ children }) {
   const context = {
     // data
     data,
-    onAdd,
-    onUpdate,
-    onDelete,
+    isLoading,
+    error,
     // table
     columns,
-    rows: rows.paginate(page, PAGE_LIMIT),
+    rows: rows?.paginate(page, PAGE_LIMIT),
     // search
     query,
     onSearch,
@@ -371,8 +233,8 @@ export function TableLayout({ children }) {
   );
 }
 
-function NewRecord() {
-  const { onAdd, showForm } = useTable();
+function NewRecord({ onAdd }) {
+  const { showForm, isLoading } = useTable();
 
   return (
     <Button
@@ -392,6 +254,7 @@ function NewRecord() {
           },
         })
       }
+      disabled={isLoading}
     >
       <FaPlus />
       New Intern
@@ -413,3 +276,4 @@ TableLayout.Pagination = Pagination;
 TableLayout.NewRecord = NewRecord;
 TableLayout.TableRecord = TableRecord;
 TableLayout.DeleteConfirmation = DeleteConfirmation;
+TableLayout.Actions = Actions;

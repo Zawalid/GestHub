@@ -8,8 +8,8 @@ const toggleChecked = (filter, value) =>
 export function Filter() {
   const { filters, onFilter } = useTable();
 
-  if (!filters.length) return null;
-  
+  if (!filters) return null;
+
   return (
     <DropDown
       toggler={

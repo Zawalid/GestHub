@@ -33,7 +33,7 @@ const button = tv({
     },
     state: {
       disabled:
-        "bg-background-disabled cursor-not-allowed hover:bg-background-disabled text-text-disabled",
+        "bg-background-disabled cursor-not-allowed border-transparent hover:bg-background-disabled text-text-disabled",
       active: "bg-primary text-white hover:bg-primary",
     },
   },

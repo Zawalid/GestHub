@@ -3,9 +3,10 @@ import { Button } from "../../ui";
 import { PAGE_LIMIT } from "@/utils/constants";
 
 export function Pagination() {
-  const { totalItems, totalPages, page, onNextPage, onPrevPage } = useTable();
+  const { totalItems, totalPages, page, onNextPage, onPrevPage, isLoading } =
+    useTable();
 
-  if (totalItems === 0) return null;
+  if (totalItems === 0 || isLoading) return null;
 
   return (
     <div className="flex gap-3 flex-col sm:flex-row px-6 py-2 sm:items-center border-t border-border mt-auto justify-between">
@@ -32,7 +33,7 @@ export function Pagination() {
           className="w-20"
           size="small"
           onClick={onPrevPage}
-          disabled={page === 1}
+          disabled={page === 1 }
         >
           Previous
         </Button>
@@ -42,7 +43,7 @@ export function Pagination() {
           className="w-20"
           size="small"
           onClick={onNextPage}
-          disabled={page === totalPages}
+          disabled={page === totalPages }
         >
           Next
         </Button>
@@ -58,7 +59,7 @@ function Span({ children, variable }) {
         variable ? "text-text-primary font-semibold" : "text-text-tertiary"
       }`}
     >
-      {children}
+      {children ? children : "-"}
     </span>
   );
 }

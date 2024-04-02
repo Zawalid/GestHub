@@ -1,272 +1,260 @@
 {
-    "interns": [
-        {
-            "id": 1,
-            "firstName": "John",
-            "lastName": "Doe",
-            "email": "john.doe@example.com",
-            "phone": "123-456-7890",
-            "birthday": "1990-01-01",
-            "university": "Harvard University",
-            "major": "Computer Science",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01"
-        },
-        {
-            "id": 2,
-            "firstName": "Jane",
-            "lastName": "Doe",
-            "email": "jane.doe@example.com",
-            "phone": "098-765-4321",
-            "birthday": "1992-02-02",
-            "university": "Stanford University",
-            "major": "Information Systems",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01"
-        },
-        {
-            "id": 3,
-            "firstName": "Bob",
-            "lastName": "Smith",
-            "email": "bob.smith@example.com",
-            "phone": "111-222-3333",
-            "birthday": "1991-03-03",
-            "university": "MIT",
-            "major": "Software Engineering",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01"
-        },
-        {
-            "id": 4,
-            "firstName": "Alice",
-            "lastName": "Johnson",
-            "email": "alice.johnson@example.com",
-            "phone": "222-333-4444",
-            "birthday": "1993-04-04",
-            "university": "University of California, Berkeley",
-            "major": "Data Science",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01"
-        },
-        {
-            "id": 5,
-            "firstName": "Charlie",
-            "lastName": "Brown",
-            "email": "charlie.brown@example.com",
-            "phone": "333-444-5555",
-            "birthday": "1994-05-05",
-            "university": "Carnegie Mellon University",
-            "major": "Artificial Intelligence",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01"
-        },
-        {
-            "id": 6,
-            "firstName": "David",
-            "lastName": "Williams",
-            "email": "david.williams@example.com",
-            "phone": "444-555-6666",
-            "birthday": "1995-06-06",
-            "university": "University of Washington",
-            "major": "Human Centered Design & Engineering",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01"
-        },
-        {
-            "id": 7,
-            "firstName": "Emily",
-            "lastName": "Miller",
-            "email": "emily.miller@example.com",
-            "phone": "555-666-7777",
-            "birthday": "1996-07-07",
-            "university": "University of Illinois Urbana-Champaign",
-            "major": "Information Sciences",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01"
-        },
-        {
-            "id": 8,
-            "firstName": "Frank",
-            "lastName": "Davis",
-            "email": "frank.davis@example.com",
-            "phone": "666-777-8888",
-            "birthday": "1997-08-08",
-            "university": "University of Texas at Austin",
-            "major": "Computer Engineering",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01"
-        },
-        {
-            "id": 9,
-            "firstName": "Grace",
-            "lastName": "Wilson",
-            "email": "grace.wilson@example.com",
-            "phone": "777-888-9999",
-            "birthday": "1998-09-09",
-            "university": "University of Michigan",
-            "major": "Information Technology",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01"
-        },
-        {
-            "id": 10,
-            "firstName": "Henry",
-            "lastName": "Moore",
-            "email": "henry.moore@example.com",
-            "phone": "888-999-0000",
-            "birthday": "1999-10-10",
-            "university": "University of Wisconsin-Madison",
-            "major": "Computer Sciences",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01"
-        }
-    ],
-    "supervisors": [
-        {
-            "id": 1,
-            "firstName": "William",
-            "lastName": "Johnson",
-            "email": "william.johnson@example.com",
-            "phone": "999-888-7777",
-            "department": "Software Development"
-        },
-        {
-            "id": 2,
-            "firstName": "Elizabeth",
-            "lastName": "Smith",
-            "email": "elizabeth.smith@example.com",
-            "phone": "888-777-6666",
-            "department": "Data Science"
-        },
-        {
-            "id": 3,
-            "firstName": "James",
-            "lastName": "Brown",
-            "email": "james.brown@example.com",
-            "phone": "777-666-5555",
-            "department": "Information Systems"
-        },
-        {
-            "id": 4,
-            "firstName": "Jennifer",
-            "lastName": "Davis",
-            "email": "jennifer.davis@example.com",
-            "phone": "666-555-4444",
-            "department": "Artificial Intelligence"
-        },
-        {
-            "id": 5,
-            "firstName": "Michael",
-            "lastName": "Miller",
-            "email": "michael.miller@example.com",
-            "phone": "555-444-3333",
-            "department": "Human Centered Design & Engineering"
-        }
-    ],
-    "teams": [
-        {
-            "id": 1,
-            "name": "Team Alpha",
-            "project": "Project A",
-            "supervisorId": 1
-        },
-        {
-            "id": 2,
-            "name": "Team Beta",
-            "project": "Project B",
-            "supervisorId": 2
-        },
-        {
-            "id": 3,
-            "name": "Team Gamma",
-            "project": "Project C",
-            "supervisorId": 3
-        },
-        {
-            "id": 4,
-            "name": "Team Delta",
-            "project": "Project D",
-            "supervisorId": 4
-        },
-        {
-            "id": 5,
-            "name": "Team Epsilon",
-            "project": "Project E",
-            "supervisorId": 5
-        }
-    ],
-    "projects": [
-        {
-            "id": 1,
-            "name": "Project A",
-            "description": "This is a description of Project A.",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01",
-            "teamId": 1
-        },
-        {
-            "id": 2,
-            "name": "Project B",
-            "description": "This is a description of Project B.",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01",
-            "teamId": 2
-        },
-        {
-            "id": 3,
-            "name": "Project C",
-            "description": "This is a description of Project C.",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01",
-            "teamId": 3
-        },
-        {
-            "id": 4,
-            "name": "Project D",
-            "description": "This is a description of Project D.",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01",
-            "teamId": 4
-        },
-        {
-            "id": 5,
-            "name": "Project E",
-            "description": "This is a description of Project E.",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01",
-            "teamId": 5
-        }
-    ],
-    "absences": [
-        {
-            "id": 1,
-            "internId": 1,
-            "date": "2022-01-15",
-            "reason": "Sick leave"
-        },
-        {
-            "id": 2,
-            "internId": 2,
-            "date": "2022-02-20",
-            "reason": "Personal leave"
-        },
-        {
-            "id": 3,
-            "internId": 3,
-            "date": "2022-03-25",
-            "reason": "Vacation"
-        },
-        {
-            "id": 4,
-            "internId": 4,
-            "date": "2022-04-30",
-            "reason": "Sick leave"
-        },
-        {
-            "id": 5,
-            "internId": 5,
-            "date": "2022-05-05",
-            "reason": "Personal leave"
-        }
-    ]
+  "interns": [
+    {
+      "id": 1,
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@example.com",
+      "phone": "123-456-7890",
+      "birthday": "1990-01-01",
+      "university": "Harvard University",
+      "major": "Computer Science",
+      "startDate": "2022-01-01",
+      "endDate": "2022-06-01"
+    },
+    {
+      "id": 2,
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "email": "jane.doe@example.com",
+      "phone": "098-765-4321",
+      "birthday": "1992-02-02",
+      "university": "Stanford University",
+      "major": "Information Systems",
+      "startDate": "2022-01-01",
+      "endDate": "2022-06-01"
+    },
+    {
+      "id": 3,
+      "firstName": "Bob",
+      "lastName": "Smith",
+      "email": "bob.smith@example.com",
+      "phone": "111-222-3333",
+      "birthday": "1991-03-03",
+      "university": "MIT",
+      "major": "Software Engineering",
+      "startDate": "2022-01-01",
+      "endDate": "2022-06-01"
+    },
+    {
+      "id": 4,
+      "firstName": "Alice",
+      "lastName": "Johnson",
+      "email": "alice.johnson@example.com",
+      "phone": "222-333-4444",
+      "birthday": "1993-04-04",
+      "university": "University of California, Berkeley",
+      "major": "Data Science",
+      "startDate": "2022-01-01",
+      "endDate": "2022-06-01"
+    },
+    {
+      "id": 5,
+      "firstName": "Charlie",
+      "lastName": "Brown",
+      "email": "charlie.brown@example.com",
+      "phone": "333-444-5555",
+      "birthday": "1994-05-05",
+      "university": "Carnegie Mellon University",
+      "major": "Artificial Intelligence",
+      "startDate": "2022-01-01",
+      "endDate": "2022-06-01"
+    },
+    {
+      "id": 6,
+      "firstName": "David",
+      "lastName": "Williams",
+      "email": "david.williams@example.com",
+      "phone": "444-555-6666",
+      "birthday": "1995-06-06",
+      "university": "University of Washington",
+      "major": "Human Centered Design & Engineering",
+      "startDate": "2022-01-01",
+      "endDate": "2022-06-01"
+    },
+    {
+      "id": 7,
+      "firstName": "Emily",
+      "lastName": "Miller",
+      "email": "emily.miller@example.com",
+      "phone": "555-666-7777",
+      "birthday": "1996-07-07",
+      "university": "University of Illinois Urbana-Champaign",
+      "major": "Information Sciences",
+      "startDate": "2022-01-01",
+      "endDate": "2022-06-01"
+    },
+    {
+      "id": 8,
+      "firstName": "Frank",
+      "lastName": "Davis",
+      "email": "frank.davis@example.com",
+      "phone": "666-777-8888",
+      "birthday": "1997-08-08",
+      "university": "University of Texas at Austin",
+      "major": "Computer Engineering",
+      "startDate": "2022-01-01",
+      "endDate": "2022-06-01"
+    },
+    {
+      "id": 9,
+      "firstName": "Grace",
+      "lastName": "Wilson",
+      "email": "grace.wilson@example.com",
+      "phone": "777-888-9999",
+      "birthday": "1998-09-09",
+      "university": "University of Michigan",
+      "major": "Information Technology",
+      "startDate": "2022-01-01",
+      "endDate": "2022-06-01"
+    }
+  ],
+  "supervisors": [
+    {
+      "id": 1,
+      "firstName": "William",
+      "lastName": "Johnson",
+      "email": "william.johnson@example.com",
+      "phone": "999-888-7777",
+      "department": "Software Development"
+    },
+    {
+      "id": 2,
+      "firstName": "Elizabeth",
+      "lastName": "Smith",
+      "email": "elizabeth.smith@example.com",
+      "phone": "888-777-6666",
+      "department": "Data Science"
+    },
+    {
+      "id": 3,
+      "firstName": "James",
+      "lastName": "Brown",
+      "email": "james.brown@example.com",
+      "phone": "777-666-5555",
+      "department": "Information Systems"
+    },
+    {
+      "id": 4,
+      "firstName": "Jennifer",
+      "lastName": "Davis",
+      "email": "jennifer.davis@example.com",
+      "phone": "666-555-4444",
+      "department": "Artificial Intelligence"
+    },
+    {
+      "id": 5,
+      "firstName": "Michael",
+      "lastName": "Miller",
+      "email": "michael.miller@example.com",
+      "phone": "555-444-3333",
+      "department": "Human Centered Design & Engineering"
+    }
+  ],
+  "teams": [
+    {
+      "id": 1,
+      "name": "Team Alpha",
+      "project": "Project A",
+      "supervisorId": 1
+    },
+    {
+      "id": 2,
+      "name": "Team Beta",
+      "project": "Project B",
+      "supervisorId": 2
+    },
+    {
+      "id": 3,
+      "name": "Team Gamma",
+      "project": "Project C",
+      "supervisorId": 3
+    },
+    {
+      "id": 4,
+      "name": "Team Delta",
+      "project": "Project D",
+      "supervisorId": 4
+    },
+    {
+      "id": 5,
+      "name": "Team Epsilon",
+      "project": "Project E",
+      "supervisorId": 5
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "name": "Project A",
+      "description": "This is a description of Project A.",
+      "startDate": "2022-01-01",
+      "endDate": "2022-06-01",
+      "teamId": 1
+    },
+    {
+      "id": 2,
+      "name": "Project B",
+      "description": "This is a description of Project B.",
+      "startDate": "2022-01-01",
+      "endDate": "2022-06-01",
+      "teamId": 2
+    },
+    {
+      "id": 3,
+      "name": "Project C",
+      "description": "This is a description of Project C.",
+      "startDate": "2022-01-01",
+      "endDate": "2022-06-01",
+      "teamId": 3
+    },
+    {
+      "id": 4,
+      "name": "Project D",
+      "description": "This is a description of Project D.",
+      "startDate": "2022-01-01",
+      "endDate": "2022-06-01",
+      "teamId": 4
+    },
+    {
+      "id": 5,
+      "name": "Project E",
+      "description": "This is a description of Project E.",
+      "startDate": "2022-01-01",
+      "endDate": "2022-06-01",
+      "teamId": 5
+    }
+  ],
+  "absences": [
+    {
+      "id": 1,
+      "internId": 1,
+      "date": "2022-01-15",
+      "reason": "Sick leave"
+    },
+    {
+      "id": 2,
+      "internId": 2,
+      "date": "2022-02-20",
+      "reason": "Personal leave"
+    },
+    {
+      "id": 3,
+      "internId": 3,
+      "date": "2022-03-25",
+      "reason": "Vacation"
+    },
+    {
+      "id": 4,
+      "internId": 4,
+      "date": "2022-04-30",
+      "reason": "Sick leave"
+    },
+    {
+      "id": 5,
+      "internId": 5,
+      "date": "2022-05-05",
+      "reason": "Personal leave"
+    }
+  ]
 }
