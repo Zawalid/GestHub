@@ -61,7 +61,7 @@ function Offers() {
               ))}
             </div>
           ) : (
-            <div className="w-full h-full flex gap-2 justify-center items-center font-bold text-xl text-red-600">
+            <div className="w-full h-full min-h-32 flex gap-2 justify-center items-center font-bold text-xl text-red-600">
               No offers available <MdError />
             </div>
           )}
