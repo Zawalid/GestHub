@@ -2,7 +2,6 @@
 import { cloneElement, useRef } from "react";
 
 import { Sort } from "./Sort";
-import { formatToCamelCase } from "@/utils/helpers";
 import { useTable } from ".";
 
 export function Table({ actions }) {
@@ -27,7 +26,7 @@ export function Table({ actions }) {
         </tbody>
       );
     }
-    if (error)
+    if (error) {
       return (
         <tbody className="flex absolute h-[88%] w-full items-center justify-center text-text-tertiary">
           <tr>
@@ -37,7 +36,8 @@ export function Table({ actions }) {
           </tr>
         </tbody>
       );
-    if (rows?.length === 0)
+    }
+    if (rows?.length === 0) {
       return (
         <tbody className="flex absolute h-[88%] w-full items-center justify-center text-text-tertiary">
           <tr>
@@ -45,6 +45,7 @@ export function Table({ actions }) {
           </tr>
         </tbody>
       );
+    }
     return (
       <tbody className="text-sm h-fit font-medium divide-y divide-border text-text-primary">
         {rows?.map((row) => (
@@ -69,10 +70,10 @@ export function Table({ actions }) {
           <tr>
             {columns
               .filter((c) => c.visible)
-              .map(({ label }) => (
-                <Column key={label} column={label} />
+              .map((column) => (
+                <Column key={column.displayLabel} column={column} />
               ))}
-            <Column hide={true} />
+            {actions && <Column hide={true} />}
           </tr>
         </thead>
         {render()}
@@ -91,11 +92,13 @@ function Row({ row, visibleColumns, actions }) {
   return (
     <tr>
       {visibleColumns.map((col) => (
-        <td key={col.label} className="px-6 py-4">
-          {row[formatToCamelCase(col.label)]}
+        <td key={col.displayLabel} className="px-6 py-4">
+          {row[col.key]}
         </td>
       ))}
-      <td className="px-6 py-4">{cloneElement(actions, { row })}</td>
+      {actions && (
+        <td className="px-6 py-4">{cloneElement(actions, { row })}</td>
+      )}
     </tr>
   );
 }
@@ -105,8 +108,8 @@ function Skeleton({ columns }) {
     <tr className="animate-pulse">
       {columns
         .filter((c) => c.visible)
-        .map(({ label }) => (
-          <td key={label}>
+        .map(({ displayLabel }) => (
+          <td key={displayLabel}>
             <div className="bg-background-secondary px-6 py-4 rounded-md"></div>
           </td>
         ))}

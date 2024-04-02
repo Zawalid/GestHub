@@ -28,8 +28,8 @@ const exportAsPdf = (data, config) => {
     },
   });
 
-  doc.save(filename);
-  // doc.output("dataurlnewwindow");
+  // doc.save(`${filename}.pdf`);
+  doc.output("dataurlnewwindow");
 };
 
 //* Download
@@ -39,11 +39,7 @@ export function Download() {
   return (
     <DropDown
       toggler={
-        <Button
-          display="with-icon"
-          type="outline"
-          color="tertiary"
-        >
+        <Button display="with-icon" type="outline" color="tertiary">
           <MdDownload />
           Download
         </Button>

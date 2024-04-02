@@ -2,6 +2,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addIntern, deleteIntern, updateIntern } from "./api/internsAPI";
 import { toast } from "sonner";
 import { useRef } from "react";
+import {
+  addSupervisor,
+  deleteSupervisor,
+  updateSupervisor,
+} from "./api/supervisorsAPI";
 
 const useMutate = ({
   queryKey,
@@ -35,6 +40,7 @@ const useMutate = ({
   return { mutate, isPending, error, isSuccess };
 };
 
+// Interns
 export const useAddIntern = () =>
   useMutate({
     queryKey: ["interns", "add"],
@@ -60,4 +66,32 @@ export const useDeleteIntern = () =>
     loadingMessage: "Deleting intern...",
     successMessage: "Intern deleted successfully",
     errorMessage: "Failed to delete intern",
+  });
+
+// Supervisors
+export const useAddSupervisor = () =>
+  useMutate({
+    queryKey: ["supervisors", "add"],
+    mutationFn: addSupervisor,
+    loadingMessage: "Adding supervisor...",
+    successMessage: "Supervisor added successfully",
+    errorMessage: "Failed to add supervisor",
+  });
+
+export const useUpdateSupervisor = () =>
+  useMutate({
+    queryKey: ["supervisors", "update"],
+    mutationFn: ({ id, data }) => updateSupervisor(id, data),
+    loadingMessage: "Updating supervisor...",
+    successMessage: "Supervisor updated successfully",
+    errorMessage: "Failed to update supervisor",
+  });
+
+export const useDeleteSupervisor = () =>
+  useMutate({
+    queryKey: ["supervisors", "delete"],
+    mutationFn: deleteSupervisor,
+    loadingMessage: "Deleting supervisor...",
+    successMessage: "Supervisor deleted successfully",
+    errorMessage: "Failed to delete supervisor",
   });

@@ -1,5 +1,5 @@
 import { PiGridFourFill, PiListBold } from "react-icons/pi";
-import { Button } from "../ui";
+import { Button } from "./ui";
 
 export function ViewControl({ view = "list", setView }) {
   return (

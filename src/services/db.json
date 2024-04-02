@@ -13,18 +13,6 @@
       "endDate": "2022-06-01"
     },
     {
-      "id": 2,
-      "firstName": "Jane",
-      "lastName": "Doe",
-      "email": "jane.doe@example.com",
-      "phone": "098-765-4321",
-      "birthday": "1992-02-02",
-      "university": "Stanford University",
-      "major": "Information Systems",
-      "startDate": "2022-01-01",
-      "endDate": "2022-06-01"
-    },
-    {
       "id": 3,
       "firstName": "Bob",
       "lastName": "Smith",
@@ -231,12 +219,6 @@
       "internId": 1,
       "date": "2022-01-15",
       "reason": "Sick leave"
-    },
-    {
-      "id": 2,
-      "internId": 2,
-      "date": "2022-02-20",
-      "reason": "Personal leave"
     },
     {
       "id": 3,

@@ -4,11 +4,11 @@ import {
   IoEyeOutline,
   IoTrashOutline,
   MdDriveFileRenameOutline,
-} from "@/components/ui/icons";
+} from "@/components/ui/Icons";
 import { useTable } from ".";
 
 export function Actions({ onUpdate, onDelete, row }) {
-  const { showForm, confirmDelete } = useTable();
+  const { showForm, confirmDelete,resourceName } = useTable();
 
   return (
     <DropDown
@@ -28,9 +28,9 @@ export function Actions({ onUpdate, onDelete, row }) {
           showForm({
             defaultValues: row,
             onSubmit: (data) => onUpdate({ id: row.id, data }),
-            submitButtonText: "Save Changes",
-            heading: `Update Intern #${row.id}`,
             isOpen: true,
+            submitButtonText: "Save Changes",
+            heading: `Update ${resourceName} #${row.id}`,
           })
         }
       >
@@ -39,12 +39,7 @@ export function Actions({ onUpdate, onDelete, row }) {
       </DropDown.Option>
       <DropDown.Option
         onClick={() =>
-          confirmDelete({
-            isOpen: true,
-            title: "Delete Intern",
-            message: "Are you sure you want to delete this intern ?",
-            onConfirm: () => onDelete(row.id),
-          })
+          confirmDelete({ isOpen: true, onConfirm: () => onDelete(row.id) })
         }
       >
         <IoTrashOutline />

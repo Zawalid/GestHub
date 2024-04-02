@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { TableContext } from "./TableLayout";
+import { TableContext } from "./TableProvider";
 
-export { TableLayout } from "./TableLayout";
+export { TableProvider as Table } from "./TableProvider";
 
 export function useTable() {
   const context = useContext(TableContext);
