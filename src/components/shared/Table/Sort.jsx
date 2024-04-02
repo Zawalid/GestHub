@@ -3,10 +3,9 @@ import {
   IoArrowDownOutline,
   IoEyeOffOutline,
   FaSort,
-} from "../../ui/Icons";
+} from "@/components/ui/Icons";
 
-import { Button, DropDown } from "../../ui";
-import { formatToCamelCase } from "../../../utils/helpers";
+import { Button, DropDown } from "@/components/ui";
 import { useTable } from ".";
 
 const icons = {
@@ -17,18 +16,14 @@ const icons = {
 export function Sort({ column }) {
   const { sortBy, direction, onSort, onChangeView } = useTable();
 
-  const sort = (dir) => onSort(formatToCamelCase(column), dir);
+  const sort = (dir) => onSort(column.key, dir);
 
   return (
     <DropDown
       toggler={
         <Button color="tertiary" type="transparent" display="with-icon">
-          {column === "id" ? "ID" : column}
-          {sortBy === formatToCamelCase(column) ? (
-            icons[direction]
-          ) : (
-            <FaSort size={12} />
-          )}
+          {column.displayLabel}
+          {sortBy === column.key ? icons[direction] : <FaSort size={12} />}
         </Button>
       }
       options={{ placement: "bottom-end", className: "w-28 text-xs" }}
@@ -41,12 +36,14 @@ export function Sort({ column }) {
         {icons.desc}
         Desc
       </DropDown.Option>
-      <DropDown.Divider />
       {column === "id" || (
-        <DropDown.Option onClick={() => onChangeView(column)}>
-          <IoEyeOffOutline />
-          Hide
-        </DropDown.Option>
+        <>
+          <DropDown.Divider />
+          <DropDown.Option onClick={() => onChangeView(column)}>
+            <IoEyeOffOutline />
+            Hide
+          </DropDown.Option>
+        </>
       )}
     </DropDown>
   );

@@ -1,24 +1,24 @@
-import { useInterns } from "@/services/queries";
+import { useSupervisors } from "@/services/queries";
 import {
-  useAddIntern,
-  useDeleteIntern,
-  useUpdateIntern,
+  useAddSupervisor,
+  useDeleteSupervisor,
+  useUpdateSupervisor,
 } from "@/services/mutations";
 import TableLayout from "@/layouts/TableLayout";
 
-export default function InternsList() {
-  const { interns, isLoading, error } = useInterns();
-  const { mutate: addIntern } = useAddIntern();
-  const { mutate: updateIntern } = useUpdateIntern();
-  const { mutate: deleteIntern } = useDeleteIntern();
+export default function SupervisorsList() {
+  const { supervisors, isLoading, error } = useSupervisors();
+  const { mutate: addSupervisor } = useAddSupervisor();
+  const { mutate: updateSupervisor } = useUpdateSupervisor();
+  const { mutate: deleteSupervisor } = useDeleteSupervisor();
 
   return (
     <div className="flex h-full gap-5 flex-col">
       <TableLayout
-        data={interns}
+        data={supervisors}
+        resourceName="Supervisor"
         isLoading={isLoading}
         error={error}
-        resourceName="Intern"
         columns={[
           { key: "id", displayLabel: "ID", visible: true, type: "number" },
           {
@@ -46,34 +46,10 @@ export default function InternsList() {
             type: "string",
           },
           {
-            key: "birthday",
-            displayLabel: "Birthday",
-            visible: true,
-            type: "date",
-          },
-          {
-            key: "university",
-            displayLabel: "University",
+            key: "department",
+            displayLabel: "Department",
             visible: true,
             type: "string",
-          },
-          {
-            key: "major",
-            displayLabel: "Major",
-            visible: true,
-            type: "string",
-          },
-          {
-            key: "startDate",
-            displayLabel: "Start Date",
-            visible: true,
-            type: "date",
-          },
-          {
-            key: "endDate",
-            displayLabel: "End Date",
-            visible: true,
-            type: "date",
           },
         ]}
         formFields={[
@@ -95,9 +71,8 @@ export default function InternsList() {
             label: "Phone Number",
           },
           {
-            name: "birthday",
-            label: "Birthday",
-            type: "date",
+            name: "department",
+            label: "Department",
           },
           {
             name: "password",
@@ -113,12 +88,12 @@ export default function InternsList() {
           },
         ]}
         downloadOptions={{
-          csvFileName: "Interns",
-          pdfFileName: "Interns",
+          csvFileName: "Supervisors",
+          pdfFileName: "Supervisors",
         }}
-        onAdd={addIntern}
-        onUpdate={updateIntern}
-        onDelete={deleteIntern}
+        onAdd={addSupervisor}
+        onUpdate={updateSupervisor}
+        onDelete={deleteSupervisor}
       />
     </div>
   );

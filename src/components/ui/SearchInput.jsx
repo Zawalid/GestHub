@@ -2,7 +2,7 @@ import { useState } from "react";
 import { HiMiniXMark } from "./Icons";
 import { InputField } from "./InputField";
 
-export function SearchInput({ placeholder, query, onChange, className = "" }) {
+export function SearchInput({ placeholder, query, onChange, className = "",...props }) {
   const [searchQuery, setSearchQuery] = useState(query || "");
 
   return (
@@ -23,6 +23,7 @@ export function SearchInput({ placeholder, query, onChange, className = "" }) {
             onChange(query);
           }}
           name="search"
+          {...props}
         >
           <button
             className={`absolute right-1.5 top-1/2 -translate-y-1/2 text-xl text-text-tertiary transition-transform duration-300 ${

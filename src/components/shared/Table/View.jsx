@@ -14,11 +14,14 @@ export function View() {
       options={{ className: "w-40", shouldCloseOnClick: false }}
     >
       {columns
-        .filter((c) => c.label !== "id")
-        .map(({ label, visible }) => (
-          <DropDown.Option key={label} className="justify-between">
-            {label}
-            <CheckBox checked={visible} onChange={() => onChangeView(label)} />
+        .filter((c) => c.displayLabel !== "ID")
+        .map(({ displayLabel, visible }) => (
+          <DropDown.Option key={displayLabel} className="justify-between">
+            {displayLabel}
+            <CheckBox
+              checked={visible}
+              onChange={() => onChangeView(displayLabel)}
+            />
           </DropDown.Option>
         ))}
     </DropDown>

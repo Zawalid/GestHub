@@ -28,13 +28,13 @@ const exportAsPdf = (data, config) => {
     },
   });
 
-  doc.save(filename);
-  // doc.output("dataurlnewwindow");
+  // doc.save(`${filename}.pdf`);
+  doc.output("dataurlnewwindow");
 };
 
 //* Download
 export function Download() {
-  const { data, csvConfig, pdfConfig } = useTable();
+  const { data, csvConfig, pdfConfig, isLoading } = useTable();
 
   return (
     <DropDown
@@ -44,6 +44,7 @@ export function Download() {
           Download
         </Button>
       }
+      togglerDisabled={isLoading}
       options={{
         className: "w-40",
       }}
