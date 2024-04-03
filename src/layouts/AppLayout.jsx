@@ -29,7 +29,7 @@ function Main() {
 
   return (
     <main
-      className="flex-1  bg-background-primary"
+      className="flex-1 overflow-x-hidden grid-rows-[min-content_auto] pr-1 sm:pr-3 overflow-y-auto grid gap-5 bg-background-primary"
       ref={parent}
     >
       <Outlet />

@@ -28,7 +28,7 @@ export function Table({ actions }) {
     }
     if (error) {
       return (
-        <tbody className="flex absolute h-[88%] w-full items-center justify-center text-text-tertiary">
+        <tbody className="flex absolute h-[85%] w-full items-center justify-center text-text-tertiary">
           <tr>
             <td className="text-red-600">
               {error.message || "Something went wrong! Please try again."}
@@ -39,7 +39,7 @@ export function Table({ actions }) {
     }
     if (rows?.length === 0) {
       return (
-        <tbody className="flex absolute h-[88%] w-full items-center justify-center text-text-tertiary">
+        <tbody className="flex absolute h-[85%] w-full items-center justify-center text-text-tertiary">
           <tr>
             <td>No results found</td>
           </tr>
