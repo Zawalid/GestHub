@@ -14,12 +14,12 @@ import { Actions } from "./Actions";
 import { NewRecord } from "./NewRecord";
 
 //* Methods
-Array.prototype.search = function (query) {
+Array.prototype.search = function (query, fieldsToSearch) {
   if (!query) return this;
 
   return this.filter((el) => {
-    const valueToSearch = `${el?.firstName} ${el?.lastName} ${el?.email}`;
-
+    const valueToSearch = fieldsToSearch.map((field) => el[field]).join(" ");
+    console.log(valueToSearch);
     return valueToSearch
       ?.trim()
       .toLowerCase()
@@ -86,15 +86,18 @@ export const TableContext = createContext();
  * @property {string} resourceName - The name of the resource being displayed. @example: "Users"
  * @property {boolean} isLoading - A flag indicating if the data is currently being loaded.
  * @property {Error} [error] - An error object, if an error occurred while loading the data.
- * @property {Array} tableColumns - The columns to be displayed in the table. 
+ * @property {Array} columns - The columns to be displayed in the table.
  *    @example: [{ key: "id", displayLabel: "ID", visible: true,type : "number" },{...}]
- * @property {Object} tableFilters - The filters to be applied to the table data.
+ * @property {Object} filters - The filters to be applied to the table data.
  *     @example: { status: [{ value: "Active", checked: true },{ value: "Inactive", checked: true },{...} ],
- * @property {Array} formFields - The fields to be displayed in the form. 
+ * @property {Array} formFields - The fields to be displayed in the form.
  *    @example: [{ name: "lastName", label: "Last Name" },{  name: "email",  type: "email",  label: "Email Address"},{...}]
- * @property {Object} downloadOptions - The options for downloading the table data. 
+ * @property {Object} downloadOptions - The options for downloading the table data.
  *    @example: {csvFileName: "Interns-csv", pdfFileName: "Interns"}
-
+ * @property {Boolean} displayAllData - A indicating if the data should be displayed at once with no pagination
+/**
+ * @property {Array} fieldsToSearch - An array of field names that should be searched when performing a search operation.
+ *    @example ["firstName","lastName","email"]
  */
 
 export function TableProvider({
@@ -106,7 +109,9 @@ export function TableProvider({
   columns: tableColumns,
   filters: tableFilters,
   formFields,
+  fieldsToSearch,
   downloadOptions,
+  displayAllData,
 }) {
   // State
   const [data, setData] = useState(tableData);
@@ -128,6 +133,7 @@ export function TableProvider({
     confirmText: "Delete",
     onConfirm: () => {},
   });
+  const [limit, setLimit] = useState(PAGE_LIMIT);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("search") || "";
   const page = Number(searchParams.get("page")) || 1;
@@ -136,12 +142,12 @@ export function TableProvider({
 
   // Variables
   const rows = data
-    ?.search(query)
+    ?.search(query, fieldsToSearch)
     .customFilter(filters)
     .customSort(sortBy, direction, columns);
 
   const totalItems = rows?.length;
-  const totalPages = Math.ceil(totalItems / PAGE_LIMIT);
+  const totalPages = Math.ceil(totalItems / limit);
 
   const excludedFields = columns
     .filter((c) => !c.visible)
@@ -172,10 +178,53 @@ export function TableProvider({
       searchParams.delete("sort");
       searchParams.delete("dir");
     }
+    if (!query) searchParams.delete("search");
     setSearchParams(searchParams);
-  }, [direction, page, searchParams, sortBy, setSearchParams]);
+  }, [direction, page, searchParams, sortBy, query, setSearchParams]);
 
   // Handlers
+
+  const onSearch = (query) => {
+    searchParams.set("search", query);
+    searchParams.delete("page");
+    setSearchParams(searchParams);
+  };
+
+  const onNextPage = () => {
+    if (page === totalPages) return;
+    searchParams.set("page", page + 1);
+    setSearchParams(searchParams);
+  };
+
+  const onPrevPage = () => {
+    if (page === 1) return;
+    searchParams.set("page", page - 1);
+    setSearchParams(searchParams);
+  };
+
+  const onChangeLimit = (limit) => setLimit(limit)
+
+  const onFilter = (filter) => setFilters((prev) => ({ ...prev, ...filter }));
+
+  const onChangeView = (column, showAll) => {
+    if (showAll)
+      return setColumns(columns.map((c) => ({ ...c, visible: true })));
+
+    setColumns(
+      columns.map((c) => {
+        const visible =
+          columns.filter((co) => co.visible).length === 1 ? true : !c.visible;
+
+        return c.displayLabel === column ? { ...c, visible } : c;
+      })
+    );
+  };
+
+  const onSort = (column, direction) => {
+    searchParams.set("sort", column);
+    searchParams.set("dir", direction);
+    setSearchParams(searchParams);
+  };
 
   const showForm = (options) => {
     setFormOptions((prev) => ({
@@ -213,43 +262,6 @@ export function TableProvider({
     }));
   };
 
-  const onSearch = (query) => {
-    if (query) {
-      searchParams.set("search", query);
-      searchParams.delete("page");
-    } else searchParams.delete("s");
-
-    setSearchParams(searchParams);
-  };
-
-  const onNextPage = () => {
-    if (page === totalPages) return;
-    searchParams.set("page", page + 1);
-    setSearchParams(searchParams);
-  };
-
-  const onPrevPage = () => {
-    if (page === 1) return;
-    searchParams.set("page", page - 1);
-    setSearchParams(searchParams);
-  };
-
-  const onFilter = (filter) => setFilters((prev) => ({ ...prev, ...filter }));
-
-  const onChangeView = (column) => {
-    setColumns(
-      columns.map((c) =>
-        c.displayLabel === column ? { ...c, visible: !c.visible } : c
-      )
-    );
-  };
-
-  const onSort = (column, direction) => {
-    searchParams.set("sort", column);
-    searchParams.set("dir", direction);
-    setSearchParams(searchParams);
-  };
-
   // Context value
   const context = {
     // data
@@ -259,7 +271,7 @@ export function TableProvider({
     error,
     // table
     columns,
-    rows: rows?.paginate(page, PAGE_LIMIT),
+    rows: displayAllData ? rows : rows?.paginate(page, limit),
     // search
     query,
     onSearch,
@@ -267,6 +279,8 @@ export function TableProvider({
     totalItems,
     totalPages,
     page,
+    limit,
+    onChangeLimit,
     onNextPage,
     onPrevPage,
     // filter

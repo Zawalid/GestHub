@@ -87,6 +87,7 @@ export default function SupervisorsList() {
             passwordField: "password",
           },
         ]}
+        fieldsToSearch={["firstName","lastName","email","department"]}
         downloadOptions={{
           csvFileName: "Supervisors",
           pdfFileName: "Supervisors",

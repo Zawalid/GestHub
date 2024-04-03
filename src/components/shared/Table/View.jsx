@@ -1,5 +1,5 @@
 import { useTable } from ".";
-import { BsTable } from "react-icons/bs";
+import { BsTable, BsListCheck } from "react-icons/bs";
 import { Button, CheckBox, DropDown } from "../../ui";
 
 export function View() {
@@ -13,17 +13,34 @@ export function View() {
       }
       options={{ className: "w-40", shouldCloseOnClick: false }}
     >
-      {columns
-        .filter((c) => c.displayLabel !== "ID")
-        .map(({ displayLabel, visible }) => (
-          <DropDown.Option key={displayLabel} className="justify-between">
+      <DropDown.Option
+        onClick={() => onChangeView(null, true)}
+        disabled={columns.filter((c) => c.visible).length === columns.length}
+      >
+        <BsListCheck />
+        Check All
+      </DropDown.Option>
+      <DropDown.Divider />
+
+      {columns.map(({ displayLabel, visible }) => {
+        const disabled =
+          visible && columns.filter((c) => c.visible).length === 1;
+
+        return (
+          <DropDown.Option
+            key={displayLabel}
+            className="justify-between"
+            disabled={disabled}
+          >
             {displayLabel}
             <CheckBox
               checked={visible}
               onChange={() => onChangeView(displayLabel)}
+              disabled={disabled}
             />
           </DropDown.Option>
-        ))}
+        );
+      })}
     </DropDown>
   );
 }

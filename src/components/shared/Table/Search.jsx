@@ -7,7 +7,7 @@ export function Search() {
   return (
     <SearchInput
       placeholder="Search"
-      className="flex-1"
+      className="flex-1 md:w-[300px]"
       query={query}
       onChange={onSearch}
       disabled={isLoading}

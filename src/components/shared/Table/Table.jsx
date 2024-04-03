@@ -30,7 +30,7 @@ export function Table({ actions }) {
       return (
         <tbody className="flex absolute h-[88%] w-full items-center justify-center text-text-tertiary">
           <tr>
-            <td>
+            <td className="text-red-600">
               {error.message || "Something went wrong! Please try again."}
             </td>
           </tr>
@@ -81,6 +81,7 @@ export function Table({ actions }) {
     </div>
   );
 }
+
 function Column({ column, hide }) {
   return (
     <th scope="col" className="p-2">

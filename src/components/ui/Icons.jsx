@@ -7,10 +7,11 @@ export {
   IoSearchOutline,
   IoCalendarNumberOutline,
   IoChevronDownOutline,
+  IoChevronForwardOutline,
   IoArrowUpOutline,
   IoArrowDownOutline,
-  IoEyeOffOutline,
   IoEllipsisHorizontalSharp,
+  IoEyeOffOutline,
   IoEyeOutline,
   IoTrashOutline,
   IoSettingsOutline 
