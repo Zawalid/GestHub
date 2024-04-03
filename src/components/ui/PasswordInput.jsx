@@ -8,9 +8,9 @@ export const PasswordInput = forwardRef(({ ...props }, ref) => {
     <InputField
       type={showPassword ? "text" : "password"}
       name="password"
-      {...props}
       placeholder="••••••••••••"
       ref={ref}
+      {...props}
     >
       <button
         type="button"

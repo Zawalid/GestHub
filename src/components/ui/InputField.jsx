@@ -83,7 +83,6 @@ export const InputField = forwardRef(
             )}
             ref={ref}
             {...props}
-            value={props.value || ""}
           />
           {children}
         </div>

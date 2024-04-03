@@ -69,7 +69,7 @@
         "label": "Confirme Password",
         "placeholder": ""
       },
-      "submit": "register"
+      "submit": "Register"
     }
   },
   "hero": {

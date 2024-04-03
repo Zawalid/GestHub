@@ -12,9 +12,10 @@ export function Pagination() {
     onNextPage,
     onPrevPage,
     isLoading,
+    error
   } = useTable();
 
-  if (totalItems === 0 || isLoading) return null;
+  if (totalItems === 0 || isLoading || error) return null;
 
   return (
     <div className="flex gap-3 flex-col sm:flex-row px-6 py-2 sm:items-center border-t border-border mt-auto justify-between">
@@ -27,7 +28,7 @@ export function Pagination() {
               size="small"
               className=" bg-background-secondary text-text-primary"
             >
-              5
+              {limit}
             </DropDown.Option>
           }
         >
