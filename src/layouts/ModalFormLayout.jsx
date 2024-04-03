@@ -1,12 +1,6 @@
 import { Button } from "@/components/ui";
-import { DevTool } from "@hookform/devtools";
 
-export function ModalFormLayout({
-  children,
-  submitButton,
-  cancelButton,
-  control,
-}) {
+export function ModalFormLayout({ children, submitButton, cancelButton }) {
   return (
     <>
       <div className="flex-1 overflow-auto">{children}</div>
@@ -18,8 +12,6 @@ export function ModalFormLayout({
         )}
         <Button {...submitButton}>{submitButton.text || "Save Changes"}</Button>
       </div>
-
-      {/* {control && <DevTool control={control} />} */}
     </>
   );
 }

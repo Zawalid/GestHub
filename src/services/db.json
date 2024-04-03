@@ -121,13 +121,13 @@
       "id": 11
     },
     {
-      "firstName": "f",
-      "lastName": "",
-      "email": "",
-      "phone": "",
-      "birthday": "",
-      "password": "Abcd1234",
-      "confirmPassword": "Abcd1234",
+      "firstName": "Walid",
+      "lastName": "dsdsd",
+      "email": "walid.zakan@gmail.com",
+      "phone": "0682208346",
+      "birthday": "2024-05-11",
+      "password": "abcaS12345d?d",
+      "confirmPassword": "abcaS12345d?d",
       "id": 12
     }
   ],
@@ -173,17 +173,6 @@
       "department": "Human Centered Design & Engineering"
     },
     {
-      "firstName": "walid",
-      "lastName": "zakan",
-      "email": "walid.zakan@gmail.com",
-      "phone": "0682208346",
-      "birthday": "",
-      "department": "hhhhhhhhhh",
-      "password": "9pt-f7A-QTP-WBe",
-      "confirmPassword": "9pt-f7A-QTP-WBe",
-      "id": 6
-    },
-    {
       "firstName": "Walid",
       "lastName": "Zakan",
       "email": "walid.zakan@gmail.com",
@@ -202,6 +191,16 @@
       "password": "Abcd123??",
       "confirmPassword": "Abcd123??",
       "id": 8
+    },
+    {
+      "firstName": "Walid",
+      "lastName": "Zakan",
+      "email": "walid.zakan@gmail.com",
+      "phone": "0682208346",
+      "department": "abcaS12345d?",
+      "password": "abcaS12345d?",
+      "confirmPassword": "abcaS12345d?",
+      "id": 9
     }
   ],
   "teams": [

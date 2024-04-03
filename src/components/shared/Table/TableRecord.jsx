@@ -2,6 +2,7 @@ import { Modal } from "@/components/ui";
 import { useForm } from "@/hooks/useForm";
 import { ModalFormLayout } from "@/layouts/ModalFormLayout";
 import { useTable } from ".";
+import { useEffect } from "react";
 
 export function TableRecord() {
   const { formOptions: options } = useTable();
@@ -20,13 +21,18 @@ export function TableRecord() {
 
   const {
     Form,
-    options: { isUpdated, isValid, handleSubmit, reset },
+    options: { isUpdated, isValid, handleSubmit, reset, updateValues },
   } = useForm({
     defaultValues,
     fields,
     gridLayout,
     onSubmit,
   });
+
+  useEffect(() => {
+    updateValues(defaultValues);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValues]);
 
   return (
     <Modal

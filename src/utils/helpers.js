@@ -9,7 +9,6 @@ export const formatTime = (time) => {
 };
 
 export const objectDeepEquals = (a, b) => {
-  console.log(a,b,typeof a, typeof b)
   if(!a && !b) return true;
   if (a === b) return true;
   if (typeof a !== "object" || typeof b !== "object") return false;

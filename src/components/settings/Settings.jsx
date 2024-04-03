@@ -62,7 +62,7 @@ function Content({ currentTab }) {
   const [parent] = useAutoAnimate({ duration: 300 });
 
   const tabs = {
-    // profile: <Profile />,
+    profile: <Profile />,
     password: <Password />,
     // general: <General />,
   };

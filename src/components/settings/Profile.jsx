@@ -55,7 +55,7 @@ export default function Profile() {
     <ModalFormLayout
       submitButton={{
         onClick: handleSubmit,
-        // disabled: !isUpdated || !isValid,
+        disabled: !isUpdated || !isValid,
       }}
       cancelButton={{
         onClick: reset,
@@ -75,5 +75,4 @@ export default function Profile() {
       </div>
     </ModalFormLayout>
   );
-  return null
 }

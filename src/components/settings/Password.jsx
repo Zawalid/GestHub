@@ -1,8 +1,11 @@
-import { useForm } from "@/hooks/useForm-Bug";
+import { useForm } from "@/hooks/useForm";
 import { ModalFormLayout } from "@/layouts/ModalFormLayout";
 
 export default function Password() {
-  const { formOption, FormInputs } = useForm({
+  const {
+    Form,
+    options: { isUpdated, isValid, handleSubmit, reset },
+  } = useForm({
     defaultValues: {
       currentPassword: "",
       newPassword: "",
@@ -23,31 +26,27 @@ export default function Password() {
         name: "confirmNewPassword",
         type: "password",
         label: "Confirm New Password",
-        confirmPassword: true,
+        isConfirmPassword: true,
         passwordField: "newPassword",
       },
     ],
-    submit: (data) => console.log(data),
+    onSubmit: (data) => console.log(data),
     gridLayout: false,
   });
-
-  const { control, isUpdated, isSubmitting, isValid, onSubmit, onCancel } =
-    formOption;
 
   return (
     <ModalFormLayout
       submitButton={{
         text: "Change Password",
-        onClick: onSubmit,
-        disabled: !isUpdated || !isValid || isSubmitting,
-      }}
-      cancelButton={{
-        onClick: onCancel,
+        onClick: handleSubmit,
         disabled: !isUpdated || !isValid,
       }}
-      control={control}
+      cancelButton={{
+        onClick: reset,
+        disabled: !isUpdated,
+      }}
     >
-      <FormInputs />
+      {Form}{" "}
     </ModalFormLayout>
   );
 }

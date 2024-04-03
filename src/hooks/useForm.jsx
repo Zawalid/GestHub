@@ -1,7 +1,7 @@
 import { InputField } from "@/components/ui";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import { objectDeepEquals } from "@/utils/helpers";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const getError = (value, rules) => {
   if (!rules) return null;
@@ -115,89 +115,68 @@ const getRules = (
   };
 };
 
-export function useForm({ fields, defaultValues, gridLayout, onSubmit }) {
-  const [form, setForm] = useState({
-    defaultValues,
-    values: defaultValues,
-    isUpdated: false,
-    errors: null,
-    isValid: false,
-  });
-
-  // Effects
-  // Compute the isValid based  errors object
-  useEffect(() => {
-    setForm((prev) => ({
-      ...prev,
-      isValid:
-        fields
-          .map((field) => {
-            return getError(
-              form.values[field.name],
-              getRules(
-                field.name,
-                field.type,
-                field.rules,
-                field.isConfirmPassword,
-                form.values[field.passwordField]
-              )
-            );
-          })
-          .filter((err) => err).length === 0,
-    }));
-  }, [fields, form.values]);
-
-  // Update the values based on defaultValues
-  useEffect(() => {
-    setForm((prev) => ({
-      ...prev,
-      values: defaultValues,
-    }));
-  }, [defaultValues]);
-
-  // Compute the isUpdated value based on the equality of values and defaultValues
+export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
+  const [defaultValues, setDefaultValues] = useState(def);
+  const [values, setValues] = useState(def);
+  const [isUpdated, setIsUpdated] = useState(false);
+  const [errors, setErrors] = useState(null);
+  const isValid = useMemo(() => {
+    return (
+      fields
+        .map((field) => {
+          return getError(
+            values[field.name],
+            getRules(
+              field.name,
+              field.type,
+              field.rules,
+              field.isConfirmPassword,
+              values[field.passwordField]
+            )
+          );
+        })
+        .filter((err) => err).length === 0
+    );
+  }, [fields, values]);
 
   useEffect(() => {
-    setForm((prev) => ({
-      ...prev,
-      isUpdated: !objectDeepEquals(form.values, form.defaultValues),
-    }));
-  }, [form.values, form.defaultValues]);
+    setIsUpdated(!objectDeepEquals(values, defaultValues));
+  }, [values, defaultValues]);
 
-  // Handlers
-  // Add errors
-  const setErrors = (errors) => {
-    setForm((prev) => ({
-      ...prev,
-      errors,
-    }));
-  };
+
   // Validate fields
   const validate = (name, value, rules) => {
     const err = getError(value, rules);
-    const errors = { ...form.errors };
-    if (!err) delete errors[name];
-    else errors[name] = err;
+    setErrors((prev) => {
+      const errors = { ...prev };
+      if (!err) delete errors[name];
+      else errors[name] = err;
 
-    setErrors(errors);
+      return errors;
+    });
   };
   // Get a field value
-  const getValue = (name) => form.values[name];
+  const getValue = (name) => values[name];
 
   // Set a field value
   const setValue = (name, value) => {
-    setForm((prev) => ({ ...prev, values: { ...prev.values, [name]: value } }));
+    setValues((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const updateValues = (values) => {
+    setValues(values);
+    setDefaultValues(values)
   };
   // Submit handler
   const handleSubmit = (callback) => {
-    onSubmit?.(form.values);
-    callback?.(form.values);
-    setForm((prev) => ({ ...prev, defaultValues: form.values }));
+    onSubmit?.(values);
+    callback?.(values);
+    setDefaultValues(values);
   };
 
   // Reset handler
   const reset = (callback) => {
-    setForm((prev) => ({ ...prev, values: form.defaultValues }));
+    setValues(defaultValues);
     setErrors(null);
     callback?.();
   };
@@ -224,7 +203,7 @@ export function useForm({ fields, defaultValues, gridLayout, onSubmit }) {
               key={name}
               type={type || "text"}
               placeholder={placeholder || label}
-              value={form.values[name] || ""}
+              value={values[name] || ""}
               onChange={(e) => {
                 validate(
                   name,
@@ -234,24 +213,27 @@ export function useForm({ fields, defaultValues, gridLayout, onSubmit }) {
                     type,
                     rules,
                     isConfirmPassword,
-                    form.values[passwordField]
+                    values[passwordField]
                   )
                 );
                 setValue(name, e.target.value);
               }}
               label={label}
-              errorMessage={form.errors?.[name]?.message}
+              errorMessage={errors?.[name]?.message}
             />
           );
         })}
       </form>
     ),
     options: {
-      ...form,
+      isUpdated,
+      isValid,
+      errors,
       handleSubmit,
       reset,
       getValue,
       setValue,
+      updateValues,
     },
   };
 }

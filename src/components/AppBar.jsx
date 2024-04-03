@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 
@@ -14,6 +15,8 @@ export default function AppBar() {
 }
 
 function UserInfo() {
+  const user = useSelector((state) => state.user) || {};
+
   return (
     <div className="flex gap-3 items-center">
       <img
@@ -22,8 +25,8 @@ function UserInfo() {
         alt="profile image"
       />
       <div>
-        <h3 className="font-medium text-sm text-text-primary">John Doe</h3>
-        <h4 className="text-xs text-text-tertiary">Admin</h4>
+        <h3 className="font-medium text-sm text-text-primary">{`${user?.firstName} ${user?.lastName}`}</h3>
+        <h4 className="capitalize text-xs text-text-tertiary">{user?.role}</h4>
       </div>
     </div>
   );
