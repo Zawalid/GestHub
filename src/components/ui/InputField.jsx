@@ -25,6 +25,7 @@ const input = tv({
 
 export function ErrorTooltip({ message, className }) {
   if (!message) return null;
+  console.log(message)
   return (
     <Tippy
       content={message.split("\n").map((msg, index) => (
@@ -83,7 +84,6 @@ export const InputField = forwardRef(
             )}
             ref={ref}
             {...props}
-            value={props.value || ""}
           />
           {children}
         </div>

@@ -1,12 +1,17 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ProfileImage } from "./ProfileImage";
 import { useForm } from "@/hooks/useForm";
 import { ModalFormLayout } from "@/layouts/ModalFormLayout";
+import { updateUser } from "@/app/reducer";
 
 export default function Profile() {
   const user = useSelector((state) => state.user) || {};
+  const dispatch = useDispatch();
 
-  const { formOption, FormInputs } = useForm({
+  const {
+    Form,
+    options: { isUpdated, isValid, handleSubmit, reset, setValue, getValue },
+  } = useForm({
     defaultValues: {
       image: {
         src: user.image,
@@ -42,46 +47,33 @@ export default function Profile() {
         label: "Birthday",
       },
     ],
-    submit: (data) => console.log(data),
+    onSubmit: (data) => dispatch(updateUser(data)),
+    gridLayout: true,
   });
-
-  const {
-    control,
-    isUpdated,
-    isLoading,
-    isSubmitting,
-    isValid,
-    setValue,
-    onSubmit,
-    onCancel,
-  } = formOption;
 
   return (
     <ModalFormLayout
       submitButton={{
-        onClick: onSubmit,
-        disabled: !isUpdated || !isValid,
+        onClick: handleSubmit,
+        // disabled: !isUpdated || !isValid,
       }}
       cancelButton={{
-        onClick: onCancel,
-        disabled: !isUpdated || !isValid,
+        onClick: reset,
+        disabled: !isUpdated,
       }}
-      control={control}
     >
       <div className="space-y-5">
         <div>
           <h3 className="mb-3 font-bold text-text-secondary">Image</h3>
           <ProfileImage
-            onChange={(image) =>
-              setValue("image", image, { shouldDirty: true })
-            }
-            control={control}
-            disabled={isLoading || isSubmitting}
+            image={getValue("image")}
+            onChange={(image) => setValue("image", image)}
           />
         </div>
 
-        <FormInputs/>
+        {Form}
       </div>
     </ModalFormLayout>
   );
+  return null
 }

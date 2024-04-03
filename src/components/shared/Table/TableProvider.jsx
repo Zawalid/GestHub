@@ -92,6 +92,8 @@ export const TableContext = createContext();
  *     @example: { status: [{ value: "Active", checked: true },{ value: "Inactive", checked: true },{...} ],
  * @property {Array} formFields - The fields to be displayed in the form.
  *    @example: [{ name: "lastName", label: "Last Name" },{  name: "email",  type: "email",  label: "Email Address"},{...}]
+ * @property {Object} formDefaults - The default values of the form fields 
+ *    @example: {firstName : "walid",email : '...',...}
  * @property {Object} downloadOptions - The options for downloading the table data.
  *    @example: {csvFileName: "Interns-csv", pdfFileName: "Interns"}
  * @property {Boolean} displayAllData - A indicating if the data should be displayed at once with no pagination
@@ -109,6 +111,7 @@ export function TableProvider({
   columns: tableColumns,
   filters: tableFilters,
   formFields,
+  formDefaults,
   fieldsToSearch,
   downloadOptions,
   displayAllData,
@@ -118,10 +121,11 @@ export function TableProvider({
   const [columns, setColumns] = useState(tableColumns);
   const [filters, setFilters] = useState(tableFilters);
   const [formOptions, setFormOptions] = useState({
-    defaultValues: {},
+    defaultValues: formDefaults,
     fields: formFields,
     onSubmit: () => {},
     resetToDefault: true,
+    gridLayout: true,
     submitButtonText: "",
     heading: "",
     isOpen: false,
@@ -202,7 +206,7 @@ export function TableProvider({
     setSearchParams(searchParams);
   };
 
-  const onChangeLimit = (limit) => setLimit(limit)
+  const onChangeLimit = (limit) => setLimit(limit);
 
   const onFilter = (filter) => setFilters((prev) => ({ ...prev, ...filter }));
 
@@ -242,21 +246,15 @@ export function TableProvider({
     }));
   };
 
-  const confirmDelete = (options) => {
-    const onCancel = () => {
-      setConfirmOptions((prev) => ({
-        ...prev,
-        isOpen: false,
-        message: "",
-        title: "",
-      }));
-    };
+  const confirmDelete = (isOpen, onConfirm) => {
+    const onCancel = () => setConfirmOptions((prev) => ({ ...prev, isOpen: false }));
+
     setConfirmOptions((prev) => ({
       ...prev,
-      ...options,
+      isOpen,
       onCancel,
       onConfirm: () => {
-        options.onConfirm();
+        onConfirm();
         onCancel();
       },
     }));

@@ -1,9 +1,7 @@
-import { Controller, useWatch } from "react-hook-form";
 import { Button } from "../ui";
 import { useUploadImage } from "@/hooks/useUploadImage";
 
-export function ProfileImage({ control, onChange, disabled }) {
-  const image = useWatch({ control, name: "image" }) || {};
+export function ProfileImage({ image, onChange, disabled }) {
   const { openFilePicker } = useUploadImage({ onChange });
 
   return (
@@ -26,7 +24,7 @@ export function ProfileImage({ control, onChange, disabled }) {
           <Button
             color="delete"
             className="flex-1 min-w-[132px] md:min-w-max"
-            disabled={disabled || !image.src}
+            disabled={disabled || !image?.src}
             onClick={() => onChange({ src: null, file: null })}
           >
             Remove Image
@@ -40,13 +38,7 @@ export function ProfileImage({ control, onChange, disabled }) {
           JPG or PNG are allowed (Max size of 10MB)
         </p>
       </div>
-      <Controller
-        name="image"
-        control={control}
-        render={({ field }) => (
-          <input type="hidden" value={field.value || {}} />
-        )}
-      />
+     
     </div>
   );
 }

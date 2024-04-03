@@ -8,7 +8,7 @@ import {
 import { useTable } from ".";
 
 export function Actions({ onUpdate, onDelete, row }) {
-  const { showForm, confirmDelete,resourceName } = useTable();
+  const { showForm, confirmDelete, resourceName } = useTable();
 
   return (
     <DropDown
@@ -38,9 +38,7 @@ export function Actions({ onUpdate, onDelete, row }) {
         Edit
       </DropDown.Option>
       <DropDown.Option
-        onClick={() =>
-          confirmDelete({ isOpen: true, onConfirm: () => onDelete(row.id) })
-        }
+        onClick={() => confirmDelete(true, () => onDelete(row.id))}
       >
         <IoTrashOutline />
         Delete

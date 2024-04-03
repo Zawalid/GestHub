@@ -19,7 +19,7 @@ export function ModalFormLayout({
         <Button {...submitButton}>{submitButton.text || "Save Changes"}</Button>
       </div>
 
-      {control && <DevTool control={control} />}
+      {/* {control && <DevTool control={control} />} */}
     </>
   );
 }
