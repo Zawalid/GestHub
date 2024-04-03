@@ -1,4 +1,4 @@
-// import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { cloneElement, useRef } from "react";
 
 import { Sort } from "./Sort";
@@ -7,7 +7,7 @@ import { useTable } from ".";
 export function Table({ actions }) {
   const { columns, rows, isLoading, error } = useTable();
   const table = useRef();
-  // const [parent] = useAutoAnimate({ duration: 300 });
+  const [parent] = useAutoAnimate({ duration: 300 });
 
   const render = () => {
     if (isLoading) {
@@ -15,59 +15,45 @@ export function Table({ actions }) {
       const skeletonHeight = 40;
       const theadHeight = table.current
         ?.querySelector("thead")
-        .getBoundingClientRect().height;
+        ?.getBoundingClientRect().height;
 
       const length = Math.floor((tableHeight - theadHeight) / skeletonHeight);
       return (
-        <tbody>
+        <div>
           {Array.from({ length }).map((_, i) => (
             <Skeleton key={i} columns={columns} />
           ))}
-        </tbody>
+        </div>
       );
     }
     if (error) {
       return (
-        <tbody className="flex absolute h-[85%] w-full items-center justify-center text-text-tertiary">
-          <tr>
-            <td className="text-red-600">
-              {error.message || "Something went wrong! Please try again."}
-            </td>
-          </tr>
-        </tbody>
+        <div className="flex absolute h-full w-full items-center justify-center text-text-tertiary">
+          <h3 className="font-semibold text-red-600">
+            {error.message || "Something went wrong! Please try again."}
+          </h3>
+        </div>
       );
     }
     if (rows?.length === 0) {
       return (
-        <tbody className="flex absolute h-[85%] w-full items-center justify-center text-text-tertiary">
-          <tr>
-            <td>No results found</td>
-          </tr>
-        </tbody>
+        <div className="flex absolute h-full w-full flex-col items-center justify-center text-text-tertiary">
+          <img
+            src="/images/no_result.png"
+            alt="no results"
+            className="w-[200px]"
+          />
+          <h3 className="font-semibold">No results found</h3>
+        </div>
       );
     }
     return (
-      <tbody className="text-sm h-fit font-medium divide-y divide-border text-text-primary">
-        {rows?.map((row) => (
-          <Row
-            key={row.id}
-            row={row}
-            visibleColumns={columns.filter((c) => c.visible)}
-            actions={actions}
-          />
-        ))}
-      </tbody>
-    );
-  };
-
-  return (
-    <div className="relative flex-1 overflow-x-auto" ref={table}>
       <table
         cellPadding={3}
         className="w-full whitespace-nowrap overflow-x-auto  text-left"
       >
-        <thead className="bg-background-secondary ">
-          <tr>
+        <thead className="bg-background-secondary " >
+          <tr ref={parent}>
             {columns
               .filter((c) => c.visible)
               .map((column) => (
@@ -76,8 +62,27 @@ export function Table({ actions }) {
             {actions && <Column hide={true} />}
           </tr>
         </thead>
-        {render()}
+
+        <tbody
+          className="text-sm h-fit font-medium divide-y divide-border text-text-primary"
+          ref={parent}
+        >
+          {rows?.map((row) => (
+            <Row
+              key={row.id}
+              row={row}
+              visibleColumns={columns.filter((c) => c.visible)}
+              actions={actions}
+            />
+          ))}
+        </tbody>
       </table>
+    );
+  };
+
+  return (
+    <div className="relative flex-1 overflow-x-auto" ref={table}>
+      {render()}
     </div>
   );
 }
@@ -90,8 +95,9 @@ function Column({ column, hide }) {
   );
 }
 function Row({ row, visibleColumns, actions }) {
+  const [parent] = useAutoAnimate({ duration: 300 });
   return (
-    <tr>
+    <tr ref={parent}>
       {visibleColumns.map((col) => (
         <td key={col.displayLabel} className="px-6 py-4">
           {row[col.key]}
