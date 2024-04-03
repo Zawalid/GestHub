@@ -1,5 +1,3 @@
-import { IoIosArrowDown } from "react-icons/io";
-import { DropDown } from "../ui/DropDown";
 import { SearchInput } from "../ui/SearchInput";
 import { useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -38,36 +36,12 @@ function Hero() {
             query={query}
             placeholder={t("hero.placeholder")}
           />
-          <DropDown
-            toggler={
-              <span
-                className={
-                  "flex items-center gap-2  border px-4 py-1 rounded-lg border-border bg-primary hover:bg-primary-hover "
-                }
-              >
-                {t("hero.categories")} <IoIosArrowDown />{" "}
-              </span>
-            }
-          >
-            {["it", "Cyber securiy", "Secretariat"].map((e) => (
-              <DropDown.Option
-                key={e}
-                onClick={() =>
-                  setToUrl("category", e, searchParams, setSearchParams)
-                }
-              >
-                {e}
-              </DropDown.Option>
-            ))}
-          </DropDown>
         </div>
       </div>
       <div className="hidden lg:flex self-end justify-center items-center">
         <img src="SVG/hero.svg" className=" w-3/4" alt="" />
       </div>
-      <Shade
-        className={"absolute top-0 left-0 w-full overflow-hidden leading-[0]"}
-      />
+      <Shade className="absolute top-0 left-0 w-full overflow-hidden leading-[0]" />
       <Shade
         className=" absolute rotate-180 md:top-[89.3%] top-[92%] left-0 w-full overflow-hidden leading-[0] "
         svg="h-14 md:h-16 w-full"

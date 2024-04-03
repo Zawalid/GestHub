@@ -11,7 +11,7 @@ export function OfferCard({ offer, card }) {
   return (
     <div
       className="hover:scale-[1.01] transition-all duration-300 w-full md:w-1/2 lg:w-1/3   p-1 h-max border border-border rounded-xl shadow-md  space-y-2 capitalize"
-      style={{ width: `${90 / card}%` }}
+      style={{ width: `${95 / card}%` }}
     >
       <div className=" bg-background-tertiary rounded-xl p-4 space-y-4">
         <div className="flex justify-between">

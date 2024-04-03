@@ -8,7 +8,7 @@ import { DateTime, Interval } from "luxon";
 const OffersContext = createContext();
 
 function OffersProvider({ children }) {
-  const { offers } = useOffers();
+  const { offers, error, isLoading } = useOffers();
   const [filtredoffers, setFiltredoffers] = useState(offers);
   const [storedoffers, setStoredOffers] = useState(toLocalStorage("offers"));
   const [isShowStor, setisShowStor] = useState(false);
@@ -21,6 +21,8 @@ function OffersProvider({ children }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("search") || "";
   const value = {
+    error,
+    isLoading,
     filtredoffers,
     storedoffers,
     toggelStoredOffer,
@@ -87,7 +89,7 @@ function OffersProvider({ children }) {
   useEffect(() => {
     query.length > 2
       ? setFiltredoffers((e) =>
-          e.filter((e) =>
+          e?.filter((e) =>
             (e.title + e.description)
               .trim()
               .toLocaleLowerCase()
