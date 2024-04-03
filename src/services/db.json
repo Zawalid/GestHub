@@ -119,16 +119,6 @@
       "password": "Ancd1234",
       "confirmPassword": "Ancd1234",
       "id": 11
-    },
-    {
-      "firstName": "Walid",
-      "lastName": "dsdsd",
-      "email": "walid.zakan@gmail.com",
-      "phone": "0682208346",
-      "birthday": "2024-05-11",
-      "password": "abcaS12345d?d",
-      "confirmPassword": "abcaS12345d?d",
-      "id": 12
     }
   ],
   "supervisors": [

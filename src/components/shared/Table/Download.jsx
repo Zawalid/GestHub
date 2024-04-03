@@ -10,12 +10,13 @@ import {
 import { Button, DropDown } from "../../ui";
 import { useTable } from ".";
 
-const exportAsCsv = (data, config) => {
-  const csv = generateCsv(mkConfig(config))(data);
-  download(config)(csv);
+const exportAsCsv = (data, config, page) => {
+  const filename = page ? `${config.filename}-page-${page}` : config.filename;
+  const csv = generateCsv(mkConfig({ ...config, filename }))(data);
+  download({ ...config, filename })(csv);
 };
 
-const exportAsPdf = (data, config, headers) => {
+const exportAsPdf = (data, config, headers, page) => {
   const { filename, tableHeaders } = config;
   const tableData = data.map((row) => Object.values(row));
   const doc = new jsPDF(headers.length > 4 ? "landscape" : "portrait");
@@ -27,8 +28,8 @@ const exportAsPdf = (data, config, headers) => {
     headStyles: { fillColor: "#f0f0f0", textColor: "#000000" },
     styles: { cellPadding: 3 },
   });
-
-  doc.save(`${filename}.pdf`);
+  const name = page ? `${filename}-page-${page}.pdf` : filename;
+  doc.save(name);
   // doc.output("dataurlnewwindow");
 };
 
@@ -56,14 +57,16 @@ export function Download() {
 }
 
 function DownloadOption({ type, icon }) {
-  const { data, rows, csvConfig, pdfConfig, columns } = useTable();
+  const { data, rows, csvConfig, pdfConfig, columns, page } = useTable();
 
-  const downloadPdf = (data) =>
+  const downloadPdf = (data, page) =>
     exportAsPdf(
       data,
       pdfConfig,
-      columns.filter((c) => c.visible)
+      columns.filter((c) => c.visible),
+      page
     );
+  const downloadCsv = (data, page) => exportAsCsv(data, csvConfig, page);
 
   return (
     <DropDown.NestedMenu
@@ -78,14 +81,14 @@ function DownloadOption({ type, icon }) {
     >
       <DropDown.Option
         onClick={() => {
-          type === "pdf" ? downloadPdf(data) : exportAsCsv(data, csvConfig);
+          type === "pdf" ? downloadPdf(data) : downloadCsv(data);
         }}
       >
         All Pages
       </DropDown.Option>
       <DropDown.Option
         onClick={() => {
-          type === "pdf" ? downloadPdf(rows) : exportAsCsv(rows, csvConfig);
+          type === "pdf" ? downloadPdf(rows, page) : downloadCsv(rows, page);
         }}
       >
         This Page
