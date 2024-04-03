@@ -29,5 +29,5 @@ export function toLocalStorage(key,item,droped) {
   }
   if (item && !items.includes(item)) additem();
   if (droped) dropItem()
-  return { items };
+  return items ;
 }

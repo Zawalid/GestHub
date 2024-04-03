@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllInterns, getIntern } from "./api/internsAPI";
+import { getAllOffers } from "./api/offersAPI";
 import { getAllSupervisors, getSupervisor } from "./api/supervisorsAPI";
 
 // Interns
@@ -38,4 +39,16 @@ export function useSupervisor(id) {
   });
 
   return { supervisor: data, error, isLoading: isPending };
+}
+
+//oofers
+
+// Interns
+export function useOffers() {
+  const { data, error, isPending } = useQuery({
+    queryKey: ["offers"],
+    queryFn: getAllOffers,
+  });
+
+  return { offers: data, error, isLoading: isPending };
 }

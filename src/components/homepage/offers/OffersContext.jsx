@@ -1,59 +1,19 @@
-const ofers = [
-  {
-    id: 1,
-    exp: "Expert",
-    secteur: "devloppemnt",
-    title: "devlopper backend",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
-    date: new Date(2024, 3, 2),
-    ville: "rabat",
-  },
-  {
-    id: 3,
-    exp: "intermediate",
-    secteur: "devloppemnt",
-    title: "devlopper frontend",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
-    date: new Date(2024, 3, 4),
-    ville: "sale",
-  },
-  {
-    id: 4,
-    exp: "debutant",
-    secteur: "devops",
-    title: "engineer devops",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
-    date: new Date(2024, 3, 30),
-    ville: "rabat",
-  },
-  {
-    id: 5,
-    exp: "Expert",
-    secteur: "testing",
-    title: "testeur ",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
-    date: new Date(2024, 8, 2),
-    ville: "Casablanca",
-  },
-];
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { createContext, useContext } from "react";
 import { toLocalStorage } from "@/hooks/useLocalStorageState";
+import { useOffers } from "@/services/queries";
+import { DateTime, Interval } from "luxon";
+
 const OffersContext = createContext();
 
 function OffersProvider({ children }) {
-  const [offers, setOffers] = useState(ofers);
-  const [storedoffers, setStoredOffers] = useState(
-    toLocalStorage("offers").items
-  );
+  const { offers } = useOffers();
+  const [filtredoffers, setFiltredoffers] = useState(offers);
+  const [storedoffers, setStoredOffers] = useState(toLocalStorage("offers"));
   const [isShowStor, setisShowStor] = useState(false);
-  const secteurs = new Set(ofers.map((e) => e.secteur));
-  const exp = new Set(ofers.map((e) => e.exp));
+  const secteurs = new Set(offers?.map((e) => e.secteur));
+  const exp = new Set(offers?.map((e) => e.exp));
   const [filterdSect, setFilterdSect] = useState([]);
   const [filterdExp, setFilterdExp] = useState([]);
   const [selectAllSect, setselectAllSect] = useState(false);
@@ -61,7 +21,7 @@ function OffersProvider({ children }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("search") || "";
   const value = {
-    offers,
+    filtredoffers,
     storedoffers,
     toggelStoredOffer,
     showStored,
@@ -80,6 +40,11 @@ function OffersProvider({ children }) {
     setSearchParams,
     query,
   };
+
+  useEffect(() => {
+    setFiltredoffers(offers);
+  }, [offers]);
+
   //filter by all sect or all exp
   function selectAll(e, action, item) {
     if (e.target.checked) {
@@ -99,29 +64,29 @@ function OffersProvider({ children }) {
   useEffect(() => {
     if (isShowStor) return;
     if (filterdExp.length == 0) {
-      setOffers(ofers);
+      setFiltredoffers(offers);
     }
     if (filterdSect.length == 0) {
-      setOffers(ofers);
+      setFiltredoffers(offers);
     }
     if (filterdExp.length > 0 && filterdSect.length == 0) {
-      setOffers(ofers.filter((e) => filterdExp.includes(e.exp)));
+      setFiltredoffers(offers.filter((e) => filterdExp.includes(e.exp)));
     }
     if (filterdSect.length > 0 && filterdExp.length == 0) {
-      setOffers(ofers.filter((e) => filterdSect.includes(e.secteur)));
+      setFiltredoffers(offers.filter((e) => filterdSect.includes(e.secteur)));
     }
     if (filterdSect.length > 0 && filterdExp.length > 0) {
-      setOffers(
-        ofers.filter(
+      setFiltredoffers(
+        offers.filter(
           (e) => filterdSect.includes(e.secteur) && filterdExp.includes(e.exp)
         )
       );
     }
-  }, [filterdSect, filterdExp, isShowStor]);
+  }, [filterdSect, filterdExp, isShowStor, offers]);
   //search effect
   useEffect(() => {
     query.length > 2
-      ? setOffers((e) =>
+      ? setFiltredoffers((e) =>
           e.filter((e) =>
             (e.title + e.description)
               .trim()
@@ -129,36 +94,30 @@ function OffersProvider({ children }) {
               .includes(query.trim().toLocaleLowerCase())
           )
         )
-      : setOffers(ofers);
-    return setOffers((e) => e);
-  }, [query]);
+      : setFiltredoffers(offers);
+    return setFiltredoffers((e) => e);
+  }, [query, offers]);
   //Filter Offers by date
-  function filterByDate(e, date) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    if (date === "today" && e.target.checked) {
-      setOffers((e) =>
-        e.filter((offer) => offer.date.getTime() === today.getTime())
+  function filterByDate(e, interval) {
+    function dateInterval(interval) {
+      const dt = DateTime.now();
+      const startOfInterval = dt.startOf(interval);
+      const endOfInterval = dt.endOf(interval);
+      const i = Interval.fromDateTimes(startOfInterval, endOfInterval);
+      setFiltredoffers((e) =>
+        e.filter((offer) => {
+          const dt = DateTime.fromISO(offer.date).toFormat("yyyy','L','d");
+          const dtt = dt.split(",");
+          return i.contains(
+            DateTime.local(Number(dtt[0]), Number(dtt[1]), Number(dtt[2]))
+          );
+        })
       );
-    } else if (date === "thisWeek" && e.target.checked) {
-      today.setDate(today.getDate() - today.getDay());
-      const weekEnd = new Date(today.getTime() + 6 * 24 * 60 * 60 * 1000);
-      setOffers((e) =>
-        e.filter(
-          (offer) =>
-            offer.date.getTime() >= today && offer.date.getTime() <= weekEnd
-        )
-      );
-    } else if (date === "thisMonth" && e.target.checked) {
-        setOffers((e) =>
-        e.filter(
-          (offer) =>
-            offer.date.getFullYear() === today.getFullYear() &&
-            offer.date.getMonth() === today.getMonth()
-        )
-      );
+    }
+    if (e.target.checked) {
+      dateInterval(interval);
     } else {
-        setOffers(ofers);
+      setFiltredoffers(offers);
     }
   }
   // add to & remove from local storage
@@ -175,10 +134,10 @@ function OffersProvider({ children }) {
   function showStored(e) {
     if (e.target.checked) {
       setisShowStor(true);
-      setOffers(ofers.filter((e) => storedoffers.includes(e.id)));
+      setFiltredoffers(offers.filter((e) => storedoffers.includes(e.id)));
     } else {
       setisShowStor(false);
-      setOffers(ofers);
+      setFiltredoffers(offers);
     }
   }
 
@@ -186,7 +145,7 @@ function OffersProvider({ children }) {
     <OffersContext.Provider value={value}>{children}</OffersContext.Provider>
   );
 }
-function useOffer() {
+function useOfferContext() {
   return useContext(OffersContext);
 }
-export { OffersProvider, useOffer };
+export { OffersProvider, useOfferContext };
