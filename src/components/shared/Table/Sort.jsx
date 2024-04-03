@@ -14,7 +14,7 @@ const icons = {
 };
 
 export function Sort({ column }) {
-  const { sortBy, direction, onSort, onChangeView } = useTable();
+  const { sortBy, direction, onSort, onChangeView, columns } = useTable();
 
   const sort = (dir) => onSort(column.key, dir);
 
@@ -36,10 +36,10 @@ export function Sort({ column }) {
         {icons.desc}
         Desc
       </DropDown.Option>
-      {column === "id" || (
+      {columns.filter((c) => c.visible).length === 1 || (
         <>
           <DropDown.Divider />
-          <DropDown.Option onClick={() => onChangeView(column)}>
+          <DropDown.Option onClick={() => onChangeView(column.displayLabel)}>
             <IoEyeOffOutline />
             Hide
           </DropDown.Option>

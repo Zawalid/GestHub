@@ -19,6 +19,10 @@ export default {
         "text-placeholder": "var(--text-placeholder)",
         border: "var(--border)",
       },
+      screens : {
+        xs : "400px",
+        mobile : "540px"
+      }
     },
   },
   plugins: [

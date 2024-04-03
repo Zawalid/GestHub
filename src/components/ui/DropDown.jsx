@@ -124,7 +124,7 @@ function NestedMenu({ children, toggler, togglerClassName, options }) {
       togglerClassName={togglerClassName}
       options={{
         ...options,
-        trigger: options.trigger || "mouseenter focus",
+        trigger: options?.trigger || "mouseenter focus",
       }}
     >
       {children}

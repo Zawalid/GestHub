@@ -112,6 +112,13 @@ export default function InternsList() {
             passwordField: "password",
           },
         ]}
+        fieldsToSearch={[
+          "firstName",
+          "lastName",
+          "email",
+          "major",
+          "university",
+        ]}
         downloadOptions={{
           csvFileName: "Interns",
           pdfFileName: "Interns",
