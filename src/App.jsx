@@ -16,6 +16,9 @@ import {
   Teams,
   NotFound,
   HomePage,
+  Offers,
+  Demands,
+  Projects,
 } from "./pages";
 import { ROUTES } from "./utils/constants";
 
@@ -24,10 +27,13 @@ const queryClient = new QueryClient();
 
 const routesElements = {
   overview: <Overview />,
-  interns: <Interns />,
   supervisors: <Supervisors />,
+  interns: <Interns />,
   teams: <Teams />,
   absences: <Absences />,
+  offers: <Offers />,
+  demands: <Demands />,
+  projects: <Projects />,
 };
 
 export default function App() {

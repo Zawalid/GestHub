@@ -1,9 +1,10 @@
-import InternsList from "../components/shared/InternsList";
+import { Heading } from "@/components/Heading";
+import InternsList from "@/features/interns/InternsList";
 
 export function Interns() {
   return (
     <>
-      <h1 className="text-3xl font-bold text-text-primary">Interns</h1>
+      <Heading>Interns</Heading>
       <InternsList />
     </>
   );

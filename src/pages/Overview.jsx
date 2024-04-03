@@ -1,3 +1,10 @@
+import { Heading } from "@/components/Heading";
+
 export function Overview() {
-  return <div>Overview</div>;
+  return (
+    <>
+      <Heading>Overview</Heading>
+      <div>Overview</div>
+    </>
+  );
 }

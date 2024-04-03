@@ -1,3 +1,10 @@
+import { Heading } from "@/components/Heading";
+
 export function Teams() {
-  return <div>Teams</div>;
+  return (
+    <>
+      <Heading>Teams</Heading>
+      <div>Teams</div>
+    </>
+  );
 }

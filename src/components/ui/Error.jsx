@@ -1,4 +1,4 @@
-import { MdError } from "../ui/Icons";
+import { MdError } from "./Icons";
 import { toast } from "sonner";
 
 function ErrorMsg({ msg }) {
