@@ -16,8 +16,8 @@ const initialState = {
     lastName: "Doe",
     email: "john.doe@gmail.com",
     image: null,
-    phone : '0682828882',
-    birthday : '1998-12-12'
+    phone: "0682828882",
+    birthday: "1998-12-12",
   },
 };
 
@@ -38,9 +38,12 @@ const appSlice = createSlice({
         400
       );
     },
+    updateUser(state, action) {
+      console.log(action)
+      state.user = { ...state.user, ...action.payload };
+    },
   },
 });
 
-export const { changeTheme } = appSlice.actions;
+export const { changeTheme, updateUser } = appSlice.actions;
 export default appSlice.reducer;
-

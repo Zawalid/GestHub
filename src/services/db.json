@@ -62,27 +62,31 @@
     },
     {
       "id": 7,
-      "firstName": "Emily",
-      "lastName": "Miller",
-      "email": "emily.miller@example.com",
-      "phone": "555-666-7777",
+      "firstName": "Walid",
+      "lastName": "Biker",
+      "email": "walid.zakan@gmail.com",
+      "phone": "0682208346",
       "birthday": "1996-07-07",
       "university": "University of Illinois Urbana-Champaign",
       "major": "Information Sciences",
       "startDate": "2022-01-01",
-      "endDate": "2022-06-01"
+      "endDate": "2022-06-01",
+      "password": "Ancd1234",
+      "confirmPassword": "Ancd1234"
     },
     {
       "id": 8,
       "firstName": "Frank",
-      "lastName": "Davis",
+      "lastName": "Lampard",
       "email": "frank.davis@example.com",
-      "phone": "666-777-8888",
+      "phone": "0682208346",
       "birthday": "1997-08-08",
       "university": "University of Texas at Austin",
       "major": "Computer Engineering",
       "startDate": "2022-01-01",
-      "endDate": "2022-06-01"
+      "endDate": "2022-06-01",
+      "password": "Ancd1234",
+      "confirmPassword": "Ancd1234"
     },
     {
       "id": 9,
@@ -95,6 +99,36 @@
       "major": "Information Technology",
       "startDate": "2022-01-01",
       "endDate": "2022-06-01"
+    },
+    {
+      "firstName": "Walid",
+      "lastName": "Zakan",
+      "email": "walid.zakan@gmail.com",
+      "phone": "0682208346",
+      "birthday": "2024-05-10",
+      "password": "Ancd1234",
+      "confirmPassword": "Ancd1234",
+      "id": 10
+    },
+    {
+      "firstName": "Walid",
+      "lastName": "Zakan",
+      "email": "walid.zakan@gmail.com",
+      "phone": "0682208346",
+      "birthday": "2024-05-10",
+      "password": "Ancd1234",
+      "confirmPassword": "Ancd1234",
+      "id": 11
+    },
+    {
+      "firstName": "Walid",
+      "lastName": "dsdsd",
+      "email": "walid.zakan@gmail.com",
+      "phone": "0682208346",
+      "birthday": "2024-05-11",
+      "password": "abcaS12345d?d",
+      "confirmPassword": "abcaS12345d?d",
+      "id": 12
     }
   ],
   "supervisors": [
@@ -137,6 +171,36 @@
       "email": "michael.miller@example.com",
       "phone": "555-444-3333",
       "department": "Human Centered Design & Engineering"
+    },
+    {
+      "firstName": "Walid",
+      "lastName": "Zakan",
+      "email": "walid.zakan@gmail.com",
+      "phone": "0682208346",
+      "password": "Abcd123??",
+      "department": "Abcd123??",
+      "confirmPassword": "Abcd123??",
+      "id": 7
+    },
+    {
+      "firstName": "Walid",
+      "lastName": "Zakan",
+      "email": "walid.zakan@gmail.com",
+      "phone": "0682208346",
+      "department": "Abcd123??",
+      "password": "Abcd123??",
+      "confirmPassword": "Abcd123??",
+      "id": 8
+    },
+    {
+      "firstName": "Walid",
+      "lastName": "Zakan",
+      "email": "walid.zakan@gmail.com",
+      "phone": "0682208346",
+      "department": "abcaS12345d?",
+      "password": "abcaS12345d?",
+      "confirmPassword": "abcaS12345d?",
+      "id": 9
     }
   ],
   "teams": [

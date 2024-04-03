@@ -28,7 +28,10 @@ function Main() {
   const [parent] = useAutoAnimate({ duration: 300 });
 
   return (
-    <main className="flex-1 overflow-x-hidden pr-1 sm:pr-3 overflow-y-auto bg-background-primary" ref={parent}>
+    <main
+      className="flex-1  bg-background-primary"
+      ref={parent}
+    >
       <Outlet />
     </main>
   );

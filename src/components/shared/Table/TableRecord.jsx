@@ -2,6 +2,7 @@ import { Modal } from "@/components/ui";
 import { useForm } from "@/hooks/useForm";
 import { ModalFormLayout } from "@/layouts/ModalFormLayout";
 import { useTable } from ".";
+import { useEffect } from "react";
 
 export function TableRecord() {
   const { formOptions: options } = useTable();
@@ -13,16 +14,25 @@ export function TableRecord() {
     submitButtonText,
     heading,
     resetToDefault,
+    gridLayout,
+    onSubmit,
     close,
   } = options;
 
-  const { formOption, FormInputs } = useForm({
+  const {
+    Form,
+    options: { isUpdated, isValid, handleSubmit, reset, updateValues },
+  } = useForm({
     defaultValues,
     fields,
-    submit: (data) => options.onSubmit(data),
+    gridLayout,
+    onSubmit,
   });
 
-  const { control, isValid, onSubmit, onCancel } = formOption;
+  useEffect(() => {
+    updateValues(defaultValues);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValues]);
 
   return (
     <Modal
@@ -36,13 +46,12 @@ export function TableRecord() {
       <ModalFormLayout
         submitButton={{
           text: submitButtonText,
-          onClick: () => onSubmit(close, { resetToDefault }),
-          disabled: !isValid,
+          disabled: !isValid || !isUpdated,
+          onClick: () => handleSubmit(close, { resetToDefault }),
         }}
-        cancelButton={{ onClick: () => onCancel(close) }}
-        control={control}
+        cancelButton={{ onClick: () => reset(close) }}
       >
-        <FormInputs />
+        {Form}
       </ModalFormLayout>
     </Modal>
   );

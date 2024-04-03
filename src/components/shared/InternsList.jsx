@@ -108,10 +108,17 @@ export default function InternsList() {
             name: "confirmPassword",
             type: "password",
             label: "Confirm  Password",
-            confirmPassword: true,
+            isConfirmPassword: true,
             passwordField: "password",
           },
         ]}
+        formDefaults={{
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          birthday: "",
+        }}
         fieldsToSearch={[
           "firstName",
           "lastName",

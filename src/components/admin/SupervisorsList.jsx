@@ -83,10 +83,17 @@ export default function SupervisorsList() {
             name: "confirmPassword",
             type: "password",
             label: "Confirm  Password",
-            confirmPassword: true,
+            isConfirmPassword: true,
             passwordField: "password",
           },
         ]}
+        formDefaults={{
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          department: "",
+        }}
         fieldsToSearch={["firstName","lastName","email","department"]}
         downloadOptions={{
           csvFileName: "Supervisors",
