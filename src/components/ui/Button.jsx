@@ -74,6 +74,7 @@ export const Button = forwardRef(
       state,
       display,
       shape,
+      ...props
     },
     ref
   ) => {
@@ -93,6 +94,7 @@ export const Button = forwardRef(
         ref={ref}
         disabled={disabled}
         onClick={() => state !== "disabled" && onClick?.()}
+        {...props}
       >
         {isLoading ? (
           <div className="flex items-center gap-3 text-white">

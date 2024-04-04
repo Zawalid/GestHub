@@ -1,4 +1,4 @@
-import { Button } from "../ui";
+import { Button } from "../../components/ui";
 import { useUploadImage } from "@/hooks/useUploadImage";
 
 export function ProfileImage({ image, onChange, disabled }) {
@@ -8,7 +8,8 @@ export function ProfileImage({ image, onChange, disabled }) {
     <div className="grid grid-cols-[7rem_auto] items-center gap-5">
       <img
         className="h-28 w-28 object-cover rounded-full border border-border text-center text-xs text-text-tertiary "
-        src={image?.src || "/images/default-profile.jpg"}
+        // src={image?.src || "/images/default-profile.jpg"}
+        src={image || "/images/default-profile.jpg"}
         alt="profile image"
       />
       <div>
@@ -25,7 +26,8 @@ export function ProfileImage({ image, onChange, disabled }) {
             color="delete"
             className="flex-1 min-w-[132px] md:min-w-max"
             disabled={disabled || !image?.src}
-            onClick={() => onChange({ src: null, file: null })}
+            // onClick={() => onChange({ src: null, file: null })}
+            onClick={() => onChange(null)}
           >
             Remove Image
           </Button>
@@ -38,7 +40,6 @@ export function ProfileImage({ image, onChange, disabled }) {
           JPG or PNG are allowed (Max size of 10MB)
         </p>
       </div>
-     
     </div>
   );
 }

@@ -36,6 +36,6 @@ export { LiaUserTieSolid } from "react-icons/lia";
 export { FiLogOut, FiSettings, FiPhone } from "react-icons/fi";
 export { LuCalendarX } from "react-icons/lu";
 export { MdDriveFileRenameOutline, MdDownload, MdError } from "react-icons/md";
-export { FaSpinner, FaSort } from "react-icons/fa6";
+export { FaSpinner, FaSort,FaPlus } from "react-icons/fa6";
 
 export { HiMiniXMark } from "react-icons/hi2";

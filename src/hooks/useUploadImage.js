@@ -48,7 +48,8 @@ export function useUploadImage({
       onError?.(errors);
     },
     onFilesSuccessfullySelected: ({ plainFiles, filesContent }) => {
-      onChange({ src: filesContent[0].content, file: plainFiles[0] });
+      // onChange({ src: filesContent[0].content, file: plainFiles[0] });
+      onChange(filesContent[0].content);
     },
   });
 

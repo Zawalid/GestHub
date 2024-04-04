@@ -2,7 +2,9 @@ export const ROUTES = {
   admin: [
     "overview",
     "supervisors",
+    "supervisors/:id",
     "interns",
+    "interns/:id",
     "teams",
     "absences",
     "offers",

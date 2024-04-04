@@ -52,11 +52,11 @@
 
 body {
   font-family: "Lexend Deca", sans-serif;
-  @apply h-[100dvh] bg-background-primary !important;
+  @apply h-[100dvh] bg-background-secondary !important;
 }
 
 #root {
-  @apply flex h-full bg-background-primary
+  @apply flex h-full bg-background-secondary
 }
 
 html.theme-transition {

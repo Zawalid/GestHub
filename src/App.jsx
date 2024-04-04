@@ -21,14 +21,17 @@ import {
   Projects,
 } from "./pages";
 import { ROUTES } from "./utils/constants";
-
+import SupervisorDetails from "./features/supervisors/SupervisorDetails";
+import InternDetails from "./features/interns/InternDetails";
 
 const queryClient = new QueryClient();
 
 const routesElements = {
   overview: <Overview />,
   supervisors: <Supervisors />,
+  "supervisors/:id": <SupervisorDetails />,
   interns: <Interns />,
+  "interns/:id": <InternDetails />,
   teams: <Teams />,
   absences: <Absences />,
   offers: <Offers />,

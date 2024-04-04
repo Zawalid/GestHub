@@ -99,26 +99,6 @@
       "major": "Information Technology",
       "startDate": "2022-01-01",
       "endDate": "2022-06-01"
-    },
-    {
-      "firstName": "Walid",
-      "lastName": "Zakan",
-      "email": "walid.zakan@gmail.com",
-      "phone": "0682208346",
-      "birthday": "2024-05-10",
-      "password": "Ancd1234",
-      "confirmPassword": "Ancd1234",
-      "id": 10
-    },
-    {
-      "firstName": "Walid",
-      "lastName": "Zakan",
-      "email": "walid.zakan@gmail.com",
-      "phone": "0682208346",
-      "birthday": "2024-05-10",
-      "password": "Ancd1234",
-      "confirmPassword": "Ancd1234",
-      "id": 11
     }
   ],
   "supervisors": [
@@ -173,8 +153,8 @@
       "id": 7
     },
     {
-      "firstName": "Walid",
-      "lastName": "Zakan",
+      "firstName": "Walidjhjhhhh",
+      "lastName": "Zakanhhhh",
       "email": "walid.zakan@gmail.com",
       "phone": "0682208346",
       "department": "Abcd123??",
@@ -228,43 +208,53 @@
   "projects": [
     {
       "id": 1,
-      "name": "Project A",
-      "description": "This is a description of Project A.",
+      "name": "Website Redesign",
+      "description": "Redesign the company website to improve user experience and increase conversions.",
       "startDate": "2022-01-01",
       "endDate": "2022-06-01",
-      "teamId": 1
+      "teamId": 1,
+      "status": "In Progress",
+      "supervisor": "John Doe"
     },
     {
       "id": 2,
-      "name": "Project B",
-      "description": "This is a description of Project B.",
+      "name": "Mobile App Launch",
+      "description": "Develop and launch a new mobile app to expand our product offerings.",
       "startDate": "2022-01-01",
       "endDate": "2022-06-01",
-      "teamId": 2
+      "teamId": 2,
+      "status": "Completed",
+      "supervisor": "Jane Smith"
     },
     {
       "id": 3,
-      "name": "Project C",
-      "description": "This is a description of Project C.",
+      "name": "Data Migration",
+      "description": "Migrate all customer data to a new, more secure database.",
       "startDate": "2022-01-01",
       "endDate": "2022-06-01",
-      "teamId": 3
+      "teamId": 3,
+      "status": "In Progress",
+      "supervisor": "Bob Johnson"
     },
     {
       "id": 4,
-      "name": "Project D",
-      "description": "This is a description of Project D.",
+      "name": "Marketing Campaign",
+      "description": "Launch a new marketing campaign to increase brand awareness.",
       "startDate": "2022-01-01",
       "endDate": "2022-06-01",
-      "teamId": 4
+      "teamId": 4,
+      "status": "Not Started",
+      "supervisor": "Alice Williams"
     },
     {
       "id": 5,
-      "name": "Project E",
-      "description": "This is a description of Project E.",
+      "name": "Customer Support Improvement",
+      "description": "Improve customer support by implementing a new ticketing system.",
       "startDate": "2022-01-01",
       "endDate": "2022-06-01",
-      "teamId": 5
+      "teamId": 5,
+      "status": "In Progress",
+      "supervisor": "Charlie Brown"
     }
   ],
   "absences": [
