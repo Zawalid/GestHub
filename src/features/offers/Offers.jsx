@@ -32,7 +32,7 @@ function Offers() {
       {isLoading && <Spinner />}
       {!error && !isLoading && (
         <div className="p-1 md:p-5">
-          <h1 className="text-text-primary font-bold text-3xl w-fit py-10 capitalize">
+          <h1 className="text-secondary font-bold text-3xl w-fit py-10 capitalize">
             Offres de stage recentes
           </h1>
           <div className="grid gap-4 md:me-4 grid-cols-1 md:grid-cols-[auto,1fr]">
