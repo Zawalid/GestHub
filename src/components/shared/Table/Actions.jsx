@@ -8,8 +8,8 @@ import {
 import { useTable } from ".";
 
 export function Actions({ onUpdate, onDelete, row }) {
-  const { showForm, confirmDelete, resourceName } = useTable();
-
+  const { showForm, confirmDelete, resourceName, rows, onPrevPage } =
+    useTable();
   return (
     <DropDown
       toggler={
@@ -38,7 +38,12 @@ export function Actions({ onUpdate, onDelete, row }) {
         Edit
       </DropDown.Option>
       <DropDown.Option
-        onClick={() => confirmDelete(true, () => onDelete(row.id))}
+        onClick={() =>
+          confirmDelete(true, () => {
+            onDelete(row.id);
+            rows?.length === 1 && onPrevPage();
+          })
+        }
       >
         <IoTrashOutline />
         Delete
