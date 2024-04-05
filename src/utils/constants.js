@@ -1,6 +1,17 @@
 export const ROUTES = {
-  admin: ["overview", "supervisors", "interns", "teams", "absences","offers","demands"],
-  supervisor: ["overview", "interns", "teams", "absences","projects"],
+  admin: [
+    "overview",
+    "supervisors",
+    "supervisors/:id",
+    "interns",
+    "interns/:id",
+    "teams",
+    "absences",
+    "offers",
+    "demands",
+    "projects",
+  ],
+  supervisor: ["overview", "interns", "teams", "absences", "projects"],
   intern: ["overview", "absences"],
 };
 export const routes = [
@@ -8,6 +19,5 @@ export const routes = [
   { label: "offers", path: "#offers" },
   { label: "about", path: "#about" },
 ];
-
 
 export const PAGE_LIMIT = 5;

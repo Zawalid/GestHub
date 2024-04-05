@@ -4,12 +4,12 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import {
-  BiSolidDashboard,
+  RxDashboard,
   BsLayoutSidebarInset,
   BsLayoutSidebarInsetReverse,
   BsPeople,
   FiLogOut,
-  IoSettingsOutline ,
+  IoSettingsOutline,
   IoBriefcaseOutline,
   IoDocumentsOutline,
   IoHomeOutline,
@@ -29,7 +29,7 @@ const routesIcons = {
   absences: <LuCalendarX />,
   offers: <IoBriefcaseOutline />,
   demands: <IoDocumentsOutline />,
-  projects: <BiSolidDashboard />,
+  projects: <RxDashboard />,
 };
 
 export default function Sidebar({ openSettings }) {
@@ -79,19 +79,21 @@ export default function Sidebar({ openSettings }) {
         </Button>
       </div>
       <ul className="space-y-1">
-        {ROUTES[role].map((route) => (
-          <li key={route}>
-            <NavLink to={`/app/${route}`} className="sidebar_element group">
-              {routesIcons[route]}
-              <span className={spanClass}>{t(`app.sidebar.${route}`)}</span>
-            </NavLink>
-          </li>
-        ))}
+        {ROUTES[role]
+          .filter((r) => !r.includes("/:"))
+          .map((route) => (
+            <li key={route}>
+              <NavLink to={`/app/${route}`} className="sidebar_element group">
+                {routesIcons[route]}
+                <span className={spanClass}>{t(`app.sidebar.${route}`)}</span>
+              </NavLink>
+            </li>
+          ))}
       </ul>
 
       <div className="mt-auto">
         <button className="w-full sidebar_element group" onClick={openSettings}>
-          <IoSettingsOutline  />
+          <IoSettingsOutline />
           <span className={spanClass}>{t("app.sidebar.settings")}</span>
         </button>
         <button className="w-full sidebar_element group">

@@ -1,9 +1,10 @@
-import SupervisorsList from "../components/admin/SupervisorsList";
+import { Heading } from "@/components/Heading";
+import SupervisorsList from "@/features/supervisors/SupervisorsList";
 
 export function Supervisors() {
   return (
     <>
-      <h1 className="text-3xl font-bold text-text-primary">Supervisors</h1>
+      <Heading>Supervisors</Heading>
       <SupervisorsList />
     </>
   );

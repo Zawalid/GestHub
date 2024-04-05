@@ -2,7 +2,7 @@ import { SearchInput } from "../../ui";
 import { useTable } from ".";
 
 export function Search() {
-  const { query, onSearch,isLoading } = useTable();
+  const { query, onSearch, isLoading } = useTable();
 
   return (
     <SearchInput

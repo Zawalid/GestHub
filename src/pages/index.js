@@ -1,7 +1,10 @@
 export { Overview } from "./Overview";
-export { Interns } from "./Interns";
 export { Supervisors } from "./Supervisors";
+export { Interns } from "./Interns";
 export { Teams } from "./Teams";
 export { Absences } from "./Absences";
+export { Projects } from "./Projects";
+export { Offers } from "./Offers";
+export { Demands } from "./Demands";
 export { NotFound } from "./NotFound";
 export { HomePage } from "./HomePage";

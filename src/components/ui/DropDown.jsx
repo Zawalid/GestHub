@@ -27,7 +27,7 @@ export function DropDown({
 
   return (
     <Tippy
-      content={<ul className="grid gap-1 p-1.5">{children}</ul>}
+      content={<ul className="grid gap-1 p-2">{children}</ul>}
       className={cn(
         "dropdown rounded-md border border-border bg-background-primary p-0 shadow-md",
         options?.className || defaultOptions.className
@@ -110,7 +110,7 @@ const Toggler = forwardRef(({ children, icon, className = "" }, ref) => {
 Toggler.displayName = "Toggler";
 
 function Title({ children }) {
-  return <span className="text-sm text-text-tertiary">{children}</span>;
+  return <span className="text-sm pl-1 text-text-tertiary">{children}</span>;
 }
 
 function Divider() {

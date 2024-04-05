@@ -11,6 +11,9 @@
             "@/pages/*": [
                 "pages/*"
             ],
+            "@/features/*": [
+                "features/*"
+            ],
             "@/styles/*": [
                 "styles/*"
             ],
@@ -29,7 +32,7 @@
             "@/context/*": [
                 "context/*"
             ],
-            "@/app/*" : [
+            "@/app/*": [
                 "app/*"
             ]
         }

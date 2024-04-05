@@ -99,26 +99,6 @@
       "major": "Information Technology",
       "startDate": "2022-01-01",
       "endDate": "2022-06-01"
-    },
-    {
-      "firstName": "Walid",
-      "lastName": "Zakan",
-      "email": "walid.zakan@gmail.com",
-      "phone": "0682208346",
-      "birthday": "2024-05-10",
-      "password": "Ancd1234",
-      "confirmPassword": "Ancd1234",
-      "id": 10
-    },
-    {
-      "firstName": "Walid",
-      "lastName": "Zakan",
-      "email": "walid.zakan@gmail.com",
-      "phone": "0682208346",
-      "birthday": "2024-05-10",
-      "password": "Ancd1234",
-      "confirmPassword": "Ancd1234",
-      "id": 11
     }
   ],
   "supervisors": [
@@ -173,8 +153,8 @@
       "id": 7
     },
     {
-      "firstName": "Walid",
-      "lastName": "Zakan",
+      "firstName": "Walidjhjhhhh",
+      "lastName": "Zakanhhhh",
       "email": "walid.zakan@gmail.com",
       "phone": "0682208346",
       "department": "Abcd123??",
@@ -183,13 +163,13 @@
       "id": 8
     },
     {
-      "firstName": "Walid",
-      "lastName": "Zakan",
+      "firstName": "waliddsdd",
+      "lastName": "zakan",
       "email": "walid.zakan@gmail.com",
       "phone": "0682208346",
-      "department": "abcaS12345d?",
-      "password": "abcaS12345d?",
-      "confirmPassword": "abcaS12345d?",
+      "department": "fff",
+      "password": "Abcd124?",
+      "confirmPassword": "Abcd124?",
       "id": 9
     }
   ],
@@ -228,43 +208,252 @@
   "projects": [
     {
       "id": 1,
-      "name": "Project A",
-      "description": "This is a description of Project A.",
-      "startDate": "2022-01-01",
-      "endDate": "2022-06-01",
-      "teamId": 1
+      "name": "Customer Relationship Management System",
+      "description": "Implement a new CRM system to better manage customer relationships.",
+      "startDate": "2022-02-01",
+      "endDate": "2022-07-01",
+      "teamId": 6,
+      "status": "In Progress",
+      "supervisor": "Emma Watson",
+      "priority": "Medium",
+      "budget": 70000,
+      "tasks": [
+        {
+          "id": 1,
+          "name": "Identify CRM requirements",
+          "status": "Completed"
+        },
+        {
+          "id": 2,
+          "name": "Select CRM vendor",
+          "status": "In Progress"
+        },
+        {
+          "id": 3,
+          "name": "Implement CRM system",
+          "status": "Completed"
+        },
+        {
+          "id": 4,
+          "name": "Train staff on CRM system",
+          "status": "Not Started"
+        }
+      ],
+      "teamMembers": [
+        "Emma Watson",
+        "Daniel Radcliffe"
+      ]
     },
     {
       "id": 2,
-      "name": "Project B",
-      "description": "This is a description of Project B.",
-      "startDate": "2022-01-01",
-      "endDate": "2022-06-01",
-      "teamId": 2
+      "name": "Social Media Campaign",
+      "description": "Launch a new social media campaign to increase brand awareness.",
+      "startDate": "2022-03-01",
+      "endDate": "2022-04-01",
+      "teamId": 7,
+      "status": "Not Started",
+      "supervisor": "Tom Hanks",
+      "priority": "High",
+      "budget": 20000,
+      "tasks": [
+        {
+          "id": 1,
+          "name": "Identify target audience",
+          "status": "Not Started"
+        },
+        {
+          "id": 2,
+          "name": "Create social media content",
+          "status": "Not Started"
+        },
+        {
+          "id": 3,
+          "name": "Schedule posts",
+          "status": "Not Started"
+        },
+        {
+          "id": 4,
+          "name": "Monitor campaign performance",
+          "status": "Not Started"
+        }
+      ],
+      "teamMembers": [
+        "Tom Hanks",
+        "Meg Ryan",
+        "Bill Pullman"
+      ]
     },
     {
       "id": 3,
-      "name": "Project C",
-      "description": "This is a description of Project C.",
-      "startDate": "2022-01-01",
-      "endDate": "2022-06-01",
-      "teamId": 3
+      "name": "E-commerce Platform Upgrade",
+      "description": "Upgrade the existing e-commerce platform to improve performance and user experience.",
+      "startDate": "2022-04-01",
+      "endDate": "2022-10-01",
+      "teamId": 8,
+      "status": "In Progress",
+      "supervisor": "Julia Roberts",
+      "priority": "High",
+      "budget": 100000,
+      "tasks": [
+        {
+          "id": 1,
+          "name": "Identify platform requirements",
+          "status": "Completed"
+        },
+        {
+          "id": 2,
+          "name": "Design new platform",
+          "status": "In Progress"
+        },
+        {
+          "id": 3,
+          "name": "Develop new platform",
+          "status": "Not Started"
+        },
+        {
+          "id": 4,
+          "name": "Test new platform",
+          "status": "Not Started"
+        },
+        {
+          "id": 5,
+          "name": "Deploy new platform",
+          "status": "Not Started"
+        }
+      ],
+      "teamMembers": [
+        "Julia Roberts",
+        "Richard Gere",
+        "Hector Elizondo",
+        "Rupert Grint"
+      ]
     },
     {
       "id": 4,
-      "name": "Project D",
-      "description": "This is a description of Project D.",
-      "startDate": "2022-01-01",
-      "endDate": "2022-06-01",
-      "teamId": 4
+      "name": "New Product Development",
+      "description": "Develop a new product to expand the company's product line.",
+      "startDate": "2022-05-01",
+      "endDate": "2023-05-01",
+      "teamId": 9,
+      "status": "Not Started",
+      "supervisor": "Brad Pitt",
+      "priority": "High",
+      "budget": 150000,
+      "tasks": [
+        {
+          "id": 1,
+          "name": "Conduct market research",
+          "status": "Not Started"
+        },
+        {
+          "id": 2,
+          "name": "Design new product",
+          "status": "Not Started"
+        },
+        {
+          "id": 3,
+          "name": "Develop new product",
+          "status": "Not Started"
+        },
+        {
+          "id": 4,
+          "name": "Test new product",
+          "status": "Not Started"
+        },
+        {
+          "id": 5,
+          "name": "Launch new product",
+          "status": "Not Started"
+        }
+      ],
+      "teamMembers": [
+        "Brad Pitt",
+        "Angelina Jolie",
+        "Morgan Freeman"
+      ]
     },
     {
       "id": 5,
-      "name": "Project E",
-      "description": "This is a description of Project E.",
+      "name": "IT Infrastructure Upgrade",
+      "description": "Upgrade the company's IT infrastructure to improve performance and security.",
+      "startDate": "2022-06-01",
+      "endDate": "2022-12-01",
+      "teamId": 10,
+      "status": "In Progress",
+      "supervisor": "Meryl Streep",
+      "priority": "Low",
+      "budget": 80000,
+      "tasks": [
+        {
+          "id": 1,
+          "name": "Identify infrastructure requirements",
+          "status": "Completed"
+        },
+        {
+          "id": 2,
+          "name": "Select infrastructure vendors",
+          "status": "In Progress"
+        },
+        {
+          "id": 3,
+          "name": "Install new infrastructure",
+          "status": "Not Started"
+        },
+        {
+          "id": 4,
+          "name": "Test new infrastructure",
+          "status": "Not Started"
+        }
+      ],
+      "teamMembers": [
+        "Meryl Streep",
+        "Alec Baldwin",
+        "Steve Martin"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Data Center Migration",
+      "description": "Migrate the company's data center to a new location.",
       "startDate": "2022-01-01",
       "endDate": "2022-06-01",
-      "teamId": 5
+      "teamId": 11,
+      "status": "Completed",
+      "supervisor": "Tom Cruise",
+      "priority": "High",
+      "budget": 120000,
+      "tasks": [
+        {
+          "id": 1,
+          "name": "Plan migration",
+          "status": "Completed"
+        },
+        {
+          "id": 2,
+          "name": "Prepare new data center",
+          "status": "Completed"
+        },
+        {
+          "id": 3,
+          "name": "Migrate data",
+          "status": "Completed"
+        },
+        {
+          "id": 4,
+          "name": "Test new data center",
+          "status": "Completed"
+        },
+        {
+          "id": 5,
+          "name": "Decommission old data center",
+          "status": "Completed"
+        }
+      ],
+      "teamMembers": [
+        "Tom Cruise",
+        "Nicole Kidman",
+        "Dustin Hoffman"
+      ]
     }
   ],
   "absences": [

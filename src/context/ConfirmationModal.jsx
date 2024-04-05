@@ -1,0 +1,77 @@
+import { createContext, useCallback, useState } from "react";
+import { PiWarningFill } from "react-icons/pi";
+import { createPortal } from "react-dom";
+import { Modal,Button } from "@/components/ui";
+
+const DEFAULT_OPTIONS = {
+  message: "",
+  title: "",
+  confirmText: "Delete",
+  icon: <PiWarningFill />,
+};
+export const ModalContext = createContext();
+
+export function ModalProvider({ children }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [options, setOptions] = useState(DEFAULT_OPTIONS);
+
+  const openModal = (newOptions) => {
+    setIsModalOpen(true);
+    setOptions({ ...options, ...newOptions });
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setOptions(DEFAULT_OPTIONS);
+  };
+  const onConfirm = useCallback(() => {
+    options.onConfirm();
+    closeModal();
+  }, [options]);
+  const onCancel = () => {
+    options.onCancel?.();
+    closeModal();
+  };
+
+  return (
+    <ModalContext.Provider
+      value={{
+        options,
+        openModal,
+        isModalOpen,
+      }}
+    >
+      {children}
+      {createPortal(
+        <Modal
+          isOpen={isModalOpen}
+          className="max-w-[90%] sm:max-w-[600px] h-fit flex-col gap-5 border  py-3 shadow-sm child-padding w-fit sm:py-4"
+          overlayClassName="z-50"
+          closeOnBlur={false}
+        >
+          <div className="flex items-center gap-3  pb-3">
+            <div className="grid h-6 w-6 place-content-center rounded-full bg-[#F57800] text-white sm:h-8 sm:w-8 sm:text-lg">
+              <PiWarningFill />
+            </div>
+            <h1 className="text-xl font-bold text-text-primary   sm:text-2xl">
+              {options.title}
+            </h1>
+          </div>
+          <h4 className="text-sm font-medium text-text-secondary sm:text-base">
+            {options.message}
+          </h4>
+
+          <div className="mt-3 flex  items-center justify-end gap-3 border-t border-border pt-3">
+            <Button color="tertiary" onClick={onCancel}>
+              Cancel
+            </Button>
+            <Button color="delete" onClick={onConfirm}>
+              {options.confirmText || "Delete"}
+            </Button>
+          </div>
+        </Modal>,
+        document.body
+      )}
+    </ModalContext.Provider>
+  );
+}

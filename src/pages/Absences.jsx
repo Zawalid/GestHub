@@ -1,3 +1,10 @@
+import { Heading } from "@/components/Heading";
+
 export function Absences() {
-  return <div>Absences</div>;
+  return (
+    <>
+      <Heading>Absences</Heading>
+      <div>Absences</div>
+    </>
+  );
 }

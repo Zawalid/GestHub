@@ -1,73 +1,42 @@
-// import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { cloneElement, useRef } from "react";
 
 import { Sort } from "./Sort";
 import { useTable } from ".";
 
 export function Table({ actions }) {
-  const { columns, rows, isLoading, error } = useTable();
+  const { columns, rows, error } = useTable();
   const table = useRef();
-  // const [parent] = useAutoAnimate({ duration: 300 });
+  const [parent] = useAutoAnimate({ duration: 300 });
 
-  const render = () => {
-    if (isLoading) {
-      const tableHeight = table.current?.getBoundingClientRect().height;
-      const skeletonHeight = 40;
-      const theadHeight = table.current
-        ?.querySelector("thead")
-        .getBoundingClientRect().height;
-
-      const length = Math.floor((tableHeight - theadHeight) / skeletonHeight);
-      return (
-        <tbody>
-          {Array.from({ length }).map((_, i) => (
-            <Skeleton key={i} columns={columns} />
-          ))}
-        </tbody>
-      );
-    }
-    if (error) {
-      return (
-        <tbody className="flex absolute h-[85%] w-full items-center justify-center text-text-tertiary">
-          <tr>
-            <td className="text-red-600">
-              {error.message || "Something went wrong! Please try again."}
-            </td>
-          </tr>
-        </tbody>
-      );
-    }
-    if (rows?.length === 0) {
-      return (
-        <tbody className="flex absolute h-[85%] w-full items-center justify-center text-text-tertiary">
-          <tr>
-            <td>No results found</td>
-          </tr>
-        </tbody>
-      );
-    }
+  if (error)
     return (
-      <tbody className="text-sm h-fit font-medium divide-y divide-border text-text-primary">
-        {rows?.map((row) => (
-          <Row
-            key={row.id}
-            row={row}
-            visibleColumns={columns.filter((c) => c.visible)}
-            actions={actions}
-          />
-        ))}
-      </tbody>
+      <div className="flex z-10 h-full absolute top-0 w-full items-center justify-center text-text-tertiary">
+        <h3 className="font-semibold text-red-600">
+          {error.message || "Something went wrong! Please try again."}
+        </h3>
+      </div>
     );
-  };
 
   return (
     <div className="relative flex-1 overflow-x-auto" ref={table}>
+      {rows?.length === 0 && (
+        <div className="flex z-10 h-full flex-col absolute top-0 w-full items-center justify-center text-text-tertiary">
+          <img
+            src="/images/no_result.png"
+            alt="no results"
+            className="w-[200px]"
+          />
+          <h3 className="font-semibold">No results found</h3>
+        </div>
+      )}
       <table
         cellPadding={3}
         className="w-full whitespace-nowrap overflow-x-auto  text-left"
       >
+        <Skeleton table={table} />
         <thead className="bg-background-secondary ">
-          <tr>
+          <tr ref={parent}>
             {columns
               .filter((c) => c.visible)
               .map((column) => (
@@ -76,7 +45,19 @@ export function Table({ actions }) {
             {actions && <Column hide={true} />}
           </tr>
         </thead>
-        {render()}
+        <tbody
+          className="text-sm h-fit font-medium divide-y divide-border text-text-primary"
+          ref={parent}
+        >
+          {rows?.map((row) => (
+            <Row
+              key={row.id}
+              row={row}
+              visibleColumns={columns.filter((c) => c.visible)}
+              actions={actions}
+            />
+          ))}
+        </tbody>
       </table>
     </div>
   );
@@ -90,33 +71,49 @@ function Column({ column, hide }) {
   );
 }
 function Row({ row, visibleColumns, actions }) {
+  const [parent] = useAutoAnimate({ duration: 300 });
   return (
-    <tr>
+    <tr ref={parent}>
       {visibleColumns.map((col) => (
-        <td key={col.displayLabel} className="px-6 py-4">
+        <td key={col.displayLabel} className="px-6 py-3.5">
           {row[col.key]}
         </td>
       ))}
       {actions && (
-        <td className="px-6 py-4">{cloneElement(actions, { row })}</td>
+        <td className="px-6 py-3.5">{cloneElement(actions, { row })}</td>
       )}
     </tr>
   );
 }
 
-function Skeleton({ columns }) {
+function Skeleton({ table }) {
+  const { columns, isLoading } = useTable();
+
+  if (!isLoading) return null;
+
+  const tableHeight = table.current?.getBoundingClientRect().height;
+  const skeletonHeight = 40;
+  const theadHeight = table.current
+    ?.querySelector("thead")
+    ?.getBoundingClientRect().height;
+
+  const length = Math.floor((tableHeight - theadHeight) / skeletonHeight);
   return (
-    <tr className="animate-pulse">
-      {columns
-        .filter((c) => c.visible)
-        .map(({ displayLabel }) => (
-          <td key={displayLabel}>
+    <tbody>
+      {Array.from({ length }).map((_, i) => (
+        <tr className="animate-pulse" key={i}>
+          {columns
+            .filter((c) => c.visible)
+            .map(({ displayLabel }) => (
+              <td key={displayLabel}>
+                <div className="bg-background-secondary px-6 py-4 rounded-md"></div>
+              </td>
+            ))}
+          <td>
             <div className="bg-background-secondary px-6 py-4 rounded-md"></div>
           </td>
-        ))}
-      <td>
-        <div className="bg-background-secondary px-6 py-4 rounded-md"></div>
-      </td>
-    </tr>
+        </tr>
+      ))}
+    </tbody>
   );
 }

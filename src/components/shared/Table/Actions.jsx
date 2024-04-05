@@ -6,10 +6,15 @@ import {
   MdDriveFileRenameOutline,
 } from "@/components/ui/Icons";
 import { useTable } from ".";
+import { Link, useLocation } from "react-router-dom";
+import { useConfirmationModal } from "@/hooks/useConfirmationModal";
 
 export function Actions({ onUpdate, onDelete, row }) {
-  const { showForm, confirmDelete, resourceName, rows, onPrevPage } =
+  const { showForm, confirmOptions, resourceName, rows, onPrevPage } =
     useTable();
+  const location = useLocation();
+  const { openModal } = useConfirmationModal();
+
   return (
     <DropDown
       toggler={
@@ -19,10 +24,12 @@ export function Actions({ onUpdate, onDelete, row }) {
       }
       options={{ placement: "bottom-end" }}
     >
-      <DropDown.Option>
-        <IoEyeOutline />
-        View
-      </DropDown.Option>
+      <Link to={`${location.pathname}/${row.id}`} replace={true}>
+        <DropDown.Option>
+          <IoEyeOutline />
+          View
+        </DropDown.Option>
+      </Link>
       <DropDown.Option
         onClick={() =>
           showForm({
@@ -39,9 +46,12 @@ export function Actions({ onUpdate, onDelete, row }) {
       </DropDown.Option>
       <DropDown.Option
         onClick={() =>
-          confirmDelete(true, () => {
-            onDelete(row.id);
-            rows?.length === 1 && onPrevPage();
+          openModal({
+            ...confirmOptions,
+            onConfirm: () => {
+              onDelete(row.id);
+              rows?.length === 1 && onPrevPage();
+            },
           })
         }
       >

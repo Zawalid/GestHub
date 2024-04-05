@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { createContext, useContext } from "react";
 import { toLocalStorage } from "@/hooks/useLocalStorageState";
-import { useOffers } from "@/services/queries";
+import { useOffers } from "./useOffers";
 import { DateTime, Interval } from "luxon";
 
 const OffersContext = createContext();

@@ -2,30 +2,13 @@ import { createContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Table } from "./Table";
 import { Search } from "./Search";
-import { Filter } from "./Filter";
 import { View } from "./View";
 import { Pagination } from "./Pagination";
 import { Download } from "./Download";
 import { PAGE_LIMIT } from "../../../utils/constants";
 import { TableRecord } from "./TableRecord";
-import { ConfirmationModal } from "@/components/ui";
-import { useTable } from ".";
 import { Actions } from "./Actions";
 import { NewRecord } from "./NewRecord";
-
-//* Methods
-Array.prototype.search = function (query, fieldsToSearch) {
-  if (!query) return this;
-
-  return this.filter((el) => {
-    const valueToSearch = fieldsToSearch.map((field) => el[field]).join(" ");
-    console.log(valueToSearch);
-    return valueToSearch
-      ?.trim()
-      .toLowerCase()
-      .includes(query?.trim().toLowerCase());
-  });
-};
 
 Array.prototype.paginate = function (page, limit) {
   const start = (page - 1) * limit;
@@ -34,92 +17,22 @@ Array.prototype.paginate = function (page, limit) {
   return this.slice(start, end);
 };
 
-Array.prototype.customFilter = function (filters) {
-  if (!filters) return this;
-
-  const conditions = Object.keys(filters).map((key) => ({
-    field: key,
-    value: filters[key].filter((v) => v.checked).map((v) => v.value),
-  }));
-
-  if (!conditions.length) return this;
-
-  return this.filter((el) =>
-    conditions.some((c) => c.value.includes(el[c.field]))
-  );
-};
-
-Array.prototype.customSort = function (sortBy, direction, columns) {
-  const stringFields = columns
-    .filter((c) => c.type === "string")
-    .map((c) => c.key);
-  const numberFields = columns
-    .filter((c) => c.type === "number")
-    .map((c) => c.key);
-  const dateFields = columns.filter((c) => c.type === "date").map((c) => c.key);
-
-  return this.toSorted((a, b) => {
-    if (numberFields.includes(sortBy))
-      return direction === "asc"
-        ? a?.[sortBy] - b?.[sortBy]
-        : b?.[sortBy] - a?.[sortBy];
-
-    if (stringFields.includes(sortBy)) {
-      return direction === "asc"
-        ? a?.[sortBy].localeCompare(b?.[sortBy])
-        : b?.[sortBy].localeCompare(a?.[sortBy]);
-    }
-
-    if (dateFields.includes(sortBy)) {
-      return direction === "asc"
-        ? new Date(a.birthday) - new Date(b.birthday)
-        : new Date(b.birthday) - new Date(a.birthday);
-    }
-  });
-};
-
 export const TableContext = createContext();
-
-//* Props descriptions and examples
-/**
- * @property {Array} tableData - The data to be displayed in the table. @example: ?.[{ id: 1, firstName: 'John',... }, {...}]
- * @property {string} resourceName - The name of the resource being displayed. @example: "Users"
- * @property {boolean} isLoading - A flag indicating if the data is currently being loaded.
- * @property {Error} [error] - An error object, if an error occurred while loading the data.
- * @property {Array} columns - The columns to be displayed in the table.
- *    @example: [{ key: "id", displayLabel: "ID", visible: true,type : "number" },{...}]
- * @property {Object} filters - The filters to be applied to the table data.
- *     @example: { status: [{ value: "Active", checked: true },{ value: "Inactive", checked: true },{...} ],
- * @property {Array} formFields - The fields to be displayed in the form.
- *    @example: [{ name: "lastName", label: "Last Name" },{  name: "email",  type: "email",  label: "Email Address"},{...}]
- * @property {Object} formDefaults - The default values of the form fields 
- *    @example: {firstName : "walid",email : '...',...}
- * @property {Object} downloadOptions - The options for downloading the table data.
- *    @example: {csvFileName: "Interns-csv", pdfFileName: "Interns"}
- * @property {Boolean} displayAllData - A indicating if the data should be displayed at once with no pagination
-/**
- * @property {Array} fieldsToSearch - An array of field names that should be searched when performing a search operation.
- *    @example ["firstName","lastName","email"]
- */
 
 export function TableProvider({
   children,
-  data: tableData,
+  data,
   resourceName,
   isLoading,
   error,
   columns: tableColumns,
-  filters: tableFilters,
   formFields,
   formDefaults,
   fieldsToSearch,
   downloadOptions,
   displayAllData,
 }) {
-  // State
-  const [data, setData] = useState(tableData);
   const [columns, setColumns] = useState(tableColumns);
-  const [filters, setFilters] = useState(tableFilters);
   const [formOptions, setFormOptions] = useState({
     defaultValues: formDefaults,
     fields: formFields,
@@ -130,13 +43,7 @@ export function TableProvider({
     heading: "",
     isOpen: false,
   });
-  const [confirmOptions, setConfirmOptions] = useState({
-    isOpen: false,
-    message: `Are you sure you want to delete this ${resourceName.toLowerCase()} ?`,
-    title: `Delete ${resourceName}`,
-    confirmText: "Delete",
-    onConfirm: () => {},
-  });
+
   const [limit, setLimit] = useState(PAGE_LIMIT);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("search") || "";
@@ -147,7 +54,6 @@ export function TableProvider({
   // Variables
   const rows = data
     ?.search(query, fieldsToSearch)
-    .customFilter(filters)
     .customSort(sortBy, direction, columns);
 
   const totalItems = rows?.length;
@@ -170,11 +76,12 @@ export function TableProvider({
       .filter((c) => !excludedFields.includes(c)),
   };
 
-  // Effects
+  const confirmOptions = {
+    message: `Are you sure you want to delete this ${resourceName.toLowerCase()} ?`,
+    title: `Delete ${resourceName}`,
+    confirmText: "Delete",
+  };
 
-  useEffect(() => {
-    setData(tableData);
-  }, [tableData]);
 
   useEffect(() => {
     if (page === 1) searchParams.delete("page");
@@ -207,8 +114,6 @@ export function TableProvider({
   };
 
   const onChangeLimit = (limit) => setLimit(limit);
-
-  const onFilter = (filter) => setFilters((prev) => ({ ...prev, ...filter }));
 
   const onChangeView = (column, showAll) => {
     if (showAll)
@@ -246,20 +151,6 @@ export function TableProvider({
     }));
   };
 
-  const confirmDelete = (isOpen, onConfirm) => {
-    const onCancel = () => setConfirmOptions((prev) => ({ ...prev, isOpen: false }));
-
-    setConfirmOptions((prev) => ({
-      ...prev,
-      isOpen,
-      onCancel,
-      onConfirm: () => {
-        onConfirm();
-        onCancel();
-      },
-    }));
-  };
-
   // Context value
   const context = {
     // data
@@ -281,9 +172,6 @@ export function TableProvider({
     onChangeLimit,
     onNextPage,
     onPrevPage,
-    // filter
-    filters,
-    onFilter,
     // view
     onChangeView,
     // sort
@@ -297,7 +185,6 @@ export function TableProvider({
     formOptions,
     showForm,
     confirmOptions,
-    confirmDelete,
   };
 
   return (
@@ -305,18 +192,11 @@ export function TableProvider({
   );
 }
 
-function DeleteConfirmation() {
-  const { confirmOptions } = useTable();
-  return <ConfirmationModal {...confirmOptions} />;
-}
-
 TableProvider.Table = Table;
 TableProvider.Search = Search;
-TableProvider.Filter = Filter;
 TableProvider.View = View;
 TableProvider.Download = Download;
 TableProvider.Pagination = Pagination;
 TableProvider.NewRecord = NewRecord;
 TableProvider.TableRecord = TableRecord;
-TableProvider.DeleteConfirmation = DeleteConfirmation;
 TableProvider.Actions = Actions;

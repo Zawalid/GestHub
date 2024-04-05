@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Button, SearchInput } from "../../ui";
+import { Button, SearchInput } from "../../components/ui";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useTranslation } from "react-i18next";
-import { setToUrl } from "../../../hooks/useToUrl";
+import { setToUrl } from "../../hooks/useToUrl";
 import { PiSquaresFourBold, PiSquareSplitVerticalBold } from "react-icons/pi";
 import Shade from "@/components/ui/shade";
 import {
@@ -12,8 +12,8 @@ import {
   useOfferContext,
   OfferCard,
 } from "./index";
-import ErrorMsg from "@/components/shared/Error";
-import Spinner from "@/components/shared/Spinner";
+import ErrorMsg from "@/components/ui/Error";
+import Spinner from "@/components/ui/Spinner";
 function Offers() {
   const [card, setCards] = useState(2);
   const { t } = useTranslation();

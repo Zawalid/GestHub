@@ -16,19 +16,29 @@ import {
   Teams,
   NotFound,
   HomePage,
+  Offers,
+  Demands,
+  Projects,
 } from "./pages";
 import { ROUTES } from "./utils/constants";
 import HomePageLayout from "./layouts/HomePageLayout";
 import OfferDetails from "./pages/OfferDetails";
+import SupervisorDetails from "./features/supervisors/SupervisorDetails";
+import InternDetails from "./features/interns/InternDetails";
 
 const queryClient = new QueryClient();
 
 const routesElements = {
   overview: <Overview />,
-  interns: <Interns />,
   supervisors: <Supervisors />,
+  "supervisors/:id": <SupervisorDetails />,
+  interns: <Interns />,
+  "interns/:id": <InternDetails />,
   teams: <Teams />,
   absences: <Absences />,
+  offers: <Offers />,
+  demands: <Demands />,
+  projects: <Projects />,
 };
 
 export default function App() {

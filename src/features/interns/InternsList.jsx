@@ -1,23 +1,23 @@
-import { useSupervisors } from "@/services/queries";
 import {
-  useAddSupervisor,
-  useDeleteSupervisor,
-  useUpdateSupervisor,
-} from "@/services/mutations";
+  useInterns,
+  useAddIntern,
+  useDeleteIntern,
+  useUpdateIntern,
+} from "./useInterns";
 import TableLayout from "@/layouts/TableLayout";
 
-export default function SupervisorsList() {
-  const { supervisors, isLoading, error } = useSupervisors();
-  const { mutate: addSupervisor } = useAddSupervisor();
-  const { mutate: updateSupervisor } = useUpdateSupervisor();
-  const { mutate: deleteSupervisor } = useDeleteSupervisor();
+export default function InternsList() {
+  const { interns, isLoading, error } = useInterns();
+  const { mutate: addIntern } = useAddIntern();
+  const { mutate: updateIntern } = useUpdateIntern();
+  const { mutate: deleteIntern } = useDeleteIntern();
 
   return (
     <TableLayout
-      data={supervisors}
-      resourceName="Supervisor"
+      data={interns}
       isLoading={isLoading}
       error={error}
+      resourceName="Intern"
       columns={[
         { key: "id", displayLabel: "ID", visible: true, type: "number" },
         {
@@ -45,10 +45,34 @@ export default function SupervisorsList() {
           type: "string",
         },
         {
-          key: "department",
-          displayLabel: "Department",
+          key: "birthday",
+          displayLabel: "Birthday",
+          visible: true,
+          type: "date",
+        },
+        {
+          key: "university",
+          displayLabel: "University",
           visible: true,
           type: "string",
+        },
+        {
+          key: "major",
+          displayLabel: "Major",
+          visible: true,
+          type: "string",
+        },
+        {
+          key: "startDate",
+          displayLabel: "Start Date",
+          visible: true,
+          type: "date",
+        },
+        {
+          key: "endDate",
+          displayLabel: "End Date",
+          visible: true,
+          type: "date",
         },
       ]}
       formFields={[
@@ -70,8 +94,9 @@ export default function SupervisorsList() {
           label: "Phone Number",
         },
         {
-          name: "department",
-          label: "Department",
+          name: "birthday",
+          label: "Birthday",
+          type: "date",
         },
         {
           name: "password",
@@ -91,16 +116,16 @@ export default function SupervisorsList() {
         lastName: "",
         email: "",
         phone: "",
-        department: "",
+        birthday: "",
       }}
-      fieldsToSearch={["firstName", "lastName", "email", "department"]}
+      fieldsToSearch={["firstName", "lastName", "email", "major", "university"]}
       downloadOptions={{
-        csvFileName: "Supervisors",
-        pdfFileName: "Supervisors",
+        csvFileName: "Interns",
+        pdfFileName: "Interns",
       }}
-      onAdd={addSupervisor}
-      onUpdate={updateSupervisor}
-      onDelete={deleteSupervisor}
+      onAdd={addIntern}
+      onUpdate={updateIntern}
+      onDelete={deleteIntern}
     />
   );
 }
