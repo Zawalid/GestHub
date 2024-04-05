@@ -1,6 +1,7 @@
 import Shade from "@/components/ui/shade";
-import { useOffer } from "@/services/queries";
+import { useOffer } from "@/features/offers/useOffers";
 import { useEffect } from "react";
+
 function OfferDetails() {
   const { data } = useOffer();
   useEffect(() => {
