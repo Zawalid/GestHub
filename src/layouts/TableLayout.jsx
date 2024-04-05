@@ -10,7 +10,7 @@ export default function TableLayout({
   const [parent] = useAutoAnimate({ duration: 300 });
 
   return (
-    <div className="flex h-full gap-5 flex-col">
+    <div className="flex h-full gap-5 overflow-auto flex-col">
       <Table {...tableProps}>
         <div className="flex flex-col-reverse sm:flex-row sm:items-center gap-5 justify-between">
           <div className="flex justify-between sm:justify-normal items-center gap-3">

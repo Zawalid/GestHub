@@ -13,10 +13,7 @@ export default function Profile() {
     options: { isUpdated, isValid, handleSubmit, reset, setValue, getValue },
   } = useForm({
     defaultValues: {
-      image: {
-        src: user.image,
-        file: null,
-      },
+      image: user.image,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
