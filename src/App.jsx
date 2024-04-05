@@ -18,7 +18,8 @@ import {
   HomePage,
 } from "./pages";
 import { ROUTES } from "./utils/constants";
-
+import HomePageLayout from "./layouts/HomePageLayout";
+import OfferDetails from "./pages/OfferDetails";
 
 const queryClient = new QueryClient();
 
@@ -39,7 +40,10 @@ export default function App() {
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePageLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path="/offer/:id" element={<OfferDetails />} />
+          </Route>
           <Route path="app" element={<AppLayout />}>
             <Route index element={<Navigate to="/app/overview" />} />
             {/* Routes of every role */}

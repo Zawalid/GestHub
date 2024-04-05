@@ -1,13 +1,8 @@
-import { SearchInput } from "../ui/SearchInput";
-import { useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { setToUrl } from "../../hooks/useToUrl";
 import Shade from "../ui/shade";
 
 function Hero() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get("search") || "";
   const [parent] = useAutoAnimate({ duration: 300 });
   const { t } = useTranslation();
 
@@ -28,15 +23,7 @@ function Hero() {
           </h1>
           <p className="text-text-secondary">{t("hero.paragraph")}</p>
         </div>
-        <div className="flex flex-col md:flex-row justify-center lg:justify-start items-center gap-4 p-4">
-          <SearchInput
-            onChange={(query) =>
-              setToUrl("search", query, searchParams, setSearchParams)
-            }
-            query={query}
-            placeholder={t("hero.placeholder")}
-          />
-        </div>
+        <div className=" p-4"></div>
       </div>
       <div className="hidden lg:flex self-end justify-center items-center">
         <img src="SVG/hero.svg" className=" w-3/4" alt="" />

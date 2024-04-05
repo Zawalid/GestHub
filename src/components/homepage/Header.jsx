@@ -25,7 +25,7 @@ export function Header() {
   }, [currentPath]);
 
   return (
-    <header className="flex items-center justify-between  bg-background-secondary p-5 lg:px-20 shadow-md">
+    <header className=" relative flex items-center justify-between  bg-background-secondary p-5 lg:px-20 shadow-md">
       <Logo className="w-20" />
       <Links />
 
@@ -51,7 +51,11 @@ export function Header() {
         onClose={() => setIsMobileMenuOpen(false)}
       />
 
-      <Login isOpen={isSignInOpen} openRegister={setIsRegisterOpen} onClose={setIsSignInOpen} />
+      <Login
+        isOpen={isSignInOpen}
+        openRegister={setIsRegisterOpen}
+        onClose={setIsSignInOpen}
+      />
       <Register
         isOpen={isRegisterOpen}
         onClose={() => setIsRegisterOpen(false)}
@@ -69,7 +73,7 @@ function Links() {
       {routes.map((route) => (
         <NavLink key={route.label} to={route.path}>
           <DropDown paths={route.nested || []}>
-            <li className="relative flex items-center gap-3 font-semibold text-text-secondary transition-colors duration-300 before:absolute before:-bottom-[30px] before:left-1/2 before:h-[1px] before:w-full before:-translate-x-1/2 before:scale-0 before:bg-text-tertiary before:transition-transform before:duration-500 hover:text-text-tertiary hover:before:scale-100">
+            <li className="relative flex items-center gap-3 font-semibold text-text-secondary transition-colors duration-300 hover:text-primary ">
               <span>{t(`header.navbar.${route.label}`)}</span>
               {route.nested && <FaChevronDown />}
             </li>

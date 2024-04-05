@@ -43,10 +43,10 @@ function OffersProvider({ children }) {
     query,
   };
 
+  //set data from react Query to state
   useEffect(() => {
     setFiltredoffers(offers);
   }, [offers]);
-
   //filter by all sect or all exp
   function selectAll(e, action, item) {
     if (e.target.checked) {

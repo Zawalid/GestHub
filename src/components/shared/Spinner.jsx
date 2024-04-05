@@ -1,5 +1,4 @@
 import { toast } from "sonner";
-import { useEffect } from "react";
 function Spinner() {
   function toastError() {
     toast(
@@ -13,7 +12,7 @@ function Spinner() {
       onClick={() => toastError()}
       className="flex-col gap-4 w-full h-full flex items-center justify-center"
     >
-      <div className="loader border-t-4 border-l-4 border-dashed rounded-full border-primary  animate-spin aspect-square w-28 flex justify-center items-center text-yellow-700"></div>
+      <div className="loader border-t-4 rounded-full border-primary  animate-spin aspect-square w-28 flex justify-center items-center text-yellow-700"></div>
     </div>
   );
 }

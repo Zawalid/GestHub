@@ -4,9 +4,9 @@ export const ROUTES = {
   intern: ["overview", "absences"],
 };
 export const routes = [
-  { label: "home", path: "home" },
-  { label: "offers", path: "home" },
-  { label: "about", path: "home" }
+  { label: "home", path: "/" },
+  { label: "offers", path: "#offers" },
+  { label: "about", path: "#about" },
 ];
 
 

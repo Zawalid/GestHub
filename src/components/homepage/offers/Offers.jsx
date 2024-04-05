@@ -26,14 +26,13 @@ function Offers() {
     setSearchParams,
     query,
   } = useOfferContext();
-
   return (
-    <div className="relative  p-5 py-10 md:px-0  bg-background-secondary">
+    <div id="offers" className="relative md:px-0  bg-background-secondary">
       {error && <ErrorMsg msg={"Error Network "} />}
       {isLoading && <Spinner />}
       {!error && !isLoading && (
-        <div>
-          <h1 className="text-text-primary font-bold text-3xl w-fit py-4 capitalize">
+        <div className="p-1 md:p-5">
+          <h1 className="text-text-primary font-bold text-3xl w-fit py-10 capitalize">
             Offres de stage recentes
           </h1>
           <div className="grid gap-4 md:me-4 grid-cols-1 md:grid-cols-[auto,1fr]">
@@ -56,9 +55,9 @@ function Offers() {
                   <div className="flex gap-2">
                     <Button
                       className="text-text-secondary text-xl hidden md:flex"
-                      onClick={() => setCards((e) => (e < 3 ? e + 1 : 2))}
+                      onClick={() => setCards(2)}
                       shape={"icon"}
-                      state={[2, 3].includes(card) && "active"}
+                      state={card == 2 && "active"}
                     >
                       <PiSquaresFourBold />
                     </Button>
@@ -76,10 +75,10 @@ function Offers() {
               {offers?.length > 0 ? (
                 <div
                   ref={parent}
-                  className={` max-h-screen overflow-y-auto py-2 text-text-primary flex flex-wrap justify-center gap-4 my-5`}
+                  className={` max-h-screen overflow-y-auto p-1 py-4 text-text-primary grid grid-cols-1 md:grid-cols-${card} justify-center gap-4 my-5`}
                 >
                   {offers?.map((e, i) => (
-                    <OfferCard key={i} card={card} offer={e} />
+                    <OfferCard key={i} offer={e} />
                   ))}
                 </div>
               ) : (

@@ -4,14 +4,13 @@ import { formatTime } from "@/utils/helpers";
 import { PiTagChevronFill } from "react-icons/pi";
 import { Button } from "@/components/ui";
 import { useOfferContext } from "./OffersContext";
-
-export function OfferCard({ offer, card }) {
+import { Link } from "react-router-dom";
+export function OfferCard({ offer }) {
   const { id, title, date, ville, exp, secteur } = offer;
   const { storedoffers, toggelStoredOffer } = useOfferContext();
   return (
     <div
-      className="hover:scale-[1.01] transition-all duration-300 w-full md:w-1/2 lg:w-1/3   p-1 h-max border border-border rounded-xl shadow-md  space-y-2 capitalize"
-      style={{ width: `${95 / card}%` }}
+      className={`hover:scale-[1.01] transition-all duration-300  p-1 h-max border border-border rounded-xl hover:shadow-md  space-y-2 capitalize`}
     >
       <div className=" bg-background-tertiary rounded-xl p-4 space-y-4">
         <div className="flex justify-between">
@@ -31,7 +30,9 @@ export function OfferCard({ offer, card }) {
         </div>
         <div className="flex flex-col">
           <span className=" text-text-secondary">DSI</span>
-          <span className=" text-xl">{title}</span>
+          <Link to={`/offer/${id}`} className=" text-xl">
+            {title}
+          </Link>
         </div>
         <div className="flex flex-wrap gap-2 text-sm text-secondary">
           <span className=" px-2 p-1 rounded-2xl border border-secondary-hover  text-secondary-hover ">
@@ -46,7 +47,9 @@ export function OfferCard({ offer, card }) {
         <span className=" text-text-secondary flex items-center gap-2">
           <CiLocationOn className="text-text-primary" /> {ville}
         </span>
-        <Button size={"small"}>Postuler</Button>
+        <Link to={`/offer/${id}`}>
+          <Button size={"small"}>Postuler</Button>
+        </Link>
       </div>
     </div>
   );

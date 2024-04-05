@@ -25,9 +25,9 @@ export function FilterAside({ className }) {
   } = useOfferContext();
   return (
     <div
-      className={`flex w-56 min-h-screen flex-col shadow-xl text-text-primary border border-border rounded-r-lg capitalize ${className}`}
+      className={`flex w-56 min-h-screen flex-col shadow-xl text-text-primary border border-border rounded-lg capitalize ${className}`}
     >
-      <h1 className="flex items-center gap-3 font-bold bg-background-tertiary text-text-primary p-1 rounded-tr-lg ">
+      <h1 className="flex items-center gap-3 font-bold bg-background-tertiary text-text-primary p-1 rounded-t-lg ">
         <CiFilter /> Filter
       </h1>
       <div className="">
