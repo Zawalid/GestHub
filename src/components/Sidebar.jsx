@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import {
-  BiSolidDashboard,
+  RxDashboard,
   BsLayoutSidebarInset,
   BsLayoutSidebarInsetReverse,
   BsPeople,
@@ -29,7 +29,7 @@ const routesIcons = {
   absences: <LuCalendarX />,
   offers: <IoBriefcaseOutline />,
   demands: <IoDocumentsOutline />,
-  projects: <BiSolidDashboard />,
+  projects: <RxDashboard />,
 };
 
 export default function Sidebar({ openSettings }) {

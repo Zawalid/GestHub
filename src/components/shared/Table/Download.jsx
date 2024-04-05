@@ -73,7 +73,7 @@ function DownloadOption({ type, icon }) {
       toggler={
         <DropDown.Option className="justify-between">
           {icon}
-          {type.toUpperCase()}
+          <span className="text-start">{type.toUpperCase()}</span>
           <IoChevronForwardOutline />
         </DropDown.Option>
       }

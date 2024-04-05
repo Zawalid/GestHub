@@ -7,11 +7,13 @@ import {
 } from "@/components/ui/Icons";
 import { useTable } from ".";
 import { Link, useLocation } from "react-router-dom";
+import { useConfirmationModal } from "@/hooks/useConfirmationModal";
 
 export function Actions({ onUpdate, onDelete, row }) {
-  const { showForm, confirmDelete, resourceName, rows, onPrevPage } =
+  const { showForm, confirmOptions, resourceName, rows, onPrevPage } =
     useTable();
   const location = useLocation();
+  const { openModal } = useConfirmationModal();
 
   return (
     <DropDown
@@ -44,9 +46,12 @@ export function Actions({ onUpdate, onDelete, row }) {
       </DropDown.Option>
       <DropDown.Option
         onClick={() =>
-          confirmDelete(true, () => {
-            onDelete(row.id);
-            rows?.length === 1 && onPrevPage();
+          openModal({
+            ...confirmOptions,
+            onConfirm: () => {
+              onDelete(row.id);
+              rows?.length === 1 && onPrevPage();
+            },
           })
         }
       >

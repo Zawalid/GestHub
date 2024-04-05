@@ -15,10 +15,7 @@ export default function TableLayout({
         <div className="flex flex-col-reverse sm:flex-row sm:items-center gap-5 justify-between">
           <div className="flex justify-between sm:justify-normal items-center gap-3">
             <Table.Search />
-            <div className="flex gap-3">
-              <Table.Filter />
-              <Table.View />
-            </div>
+            <Table.View />
           </div>
           <div className="flex justify-between items-center gap-3">
             <Table.Download />
@@ -34,7 +31,6 @@ export default function TableLayout({
           />
           <Table.TableRecord />
           <Table.Pagination />
-          <Table.DeleteConfirmation />
         </div>
       </Table>
     </div>
