@@ -15,7 +15,7 @@ function About() {
             <img className="w-2/3" src="/images/main-img.png" alt="" />
           </div>
           <div className=" flex flex-col space-y-6 py-6">
-            <h1 className=" text-2xl">Deriction de system informatique</h1>
+            <h1 className=" text-2xl">direction de system informatique</h1>
             <p>
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolor
               unde repellendus cum eum et illum neque non minus dolorem officiis

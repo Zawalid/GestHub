@@ -73,7 +73,7 @@ function Links() {
       {routes.map((route) => (
         <NavLink key={route.label} to={route.path}>
           <DropDown paths={route.nested || []}>
-            <li className="relative flex items-center gap-3 font-semibold text-text-secondary transition-colors duration-300 hover:text-primary ">
+            <li className="relative flex items-center gap-3 font-semibold text-secondary transition-colors duration-300 hover:text-primary ">
               <span>{t(`header.navbar.${route.label}`)}</span>
               {route.nested && <FaChevronDown />}
             </li>
