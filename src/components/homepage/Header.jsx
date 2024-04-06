@@ -6,9 +6,7 @@ import { routes } from "../../utils/constants";
 import { MobileHeader } from "./MobileHeader";
 import { useEffect, useState } from "react";
 import { AuthSwitcher } from "../AuthSwitcher";
-import Login from "../auth/Login";
 import { useTranslation } from "react-i18next";
-import Register from "../auth/Register";
 import { Button } from "../ui";
 import Shade from "../ui/shade";
 import { Logo } from "../ui/logo";
@@ -17,8 +15,6 @@ import { LanguageSwitcher } from "../LanguageSwitcher";
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSignInOpen, setIsSignInOpen] = useState(false);
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const currentPath = useHref().split("/")[1];
 
   useEffect(() => {
@@ -33,10 +29,7 @@ export function Header() {
       <div className="flex items-center gap-4">
         <ThemeSwitcher />
         <LanguageSwitcher />
-        <AuthSwitcher
-          setIsRegisterOpen={setIsRegisterOpen}
-          setIsSignInOpen={setIsSignInOpen}
-        />
+        <AuthSwitcher />
 
         <Button
           shape="icon"
@@ -52,15 +45,6 @@ export function Header() {
         onClose={() => setIsMobileMenuOpen(false)}
       />
 
-      <Login
-        isOpen={isSignInOpen}
-        openRegister={setIsRegisterOpen}
-        onClose={setIsSignInOpen}
-      />
-      <Register
-        isOpen={isRegisterOpen}
-        onClose={() => setIsRegisterOpen(false)}
-      />
       <Shade className="absolute top-16 z-10 left-0 w-full overflow-hidden leading-[0]" />
     </header>
   );

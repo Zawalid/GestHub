@@ -2,13 +2,13 @@ import { Button, DropDown } from "./ui";
 import { useTranslation } from "react-i18next";
 import { IoLanguageOutline } from "react-icons/io5";
 
-export function LanguageSwitcher() {
+export function LanguageSwitcher({size}) {
   const { t, i18n } = useTranslation();
 
   return (
     <DropDown
       toggler={
-        <Button shape="icon">
+        <Button size={size} shape="icon">
           <IoLanguageOutline />
         </Button>
       }

@@ -49,13 +49,9 @@
     "label": "Votre e-mail",
     "placeholder": "Entrez votre adresse e-mail"
   },
-  "firstName": {
-    "label": "Prénom",
-    "placeholder": "Entrez votre prénom"
-  },
-  "lastName": {
-    "label": "Nom",
-    "placeholder": "Entrez votre nom"
+  "fullName": {
+    "label": "Nom Complet",
+    "placeholder": "Entrez votre Nom Complet"
   },
   "phone": {
     "label": "Votre numéro de téléphone",

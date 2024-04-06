@@ -41,9 +41,9 @@
         "label": "Your Email",
         "placeholder": "Your Email"
       },
-      "firstName": {
-        "label": "First Name",
-        "placeholder": "First Name "
+      "fullName": {
+        "label": "Full Name",
+        "placeholder": "Full Name "
       },
       "lastName": {
         "label": "Last Name",

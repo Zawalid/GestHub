@@ -22,9 +22,6 @@
     /* --primary: #ffae5c; */
     --primary: #f6a228;
     --primary-hover: #cc8a3e;
-    --secondary: #363d71;
-    --secondary-hover: #2f3671;
-
   }
 
   /** Dark Mode */
@@ -42,12 +39,10 @@
     --border: rgba(255, 255, 255, 0.1);
     --primary: #b5753e;
     --primary-hover: #8a4e2c;
-    --secondary: #626893;
-    --secondary-hover: #2f3671;
-
   }
 
-
+  --secondary: #363d71;
+  --secondary-hover: #2f3671;
   color-scheme: light dark;
 }
 

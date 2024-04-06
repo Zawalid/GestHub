@@ -1,9 +1,9 @@
 import { useForm } from "@/hooks/useForm";
-import { Button, Modal } from "../ui";
+import { Button } from "../ui";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-function Login({ isOpen, onClose, openRegister }) {
+function Login() {
   const { t } = useTranslation();
   const {
     Form,
@@ -29,38 +29,31 @@ function Login({ isOpen, onClose, openRegister }) {
     gridLayout: false,
   });
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      className={"w-full pt-10 md:pt-0 h-full md:w-3/4 lg:w-1/2  md:h-fit"}
-      closeButton={true}
-    >
-      <div className="relative flex flex-col  p-10">
-        <h1 className="text-text-primary text-4xl my-10">
-          {t("auth.login.title1")}{" "}
-          <span className="text-secondary">{t("auth.login.title2")}</span>
-        </h1>
-        {Form}
-        <p
-          className=" underline text-text-secondary cursor-pointer text-sm mt-4"
-          onClick={() => {
-            onClose(false);
-            openRegister(true);
-          }}
+    <div className="relative w-full md:w-[40%] m-auto mt-10 h-full p-2  flex flex-col   rounded-xl ">
+      <h1 className="text-text-primary text-4xl my-10">
+        {t("auth.login.title1")}{" "}
+        <span className="text-secondary">{t("auth.login.title2")}</span>
+      </h1>
+      {Form}
+      <Link to="/app">
+        <Button
+          className={"self-end my-4 w-full"}
+          disabled={!isValid}
+          onClick={(e) => handleSubmit(console.log(e))}
         >
-          Vous navez pas de compte
-        </p>
-        <Link to="/app">
-          <Button
-            className={"self-end my-4"}
-            disabled={!isValid}
-            onClick={handleSubmit}
-          >
-            {t("auth.login.submit")}
-          </Button>
+          {t("auth.login.submit")}
+        </Button>
+      </Link>
+      <p className=" border-t border-border text-text-primary py-4 text-center flex gap-1 items-center justify-center">
+        Dont have an account ?
+        <Link
+          to="/register"
+          className=" underline text-primary font-bold cursor-pointer text-sm "
+        >
+          Register Now
         </Link>
-      </div>
-    </Modal>
+      </p>
+    </div>
   );
 }
 

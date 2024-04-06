@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeTheme } from "../app/reducer";
 import { useTranslation } from "react-i18next";
 
-export function ThemeSwitcher() {
+export function ThemeSwitcher({size}) {
   const theme = useSelector((state) => state.theme);
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -15,7 +15,13 @@ export function ThemeSwitcher() {
   };
 
   return (
-    <DropDown toggler={<Button shape="icon">{icons[theme]}</Button>}>
+    <DropDown
+      toggler={
+        <Button size={size} shape="icon">
+          {icons[theme]}
+        </Button>
+      }
+    >
       {Object.keys(icons).map((icon) => (
         <DropDown.Option
           key={icon}

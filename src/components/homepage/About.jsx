@@ -135,7 +135,7 @@ function DsiLocation() {
       >
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3308.16598525745!2d-6.858738424189181!3d33.98827007318123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda76d6b99660137%3A0x2e8e7d79b04b2d11!2sDSI%20MEN!5e0!3m2!1sfr!2sma!4v1712325098680!5m2!1sfr!2sma"
-          allowfullscreen=""
+          allowFullScreen=""
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
           width="100%"

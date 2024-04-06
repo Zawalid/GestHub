@@ -201,6 +201,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
           return (
             <Input
               key={name}
+              name={name}
               type={type || "text"}
               placeholder={placeholder || label}
               value={values[name] || ""}
@@ -239,9 +240,9 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-const Input = ({ type, ...props }) =>
+const Input = ({ type,name, ...props }) =>
   type === "password" ? (
     <PasswordInput {...props} />
   ) : (
-    <InputField {...props} type={type} />
+    <InputField {...props} name={name} type={type} />
   );

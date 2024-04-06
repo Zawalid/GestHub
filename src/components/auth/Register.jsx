@@ -1,8 +1,9 @@
 import { useForm } from "@/hooks/useForm";
-import { Button, Modal } from "../ui";
+import { Button } from "../ui";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
-function Register({ isOpen, onClose }) {
+function Register() {
   const { t } = useTranslation();
   const {
     Form,
@@ -14,12 +15,8 @@ function Register({ isOpen, onClose }) {
     },
     fields: [
       {
-        name: "firstName",
-        label: t("auth.register.firstName.label"),
-      },
-      {
-        name: "lastName",
-        label: t("auth.register.lastName.label"),
+        name: "fullName",
+        label: t("auth.register.fullName.label"),
       },
       {
         name: "email",
@@ -33,11 +30,6 @@ function Register({ isOpen, onClose }) {
       {
         name: "city",
         label: t("auth.register.city.label"),
-      },
-      {
-        name: "birthday",
-        type: "date",
-        label: t("auth.register.birthday.label"),
       },
       {
         name: "password",
@@ -54,23 +46,25 @@ function Register({ isOpen, onClose }) {
     gridLayout: true,
   });
   return (
-    <Modal
-      isOpen={isOpen}
-      className={"w-full overflow-auto h-full md:w-3/4  md:h-fit"}
-      onClose={onClose}
-      closeButton={true}
-    >
-      <div className="relative flex flex-col  p-10 space-y-4 ">
-        <h1 className="text-text-primary text-4xl">
-          {t("auth.login.title1")}{" "}
-          <span className="text-secondary">{t("auth.login.title2")}</span>
-        </h1>
-        {Form}
-        <Button className={"self-end"} disabled={!isValid} onClick={handleSubmit}>
-          {t("auth.register.submit")}
-        </Button>
-      </div>
-    </Modal>
+    <div className="relative w-full md:w-2/3 m-auto p-2 md:p-5 mt-10 flex flex-col space-y-4 ">
+      <h1 className="text-text-primary text-4xl">
+        {t("auth.login.title1")}{" "}
+        <span className="text-secondary">{t("auth.login.title2")}</span>
+      </h1>
+      {Form}
+      <Button className={"self-end"} disabled={!isValid} onClick={handleSubmit}>
+        {t("auth.register.submit")}
+      </Button>
+      <p className="border-t border-border text-text-primary py-4 text-center flex gap-1 items-center justify-center">
+        you have an account alraedy ?
+        <Link
+          to="/login"
+          className=" underline text-primary font-bold cursor-pointer text-sm "
+        >
+          Login Now
+        </Link>
+      </p>
+    </div>
   );
 }
 
