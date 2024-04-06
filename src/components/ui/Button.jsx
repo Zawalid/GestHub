@@ -93,7 +93,7 @@ export const Button = forwardRef(
         )}
         ref={ref}
         disabled={disabled}
-        onClick={() => state !== "disabled" && onClick?.()}
+        onClick={(e) => state !== "disabled" && onClick?.(e)}
         {...props}
       >
         {isLoading ? (

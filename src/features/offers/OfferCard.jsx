@@ -4,14 +4,15 @@ import { formatTime } from "@/utils/helpers";
 import { PiTagChevronFill } from "react-icons/pi";
 import { Button } from "@/components/ui";
 import { useOfferContext } from "./OffersContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export function OfferCard({ offer }) {
   const { id, title, date, ville, exp, secteur } = offer;
+  const navigate = useNavigate();
   const { storedoffers, toggelStoredOffer } = useOfferContext();
   return (
-    <Link
-      to={`/offer/${id}`}
-      className={`hover:scale-[1.01] transition-all duration-300  p-1 h-max border border-border rounded-xl hover:shadow-md  space-y-2 capitalize`}
+    <div
+      onClick={() => navigate(`/offer/${id}`)}
+      className={`hover:scale-[1.01] transition-all duration-300 cursor-pointer  p-1 h-max border border-border rounded-xl hover:shadow-md  space-y-2 capitalize`}
     >
       <div className=" bg-background-tertiary rounded-xl p-4 space-y-4">
         <div className="flex justify-between">
@@ -19,18 +20,16 @@ export function OfferCard({ offer }) {
           <Button
             onClick={(e) => {
               e.stopPropagation();
-              if (e.target === e.currentTarget) {
-                toggelStoredOffer(id);
-              }
+              toggelStoredOffer(id);
             }}
             color={"secondary"}
             shape={"icon"}
             size={"small"}
           >
             {storedoffers.includes(id) ? (
-              <PiTagChevronFill className=" -rotate-90 text-text-primary" />
+              <PiTagChevronFill className=" -rotate-90 text-secondary" />
             ) : (
-              <BiTagAlt className=" -rotate-90 text-text-primary" />
+              <BiTagAlt className=" -rotate-90 text-secondary" />
             )}
           </Button>
         </div>
@@ -57,6 +56,6 @@ export function OfferCard({ offer }) {
           <Button size={"small"}>Postuler</Button>
         </Link>
       </div>
-    </Link>
+    </div>
   );
 }

@@ -4,7 +4,6 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useTranslation } from "react-i18next";
 import { setToUrl } from "../../hooks/useToUrl";
 import { PiSquaresFourBold, PiSquareSplitVerticalBold } from "react-icons/pi";
-import Shade from "@/components/ui/shade";
 import {
   FilterDropDown,
   FilterAside,
@@ -14,6 +13,7 @@ import {
 } from "./index";
 import ErrorMsg from "@/components/ui/Error";
 import Spinner from "@/components/ui/Spinner";
+import Shade from "@/components/ui/shade";
 function Offers() {
   const [card, setCards] = useState(2);
   const { t } = useTranslation();
@@ -38,16 +38,16 @@ function Offers() {
           <div className="grid gap-4 md:me-4 grid-cols-1 md:grid-cols-[auto,1fr]">
             <FilterAside className="hidden md:flex" />
             <div className="">
-              <div className="flex justify-between gap-2 ">
+              <div className="grid px-2 grid-cols-[1fr,auto] md:grid-cols-[2fr,1fr] justify-between gap-2 ">
                 <SearchInput
-                  className="w-full md:w-1/2"
+                  className=" w-3/4"
                   onChange={(query) =>
                     setToUrl("search", query, searchParams, setSearchParams)
                   }
                   query={query}
                   placeholder={t("hero.placeholder")}
                 />
-                <div className="flex justify-between">
+                <div className=" ms-auto flex justify-between">
                   <div className="flex gap-2 md:hidden">
                     <FilterDropDown />
                     <Sort />
@@ -89,9 +89,8 @@ function Offers() {
         </div>
       )}
       <Shade
-        className={
-          "absolute top-full left-0 w-full overflow-hidden leading-[0]"
-        }
+        className=" absolute rotate-180 bottom-full left-0 w-full overflow-hidden leading-[0] "
+        svg="h-14 md:h-16 w-full"
       />
     </div>
   );

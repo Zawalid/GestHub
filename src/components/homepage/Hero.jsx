@@ -9,7 +9,7 @@ function Hero() {
   return (
     <div
       ref={parent}
-      className="relative grid grid-cols-1 min-h-[75vh] max-lg:text-center lg:grid-cols-2 pt-10 lg:px-12 2xl:px-24"
+      className="relative grid grid-cols-1 min-h-[75vh] max-lg:text-center lg:grid-cols-2 pt-10 lg:px-12 2xl:px-24 bg-background-primary"
     >
       <div className="flex my-auto flex-col pb-10 mb-10">
         <div className="p-4 mb-10">
@@ -28,11 +28,7 @@ function Hero() {
       <div className="hidden lg:flex self-end justify-center items-center">
         <img src="SVG/hero.svg" className=" w-3/4" alt="" />
       </div>
-      <Shade className="absolute top-0 left-0 w-full overflow-hidden leading-[0]" />
-      <Shade
-        className=" absolute rotate-180 md:top-[89.3%] top-[92%] left-0 w-full overflow-hidden leading-[0] "
-        svg="h-14 md:h-16 w-full"
-      />
+  
     </div>
   );
 }

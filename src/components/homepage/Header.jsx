@@ -13,6 +13,7 @@ import Login from "../auth/Login";
 import { useTranslation } from "react-i18next";
 import Register from "../auth/Register";
 import { Button } from "../ui";
+import Shade from "../ui/shade";
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -60,6 +61,7 @@ export function Header() {
         isOpen={isRegisterOpen}
         onClose={() => setIsRegisterOpen(false)}
       />
+      <Shade className="absolute top-16 z-10 left-0 w-full overflow-hidden leading-[0]" />
     </header>
   );
 }
