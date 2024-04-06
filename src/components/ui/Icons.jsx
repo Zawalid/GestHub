@@ -8,6 +8,7 @@ export {
   IoCalendarNumberOutline,
   IoChevronDownOutline,
   IoChevronForwardOutline,
+  IoChevronBackOutline,
   IoArrowUpOutline,
   IoArrowDownOutline,
   IoEllipsisHorizontalSharp,

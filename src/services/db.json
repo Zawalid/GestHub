@@ -216,7 +216,6 @@
       "status": "In Progress",
       "supervisor": "Emma Watson",
       "priority": "Medium",
-      "budget": 70000,
       "tasks": [
         {
           "id": 1,
@@ -254,7 +253,6 @@
       "status": "Not Started",
       "supervisor": "Tom Hanks",
       "priority": "High",
-      "budget": 20000,
       "tasks": [
         {
           "id": 1,
@@ -293,7 +291,6 @@
       "status": "In Progress",
       "supervisor": "Julia Roberts",
       "priority": "High",
-      "budget": 100000,
       "tasks": [
         {
           "id": 1,
@@ -338,7 +335,6 @@
       "status": "Not Started",
       "supervisor": "Brad Pitt",
       "priority": "High",
-      "budget": 150000,
       "tasks": [
         {
           "id": 1,
@@ -382,7 +378,6 @@
       "status": "In Progress",
       "supervisor": "Meryl Streep",
       "priority": "Low",
-      "budget": 80000,
       "tasks": [
         {
           "id": 1,
@@ -421,7 +416,6 @@
       "status": "Completed",
       "supervisor": "Tom Cruise",
       "priority": "High",
-      "budget": 120000,
       "tasks": [
         {
           "id": 1,
