@@ -7,7 +7,7 @@ const toggleChecked = (filter, value) =>
   filter.map((f) => (f.value === value ? { ...f, checked: !f.checked } : f));
 
 export function Filter() {
-  const { filters, onFilter, appliedFiltersNumber } = useOperations();
+  const { filters, onFilter, appliedFiltersNumber,isLoading,error } = useOperations();
 
   if (!filters) return null;
 
@@ -31,6 +31,7 @@ export function Filter() {
         shouldCloseOnClick: false,
       }}
       togglerClassName="relative w-28 justify-between"
+      togglerDisabled={isLoading || error}
     >
       {Object.keys(filters).map((key) => (
         <>

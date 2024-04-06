@@ -90,8 +90,9 @@ export const OperationsContext = createContext();
 
 export function Operations({
   children,
-  data,
-  getData,
+  data: initialData,
+  isLoading,
+  error,
   sortOptions,
   defaultSortBy,
   defaultDirection,
@@ -106,6 +107,11 @@ export function Operations({
   const query = searchParams.get("search") || "";
   const sortBy = searchParams.get("sort") || defaultSortBy;
   const direction = searchParams.get("dir") || defaultDirection;
+
+  const data = initialData
+    ?.search(query, fieldsToSearch)
+    .customFilter(filters)
+    .customSort(sortBy, direction, sortOptions);
 
   const appliedFiltersNumber = Object.values(filters)
     .flat()
@@ -131,19 +137,6 @@ export function Operations({
 
   // Perform operations
 
-  useEffect(
-    () => {
-      // getData(
-      //   data
-      //     ?.search(query, fieldsToSearch)
-      //     .customSort(sortBy, direction, sortOptions)
-      //     .customFilter(filters)
-      // );
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [query, sortBy, direction, filters, sortOptions, fieldsToSearch, data]
-  );
-
   const onSearch = (query) => {
     searchParams.set("search", query);
     setSearchParams(searchParams);
@@ -163,6 +156,9 @@ export function Operations({
   const onchangeLayout = (layout) => setLayout(layout);
 
   const context = {
+    data,
+    isLoading,
+    error,
     query,
     onSearch,
     sortBy,

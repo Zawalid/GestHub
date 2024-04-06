@@ -2,9 +2,6 @@ import Tippy from "@tippyjs/react";
 import { NavLink, useHref } from "react-router-dom";
 import { FaChevronDown } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { ThemeSwitcher } from "../ThemeSwitcher";
-import { LanguageSwitcher } from "../LanguageSwitcher";
-import { Logo } from "../ui/logo";
 import { routes } from "../../utils/constants";
 import { MobileHeader } from "./MobileHeader";
 import { useEffect, useState } from "react";
@@ -14,6 +11,9 @@ import { useTranslation } from "react-i18next";
 import Register from "../auth/Register";
 import { Button } from "../ui";
 import Shade from "../ui/shade";
+import { Logo } from "../ui/logo";
+import { ThemeSwitcher } from "../ThemeSwitcher";
+import { LanguageSwitcher } from "../LanguageSwitcher";
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -26,7 +26,7 @@ export function Header() {
   }, [currentPath]);
 
   return (
-    <header className=" relative flex items-center justify-between  bg-background-secondary p-5 lg:px-20 shadow-md">
+    <header className=" flex items-center justify-between  bg-background-secondary p-5 lg:px-20 shadow-md">
       <Logo className="w-20" />
       <Links />
 

@@ -22,7 +22,8 @@ export default {
       screens : {
         xs : "400px",
         mobile : "540px"
-      }
+      },
+      
     },
   },
   plugins: [

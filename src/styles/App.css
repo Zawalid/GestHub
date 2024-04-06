@@ -50,9 +50,35 @@
       @apply cursor-default bg-background-disabled text-text-disabled;
     }
   }
-
 }
 
 #themeToggler div {
   @apply absolute grid w-full grid-cols-[30px_auto] transition-transform duration-500 !important;
+}
+
+.relative {
+  z-index: 5;
+}
+
+.project-date {
+  transform-style: preserve-3d;
+  -webkit-transition: all 0.5s linear;
+  transition: all 0.5s linear;
+  border-radius: 10px;
+
+  .side {
+    @apply text-xs text-center cursor-pointer font-medium py-1 px-1.5 rounded-md ;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  .side:last-child {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+  }
+
+  &:hover {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+  }
 }

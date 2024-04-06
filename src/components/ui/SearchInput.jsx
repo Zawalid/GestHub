@@ -6,34 +6,35 @@ export function SearchInput({
   placeholder,
   query,
   onChange,
-  className = "",
+  className,
   ...props
 }) {
   const [searchQuery, setSearchQuery] = useState(query || "");
 
   return (
-    <div className="relative">
-      <InputField
-        className={`relative ${className} `}
-        placeholder={placeholder}
-        value={searchQuery}
-        onChange={(e) => {
-          const query = e.target.value;
-          setSearchQuery(query);
-          onChange(query);
+    <InputField
+      placeholder={placeholder}
+      value={searchQuery}
+      onChange={(e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+        onChange(query);
+      }}
+      name="search"
+      className={className}
+      {...props}
+    >
+      <button
+        className={`absolute right-1.5 top-1/2 -translate-y-1/2 text-xl text-text-tertiary transition-transform duration-300 ${
+          searchQuery ? "scale-100" : "scale-0"
+        }`}
+        onClick={() => {
+          setSearchQuery("");
+          onChange("")
         }}
-        name="search"
-        {...props}
       >
-        <button
-          className={`absolute right-1.5 top-1/2 -translate-y-1/2 text-xl text-text-tertiary transition-transform duration-300 ${
-            searchQuery ? "scale-100" : "scale-0"
-          }`}
-          onClick={() => setSearchQuery("")}
-        >
-          <HiMiniXMark />
-        </button>
-      </InputField>
-    </div>
+        <HiMiniXMark />
+      </button>
+    </InputField>
   );
 }

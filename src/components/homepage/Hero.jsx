@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import Shade from "../ui/shade";
 
 function Hero() {
   const [parent] = useAutoAnimate({ duration: 300 });
