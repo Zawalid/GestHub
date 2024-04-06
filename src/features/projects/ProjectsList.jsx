@@ -1,19 +1,33 @@
 import { Operations } from "@/components/shared/operations/Operations";
-import AddMembers from "./AddMembers";
 import Project from "./Project";
 import { Button } from "@/components/ui";
 import { FaPlus } from "react-icons/fa6";
 import { useOperations } from "@/components/shared/operations/useOperations";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Status } from "@/components/ui/Status";
+import ProjectsSkeleton from "./ProjectsSkeleton";
 
 export default function ProjectsList() {
-  const { data: projects, isLoading, error, layout } = useOperations();
+  const {
+    data: projects,
+    isLoading,
+    error,
+    layout,
+    appliedFiltersNumber,
+    query,
+  } = useOperations();
   const [parent] = useAutoAnimate({ duration: 500 });
 
   const render = () => {
-    if (isLoading) return <Status status="loading" />;
-    if (error) return <Status status="error" heading={error.message} message="Try again later" />;
+    if (isLoading) return <ProjectsSkeleton layout={layout} />;
+    if (error)
+      return (
+        <Status
+          status="error"
+          heading={error.message}
+          message="Try again later"
+        />
+      );
     if (projects.length === 0)
       return (
         <Status
@@ -24,7 +38,7 @@ export default function ProjectsList() {
       );
     return (
       <>
-        <NewProject layout={layout} />
+        {!appliedFiltersNumber && !query && <NewProject layout={layout} />}
         {projects?.map((project) => (
           <Project key={project.id} project={project} layout={layout} />
         ))}
@@ -55,7 +69,6 @@ export default function ProjectsList() {
       >
         {render()}
       </div>
-      {/* <AddMembers /> */}
     </div>
   );
 }
@@ -64,18 +77,14 @@ function NewProject({ layout }) {
   return (
     <Button
       color="tertiary"
-      className={`group bg-background-secondary flex items-center justify-center   border  border-border rounded-lg shadow-md p-3 ${
-        layout === "grid"
-          ? "h-[240px] flex-col gap-2"
-          : "fixed z-10 bottom-6 right-5 w-20 h-20"
+      className={`group bg-background-disabled flex items-center justify-center   border  border-border rounded-lg shadow-md p-3 ${
+        layout === "grid" ? "h-[240px] flex-col gap-2" : "w- h-20 gap-4"
       }`}
     >
-      <div className="h-10 w-10 flex items-center justify-center rounded-full p-1 bg-background-tertiary text-text-tertiary hover:bg-background-tertiary group-hover:bg-background-tertiary">
+      <div className="h-10 w-10 flex items-center justify-center rounded-full p-1 bg-background-secondary text-text-tertiary hover:bg-background-tertiary group-hover:bg-background-tertiary">
         <FaPlus />
       </div>
-      {layout === "grid" && (
-        <h3 className="font-semibold text-text-primary">Add New Project</h3>
-      )}
+      <h3 className="font-semibold text-text-primary">Add New Project</h3>
     </Button>
   );
 }

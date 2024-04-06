@@ -28,7 +28,10 @@ export function SearchInput({
         className={`absolute right-1.5 top-1/2 -translate-y-1/2 text-xl text-text-tertiary transition-transform duration-300 ${
           searchQuery ? "scale-100" : "scale-0"
         }`}
-        onClick={() => setSearchQuery("")}
+        onClick={() => {
+          setSearchQuery("");
+          onChange("")
+        }}
       >
         <HiMiniXMark />
       </button>

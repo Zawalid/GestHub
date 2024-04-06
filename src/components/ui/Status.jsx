@@ -42,7 +42,7 @@ export function Status({ status, heading, message }) {
   };
 
   return (
-    <div className="flex text-center z-10 h-full flex-col absolute top-0 w-full items-center justify-center">
+    <div className="flex text-center z-[2] h-full flex-col absolute top-0 w-full items-center justify-center">
       {statuses[status]}
     </div>
   );
