@@ -4,7 +4,7 @@ import { FaChevronDown } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { ThemeSwitcher } from "../ThemeSwitcher";
 import { LanguageSwitcher } from "../LanguageSwitcher";
-import { Logo } from "../ui/logo";
+import { Logo } from "../ui/Logo";
 import { routes } from "../../utils/constants";
 import { MobileHeader } from "./MobileHeader";
 import { useEffect, useState } from "react";

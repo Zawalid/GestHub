@@ -56,3 +56,7 @@
 #themeToggler div {
   @apply absolute grid w-full grid-cols-[30px_auto] transition-transform duration-500 !important;
 }
+
+.relative {
+  z-index: 20;
+}

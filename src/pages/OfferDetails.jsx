@@ -1,4 +1,4 @@
-import Shade from "@/components/ui/shade";
+import Shade from "@/components/ui/Shade";
 import { useOffer } from "@/features/offers/useOffers";
 import { useEffect } from "react";
 

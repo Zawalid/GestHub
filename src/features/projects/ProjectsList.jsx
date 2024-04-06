@@ -1,89 +1,81 @@
 import { Operations } from "@/components/shared/operations/Operations";
 import AddMembers from "./AddMembers";
 import Project from "./Project";
-import { useProjects } from "./useProjects";
 import { Button } from "@/components/ui";
 import { FaPlus } from "react-icons/fa6";
-import { useEffect, useState } from "react";
+import { useOperations } from "@/components/shared/operations/useOperations";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { Status } from "@/components/ui/Status";
 
 export default function ProjectsList() {
-  const { projects: initialProjects, isLoading, error } = useProjects();
-  const [projects, setProjects] = useState(initialProjects);
+  const { data: projects, isLoading, error, layout } = useOperations();
+  const [parent] = useAutoAnimate({ duration: 500 });
 
-  const getOperatedOnData = (data) => setProjects(data);
-
-  useEffect(() => {
-    setProjects(initialProjects);
-  }, [initialProjects]);
-
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Something went wrong</p>;
+  const render = () => {
+    if (isLoading) return <Status status="loading" />;
+    if (error) return <Status status="error" heading={error.message} message="Try again later" />;
+    if (projects.length === 0)
+      return (
+        <Status
+          status="noResults"
+          heading="No projects found"
+          message="Try changing your search query or filters"
+        />
+      );
+    return (
+      <>
+        <NewProject layout={layout} />
+        {projects?.map((project) => (
+          <Project key={project.id} project={project} layout={layout} />
+        ))}
+      </>
+    );
+  };
 
   return (
     <div className="flex flex-col gap-5">
-      <Operations
-        data={initialProjects}
-        getData={getOperatedOnData}
-        sortOptions={[
-          { key: "name", display: "Name", type: "string" },
-          { key: "startDate", display: "Start Date", type: "date" },
-          { key: "endDate", display: "End Date", type: "date" },
-          { key: "tasksNumber", display: "Tasks Number", type: "number" },
-          { key: "membersNumber", display: "Members Number", type: "number" },
-          { key: "progress", display: "Progress", type: "number" },
-        ]}
-        defaultSortBy="startDate"
-        defaultDirection="asc"
-        filters={{
-          status: [
-            { value: "Not Started", checked: false },
-            { value: "In Progress", checked: false },
-            { value: "Completed", checked: false },
-          ],
-          priority: [
-            { value: "Low", checked: false },
-            { value: "Medium", checked: false },
-            { value: "High", checked: false },
-          ],
-        }}
-        defaultLayout="grid"
-        fieldsToSearch={["name"]}
-      >
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <Operations.Search />
-            <Operations.DropDown>
-              <Operations.SortBy />
-              <Operations.OrderBy />
-            </Operations.DropDown>
-          </div>
-          <div className="flex items-center gap-3">
-            <Operations.Filter />
-            <Operations.Layout />
-          </div>
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <Operations.DropDown>
+            <Operations.SortBy />
+            <Operations.OrderBy />
+          </Operations.DropDown>
+          <Operations.Filter />
         </div>
-      </Operations>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(310px,1fr))] gap-5">
-        <NewProject />
-        {projects?.map((project) => (
-          <Project key={project.id} project={project} />
-        ))}
+        <Operations.Layout />
+      </div>
+
+      <div
+        className={`gap-5 h-full ${
+          layout === "grid"
+            ? "grid grid-cols-[repeat(auto-fill,minmax(310px,1fr))]"
+            : "flex flex-col"
+        }`}
+        ref={parent}
+      >
+        {render()}
       </div>
       {/* <AddMembers /> */}
     </div>
   );
 }
 
-function NewProject() {
+function NewProject({ layout }) {
   return (
     <Button
       color="tertiary"
-      className="group bg-background-disabled flex items-center justify-center flex-col gap-2 border  border-border rounded-lg shadow-md p-3"
+      className={`group bg-background-secondary flex items-center justify-center   border  border-border rounded-lg shadow-md p-3 ${
+        layout === "grid"
+          ? "h-[240px] flex-col gap-2"
+          : "fixed z-10 bottom-6 right-5 w-20 h-20"
+      }`}
     >
-      <div className="h-10 w-10 flex items-center justify-center rounded-full p-1 bg-background-secondary text-text-tertiary hover:bg-background-tertiary group-hover:bg-background-tertiary">
+      <div className="h-10 w-10 flex items-center justify-center rounded-full p-1 bg-background-tertiary text-text-tertiary hover:bg-background-tertiary group-hover:bg-background-tertiary">
         <FaPlus />
       </div>
-      <h3 className="font-semibold text-text-primary">Add New Project</h3>
+      {layout === "grid" && (
+        <h3 className="font-semibold text-text-primary">Add New Project</h3>
+      )}
     </Button>
   );
 }

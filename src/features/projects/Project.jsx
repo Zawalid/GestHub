@@ -20,7 +20,7 @@ const priorityColors = {
   High: "bg-red-500",
 };
 
-export default function Project({ project }) {
+export default function Project({ project, layout }) {
   const {
     name,
     description,
@@ -37,9 +37,16 @@ export default function Project({ project }) {
   } = project;
 
   return (
-    <div className="grid grid-rows-[24px_auto_20px_28px] relative gap-3 bg-background-disabled border border-border rounded-lg shadow-md p-3">
+    <div
+      className={`grid rounded-tr-none  grid-rows-[24px_auto_20px_28px] relative gap-3 bg-background-disabled border border-border rounded-lg shadow-md p-3 ${
+        layout === "grid" ? "h-[240px]" : ""
+      }`}
+    >
       <div
-        className={`absolute -top-[1.5px] left-1/2 h-[2px] rounded-lg -translate-x-1/2 w-[150px] ${priorityColors[priority]}`}
+        className={`absolute -top-[1.5px] -right-[1.2px] h-[2px] rounded-lg w-16 ${priorityColors[priority]}`}
+      ></div>
+      <div
+        className={`absolute -right-[1.5px] -top-[1.2px] w-[2px] rounded-lg h-16 ${priorityColors[priority]}`}
       ></div>
       <div className="flex items-center justify-between gap-5">
         <span className="text-xs text-text-secondary font-medium">

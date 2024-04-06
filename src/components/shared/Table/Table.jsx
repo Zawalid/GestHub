@@ -3,6 +3,7 @@ import { cloneElement, useRef } from "react";
 
 import { Sort } from "./Sort";
 import { useTable } from ".";
+import {Status} from "@/components/ui/Status";
 
 export function Table({ actions }) {
   const { columns, rows, error } = useTable();
@@ -21,14 +22,7 @@ export function Table({ actions }) {
   return (
     <div className="relative flex-1 overflow-x-auto" ref={table}>
       {rows?.length === 0 && (
-        <div className="flex z-10 h-full flex-col absolute top-0 w-full items-center justify-center text-text-tertiary">
-          <img
-            src="/images/no_result.png"
-            alt="no results"
-            className="w-[200px]"
-          />
-          <h3 className="font-semibold">No results found</h3>
-        </div>
+        <Status status="noResults" heading="No results found" />
       )}
       <table
         cellPadding={3}

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink as L } from "react-router-dom";
 import { FaChevronDown } from "react-icons/fa6";
-import { Logo } from "../ui/logo";
+import { Logo } from "../ui/Logo";
 import { routes } from "../../utils/constants";
 import { SocialMedia } from "../ui/SocialMedia";
 import { useTranslation } from "react-i18next";

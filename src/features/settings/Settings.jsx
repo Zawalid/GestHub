@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
-import { PiArrowRight, PiX } from "../../components/ui/Icons";
+import { PiArrowRight, PiX } from "@/components/ui/Icons";
 import { Panel } from "./Panel";
 import Password from "./Password";
 import Profile from "./Profile";
-import { Button, Modal } from "../../components/ui";
+import { Button, Modal } from "@/components/ui";
 
 export default function Settings({ isOpen, onClose }) {
   const [currentTab, setCurrentTab] = useState("profile");

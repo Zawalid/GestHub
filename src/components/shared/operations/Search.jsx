@@ -2,7 +2,7 @@ import { SearchInput } from "@/components/ui";
 import { useOperations } from "./useOperations";
 
 export function Search({ placeholder, className = "" }) {
-  const { query, onSearch } = useOperations();
+  const { query, onSearch,isLoading,error } = useOperations();
 
   return (
     <SearchInput
@@ -10,7 +10,7 @@ export function Search({ placeholder, className = "" }) {
       className={`flex-1 md:flex-none md:w-[300px] ${className}`}
       query={query}
       onChange={onSearch}
-      // disabled={isLoading}
+      disabled={isLoading || error}
     />
   );
 }

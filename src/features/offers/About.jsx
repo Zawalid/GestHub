@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Shade from "@/components/ui/shade";
+import Shade from "@/components/ui/Shade";
 import { CiLocationOn } from "react-icons/ci";
 import { IoIosArrowDown } from "react-icons/io";
 

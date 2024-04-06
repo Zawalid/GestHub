@@ -4,7 +4,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useTranslation } from "react-i18next";
 import { setToUrl } from "../../hooks/useToUrl";
 import { PiSquaresFourBold, PiSquareSplitVerticalBold } from "react-icons/pi";
-import Shade from "@/components/ui/shade";
+import Shade from "@/components/ui/Shade";
 import {
   FilterDropDown,
   FilterAside,
@@ -12,8 +12,8 @@ import {
   useOfferContext,
   OfferCard,
 } from "./index";
-import ErrorMsg from "@/components/ui/Error";
-import Spinner from "@/components/ui/Spinner";
+import { Status } from "@/components/ui/Status";
+
 function Offers() {
   const [card, setCards] = useState(2);
   const { t } = useTranslation();
@@ -27,9 +27,14 @@ function Offers() {
     query,
   } = useOfferContext();
   return (
-    <div id="offers" className="relative md:px-0  bg-background-secondary">
-      {error && <ErrorMsg msg={"Error Network "} />}
-      {isLoading && <Spinner />}
+    <div
+      id="offers"
+      className={`relative md:px-0  bg-background-secondary ${
+        isLoading || error ? "min-h-[50vh]" : ""
+      }`}
+    >
+      {error && <Status status="error" heading={error.message} />}
+      {isLoading && <Status status="loading" />}
       {!error && !isLoading && (
         <div className="p-1 md:p-5">
           <h1 className="text-secondary font-bold text-3xl w-fit py-10 capitalize">
@@ -37,7 +42,7 @@ function Offers() {
           </h1>
           <div className="grid gap-4 md:me-4 grid-cols-1 md:grid-cols-[auto,1fr]">
             <FilterAside className="hidden md:flex" />
-            <div className="">
+            <div className="relative">
               <div className="flex justify-between gap-2 ">
                 <SearchInput
                   className="w-full md:w-1/2"
@@ -75,14 +80,14 @@ function Offers() {
               {offers?.length > 0 ? (
                 <div
                   ref={parent}
-                  className={` max-h-screen overflow-y-auto p-1 py-4 text-text-primary grid grid-cols-1 md:grid-cols-${card} justify-center gap-4 my-5`}
+                  className={`max-h-screen overflow-y-auto p-1 py-4 text-text-primary grid grid-cols-1 md:grid-cols-${card} justify-center gap-4 my-5`}
                 >
                   {offers?.map((e, i) => (
                     <OfferCard key={i} offer={e} />
                   ))}
                 </div>
               ) : (
-                <ErrorMsg msg={"no offers available"} />
+                <Status status="noResults" heading="No offers available" />
               )}
             </div>
           </div>
