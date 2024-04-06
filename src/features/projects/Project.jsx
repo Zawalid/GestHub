@@ -10,8 +10,8 @@ import { useConfirmationModal } from "@/hooks/useConfirmationModal";
 
 const statusColors = {
   "Not Started": "bg-gray-500",
-  "In Progress": "bg-primary", 
-  "Completed": "bg-green-600", 
+  "In Progress": "bg-primary",
+  Completed: "bg-green-600",
 };
 
 const priorityColors = {
@@ -26,13 +26,11 @@ export default function Project({ project, layout }) {
     description,
     startDate,
     endDate,
-    teamId,
     status,
-    supervisor,
     priority,
-    budget,
     tasks,
     teamMembers,
+    progress,
   } = project;
 
   return (
@@ -58,7 +56,11 @@ export default function Project({ project, layout }) {
           {description}
         </p>
       </div>
-      <Progress tasks={tasks} statusColor={statusColors[status]} />
+      <Progress
+        tasks={tasks}
+        statusColor={statusColors[status]}
+        progress={progress}
+      />
       <div className="mt-auto flex justify-between items-center ">
         <Members members={teamMembers} />
         <p
@@ -94,9 +96,8 @@ function Members({ members }) {
   );
 }
 
-function Progress({ tasks, statusColor }) {
+function Progress({ tasks, statusColor, progress }) {
   const completedTasks = tasks.filter((task) => task.status === "Completed");
-  const progress = (completedTasks.length / tasks.length) * 100;
 
   return (
     <div className="flex items-center gap-2">

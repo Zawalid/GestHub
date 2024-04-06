@@ -53,8 +53,8 @@ const icons = {
 };
 
 export const InputField = forwardRef(
-  ({ className, errorMessage, name, label, children, ...props }, ref) => {
-    const icon = icons[name] || icons[props.type];
+  ({ className, errorMessage, name, type, label, children, ...props }, ref) => {
+    const icon = icons[name] || icons[type];
 
     return (
       <div className="space-y-1.5">
@@ -66,24 +66,31 @@ export const InputField = forwardRef(
             <ErrorTooltip message={errorMessage} />
           </div>
         )}
-
-        <div className="relative overflow-hidden rounded-lg border border-border w-full ">
+        <div className="relative bg-background-secondary overflow-hidden rounded-lg border border-border w-full ">
           {icon && (
             <span className="bg-background-tertiary h-full w-7 grid place-content-center absolute left-0 z-10 text-text-tertiary duration-300">
               {icon}
             </span>
           )}
-          <input
-            type={props.type || "text"}
-            className={cn(
-              input({
-                type: icon ? "icon" : name === "search" ? "search" : null,
-              }),
-              className
-            )}
-            ref={ref}
-            {...props}
-          />
+          {type === "textarea" ? (
+            <textarea
+              className={cn(input(), className, "resize-none")}
+              ref={ref}
+              {...props}
+            ></textarea>
+          ) : (
+            <input
+              type={type || "text"}
+              className={cn(
+                input({
+                  type: icon ? "icon" : name === "search" ? "search" : null,
+                }),
+                className
+              )}
+              ref={ref}
+              {...props}
+            />
+          )}
           {children}
         </div>
       </div>

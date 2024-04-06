@@ -1,7 +1,7 @@
 import { InputField } from "@/components/ui";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import { objectDeepEquals } from "@/utils/helpers";
-import { useEffect, useMemo, useState } from "react";
+import { cloneElement, useEffect, useMemo, useState } from "react";
 
 const getError = (value, rules) => {
   if (!rules) return null;
@@ -138,11 +138,51 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
         .filter((err) => err).length === 0
     );
   }, [fields, values]);
+  const formInputs = useMemo(() => {
+    const inputs = {};
+    fields
+      .filter((field) => !field.hidden)
+      .forEach((field) => {
+        const {
+          name,
+          type,
+          placeholder,
+          label,
+          rules,
+          isConfirmPassword,
+          passwordField,
+        } = field;
+
+        inputs[name] = (
+          <Input
+            type={type || "text"}
+            placeholder={placeholder || label}
+            value={values[name] || ""}
+            onChange={(e) => {
+              validate(
+                name,
+                e.target.value,
+                getRules(
+                  name,
+                  type,
+                  rules,
+                  isConfirmPassword,
+                  values[passwordField]
+                )
+              );
+              setValue(name, e.target.value);
+            }}
+            errorMessage={errors?.[name]?.message}
+            {...field}
+          />
+        );
+      });
+    return inputs;
+  }, [fields, errors, values]);
 
   useEffect(() => {
     setIsUpdated(!objectDeepEquals(values, defaultValues));
   }, [values, defaultValues]);
-
 
   // Validate fields
   const validate = (name, value, rules) => {
@@ -165,7 +205,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
 
   const updateValues = (values) => {
     setValues(values);
-    setDefaultValues(values)
+    setDefaultValues(values);
   };
   // Submit handler
   const handleSubmit = (callback) => {
@@ -187,41 +227,10 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
         className={`grid gap-y-3 gap-x-5 ${
           gridLayout ? " md:grid-cols-2" : ""
         } `}
+        onSubmit={(e) => e.preventDefault()}
       >
-        {fields.map((field) => {
-          const {
-            name,
-            type,
-            placeholder,
-            label,
-            rules,
-            isConfirmPassword,
-            passwordField,
-          } = field;
-          return (
-            <Input
-              key={name}
-              type={type || "text"}
-              placeholder={placeholder || label}
-              value={values[name] || ""}
-              onChange={(e) => {
-                validate(
-                  name,
-                  e.target.value,
-                  getRules(
-                    name,
-                    type,
-                    rules,
-                    isConfirmPassword,
-                    values[passwordField]
-                  )
-                );
-                setValue(name, e.target.value);
-              }}
-              label={label}
-              errorMessage={errors?.[name]?.message}
-            />
-          );
+        {Object.keys(formInputs).map((key) => {
+          return cloneElement(formInputs[key], { key });
         })}
       </form>
     ),
@@ -229,6 +238,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
       isUpdated,
       isValid,
       errors,
+      formInputs,
       handleSubmit,
       reset,
       getValue,

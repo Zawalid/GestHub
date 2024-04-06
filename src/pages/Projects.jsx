@@ -1,14 +1,30 @@
 import { Heading } from "@/components/Heading";
 import { Operations } from "@/components/shared/operations/Operations";
+import NewProject from "@/features/projects/NewProject";
 import ProjectsList from "@/features/projects/ProjectsList";
 import { useProjects } from "@/features/projects/useProjects";
 
 export function Projects() {
   const { projects, isLoading, error } = useProjects();
 
+  const updateProjects = () => {
+    return projects?.map((p) => {
+      const completedTasks = p.tasks.filter(
+        (task) => task.status === "Completed"
+      );
+      const progress = (completedTasks.length / p.tasks.length) * 100;
+      return {
+        ...p,
+        tasksNumber: p.tasks.length,
+        membersNumber: p.teamMembers.length,
+        progress,
+      };
+    });
+  };
+
   return (
     <Operations
-      data={projects}
+      data={updateProjects()}
       isLoading={isLoading}
       error={error}
       sortOptions={[
@@ -41,6 +57,7 @@ export function Projects() {
         <Operations.Search />
       </div>
       <ProjectsList />
+      <NewProject />
     </Operations>
   );
 }
