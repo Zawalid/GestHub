@@ -238,6 +238,8 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
       isUpdated,
       isValid,
       errors,
+      values,
+      defaultValues,
       formInputs,
       handleSubmit,
       reset,

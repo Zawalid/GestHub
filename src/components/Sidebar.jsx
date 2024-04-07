@@ -83,7 +83,7 @@ export default function Sidebar({ openSettings }) {
           .filter((r) => !r.includes("/:"))
           .map((route) => (
             <li key={route}>
-              <NavLink to={`/app/${route}`} className="sidebar_element group">
+              <NavLink to={`/app/${route}`} className="sidebar-element group">
                 {routesIcons[route]}
                 <span className={spanClass}>{t(`app.sidebar.${route}`)}</span>
               </NavLink>
@@ -92,11 +92,11 @@ export default function Sidebar({ openSettings }) {
       </ul>
 
       <div className="mt-auto">
-        <button className="w-full sidebar_element group" onClick={openSettings}>
+        <button className="w-full sidebar-element group" onClick={openSettings}>
           <IoSettingsOutline />
           <span className={spanClass}>{t("app.sidebar.settings")}</span>
         </button>
-        <button className="w-full sidebar_element group">
+        <button className="w-full sidebar-element group">
           <FiLogOut />
           <span className={spanClass}>{t("app.sidebar.logout")}</span>
         </button>

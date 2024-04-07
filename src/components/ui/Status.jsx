@@ -26,19 +26,23 @@ const Error = ({ heading, message }) => {
   );
 };
 
-const Loading = () => {
+const Loading = ({size = 'default'}) => {
+  const sizes = {
+    default : "w-16",
+    small : "w-10"
+  }
   return (
-    <div className=" border-t-4 rounded-full border-primary  animate-spin aspect-square w-16 flex justify-center items-center text-yellow-700"></div>
+    <div className={`border-t-4 rounded-full border-primary  animate-spin aspect-square flex justify-center items-center text-yellow-700 ${sizes[size]}`}></div>
   );
 };
 
-export function Status({ status, heading, message }) {
+export function Status({ status, heading, message,size }) {
   const props = { heading, message };
 
   const statuses = {
     noResults: <NoResults {...props} />,
     error: <Error {...props} />,
-    loading: <Loading {...props} />,
+    loading: <Loading size={size} />,
   };
 
   return (

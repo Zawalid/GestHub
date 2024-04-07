@@ -38,7 +38,7 @@ function Tab({ tabName, icon, currentTab, setCurrentTab }) {
   return (
     <button
       className={
-        "sidebar_element w-full gap-2 " +
+        "sidebar-element w-full gap-2 " +
         (currentTab === tabName
           ? "active text-text-secondary"
           : "text-text-tertiary")
