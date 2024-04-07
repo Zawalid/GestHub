@@ -40,7 +40,7 @@ function Offers() {
           <h1 className="text-secondary font-bold text-3xl w-fit py-10 capitalize">
             Offres de stage recentes
           </h1>
-          <div className="grid gap-4 md:me-4 grid-cols-1 md:grid-cols-[auto,1fr]">
+          <div className="grid gap-4  grid-cols-1 md:grid-cols-[auto,1fr]">
             <FilterAside className="hidden md:flex" />
             <div className="relative">
               <div className="flex justify-between gap-2 ">

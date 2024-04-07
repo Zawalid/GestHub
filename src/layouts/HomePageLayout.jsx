@@ -12,7 +12,6 @@ function HomePageLayout() {
       <OffersProvider>
         <Outlet />
       </OffersProvider>
-
       <Footer />
     </div>
   );
