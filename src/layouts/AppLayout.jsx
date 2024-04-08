@@ -13,7 +13,7 @@ export default function AppLayout() {
   return (
     <div className="w-full h-full flex">
       <Sidebar openSettings={() => setIsSettingsOpen(true)} />
-      <div className="ml-14 md:ml-0 flex-1 p-1.5 overflow-hidden  flex flex-col">
+      <div className="ml-14 md:ml-0 flex-1 p-1.5 overflow-hidden bg-background-secondary  flex flex-col">
         <AppBar />
         <Main />
       </div>
