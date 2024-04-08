@@ -1,21 +1,20 @@
-import { DropDown } from "@/components/ui/DropDown";
-import { Button, Modal, SearchInput } from "@/components/ui";
+import { Button, Modal } from "@/components/ui";
 import {
   IoChevronForwardOutline,
   IoChevronBackOutline,
 } from "@/components/ui/Icons";
-import { useForm } from "@/hooks/useForm";
-import { cloneElement, useEffect, useState } from "react";
-import { useInterns } from "../interns/useInterns";
-import { Status } from "@/components/ui/Status";
+import { cloneElement, useState } from "react";
+import { BasicInfo } from "./BasicInfo";
+import { TeamMembers } from "./TeamMembers";
+import { StarterTasks } from "./StarterTasks";
 
 export default function NewProject() {
   const [steps, setSteps] = useState([
     {
       number: 0,
       title: "Basic Info",
-      element: <Form />,
-      canSkip: true,
+      element: <BasicInfo />,
+      canSkip: false,
       state: {
         name: "",
         description: "",
@@ -29,6 +28,7 @@ export default function NewProject() {
       title: "Team Members",
       element: <TeamMembers />,
       canSkip: true,
+      state: [],
     },
     {
       number: 2,
@@ -129,116 +129,9 @@ function Buttons({ onNext, canGoNext, onBack, canGoBack }) {
         Back
       </Button>
       <Button display="with-icon" onClick={onNext} disabled={!canGoNext}>
-        Next
+        {canGoNext ? "Skip" : "Next"}
         <IoChevronForwardOutline />
       </Button>
     </div>
   );
-}
-
-// Steps
-function Form({ shouldSkip, updateState, step }) {
-  const {
-    options: { isValid, formInputs, values, getValue, setValue },
-  } = useForm({
-    defaultValues: step?.state || {},
-    fields: [
-      {
-        name: "name",
-        label: "Name",
-        placeholder: "Project's Name",
-      },
-      {
-        name: "description",
-        label: "Description",
-        type: "textarea",
-        placeholder: "Project's description",
-        rows: "5",
-      },
-      {
-        name: "priority",
-        hidden: true,
-      },
-      {
-        name: "startDate",
-        type: "date",
-        label: "Start Date",
-      },
-      {
-        name: "endDate",
-        type: "date",
-        label: "End Date",
-      },
-    ],
-    gridLayout: true,
-    // onSubmit,
-  });
-
-  useEffect(() => {
-    shouldSkip?.(isValid);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isValid]);
-
-  useEffect(() => {
-    updateState?.(values);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [values]);
-
-  return (
-    <div className="flex gap-5 w-full">
-      <div className="flex flex-1 flex-col gap-5">
-        {formInputs["name"]}
-        {formInputs["description"]}
-      </div>
-      <div className="flex flex-1 flex-col gap-5">
-        {formInputs["startDate"]}
-        {formInputs["endDate"]}
-        <div className="gap-1.5 flex flex-col">
-          <label className="font-medium text-text-tertiary text-sm">
-            Priority
-          </label>
-          <DropDown
-            toggler={
-              <DropDown.Toggler>
-                <span className="capitalize">{getValue("priority")}</span>
-              </DropDown.Toggler>
-            }
-          >
-            {["none", "high", "medium", "small"].map((e) => (
-              <DropDown.Option
-                key={e}
-                className="capitalize"
-                onClick={() => setValue("priority", e)}
-                isCurrent={e === getValue("priority")}
-              >
-                {e}
-              </DropDown.Option>
-            ))}
-          </DropDown>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function TeamMembers({ shouldSkip, updateState, step }) {
-  const { interns, error, isLoading } = useInterns();
-  return (
-    <div className="flex h-40 divide-x-2 divide-border">
-      <div className="flex-1 pr-4">
-        <h3 className="text-text-secondary font-semibold">All Interns</h3>
-        <SearchInput placeholder="Search for interns" />
-        <div className="relative h-[200px]">
-          {isLoading && <Status status="loading" size="small" />}
-        </div>
-      </div>
-      <div className="flex-1 pl-4">
-        <h3 className="text-text-secondary font-semibold">Team Members</h3>
-      </div>
-    </div>
-  );
-}
-
-function StarterTasks({ shouldSkip, updateState, step }) {
-  return <div className="">Starter Tasks</div>;
 }

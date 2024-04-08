@@ -64,26 +64,25 @@ function Icon({ icon }) {
   );
 }
 
-export const InputField = forwardRef(({ children, ...props }, ref) => {
-  const { type, className, name, errorMessage, label } =
-    props;
+export const InputField = forwardRef(
+  ({ children, type, className, name, errorMessage, label, ...props }, ref) => {
+    const icon = icons[name] || icons[type];
 
-  const icon = icons[name] || icons[type];
-
-  return (
-    <div className="space-y-1.5">
-      <Label label={label} message={errorMessage} />
-      <div className={cn(input({ icon: Boolean(icon) }), className)}>
-        <Icon icon={icon} />
-        {type === "textarea" ? (
-          <textarea ref={ref} {...props}></textarea>
-        ) : (
-          <input type={type || "text"} ref={ref} {...props} />
-        )}
-        {children}
+    return (
+      <div className="space-y-1.5">
+        <Label label={label} message={errorMessage} />
+        <div className={cn(input({ icon: Boolean(icon) }), className)}>
+          <Icon icon={icon} />
+          {type === "textarea" ? (
+            <textarea ref={ref} {...props}></textarea>
+          ) : (
+            <input type={type || "text"} ref={ref} {...props} />
+          )}
+          {children}
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  }
+);
 
 InputField.displayName = "InputField";
