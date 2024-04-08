@@ -14,7 +14,7 @@ export default function NewProject() {
       number: 0,
       title: "Basic Info",
       element: <BasicInfo />,
-      canSkip: false,
+      stepStatus: "uncompleted",
       state: {
         name: "",
         description: "",
@@ -27,14 +27,14 @@ export default function NewProject() {
       number: 1,
       title: "Team Members",
       element: <TeamMembers />,
-      canSkip: true,
+      stepStatus: "skippable",
       state: [],
     },
     {
       number: 2,
       title: "Starter Tasks",
       element: <StarterTasks />,
-      canSkip: true,
+      stepStatus: "skippable",
     },
   ]);
   const [currentStep, setCurrentStep] = useState(steps[1]);
@@ -81,14 +81,20 @@ export default function NewProject() {
             )
           );
         },
-        shouldSkip: (canSkip) => {
-          setCurrentStep((prev) => ({ ...prev, canSkip }));
+        updateStatus: (stepStatus) => {
+          setCurrentStep((prev) => ({ ...prev, stepStatus }));
         },
       })}
 
       <Buttons
         onNext={() => nextStep && setCurrentStep(nextStep)}
-        canGoNext={currentStep.canSkip && nextStep}
+        canGoNext={
+          ["completed", "skippable"].includes(currentStep.stepStatus) &&
+          nextStep
+        }
+        nextButtonText={
+          currentStep.stepStatus === "skippable" ? "Skip" : "Next"
+        }
         onBack={() => backStep && setCurrentStep(backStep)}
         canGoBack={backStep}
       />
@@ -116,7 +122,7 @@ function Steps({ steps, currentStep }) {
     </div>
   );
 }
-function Buttons({ onNext, canGoNext, onBack, canGoBack }) {
+function Buttons({ onNext, canGoNext, nextButtonText, onBack, canGoBack }) {
   return (
     <div className="flex mt-auto justify-between gap-3">
       <Button
@@ -129,7 +135,7 @@ function Buttons({ onNext, canGoNext, onBack, canGoBack }) {
         Back
       </Button>
       <Button display="with-icon" onClick={onNext} disabled={!canGoNext}>
-        {canGoNext ? "Skip" : "Next"}
+        {nextButtonText}
         <IoChevronForwardOutline />
       </Button>
     </div>

@@ -4,7 +4,7 @@ import { Status } from "@/components/ui/Status";
 import { useEffect, useState } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
-export function TeamMembers({ shouldSkip, updateState, step }) {
+export function TeamMembers({ updateStatus, updateState, step }) {
   const { interns, error, isLoading } = useInterns();
   const [teamMembers, setTeamMembers] = useState(step.state);
   const [query, setQuery] = useState("");
@@ -12,6 +12,7 @@ export function TeamMembers({ shouldSkip, updateState, step }) {
 
   useEffect(() => {
     updateState?.(teamMembers);
+    updateStatus(teamMembers.length ? "completed" : "skippable");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [teamMembers]);
 

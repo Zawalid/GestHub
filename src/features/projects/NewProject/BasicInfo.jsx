@@ -3,7 +3,7 @@ import { useForm } from "@/hooks/useForm";
 import { useEffect } from "react";
 
 // Steps
-export function BasicInfo({ shouldSkip, updateState, step }) {
+export function BasicInfo({ updateStatus, updateState, step }) {
   const {
     options: { isValid, formInputs, values, getValue, setValue },
   } = useForm({
@@ -41,7 +41,7 @@ export function BasicInfo({ shouldSkip, updateState, step }) {
   });
 
   useEffect(() => {
-    shouldSkip?.(isValid);
+    updateStatus?.(isValid ? "completed" : "uncompleted");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isValid]);
 
@@ -64,9 +64,11 @@ export function BasicInfo({ shouldSkip, updateState, step }) {
             Priority
           </label>
           <DropDown
-            toggler={<DropDown.Toggler>
-              <span className="capitalize">{getValue("priority")}</span>
-            </DropDown.Toggler>}
+            toggler={
+              <DropDown.Toggler>
+                <span className="capitalize">{getValue("priority")}</span>
+              </DropDown.Toggler>
+            }
           >
             {["none", "high", "medium", "small"].map((e) => (
               <DropDown.Option
