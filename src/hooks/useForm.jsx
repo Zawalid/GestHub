@@ -208,10 +208,10 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
     setDefaultValues(values);
   };
   // Submit handler
-  const handleSubmit = (callback) => {
+  const handleSubmit = (callback, resetToDefaults) => {
     onSubmit?.(values);
-    callback?.(values);
-    setDefaultValues(values);
+    typeof callback === "function" && callback?.(values);
+    resetToDefaults ? setValues(defaultValues) : setDefaultValues(values);
   };
 
   // Reset handler

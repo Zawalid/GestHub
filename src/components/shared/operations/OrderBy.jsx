@@ -5,7 +5,7 @@ import {
   MdOutlineSortByAlpha,
 } from "@/components/ui/Icons";
 import { useOperations } from "./useOperations";
-import { options } from "./DropDown";
+import { options } from "./ActionsDropDown";
 
 export function OrderBy() {
   const { direction, onOrder } = useOperations();

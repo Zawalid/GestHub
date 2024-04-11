@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { Search } from "./Search";
 import { OrderBy } from "./OrderBy";
 import { SortBy } from "./SortBy";
-import { DropDown } from "./DropDown";
+import { ActionsDropDown } from "./ActionsDropDown";
 import { Filter } from "./Filter";
 import { Layout } from "./Layout";
 
@@ -180,7 +180,7 @@ export function Operations({
 }
 
 Operations.Search = Search;
-Operations.DropDown = DropDown;
+Operations.DropDown = ActionsDropDown;
 Operations.OrderBy = OrderBy;
 Operations.SortBy = SortBy;
 Operations.Filter = Filter;
