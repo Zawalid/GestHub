@@ -65,14 +65,26 @@ function Icon({ icon }) {
 }
 
 export const InputField = forwardRef(
-  ({ children, type, className, name, errorMessage, label, ...props }, ref) => {
-    const icon = icons[name] || icons[type];
+  (
+    {
+      children,
+      type,
+      className,
+      name,
+      errorMessage,
+      label,
+      showIcon = true,
+      ...props
+    },
+    ref
+  ) => {
+    const icon = showIcon && (icons[name] || icons[type]);
 
     return (
       <div className="space-y-1.5">
         <Label label={label} message={errorMessage} />
         <div className={cn(input({ icon: Boolean(icon) }), className)}>
-          <Icon icon={icon} />
+          {showIcon && <Icon icon={icon} />}
           {type === "textarea" ? (
             <textarea ref={ref} {...props}></textarea>
           ) : (

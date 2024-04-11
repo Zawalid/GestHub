@@ -1,12 +1,29 @@
+/* eslint-disable react-refresh/only-export-components */
 import { CheckBox, SearchInput } from "@/components/ui";
 import { useInterns } from "../../interns/useInterns";
 import { Status } from "@/components/ui/Status";
 import { useEffect, useState } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
-export function TeamMembers({ updateStatus, updateState, step }) {
+export const getSearchedInterns = (interns, query) =>
+  interns?.filter((intern) =>
+    `${intern.firstName} ${intern.lastName}`
+      .trim()
+      .toLowerCase()
+      .includes(query.trim().toLowerCase())
+  );
+
+export const renderInternsStatus = (isLoading, error, searchedInterns) => {
+  if (isLoading) return <Status status="loading" size="small" />;
+  if (error)
+    return <Status status="error" heading={error?.message} size="small" />;
+  if (searchedInterns.length === 0)
+    return <Status status="noResults" size="small" />;
+};
+
+export function TeamMembers({ updateStatus, updateState, state }) {
   const { interns, error, isLoading } = useInterns();
-  const [teamMembers, setTeamMembers] = useState(step.state);
+  const [teamMembers, setTeamMembers] = useState(state);
   const [query, setQuery] = useState("");
   const [parent] = useAutoAnimate();
 
@@ -16,21 +33,16 @@ export function TeamMembers({ updateStatus, updateState, step }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [teamMembers]);
 
-  const filteredInterns = interns?.filter((intern) =>
-    `${intern.firstName} ${intern.lastName}`
-      .trim()
-      .toLowerCase()
-      .includes(query.trim().toLowerCase())
-  );
+  const searchedInterns = getSearchedInterns(interns, query);
 
   const renderInterns = () => {
     if (isLoading) return <Status status="loading" size="small" />;
     if (error)
       return <Status status="error" heading={error?.message} size="small" />;
-    if (filteredInterns.length === 0)
+    if (searchedInterns.length === 0)
       return <Status status="noResults" size="small" />;
 
-    return filteredInterns.map((intern) => (
+    return searchedInterns.map((intern) => (
       <Intern
         key={intern.id}
         intern={intern}
@@ -71,7 +83,7 @@ export function TeamMembers({ updateStatus, updateState, step }) {
           onChange={setQuery}
         />
         <div
-          className="relative space-y-1 overflow-auto pr-2 mt-5 h-[200px]"
+          className="relative space-y-1 overflow-auto pr-2 mt-5 h-[215px]"
           ref={parent}
         >
           {renderInterns()}
@@ -82,7 +94,7 @@ export function TeamMembers({ updateStatus, updateState, step }) {
           Team Members ({teamMembers.length || "-"})
         </h3>
         <div
-          className="relative flex-1 space-y-3 overflow-auto pr-2"
+          className="relative space-y-3 h-[260px] overflow-auto pr-2"
           ref={parent}
         >
           {renderTeam()}
@@ -105,7 +117,7 @@ function Intern({ intern, isChosen, onToggle }) {
   );
 }
 
-function TeamMember({ intern }) {
+export function TeamMember({ intern }) {
   return (
     <div className="flex items-center gap-2">
       <img

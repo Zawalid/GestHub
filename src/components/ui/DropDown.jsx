@@ -30,7 +30,8 @@ export function DropDown({
       content={<ul className="grid gap-1 p-2">{children}</ul>}
       className={cn(
         "dropdown rounded-md border border-border bg-background-primary p-0 shadow-md",
-        options?.className || defaultOptions.className
+        defaultOptions.className,
+        options?.className,
       )}
       theme="light"
       trigger={options?.trigger || defaultOptions.trigger}
@@ -66,7 +67,7 @@ function Option({
   return (
     <li
       className={cn(
-        "dropDown-option",
+        "dropdown-option",
         size,
         isDeleteButton && "delete",
         isCurrent && "current",
@@ -81,11 +82,11 @@ function Option({
   );
 }
 
-function SearchBar({ placeholder, value, onChange }) {
+function SearchBar({ placeholder, query, onChange }) {
   return (
     <SearchInput
       placeholder={placeholder}
-      value={value}
+      query={query}
       onChange={onChange}
       className="text-sm"
       iconClassName="text-text-tertiary text-sm"
@@ -97,7 +98,7 @@ const Toggler = forwardRef(({ children, icon, className = "" }, ref) => {
   return (
     <button
       className={cn(
-        "flex min-w-28 hover:bg-background-tertiary transition-colors duration-200 cursor-pointer items-center justify-between rounded-lg border border-border  bg-background-secondary p-2 text-start  text-sm text-text-secondary  focus:outline-none",
+        "dropdown-toggler",
         className
       )}
       ref={ref}

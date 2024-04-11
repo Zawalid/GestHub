@@ -2,12 +2,11 @@ import { DropDown } from "@/components/ui/DropDown";
 import { useForm } from "@/hooks/useForm";
 import { useEffect } from "react";
 
-// Steps
-export function BasicInfo({ updateStatus, updateState, step }) {
+export function BasicInfo({ updateStatus, updateState, state }) {
   const {
     options: { isValid, formInputs, values, getValue, setValue },
   } = useForm({
-    defaultValues: step?.state || {},
+    defaultValues: state || {},
     fields: [
       {
         name: "name",
@@ -51,7 +50,7 @@ export function BasicInfo({ updateStatus, updateState, step }) {
   }, [values]);
 
   return (
-    <div className="flex gap-5 w-full">
+    <div className="flex items-center h-full gap-5 w-full">
       <div className="flex flex-1 flex-col gap-5">
         {formInputs["name"]}
         {formInputs["description"]}
@@ -66,14 +65,13 @@ export function BasicInfo({ updateStatus, updateState, step }) {
           <DropDown
             toggler={
               <DropDown.Toggler>
-                <span className="capitalize">{getValue("priority")}</span>
+                <span>{getValue("priority")}</span>
               </DropDown.Toggler>
             }
           >
-            {["none", "high", "medium", "small"].map((e) => (
+            {["None", "High", "Medium", "Small"].map((e) => (
               <DropDown.Option
                 key={e}
-                className="capitalize"
                 onClick={() => setValue("priority", e)}
                 isCurrent={e === getValue("priority")}
               >

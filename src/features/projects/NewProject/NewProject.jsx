@@ -7,95 +7,114 @@ import { cloneElement, useState } from "react";
 import { BasicInfo } from "./BasicInfo";
 import { TeamMembers } from "./TeamMembers";
 import { StarterTasks } from "./StarterTasks";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { Summary } from "./Summary";
+import { useAddProject } from "../useProjects";
+
+const steps = [
+  {
+    number: 1,
+    title: "Basic Info",
+    element: <BasicInfo />,
+    stepStatus: "uncompleted",
+  },
+  {
+    number: 2,
+    title: "Team Members",
+    element: <TeamMembers />,
+    stepStatus: "skippable",
+  },
+  {
+    number: 3,
+    title: "Starter Tasks",
+    element: <StarterTasks />,
+    stepStatus: "skippable",
+  },
+  {
+    number: 4,
+    title: "Summary",
+    element: <Summary />,
+    stepStatus: "last",
+  },
+];
 
 export default function NewProject() {
-  const [steps, setSteps] = useState([
-    {
-      number: 0,
-      title: "Basic Info",
-      element: <BasicInfo />,
-      stepStatus: "uncompleted",
-      state: {
-        name: "",
-        description: "",
-        startDate: "",
-        endDate: "",
-        priority: "none",
-      },
+  const [projectData, setProjectData] = useState({
+    "Basic Info": {
+      name: "",
+      description: "",
+      startDate: "",
+      endDate: "",
+      priority: "None",
     },
-    {
-      number: 1,
-      title: "Team Members",
-      element: <TeamMembers />,
-      stepStatus: "skippable",
-      state: [],
-    },
-    {
-      number: 2,
-      title: "Starter Tasks",
-      element: <StarterTasks />,
-      stepStatus: "skippable",
-    },
-  ]);
-  const [currentStep, setCurrentStep] = useState(steps[1]);
+    "Team Members": [],
+    "Starter Tasks": [],
+  });
+  const [currentStep, setCurrentStep] = useState(steps[2]);
+  const { mutate: addProject } = useAddProject();
+  const [parent] = useAutoAnimate({ duration: 400 });
 
   const nextStep = steps.find((step) => step.number - 1 === currentStep.number);
   const backStep = steps.find((step) => step.number + 1 === currentStep.number);
 
+  const getProps = () => {
+    if (currentStep.title === "Summary") return { projectData };
+    return {
+      state: projectData[currentStep.title],
+      updateState: (newState) => {
+        setProjectData((prev) => ({
+          ...prev,
+          [currentStep.title]: newState,
+        }));
+      },
+      updateStatus: (stepStatus) => {
+        setCurrentStep((prev) => ({ ...prev, stepStatus }));
+      },
+    };
+  };
+
   return (
     <Modal
       isOpen={true}
-      className="p-5 gap-6 md:h-fit md:border lg:w-3/5"
+      className="p-5 gap-6 md:h-[480px] md:border lg:w-3/5"
       closeButton={true}
     >
-      <h1 className="text- text-text-primary font-bold text-2xl">
-        Add New Project
-      </h1>
       <Steps steps={steps} currentStep={currentStep} />
-      {/* With animation but not secure */}
-
-      {/* <div className="flex h-[250px] overflow-hidden relative">
-        {steps.map((step) => (
-          <div
-            key={step.title}
-            className="absolute transition-transform duration-500 w-full h-full"
-            style={{
-              transform: `translateX(${
-                ( step.number - currentStep.number) * 100
-              }%)`,
-            }}
-          >
-            {step.element}
-          </div>
-        ))}
-      </div> */}
-
-      {/* No animation but secure */}
-
-      {cloneElement(currentStep.element, {
-        step: currentStep,
-        updateState: (state) => {
-          setSteps((prev) =>
-            prev.map((s) =>
-              s.number === currentStep.number ? { ...s, state } : s
-            )
-          );
-        },
-        updateStatus: (stepStatus) => {
-          setCurrentStep((prev) => ({ ...prev, stepStatus }));
-        },
-      })}
+      <div
+        className={`h-full ${
+          currentStep.title === "Summary"
+            ? " overflow-y-auto overflow-x-hidden"
+            : ""
+        }`}
+        ref={parent}
+      >
+        {cloneElement(currentStep.element, getProps())}
+      </div>
 
       <Buttons
-        onNext={() => nextStep && setCurrentStep(nextStep)}
-        canGoNext={
-          ["completed", "skippable"].includes(currentStep.stepStatus) &&
-          nextStep
-        }
+        onNext={() => {
+          if (currentStep.title === "Summary") {
+            const project = {
+              ...projectData["Basic Info"],
+              status: "Not Started",
+              teamMembers: projectData["Team Members"].map((t) => t.id),
+              tasks: projectData["Starter Tasks"].map((t) => t.id),
+            };
+            return addProject(project);
+          }
+          setCurrentStep(nextStep);
+        }}
+        canGoNext={["completed", "skippable", "last"].includes(
+          currentStep.stepStatus
+        )}
         nextButtonText={
-          currentStep.stepStatus === "skippable" ? "Skip" : "Next"
+          currentStep.stepStatus === "skippable"
+            ? "Skip"
+            : currentStep.stepStatus === "last"
+            ? "Create Project"
+            : "Next"
         }
-        onBack={() => backStep && setCurrentStep(backStep)}
+        onBack={() => setCurrentStep(backStep)}
         canGoBack={backStep}
       />
     </Modal>
