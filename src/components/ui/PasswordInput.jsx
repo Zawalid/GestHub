@@ -2,8 +2,7 @@ import { forwardRef, useState } from 'react';
 import { PiEyeLight, PiEyeClosedLight } from './Icons';
 import { InputField } from './InputField';
 
-// eslint-disable-next-line no-unused-vars
-export const PasswordInput = forwardRef(({ passwordField, isConfirmPassword, ...props }, ref) => {
+export const PasswordInput = forwardRef((props, ref) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <InputField

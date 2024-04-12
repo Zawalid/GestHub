@@ -1,10 +1,5 @@
-import {
-  useInterns,
-  useAddIntern,
-  useDeleteIntern,
-  useUpdateIntern,
-} from "./useInterns";
-import TableLayout from "@/layouts/TableLayout";
+import { useInterns, useAddIntern, useDeleteIntern, useUpdateIntern } from './useInterns';
+import TableLayout from '@/layouts/TableLayout';
 
 export default function InternsList() {
   const { interns, isLoading, error } = useInterns();
@@ -19,109 +14,108 @@ export default function InternsList() {
       error={error}
       resourceName="Intern"
       columns={[
-        { key: "id", displayLabel: "ID", visible: true, type: "number" },
+        { key: 'id', displayLabel: 'ID', visible: true, type: 'number' },
         {
-          key: "firstName",
-          displayLabel: "First Name",
+          key: 'firstName',
+          displayLabel: 'First Name',
           visible: true,
-          type: "string",
+          type: 'string',
         },
         {
-          key: "lastName",
-          displayLabel: "Last Name",
+          key: 'lastName',
+          displayLabel: 'Last Name',
           visible: true,
-          type: "string",
+          type: 'string',
         },
         {
-          key: "email",
-          displayLabel: "Email",
+          key: 'email',
+          displayLabel: 'Email',
           visible: true,
-          type: "string",
+          type: 'string',
         },
         {
-          key: "phone",
-          displayLabel: "Phone",
+          key: 'phone',
+          displayLabel: 'Phone',
           visible: true,
-          type: "string",
+          type: 'string',
         },
         {
-          key: "birthday",
-          displayLabel: "Birthday",
+          key: 'birthday',
+          displayLabel: 'Birthday',
           visible: true,
-          type: "date",
+          type: 'date',
         },
         {
-          key: "university",
-          displayLabel: "University",
+          key: 'university',
+          displayLabel: 'University',
           visible: true,
-          type: "string",
+          type: 'string',
         },
         {
-          key: "major",
-          displayLabel: "Major",
+          key: 'major',
+          displayLabel: 'Major',
           visible: true,
-          type: "string",
+          type: 'string',
         },
         {
-          key: "startDate",
-          displayLabel: "Start Date",
+          key: 'startDate',
+          displayLabel: 'Start Date',
           visible: true,
-          type: "date",
+          type: 'date',
         },
         {
-          key: "endDate",
-          displayLabel: "End Date",
+          key: 'endDate',
+          displayLabel: 'End Date',
           visible: true,
-          type: "date",
+          type: 'date',
         },
       ]}
       formFields={[
         {
-          name: "firstName",
-          label: "First Name",
+          name: 'firstName',
+          label: 'First Name',
         },
         {
-          name: "lastName",
-          label: "Last Name",
+          name: 'lastName',
+          label: 'Last Name',
         },
         {
-          name: "email",
-          type: "email",
-          label: "Email Address",
+          name: 'email',
+          type: 'email',
+          label: 'Email Address',
         },
         {
-          name: "phone",
-          label: "Phone Number",
+          name: 'phone',
+          label: 'Phone Number',
         },
         {
-          name: "birthday",
-          label: "Birthday",
-          type: "date",
+          name: 'birthday',
+          label: 'Birthday',
+          type: 'date',
         },
         {
-          name: "password",
-          type: "password",
-          label: " Password",
+          name: 'password',
+          type: 'password',
+          label: ' Password',
         },
         {
-          name: "confirmPassword",
-          type: "password",
-          label: "Confirm  Password",
-          isConfirmPassword: true,
-          passwordField: "password",
+          name: 'confirmPassword',
+          type: 'password',
+          label: 'Confirm  Password',
+          rules: { validate: (pass, getValue) => pass === getValue('password') || "Passwords don't match" },
         },
       ]}
       formDefaults={{
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        birthday: "",
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        birthday: '',
       }}
-      fieldsToSearch={["firstName", "lastName", "email", "major", "university"]}
+      fieldsToSearch={['firstName', 'lastName', 'email', 'major', 'university']}
       downloadOptions={{
-        csvFileName: "Interns",
-        pdfFileName: "Interns",
+        csvFileName: 'Interns',
+        pdfFileName: 'Interns',
       }}
       onAdd={addIntern}
       onUpdate={updateIntern}

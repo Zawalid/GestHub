@@ -1,10 +1,5 @@
-import {
-  useSupervisors,
-  useAddSupervisor,
-  useDeleteSupervisor,
-  useUpdateSupervisor,
-} from "./useSupervisors";
-import TableLayout from "@/layouts/TableLayout";
+import { useSupervisors, useAddSupervisor, useDeleteSupervisor, useUpdateSupervisor } from './useSupervisors';
+import TableLayout from '@/layouts/TableLayout';
 
 export default function SupervisorsList() {
   const { supervisors, isLoading, error } = useSupervisors();
@@ -19,84 +14,83 @@ export default function SupervisorsList() {
       isLoading={isLoading}
       error={error}
       columns={[
-        { key: "id", displayLabel: "ID", visible: true, type: "number" },
+        { key: 'id', displayLabel: 'ID', visible: true, type: 'number' },
         {
-          key: "firstName",
-          displayLabel: "First Name",
+          key: 'firstName',
+          displayLabel: 'First Name',
           visible: true,
-          type: "string",
+          type: 'string',
         },
         {
-          key: "lastName",
-          displayLabel: "Last Name",
+          key: 'lastName',
+          displayLabel: 'Last Name',
           visible: true,
-          type: "string",
+          type: 'string',
         },
         {
-          key: "email",
-          displayLabel: "Email",
+          key: 'email',
+          displayLabel: 'Email',
           visible: true,
-          type: "string",
+          type: 'string',
         },
         {
-          key: "phone",
-          displayLabel: "Phone",
+          key: 'phone',
+          displayLabel: 'Phone',
           visible: true,
-          type: "string",
+          type: 'string',
         },
         {
-          key: "department",
-          displayLabel: "Department",
+          key: 'department',
+          displayLabel: 'Department',
           visible: true,
-          type: "string",
+          type: 'string',
         },
       ]}
       formFields={[
         {
-          name: "firstName",
-          label: "First Name",
+          name: 'firstName',
+          label: 'First Name',
         },
         {
-          name: "lastName",
-          label: "Last Name",
+          name: 'lastName',
+          label: 'Last Name',
         },
         {
-          name: "email",
-          type: "email",
-          label: "Email Address",
+          name: 'email',
+          type: 'email',
+          label: 'Email Address',
         },
         {
-          name: "phone",
-          label: "Phone Number",
+          name: 'phone',
+          label: 'Phone Number',
         },
         {
-          name: "department",
-          label: "Department",
+          name: 'department',
+          label: 'Department',
         },
         {
-          name: "password",
-          type: "password",
-          label: " Password",
+          name: 'password',
+          type: 'password',
+          label: ' Password',
         },
         {
-          name: "confirmPassword",
-          type: "password",
-          label: "Confirm  Password",
-          isConfirmPassword: true,
-          passwordField: "password",
+          name: 'confirmPassword',
+          type: 'password',
+          label: 'Confirm  Password',
+          rules: { validate: (pass, getValue) => pass === getValue('password') || "Passwords don't match" },
         },
       ]}
       formDefaults={{
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        department: "",
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        department: '',
       }}
-      fieldsToSearch={["firstName", "lastName", "email", "department"]}
+      fieldsToSearch={['firstName', 'lastName', 'email', 'department']}
       downloadOptions={{
-        csvFileName: "Supervisors",
-        pdfFileName: "Supervisors",
+        csvFileName: 'Supervisors',
+        pdfFileName: 'Supervisors',
       }}
       onAdd={addSupervisor}
       onUpdate={updateSupervisor}

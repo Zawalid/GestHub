@@ -3,7 +3,7 @@ import { PasswordInput } from '@/components/ui/PasswordInput';
 import { objectDeepEquals } from '@/utils/helpers';
 import { cloneElement, useEffect, useMemo, useState } from 'react';
 
-const getError = (value, rules) => {
+const getError = (value, rules, getValue) => {
   if (!rules) return null;
 
   // Required
@@ -62,7 +62,7 @@ const getError = (value, rules) => {
   }
   // Custom validation
   if (rules.validate && value) {
-    const validate = rules.validate(value);
+    const validate = rules.validate(value, getValue);
     if (validate !== true)
       return {
         type: 'validate',
@@ -94,15 +94,12 @@ const rules = {
   },
 };
 
-const getRules = (name, type, fieldRules, isConfirmPassword, passwordFieldValue) => {
+const getRules = (name, type, fieldRules) => {
   return {
     required: `Please enter your ${name}`,
     ...(rules[name] && rules[name]),
     ...(rules[type] && rules[type]),
     ...(fieldRules && fieldRules),
-    ...(isConfirmPassword && {
-      validate: (pass) => pass === passwordFieldValue || "Passwords don't match",
-    }),
   };
 };
 
@@ -111,31 +108,32 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
   const [values, setValues] = useState(def);
   const [isUpdated, setIsUpdated] = useState(false);
   const [errors, setErrors] = useState(null);
+  // Is form valid
   const isValid = useMemo(() => {
     return (
       fields
         .map((field) => {
-          return getError(
-            values?.[field.name],
-            getRules(field.name, field.type, field.rules, field.isConfirmPassword, values?.[field.passwordField])
-          );
+          const rules = getRules(field.name, field.type, field.rules);
+          return getError(values?.[field.name], rules, getValue);
         })
         .filter((err) => err).length === 0
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fields, values]);
+  // Form Inputs
   const formInputs = useMemo(() => {
     const inputs = {};
     fields
       .filter((field) => !field.hidden)
       .forEach((field) => {
-        const { name, type, placeholder, label, rules, isConfirmPassword, passwordField } = field;
+        const { name, type, placeholder, label, rules } = field;
 
         inputs[name] = (
           <Input
             placeholder={placeholder || label}
             value={values?.[name] || ''}
             onChange={(e) => {
-              validate(name, e.target.value, getRules(name, type, rules, isConfirmPassword, values[passwordField]));
+              validate(name, e.target.value, getRules(name, type, rules));
               setValue(name, e.target.value);
             }}
             errorMessage={errors?.[name]?.message}
@@ -144,6 +142,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
         );
       });
     return inputs;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fields, errors, values]);
 
   useEffect(() => {
@@ -152,7 +151,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
 
   // Validate fields
   const validate = (name, value, rules) => {
-    const err = getError(value, rules);
+    const err = getError(value, rules, getValue);
     setErrors((prev) => {
       const errors = { ...prev };
       if (!err) delete errors[name];
@@ -161,8 +160,10 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
       return errors;
     });
   };
-  // Get a field value
-  const getValue = (name) => values?.[name];
+  // Get a field value (Must be 'function' for hoisting)
+  function getValue(name) {
+    return values?.[name];
+  }
 
   // Set a field value
   const setValue = (name, value) => {
