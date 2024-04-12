@@ -35,7 +35,7 @@ export function TeamMembers({ updateStatus, updateState, state }) {
     if (error) return <Status status="error" heading={error?.message} size="small" />;
     if (searchedInterns.length === 0) return <Status status="noResults" size="small" />;
 
-    return [...searchedInterns, ...searchedInterns].map((intern) => (
+    return searchedInterns.map((intern) => (
       <Intern
         key={intern.id}
         intern={intern}
@@ -100,11 +100,11 @@ export function TeamMember({ intern }) {
   return (
     <div className="flex items-center gap-2">
       <img
-        src={intern.image || '/images/default-profile.jpg'}
-        alt={intern.firstName}
+        src={intern?.image || '/images/default-profile.jpg'}
+        alt={intern?.firstName}
         className="h-6 w-6 rounded-full border border-border"
       />
-      <span className="text-sm font-semibold text-text-primary">{`${intern.firstName} ${intern.lastName}`}</span>
+      <span className="text-sm font-semibold text-text-primary">{`${intern?.firstName} ${intern?.lastName}`}</span>
     </div>
   );
 }

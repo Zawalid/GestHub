@@ -53,7 +53,7 @@ export function InternsDropDown({ getValue, setValue }) {
         </DropDown.Toggler>}
         options={{
           shouldCloseOnClick: false,
-          className: "max-h-[250px] h-[230px]",
+          className: "max-h-[250px] h-[230px] overflow-auto",
         }}
       >
         <DropDown.SearchBar

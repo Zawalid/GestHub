@@ -49,7 +49,7 @@ const defaultProject = {
 
 export default function NewProject({ isOpen, onClose }) {
   const [projectData, setProjectData] = useState(defaultProject);
-  const [currentStep, setCurrentStep] = useState(steps[2]);
+  const [currentStep, setCurrentStep] = useState(steps[0]);
   const { mutate: addProject } = useAddProject();
   const [parent] = useAutoAnimate({ duration: 400 });
 
@@ -76,8 +76,10 @@ export default function NewProject({ isOpen, onClose }) {
     const project = {
       ...projectData['Basic Info'],
       status: 'Not Started',
-      teamMembers: projectData['Team Members'].map((t) => t.id),
-      tasks: projectData['Starter Tasks'].map((t) => t.id),
+      // teamMembers: projectData['Team Members'].map((t) => t.id),
+      // tasks: projectData['Starter Tasks'].map((t) => t.id),
+      teamMembers: projectData['Team Members'],
+      tasks: projectData['Starter Tasks'],
     };
     addProject(project, {
       onSuccess: () => {
@@ -97,7 +99,7 @@ export default function NewProject({ isOpen, onClose }) {
       closeOnBlur={false}
     >
       <Steps steps={steps} currentStep={currentStep} />
-      <div className="h-full overflow-y-auto overflow-x-hidden pr-2" ref={parent}>
+      <div className="h-full overflow-y-auto overflow-x-hidden" ref={parent}>
         {cloneElement(currentStep.element, getProps())}
       </div>
 

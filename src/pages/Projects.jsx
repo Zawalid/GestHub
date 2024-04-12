@@ -11,7 +11,7 @@ export function Projects() {
 
   const updateProjects = () => {
     return projects?.map((p) => {
-      const completedTasks = p.tasks.filter((task) => task.status === 'Completed');
+      const completedTasks = p.tasks.filter((task) => task?.status === 'Completed');
       const progress = (completedTasks.length / p.tasks.length) * 100;
       return {
         ...p,

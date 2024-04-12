@@ -25,3 +25,7 @@ export function formatTime(time) {
 
   return formattedDate;
 }
+export function getIncrementedID(array) {
+  const ids = array.map((item) => item.id);
+  return ids.length > 0 ? Math.max(...ids) + 1 : 1;
+}

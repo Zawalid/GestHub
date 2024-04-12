@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
 import { Button, DropDown } from '@/components/ui';
 import { useForm } from '@/hooks/useForm';
 import { InternsDropDown } from './InternsDropDown';
+import Task from '../Task';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { getIncrementedID } from '@/utils/helpers';
 
 export function StarterTasks({ updateStatus, updateState, state }) {
   const [currentTab, setCurrentTab] = useState('view');
   const [tasks, setTasks] = useState(state);
+  const [currentTask, setCurrentTask] = useState(null);
 
   useEffect(() => {
     updateState?.(tasks);
@@ -16,64 +19,94 @@ export function StarterTasks({ updateStatus, updateState, state }) {
 
   return (
     <div className="relative h-full overflow-hidden">
-      {tasks.length ? (
-        <TasksList tasks={tasks} />
-      ) : (
-        <StarterTasksPrompt setCurrentTab={setCurrentTab} display={currentTab === 'view'} />
-      )}
-      <NewTask
+      <TasksList
+        tasks={tasks}
+        setTasks={setTasks}
+        setCurrentTask={setCurrentTask}
         setCurrentTab={setCurrentTab}
+        display={currentTab === 'view'}
+      />
+      <NewTask
         display={currentTab === 'add'}
-        onAddTask={(task) => setTasks((prev) => [...prev, task])}
+        onCancel={() => {
+          setCurrentTab('view');
+          setCurrentTask(null);
+        }}
+        currentTask={currentTask}
+        onSubmit={(task) => {
+          setTasks((prev) => {
+            if (currentTask) return prev.map((t) => (t.id === task.id ? task : t));
+            return [...prev, { id: getIncrementedID(tasks), ...task }];
+          });
+        }}
       />
     </div>
   );
 }
 
-function StarterTasksPrompt({ setCurrentTab, display }) {
+function TasksList({ tasks, setTasks, setCurrentTask, setCurrentTab, display }) {
+  const [parent] = useAutoAnimate({ duration: 400 });
+
+  const render = () => {
+    if (!tasks.length)
+      return (
+        <>
+          <img src="/SVG/tasks.svg" alt="" className="h-[150px]" />
+          <h2 className="text-lg font-semibold text-text-primary">Let&apos;s get started with some tasks</h2>
+          <p className="text-sm font-medium text-text-secondary">Kickstart your project with essential tasks.</p>
+        </>
+      );
+    return (
+      <div
+        className="grid flex-1 grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-4 gap-y-6 overflow-auto pr-1.5"
+        ref={parent}
+      >
+        {tasks.map((task) => (
+          <Task
+            key={task.id}
+            task={task}
+            onEdit={(id) => {
+              setCurrentTask(tasks.find((t) => t.id === id));
+              setCurrentTab('add');
+            }}
+            onDelete={(id) => setTasks((prev) => prev.filter((t) => t.id !== id))}
+            onUpdate={(task) => setTasks((prev) => prev.map((t) => (t.id === task.id ? task : t)))}
+          />
+        ))}
+      </div>
+    );
+  };
   return (
     <div
-      className={`absolute flex h-full w-full flex-col items-center justify-center gap-4 pr-2 text-center  transition-transform duration-500 ${
+      className={`absolute flex h-full w-full flex-col gap-4 pr-2   transition-transform duration-500 ${
         display ? '' : '-translate-y-full'
-      }`}
+      }
+      ${!tasks.length ? 'items-center justify-center text-center' : ''}
+      `}
+      ref={parent}
     >
-      <img src="/SVG/tasks.svg" alt="" className="h-[150px]" />
-      <h2 className="text-lg font-semibold text-text-primary">Let&apos;s get started with some tasks</h2>
-      <p className="text-sm font-medium text-text-secondary">Kickstart your project with essential tasks.</p>
-      <Button onClick={() => setCurrentTab('add')}>Create Tasks</Button>
+      {render()}
+      <Button color="secondary" onClick={() => setCurrentTab('add')}>
+        {!tasks.length ? 'Create Tasks' : 'Add More'}
+      </Button>
     </div>
   );
 }
 
-function TasksList({ tasks }) {
-  return (
-    <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4">
-      {tasks.map((task, index) => (
-        <div key={index} className="rounded-lg border border-border bg-background-secondary p-4 shadow-sm">
-          <p>{task.title}</p>
-          <p>{task.description}</p>
-          <p>{task.dueDate}</p>
-          <p>{task.priority}</p>
-          <p>{task.status}</p>
-          <p>{task.assignee.firstName}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
+function NewTask({ display, onCancel, currentTask, onSubmit }) {
+  const defaultTask = {
+    title: '',
+    description: '',
+    dueDate: '',
+    priority: 'None',
+    assignee: 'None',
+    status: 'Not Started',
+  };
 
-function NewTask({ setCurrentTab, display, onAddTask }) {
   const {
-    options: { isValid, formInputs, handleSubmit, getValue, setValue },
+    options: { isValid, isUpdated, formInputs, handleSubmit, reset, getValue, setValue, updateValues },
   } = useForm({
-    defaultValues: {
-      title: '',
-      description: '',
-      dueDate: '',
-      priority: 'None',
-      assignee: 'None',
-      status: 'Not Started',
-    },
+    defaultValues: currentTask || defaultTask,
     fields: [
       {
         name: 'title',
@@ -86,6 +119,7 @@ function NewTask({ setCurrentTab, display, onAddTask }) {
         type: 'textarea',
         placeholder: "Task's description",
         rows: '5',
+        rules: { required: false },
       },
       {
         name: 'priority',
@@ -103,11 +137,17 @@ function NewTask({ setCurrentTab, display, onAddTask }) {
         name: 'dueDate',
         type: 'date',
         label: 'Due Date',
+        rules: { required: false },
       },
     ],
     gridLayout: true,
-    onSubmit: (data) => onAddTask(data),
+    onSubmit,
   });
+
+  useEffect(() => {
+    updateValues(currentTask || defaultTask);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTask]);
 
   return (
     <div
@@ -130,8 +170,9 @@ function NewTask({ setCurrentTab, display, onAddTask }) {
                   <span>{getValue('priority')}</span>
                 </DropDown.Toggler>
               }
+              options={{ className: 'h-[155px] overflow-auto' }}
             >
-              {['None', 'High', 'Medium', 'Small'].map((e) => (
+              {['None', 'High', 'Medium', 'Low'].map((e) => (
                 <DropDown.Option key={e} onClick={() => setValue('priority', e)} isCurrent={e === getValue('priority')}>
                   {e}
                 </DropDown.Option>
@@ -142,20 +183,15 @@ function NewTask({ setCurrentTab, display, onAddTask }) {
         </div>
       </div>
       <div className="mt-5 grid grid-cols-2 gap-4">
-        <Button color="tertiary" onClick={() => setCurrentTab('view')}>
+        <Button color="tertiary" onClick={() => reset(onCancel)}>
           Cancel
         </Button>
         <Button
-          onClick={() =>
-            handleSubmit(() => {
-              setCurrentTab('view');
-              setCurrentTab('view');
-              toast.success('Task has been created successfully');
-            }, true)
-          }
-          disabled={!isValid}
+          color="secondary"
+          onClick={() => handleSubmit(onCancel, true)}
+          disabled={currentTask ? !isUpdated : !isValid}
         >
-          Add Task
+          {currentTask ? 'Update Task' : 'Add Task'}
         </Button>
       </div>
     </div>

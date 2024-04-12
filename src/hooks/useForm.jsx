@@ -116,8 +116,8 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
       fields
         .map((field) => {
           return getError(
-            values[field.name],
-            getRules(field.name, field.type, field.rules, field.isConfirmPassword, values[field.passwordField])
+            values?.[field.name],
+            getRules(field.name, field.type, field.rules, field.isConfirmPassword, values?.[field.passwordField])
           );
         })
         .filter((err) => err).length === 0
@@ -133,7 +133,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
         inputs[name] = (
           <Input
             placeholder={placeholder || label}
-            value={values[name] || ''}
+            value={values?.[name] || ''}
             onChange={(e) => {
               validate(name, e.target.value, getRules(name, type, rules, isConfirmPassword, values[passwordField]));
               setValue(name, e.target.value);
@@ -162,7 +162,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
     });
   };
   // Get a field value
-  const getValue = (name) => values[name];
+  const getValue = (name) => values?.[name];
 
   // Set a field value
   const setValue = (name, value) => {

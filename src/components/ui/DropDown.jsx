@@ -5,7 +5,7 @@ import { IoChevronDownOutline } from "./Icons";
 import { cn } from "../../utils/helpers";
 
 const defaultOptions = {
-  className: "overflow-auto  max-h-[200px]",
+  className: "max-h-[200px]",
   placement: "bottom-end",
   trigger: "click",
   shouldCloseOnClick: true,

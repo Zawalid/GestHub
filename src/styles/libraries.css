@@ -87,7 +87,7 @@
 }
 
 .tippy-box:is([data-theme~="bubbleMenu"], [data-theme~="custom"]) {
-  @apply p-1;
+  @apply p-2;
 }
 
 /* Tooltip arrow */

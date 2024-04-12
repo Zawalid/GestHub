@@ -8,18 +8,7 @@ import {
 } from '@/components/ui/Icons';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { useDeleteProject } from './useProjects';
-
-const statusColors = {
-  'Not Started': 'bg-gray-500',
-  'In Progress': 'bg-primary',
-  Completed: 'bg-green-600',
-};
-
-const priorityColors = {
-  Low: 'bg-green-500',
-  Medium: 'bg-orange-500',
-  High: 'bg-red-500',
-};
+import { PRIORITY_COLORS, STATUS_COLORS } from '@/utils/constants';
 
 export default function Project({ project, layout }) {
   const { id, name, description, startDate, endDate, status, priority, tasks, teamMembers, progress } = project;
@@ -30,8 +19,10 @@ export default function Project({ project, layout }) {
         layout === 'grid' ? 'h-[240px]' : ''
       }`}
     >
-      <div className={`absolute -right-[1.2px] -top-[1.5px] h-[2px] w-16 rounded-lg ${priorityColors[priority]}`}></div>
-      <div className={`absolute -right-[1px] -top-[1.2px] h-16 w-[2px] rounded-lg ${priorityColors[priority]}`}></div>
+      <div
+        className={`absolute -right-[1.2px] -top-[1.5px] h-[2px] w-16 rounded-lg ${PRIORITY_COLORS[priority]}`}
+      ></div>
+      <div className={`absolute -right-[1px] -top-[1.2px] h-16 w-[2px] rounded-lg ${PRIORITY_COLORS[priority]}`}></div>
       <div className="flex items-center justify-between gap-5">
         <Date startDate={startDate} endDate={endDate} />
         <Actions id={id} />
@@ -39,12 +30,14 @@ export default function Project({ project, layout }) {
 
       <div className="space-y-2">
         <h3 className="line-clamp-2 text-lg font-semibold text-text-primary">{name}</h3>
-        <p className="line-clamp-2 text-sm text-text-secondary">{description}</p>
+        <p className="line-clamp-2 text-sm text-text-secondary">{description || "No description"}</p>
       </div>
-      <Progress tasks={tasks} statusColor={statusColors[status]} progress={progress} />
+      <Progress tasks={tasks} statusColor={STATUS_COLORS[status].bg} progress={progress} />
       <div className="mt-auto flex items-center justify-between ">
         <Members members={teamMembers} />
-        <p className={`w-fit rounded-md p-2 py-1 text-xs text-white ${statusColors[status]}`}>{status}</p>
+        <p className={`w-fit rounded-md p-2 py-1 text-xs text-white ${STATUS_COLORS[status || 'Not Started'].bg}`}>
+          {status || 'Not Started'}
+        </p>
       </div>
     </div>
   );
@@ -74,7 +67,7 @@ function Members({ members }) {
 }
 
 function Progress({ tasks, statusColor, progress }) {
-  const completedTasks = tasks.filter((task) => task.status === 'Completed');
+  const completedTasks = tasks.filter((task) => task?.status === 'Completed');
 
   return (
     <div className="flex items-center gap-2">

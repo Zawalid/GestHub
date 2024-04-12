@@ -19,6 +19,7 @@ export function BasicInfo({ updateStatus, updateState, state }) {
         type: "textarea",
         placeholder: "Project's description",
         rows: "5",
+        rules : {required : false}
       },
       {
         name: "priority",
