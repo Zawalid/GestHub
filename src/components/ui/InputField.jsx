@@ -1,5 +1,5 @@
-import Tippy from "@tippyjs/react";
-import { forwardRef } from "react";
+import Tippy from '@tippyjs/react';
+import { forwardRef } from 'react';
 import {
   IoMailOutline,
   IoKeyOutline,
@@ -9,14 +9,14 @@ import {
   MdDriveFileRenameOutline,
   BiSolidCity,
   MdError,
-} from "./Icons";
-import { cn } from "../../utils/helpers";
-import { tv } from "tailwind-variants";
+} from './Icons';
+import { cn } from '../../utils/helpers';
+import { tv } from 'tailwind-variants';
 
 const input = tv({
-  base: "input-field relative py-1 rounded-lg bg-background-secondary px-2 overflow-hidden border border-border w-full",
+  base: 'input-field relative py-1 rounded-lg bg-background-secondary px-2 overflow-hidden border border-border w-full',
   variants: {
-    icon: { true: "pl-9" },
+    icon: { true: 'pl-9' },
   },
 });
 
@@ -34,11 +34,11 @@ function Label({ label, message }) {
   if (!label) return null;
 
   return (
-    <div className="flex gap-2 items-center">
-      <label className="font-medium text-text-tertiary text-sm">{label}</label>
+    <div className="flex items-center gap-2">
+      <label className="text-sm font-medium text-text-tertiary">{label}</label>
       {message && (
         <Tippy
-          content={message.split("\n").map((msg, index) => (
+          content={message.split('\n').map((msg, index) => (
             <p key={index} className="text-white">
               {msg}
             </p>
@@ -55,10 +55,12 @@ function Label({ label, message }) {
   );
 }
 
-function Icon({ icon }) {
+function Icon({ icon, className = '' }) {
   if (!icon) return null;
   return (
-    <span className="border-r border-border top-0 bg-background-tertiary h-full w-7 grid place-content-center absolute left-0 z-10 text-text-tertiary duration-300">
+    <span
+      className={`absolute left-0 top-0 z-10 grid h-full w-7 place-content-center border-r border-border bg-background-tertiary text-text-tertiary duration-300 ${className}`}
+    >
       {icon}
     </span>
   );
@@ -74,6 +76,7 @@ export const InputField = forwardRef(
       errorMessage,
       label,
       showIcon = true,
+      iconClassName,
       ...props
     },
     ref
@@ -84,11 +87,11 @@ export const InputField = forwardRef(
       <div className="space-y-1.5">
         <Label label={label} message={errorMessage} />
         <div className={cn(input({ icon: Boolean(icon) }), className)}>
-          {showIcon && <Icon icon={icon} />}
-          {type === "textarea" ? (
+          {showIcon && <Icon icon={icon} className={iconClassName} />}
+          {type === 'textarea' ? (
             <textarea ref={ref} {...props}></textarea>
           ) : (
-            <input type={type || "text"} ref={ref} {...props} />
+            <input type={type || 'text'} ref={ref} {...props} />
           )}
           {children}
         </div>
@@ -97,4 +100,4 @@ export const InputField = forwardRef(
   }
 );
 
-InputField.displayName = "InputField";
+InputField.displayName = 'InputField';

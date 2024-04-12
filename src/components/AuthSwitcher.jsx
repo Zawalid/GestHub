@@ -1,7 +1,7 @@
-import { Button, DropDown } from "./ui";
-import { FaUserAlt } from "react-icons/fa";
-import { useTranslation } from "react-i18next";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Button, DropDown } from './ui';
+import { FaUserAlt } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 
 export function AuthSwitcher({ size }) {
   const { pathname } = useLocation();
@@ -14,11 +14,9 @@ export function AuthSwitcher({ size }) {
         </Button>
       }
     >
-      {["login", "register"].map((e) => (
+      {['login', 'register'].map((e) => (
         <NavLink to={`/${e}`} key={e}>
-          <DropDown.Option
-            className={`${pathname.includes(e) && "bg-primary"}`}
-          >
+          <DropDown.Option className={`${pathname.includes(e) && 'bg-primary'}`}>
             {t(`header.auth.${e}`)}
           </DropDown.Option>
         </NavLink>

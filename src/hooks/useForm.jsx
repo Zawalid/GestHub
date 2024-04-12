@@ -1,7 +1,7 @@
-import { InputField } from "@/components/ui";
-import { PasswordInput } from "@/components/ui/PasswordInput";
-import { objectDeepEquals } from "@/utils/helpers";
-import { cloneElement, useEffect, useMemo, useState } from "react";
+import { InputField } from '@/components/ui';
+import { PasswordInput } from '@/components/ui/PasswordInput';
+import { objectDeepEquals } from '@/utils/helpers';
+import { cloneElement, useEffect, useMemo, useState } from 'react';
 
 const getError = (value, rules) => {
   if (!rules) return null;
@@ -10,8 +10,8 @@ const getError = (value, rules) => {
   if (rules.required && !value) {
     const required = rules.required;
     return {
-      type: "required",
-      message: typeof required === "boolean" ? null : required,
+      type: 'required',
+      message: typeof required === 'boolean' ? null : required,
     };
   }
   // Pattern
@@ -19,7 +19,7 @@ const getError = (value, rules) => {
     const pattern = new RegExp(rules.pattern.value);
     if (!pattern.test(value)) {
       return {
-        type: "pattern",
+        type: 'pattern',
         message: rules.pattern?.message,
       };
     }
@@ -28,7 +28,7 @@ const getError = (value, rules) => {
   if (rules.minLength && value) {
     if (value.length < rules.minLength.value) {
       return {
-        type: "minLength",
+        type: 'minLength',
         message: rules.minLength?.message,
       };
     }
@@ -37,7 +37,7 @@ const getError = (value, rules) => {
   if (rules.maxLength && value) {
     if (value.length > rules.maxLength.value) {
       return {
-        type: "maxLength",
+        type: 'maxLength',
         message: rules.maxLength?.message,
       };
     }
@@ -46,7 +46,7 @@ const getError = (value, rules) => {
   if (rules.min && value) {
     if (Number(value) < rules.min.value) {
       return {
-        type: "min",
+        type: 'min',
         message: rules.min?.message,
       };
     }
@@ -55,7 +55,7 @@ const getError = (value, rules) => {
   if (rules.max && value) {
     if (Number(value) > rules.max.value) {
       return {
-        type: "max",
+        type: 'max',
         message: rules.max?.message,
       };
     }
@@ -65,7 +65,7 @@ const getError = (value, rules) => {
     const validate = rules.validate(value);
     if (validate !== true)
       return {
-        type: "validate",
+        type: 'validate',
         message: validate,
       };
   }
@@ -77,40 +77,31 @@ const rules = {
   email: {
     pattern: {
       value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      message: "Invalid email address",
+      message: 'Invalid email address',
     },
   },
   phone: {
     pattern: {
       value: /^(\+212\s)?(05|06|07)\d{8}$/,
-      message:
-        "Invalid phone number format. \n Ex: +212 0637814207 or 0637814207",
+      message: 'Invalid phone number format. \n Ex: +212 0637814207 or 0637814207',
     },
   },
   password: {
     pattern: {
       value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\W]{8,}$/,
-      message:
-        "Password must contain at least 8 characters, one uppercase letter, one lowercase letter and one number",
+      message: 'Password must contain at least 8 characters, one uppercase letter, one lowercase letter and one number',
     },
   },
 };
 
-const getRules = (
-  name,
-  type,
-  fieldRules,
-  isConfirmPassword,
-  passwordFieldValue
-) => {
+const getRules = (name, type, fieldRules, isConfirmPassword, passwordFieldValue) => {
   return {
     required: `Please enter your ${name}`,
     ...(rules[name] && rules[name]),
     ...(rules[type] && rules[type]),
     ...(fieldRules && fieldRules),
     ...(isConfirmPassword && {
-      validate: (pass) =>
-        pass === passwordFieldValue || "Passwords don't match",
+      validate: (pass) => pass === passwordFieldValue || "Passwords don't match",
     }),
   };
 };
@@ -126,13 +117,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
         .map((field) => {
           return getError(
             values[field.name],
-            getRules(
-              field.name,
-              field.type,
-              field.rules,
-              field.isConfirmPassword,
-              values[field.passwordField]
-            )
+            getRules(field.name, field.type, field.rules, field.isConfirmPassword, values[field.passwordField])
           );
         })
         .filter((err) => err).length === 0
@@ -143,33 +128,14 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
     fields
       .filter((field) => !field.hidden)
       .forEach((field) => {
-        const {
-          name,
-          type,
-          placeholder,
-          label,
-          rules,
-          isConfirmPassword,
-          passwordField,
-        } = field;
+        const { name, type, placeholder, label, rules, isConfirmPassword, passwordField } = field;
 
         inputs[name] = (
           <Input
-            type={type || "text"}
             placeholder={placeholder || label}
-            value={values[name] || ""}
+            value={values[name] || ''}
             onChange={(e) => {
-              validate(
-                name,
-                e.target.value,
-                getRules(
-                  name,
-                  type,
-                  rules,
-                  isConfirmPassword,
-                  values[passwordField]
-                )
-              );
+              validate(name, e.target.value, getRules(name, type, rules, isConfirmPassword, values[passwordField]));
               setValue(name, e.target.value);
             }}
             errorMessage={errors?.[name]?.message}
@@ -210,7 +176,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
   // Submit handler
   const handleSubmit = (callback, resetToDefaults) => {
     onSubmit?.(values);
-    typeof callback === "function" && callback?.(values);
+    typeof callback === 'function' && callback?.(values);
     resetToDefaults ? setValues(defaultValues) : setDefaultValues(values);
   };
 
@@ -224,9 +190,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
   return {
     Form: (
       <form
-        className={`grid gap-y-3 gap-x-5 ${
-          gridLayout ? " md:grid-cols-2" : ""
-        } `}
+        className={`grid gap-x-5 gap-y-3 ${gridLayout ? ' md:grid-cols-2' : ''} `}
         onSubmit={(e) => e.preventDefault()}
       >
         {Object.keys(formInputs).map((key) => {
@@ -251,9 +215,5 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-const Input = ({ type,name, ...props }) =>
-  type === "password" ? (
-    <PasswordInput {...props} />
-  ) : (
-    <InputField {...props} name={name} type={type} />
-  );
+const Input = ({ type, name, ...props }) =>
+  type === 'password' ? <PasswordInput {...props} /> : <InputField {...props} name={name} type={type} />;

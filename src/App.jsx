@@ -51,52 +51,53 @@ export default function App() {
   const [parent] = useAutoAnimate({ duration: 300 });
 
   return (
-    <div className="w-full h-dvh" ref={parent}>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <BrowserRouter>
-          <Routes>
-            <Route element={<AuthLayout />}>
-              <Route path="login" index element={<Login />} />
-              <Route path="register" element={<Register />} />
-            </Route>
-            <Route path="/" element={<HomePageLayout />}>
-              <Route index element={<HomePage />} />
-              <Route path="/offer/:id" element={<OfferDetails />} />
-            </Route>
-            <Route path="app" element={<AppLayout />}>
-              <Route index element={<Navigate to="/app/overview" />} />
-              {/* Routes of every role */}
-              <Route path="overview" element={<Overview />} />
-              <Route path="absences" element={<Absences />} />
+    <>
+      <div className="w-full h-dvh" ref={parent}>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <BrowserRouter>
+            <Routes>
+              <Route element={<AuthLayout />}>
+                <Route path="login" index element={<Login />} />
+                <Route path="register" element={<Register />} />
+              </Route>
+              <Route path="/" element={<HomePageLayout />}>
+                <Route index element={<HomePage />} />
+                <Route path="/offer/:id" element={<OfferDetails />} />
+              </Route>
+              <Route path="app" element={<AppLayout />}>
+                <Route index element={<Navigate to="/app/overview" />} />
+                {/* Routes of every role */}
+                <Route path="overview" element={<Overview />} />
+                <Route path="absences" element={<Absences />} />
 
-              {/*  Routes of specific role */}
-              {ROUTES[role].map((route) => (
-                <Route
-                  key={route}
-                  path={route}
-                  element={routesElements[route]}
-                />
-              ))}
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-
-        <Toaster
-          icons={{
-            loading: (
-              <FaSpinner className="animate-spin text-lg text-text-secondary" />
-            ),
-          }}
-          position={window.innerWidth < 768 ? "bottom-center" : "bottom-right"}
-          theme={theme}
-          toastOptions={{
-            className: "sonner-toast",
-            duration: 2000,
-          }}
-        />
-      </QueryClientProvider>
-    </div>
+                {/*  Routes of specific role */}
+                {ROUTES[role].map((route) => (
+                  <Route
+                    key={route}
+                    path={route}
+                    element={routesElements[route]}
+                  />
+                ))}
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </QueryClientProvider>
+      </div>
+      <Toaster
+        icons={{
+          loading: (
+            <FaSpinner className="animate-spin text-lg text-text-secondary" />
+          ),
+        }}
+        position={window.innerWidth < 768 ? "bottom-center" : "bottom-right"}
+        theme={theme}
+        toastOptions={{
+          className: "sonner-toast",
+          duration: 2000,
+        }}
+      />
+    </>
   );
 }

@@ -50,7 +50,7 @@ export function BasicInfo({ updateStatus, updateState, state }) {
   }, [values]);
 
   return (
-    <div className="flex items-center h-full gap-5 w-full">
+    <div className="flex mobile:items-center mobile:flex-row flex-col h-full gap-5 w-full">
       <div className="flex flex-1 flex-col gap-5">
         {formInputs["name"]}
         {formInputs["description"]}

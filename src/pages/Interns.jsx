@@ -1,5 +1,5 @@
-import { Heading } from "@/components/Heading";
-import InternsList from "@/features/interns/InternsList";
+import { Heading } from '@/components/Heading';
+import InternsList from '@/features/interns/InternsList';
 
 export function Interns() {
   return (

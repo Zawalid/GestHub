@@ -89,7 +89,6 @@ function SearchBar({ placeholder, query, onChange }) {
       query={query}
       onChange={onChange}
       className="text-sm"
-      iconClassName="text-text-tertiary text-sm"
     />
   );
 }

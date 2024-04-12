@@ -47,7 +47,7 @@ export function Overlay({
   return (
     <div
       className={cn(
-        "fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black/25 backdrop-blur-[1px] transition-[visibility] duration-200",
+        "fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black/40 backdrop-blur-[1px] transition-[visibility] duration-200",
         className,
         isOpen ? "visible" : "invisible"
       )}

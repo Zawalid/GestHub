@@ -1,26 +1,22 @@
-import { useFilePicker } from "use-file-picker";
+import { useFilePicker } from 'use-file-picker';
 import {
   FileAmountLimitValidator,
   FileTypeValidator,
   FileSizeValidator,
   ImageDimensionsValidator,
-} from "use-file-picker/validators";
-import { toast } from "sonner";
+} from 'use-file-picker/validators';
+import { toast } from 'sonner';
 
 const defaultOptions = {
-  accept: [".png", ".jpg"],
-  readAs: "DataURL",
+  accept: ['.png', '.jpg'],
+  readAs: 'DataURL',
   maxImages: 1,
   maxFileSize: 10,
   minHeight: 100,
   minWidth: 100,
 };
 
-export function useUploadImage({
-  options = defaultOptions,
-  onChange,
-  onError,
-}) {
+export function useUploadImage({ options = defaultOptions, onChange, onError }) {
   const { openFilePicker } = useFilePicker({
     accept: options.accept || defaultOptions.accept,
     readAs: options.readAs || defaultOptions.readAs,
@@ -28,12 +24,9 @@ export function useUploadImage({
       new FileAmountLimitValidator({
         max: options.maxImages || defaultOptions.maxImages,
       }),
-      new FileTypeValidator(["jpg", "png"]),
+      new FileTypeValidator(['jpg', 'png']),
       new FileSizeValidator({
-        maxFileSize:
-          (options.maxFileSize || defaultOptions.maxFileSize) *
-          1024 *
-          1024 /* To MB */,
+        maxFileSize: (options.maxFileSize || defaultOptions.maxFileSize) * 1024 * 1024 /* To MB */,
       }),
       new ImageDimensionsValidator({
         minHeight: options.minHeight || defaultOptions.minHeight,
@@ -58,15 +51,15 @@ export function useUploadImage({
 
 function getErrorMessage(name) {
   switch (name) {
-    case "FileTypeError":
-      return "Only JPG and PNG are allowed";
-    case "ImageDimensionError":
-      return "Image must be at least 100x100 px";
-    case "FileSizeError":
-      return "Image must be at most 10 MB";
-    case "FileAmountLimitError":
-      return "Only one image is allowed";
+    case 'FileTypeError':
+      return 'Only JPG and PNG are allowed';
+    case 'ImageDimensionError':
+      return 'Image must be at least 100x100 px';
+    case 'FileSizeError':
+      return 'Image must be at most 10 MB';
+    case 'FileAmountLimitError':
+      return 'Only one image is allowed';
     default:
-      return "Something went wrong";
+      return 'Something went wrong';
   }
 }

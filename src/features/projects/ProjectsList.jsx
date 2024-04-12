@@ -7,7 +7,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Status } from "@/components/ui/Status";
 import ProjectsSkeleton from "./ProjectsSkeleton";
 
-export default function ProjectsList() {
+export default function ProjectsList({ onAddNewProject }) {
   const {
     data: projects,
     isLoading,
@@ -38,7 +38,9 @@ export default function ProjectsList() {
       );
     return (
       <>
-        {!appliedFiltersNumber && !query && <NewProject layout={layout} />}
+        {!appliedFiltersNumber && !query && (
+          <NewProject onAdd={onAddNewProject} layout={layout} />
+        )}
         {projects?.map((project) => (
           <Project key={project.id} project={project} layout={layout} />
         ))}
@@ -62,7 +64,7 @@ export default function ProjectsList() {
       <div
         className={`gap-5 h-full ${
           layout === "grid"
-            ? "grid grid-cols-[repeat(auto-fill,minmax(310px,1fr))]"
+            ? "grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(310px,1fr))]"
             : "flex flex-col"
         }`}
         ref={parent}
@@ -73,13 +75,14 @@ export default function ProjectsList() {
   );
 }
 
-function NewProject({ layout }) {
+function NewProject({ onAdd, layout }) {
   return (
     <Button
       color="tertiary"
       className={`group bg-background-disabled flex items-center justify-center   border  border-border rounded-lg shadow-md p-3 ${
         layout === "grid" ? "h-[240px] flex-col gap-2" : "w- h-20 gap-4"
       }`}
+      onClick={onAdd}
     >
       <div className="h-10 w-10 flex items-center justify-center rounded-full p-1 bg-background-secondary text-text-tertiary hover:bg-background-tertiary group-hover:bg-background-tertiary">
         <FaPlus />

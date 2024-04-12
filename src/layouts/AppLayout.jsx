@@ -1,26 +1,23 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
-import Sidebar from "../components/Sidebar";
-import Settings from "../features/settings/Settings";
-import AppBar from "../components/AppBar";
-import { ModalProvider } from "@/context/ConfirmationModal";
+import Sidebar from '../components/Sidebar';
+import Settings from '../features/settings/Settings';
+import AppBar from '../components/AppBar';
+import { ModalProvider } from '@/context/ConfirmationModal';
 
 export default function AppLayout() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   return (
-    <div className="w-full h-full flex">
+    <div className="flex size-full">
       <Sidebar openSettings={() => setIsSettingsOpen(true)} />
-      <div className="ml-14 md:ml-0 flex-1 p-1.5 overflow-hidden bg-background-secondary  flex flex-col">
+      <div className="ml-14 flex flex-1 flex-col overflow-hidden bg-background-secondary p-1.5 md:ml-0">
         <AppBar />
         <Main />
       </div>
-      <Settings
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-      />
+      <Settings isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
     </div>
   );
 }
@@ -31,7 +28,7 @@ function Main() {
   return (
     <ModalProvider>
       <main
-        className="flex-1 rounded-2xl p-5 overflow-x-hidden grid-rows-[min-content_auto] pr-1 sm:pr-3 overflow-y-auto grid gap-5 bg-background-primary"
+        className="grid flex-1 grid-rows-[min-content_auto] gap-5 overflow-y-auto overflow-x-hidden rounded-xl bg-background-primary p-3 sm:rounded-2xl sm:p-5"
         ref={parent}
       >
         <Outlet />

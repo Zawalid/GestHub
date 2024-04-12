@@ -1,5 +1,5 @@
-import { Heading } from "@/components/Heading";
-import SupervisorsList from "@/features/supervisors/SupervisorsList";
+import { Heading } from '@/components/Heading';
+import SupervisorsList from '@/features/supervisors/SupervisorsList';
 
 export function Supervisors() {
   return (

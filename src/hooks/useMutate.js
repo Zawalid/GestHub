@@ -1,10 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { useRef } from "react";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { useRef } from 'react';
 
-export function useMutate({
-  queryKey, mutationFn, loadingMessage, successMessage, errorMessage,
-}) {
+export function useMutate({ queryKey, mutationFn, loadingMessage, successMessage, errorMessage }) {
   const queryClient = useQueryClient();
   const toastId = useRef(null);
 

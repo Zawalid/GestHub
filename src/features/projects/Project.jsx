@@ -1,73 +1,50 @@
-import { Button, DropDown } from "@/components/ui";
+import { Button, DropDown } from '@/components/ui';
 import {
   IoEllipsisHorizontalSharp,
   IoTrashOutline,
   MdDriveFileRenameOutline,
   FaPlus,
   IoEyeOutline,
-} from "@/components/ui/Icons";
-import { useConfirmationModal } from "@/hooks/useConfirmationModal";
+} from '@/components/ui/Icons';
+import { useConfirmationModal } from '@/hooks/useConfirmationModal';
+import { useDeleteProject } from './useProjects';
 
 const statusColors = {
-  "Not Started": "bg-gray-500",
-  "In Progress": "bg-primary",
-  Completed: "bg-green-600",
+  'Not Started': 'bg-gray-500',
+  'In Progress': 'bg-primary',
+  Completed: 'bg-green-600',
 };
 
 const priorityColors = {
-  Low: "bg-green-500",
-  Medium: "bg-orange-500",
-  High: "bg-red-500",
+  Low: 'bg-green-500',
+  Medium: 'bg-orange-500',
+  High: 'bg-red-500',
 };
 
 export default function Project({ project, layout }) {
-  const {
-    name,
-    description,
-    startDate,
-    endDate,
-    status,
-    priority,
-    tasks,
-    teamMembers,
-    progress,
-  } = project;
+  const { id, name, description, startDate, endDate, status, priority, tasks, teamMembers, progress } = project;
 
   return (
     <div
-      className={`grid rounded-tr-none grid-rows-[24px_auto_20px_28px] relative gap-3 bg-background-disabled border border-border rounded-lg shadow-md p-3 ${
-        layout === "grid" ? "h-[240px]" : ""
+      className={`relative grid grid-rows-[24px_auto_20px_28px] gap-3 rounded-lg rounded-tr-none border border-border bg-background-disabled p-3 shadow-md ${
+        layout === 'grid' ? 'h-[240px]' : ''
       }`}
     >
-      <div
-        className={`absolute -top-[1.5px] -right-[1.2px] h-[2px] rounded-lg w-16 ${priorityColors[priority]}`}
-      ></div>
-      <div
-        className={`absolute -right-[1px] -top-[1.2px] w-[2px] rounded-lg h-16 ${priorityColors[priority]}`}
-      ></div>
+      <div className={`absolute -right-[1.2px] -top-[1.5px] h-[2px] w-16 rounded-lg ${priorityColors[priority]}`}></div>
+      <div className={`absolute -right-[1px] -top-[1.2px] h-16 w-[2px] rounded-lg ${priorityColors[priority]}`}></div>
       <div className="flex items-center justify-between gap-5">
         <Date startDate={startDate} endDate={endDate} />
-        <Actions />
+        <Actions id={id} />
       </div>
 
       <div className="space-y-2">
-        <h3 className="text-lg font-semibold text-text-primary">{name}</h3>
-        <p className="text-text-secondary text-sm line-clamp-2">
-          {description}
-        </p>
+        <h3 className="line-clamp-2 text-lg font-semibold text-text-primary">{name}</h3>
+        <p className="line-clamp-2 text-sm text-text-secondary">{description}</p>
       </div>
-      <Progress
-        tasks={tasks}
-        statusColor={statusColors[status]}
-        progress={progress}
-      />
-      <div className="mt-auto flex justify-between items-center ">
+      <Progress tasks={tasks} statusColor={statusColors[status]} progress={progress} />
+      <div className="mt-auto flex items-center justify-between ">
         <Members members={teamMembers} />
-        <p
-          className={`text-xs p-2 w-fit rounded-md text-white py-1 ${statusColors[status]}`}
-        >
-          {status}
-        </p>
+        <p className={`w-fit rounded-md p-2 py-1 text-xs text-white ${statusColors[status]}`}>{status}</p>
       </div>
     </div>
   );
@@ -75,7 +52,7 @@ export default function Project({ project, layout }) {
 
 function Members({ members }) {
   return (
-    <div className="flex-1 relative h-7">
+    <div className="relative h-7 flex-1">
       {members.map((m, i) => (
         <img
           key={m}
@@ -86,7 +63,7 @@ function Members({ members }) {
         />
       ))}
       <Button
-        className="w-7 h-7 rounded-full z-[1] border border-border absolute grid place-content-center"
+        className="absolute z-[1] grid h-7 w-7 place-content-center rounded-full border border-border"
         style={{ left: `${members.length * 15}px` }}
         color="tertiary"
       >
@@ -97,25 +74,23 @@ function Members({ members }) {
 }
 
 function Progress({ tasks, statusColor, progress }) {
-  const completedTasks = tasks.filter((task) => task.status === "Completed");
+  const completedTasks = tasks.filter((task) => task.status === 'Completed');
 
   return (
     <div className="flex items-center gap-2">
-      <span className="text-xs text-text-primary font-bold">
+      <span className="text-xs font-bold text-text-primary">
         {completedTasks.length}/{tasks.length}
       </span>
-      <div className="py-1 w-full rounded-lg bg-background-tertiary relative">
-        <div
-          className={`absolute h-full top-0 rounded-lg ${statusColor}`}
-          style={{ width: `${progress}%` }}
-        ></div>
+      <div className="relative w-full rounded-lg bg-background-tertiary py-1">
+        <div className={`absolute top-0 h-full rounded-lg ${statusColor}`} style={{ width: `${progress}%` }}></div>
       </div>
     </div>
   );
 }
 
-function Actions() {
+function Actions({ id }) {
   const { openModal } = useConfirmationModal();
+  const { mutate } = useDeleteProject();
 
   return (
     <DropDown
@@ -136,9 +111,10 @@ function Actions() {
       <DropDown.Option
         onClick={() =>
           openModal({
-            message: "Are you sure you want to delete this project ?",
-            title: "Delete Project",
-            confirmText: "Delete",
+            message: 'Are you sure you want to delete this project ?',
+            title: 'Delete Project',
+            confirmText: 'Delete',
+            onConfirm: () => mutate(id),
           })
         }
       >
@@ -151,11 +127,11 @@ function Actions() {
 
 function Date({ startDate, endDate }) {
   return (
-    <div className="project-date h-6 w-20 relative">
-      <div className="side z-[1] bg-background-secondary absolute">
+    <div className="project-date relative h-6 w-20">
+      <div className="side absolute z-[1] bg-background-secondary">
         <span className="text-text-secondary ">{startDate}</span>
       </div>
-      <div className="side bg-red-500 overflow-hidden -z-[1]">
+      <div className="side -z-[1] overflow-hidden bg-red-500">
         <span className="text-white">{endDate}</span>
       </div>
     </div>
