@@ -1,14 +1,17 @@
 import { Heading } from '@/components/Heading';
-import { Link, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useProject } from '../../features/projects/useProjects';
-import { Button } from '@/components/ui';
-import { IoChevronBack } from 'react-icons/io5';
+import ProjectOverview from '@/features/projects/ProjectOverview/ProjectOverview';
+import { useEffect } from 'react';
 
 export function ProjectDetails() {
-  const { id } = useParams();
+  const { id, tab } = useParams();
+  const navigate = useNavigate();
   const { project, isLoading, error } = useProject(id);
 
-  const { title, description, priority, status, startDate, endDate, tasks, teamMembers } = project || {};
+  useEffect(() => {
+    if (!['overview', 'tasks','notes'].includes(tab)) navigate(`/app/projects/${id}/overview`);
+  }, [id, tab, navigate]);
 
   const render = () => {
     if (isLoading) return <Heading>Loading...</Heading>;
@@ -17,28 +20,11 @@ export function ProjectDetails() {
 
     return (
       <div className=''>
-        <p>{title}</p>
-        <p>{description}</p>
-        <p>{priority}</p>
-        <p>{status}</p>
-        <p>{startDate}</p>
-        <p>{endDate}</p>
-        <p>Tasks :{tasks.length}</p>
-        <p>Team : {teamMembers.length}</p>
+        <Outlet />
+        <ProjectOverview />
       </div>
     );
   };
 
-  return (
-    <>
-      <Link to='/app/projects' replace={true}>
-        <Button color='tertiary' display='with-icon' size='small'>
-          <IoChevronBack />
-          Back
-        </Button>
-      </Link>
-      <Heading>Project</Heading>
-      {render()}
-    </>
-  );
+  return <>{render()}</>;
 }

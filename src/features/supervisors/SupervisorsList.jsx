@@ -1,5 +1,5 @@
 import { useSupervisors, useAddSupervisor, useDeleteSupervisor, useUpdateSupervisor } from './useSupervisors';
-import {TableLayout} from '@/layouts';
+import { TableLayout } from '@/layouts';
 
 export default function SupervisorsList() {
   const { supervisors, isLoading, error } = useSupervisors();
@@ -10,7 +10,7 @@ export default function SupervisorsList() {
   return (
     <TableLayout
       data={supervisors}
-      resourceName="Supervisor"
+      resourceName='Supervisor'
       isLoading={isLoading}
       error={error}
       columns={[

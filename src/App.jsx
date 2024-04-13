@@ -30,6 +30,9 @@ import {
   Register,
 } from './pages';
 
+import Tasks from './features/projects/ProjectOverview/Tasks';
+import ProjectOverview from './features/projects/ProjectOverview/Overview';
+
 const queryClient = new QueryClient();
 
 const routesElements = {
@@ -46,6 +49,7 @@ const routesElements = {
   projects: <Projects />,
   'projects/new': <Projects />,
   'projects/:id': <ProjectDetails />,
+  'projects/:id/:tab': <ProjectDetails />,
 };
 
 export default function App() {
@@ -80,6 +84,12 @@ export default function App() {
                 {ROUTES[role].map((route) => (
                   <Route key={route} path={route} element={routesElements[route]} />
                 ))}
+
+                {/* <Route path='projects/:id' element={<ProjectDetails />}>
+                  <Route index element={<Navigate to='overview' />} />
+                  <Route path='overview' element={<ProjectOverview />} />
+                  <Route path='tasks' element={<Tasks />} />
+                </Route> */}
               </Route>
               <Route path='*' element={<NotFound />} />
             </Routes>

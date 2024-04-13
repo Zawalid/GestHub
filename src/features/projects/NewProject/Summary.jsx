@@ -41,7 +41,7 @@ export function Summary({ projectData }) {
   const tasks = projectData['Starter Tasks'];
 
   return (
-    <div className="flex h-full flex-col mobile:justify-normal pr-2 justify-center">
+    <div className="flex h-full flex-col mobile:justify-center pr-2 justify-start">
       <h2 className="mb-2 text-center text-xl font-bold text-text-primary">Finishing Up</h2>
       <p className="text-center text-sm font-medium text-text-tertiary">
         Double-check everything looks OK before confirming

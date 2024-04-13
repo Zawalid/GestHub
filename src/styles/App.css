@@ -1,7 +1,7 @@
 @import url(./libraries.css);
 
 .sidebar-element {
-  @apply grid cursor-pointer grid-cols-[30px_auto] items-center rounded-lg p-3 transition-colors duration-200  hover:bg-background-tertiary;
+  @apply grid cursor-pointer grid-cols-[30px_auto] items-center rounded-r-lg  p-3 transition-colors duration-200 hover:bg-background-tertiary;
   &.active {
     @apply bg-background-tertiary;
   }
@@ -47,7 +47,7 @@
   }
 }
 .dropdown-toggler {
-  @apply flex min-w-28 hover:bg-background-tertiary transition-colors duration-200 cursor-pointer items-center justify-between rounded-lg border border-border  bg-background-secondary p-2 text-start  text-sm text-text-secondary  focus:outline-none;
+  @apply flex min-w-28 cursor-pointer items-center justify-between rounded-lg border border-border bg-background-secondary p-2 text-start  text-sm text-text-secondary transition-colors  duration-200 hover:bg-background-tertiary  focus:outline-none;
 }
 .project-date {
   transform-style: preserve-3d;
@@ -56,7 +56,7 @@
   border-radius: 10px;
 
   .side {
-    @apply text-xs text-center cursor-pointer font-medium py-1 px-1.5 rounded-md;
+    @apply cursor-pointer rounded-md px-1.5 py-1 text-center text-xs font-medium;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
   }
@@ -74,7 +74,7 @@
 .input-field {
   & input,
   textarea {
-    @apply disabled:bg-background-disabled disabled:text-text-disabled disabled:placeholder:text-text-disabled disabled:cursor-not-allowed transition-colors  duration-300 text-text-primary resize-none bg-transparent w-full outline-none text-sm placeholder:text-sm;
+    @apply w-full resize-none bg-transparent text-sm text-text-primary  outline-none transition-colors duration-300 placeholder:text-sm disabled:cursor-not-allowed disabled:bg-background-disabled disabled:text-text-disabled disabled:placeholder:text-text-disabled;
   }
 }
 

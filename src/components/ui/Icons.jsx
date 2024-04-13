@@ -19,6 +19,7 @@ export {
 } from 'react-icons/io5';
 export {
   PiCheckBold,
+  PiListBold,
   PiEyeLight,
   PiEyeClosedLight,
   PiFilePdf,
@@ -43,5 +44,6 @@ export {
 export { FaSpinner, FaSort, FaPlus, FaRegCircleCheck } from 'react-icons/fa6';
 
 export { HiMiniXMark } from 'react-icons/hi2';
-export { RxDashboard } from 'react-icons/rx';
+export { RxDashboard,RxViewVertical } from 'react-icons/rx';
 export { TbProgressCheck } from 'react-icons/tb';
+

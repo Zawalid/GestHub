@@ -7,22 +7,9 @@ import { useProjects } from '@/features/projects/useProjects';
 export function Projects() {
   const { projects, isLoading, error } = useProjects();
 
-  const updateProjects = () => {
-    return projects?.map((p) => {
-      const completedTasks = p.tasks.filter((task) => task?.status === 'Completed');
-      const progress = (completedTasks.length / p.tasks.length) * 100;
-      return {
-        ...p,
-        tasksNumber: p.tasks.length,
-        membersNumber: p.teamMembers.length,
-        progress,
-      };
-    });
-  };
-
   return (
     <Operations
-      data={updateProjects()}
+      data={projects}
       isLoading={isLoading}
       error={error}
       sortOptions={[

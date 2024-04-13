@@ -6,7 +6,8 @@ import { PRIORITY_COLORS, STATUS_COLORS } from '@/utils/constants';
 import { useNavigate } from 'react-router-dom';
 
 export default function Project({ project, layout }) {
-  const { id, name, description, startDate, endDate, status, priority, tasks, teamMembers, progress } = project;
+  const { id, name, description, startDate, endDate, status, priority, tasks, teamMembers, progress, completedTasks } =
+    project;
 
   return (
     <div
@@ -14,10 +15,8 @@ export default function Project({ project, layout }) {
         layout === 'grid' ? 'h-[240px]' : ''
       }`}
     >
-      <div
-        className={`absolute -right-[1.2px] -top-[1.5px] h-[2px] w-16 rounded-lg ${PRIORITY_COLORS[priority]}`}
-      ></div>
-      <div className={`absolute -right-[1px] -top-[1.2px] h-16 w-[2px] rounded-lg ${PRIORITY_COLORS[priority]}`}></div>
+      <PriorityIndicator priority={priority} />
+
       <div className='flex items-center justify-between gap-5'>
         <Date startDate={startDate} endDate={endDate} />
         <Actions id={id} />
@@ -27,53 +26,19 @@ export default function Project({ project, layout }) {
         <h3 className='line-clamp-2 text-lg font-semibold text-text-primary'>{name}</h3>
         <p className='line-clamp-2 text-sm text-text-secondary'>{description || 'No description'}</p>
       </div>
-      <Progress tasks={tasks} statusColor={STATUS_COLORS[status].bg} progress={progress} />
+
+      <div className='flex items-center gap-2'>
+        <span className='text-xs font-bold text-text-primary'>
+          {completedTasks.length}/{tasks.length}
+        </span>
+        <ProgressBar progress={progress} status={status} />
+      </div>
+
       <div className='mt-auto flex items-center justify-between '>
         <Members members={teamMembers} />
-        <p className={`w-fit rounded-md p-2 py-1 text-xs text-white ${STATUS_COLORS[status || 'Not Started'].bg}`}>
+        <p className={`w-fit rounded-md p-2 py-1 text-xs text-white ${STATUS_COLORS[status || 'Not Started']?.bg}`}>
           {status || 'Not Started'}
         </p>
-      </div>
-    </div>
-  );
-}
-
-function Members({ members }) {
-  if (!members.length) return <span className='text-xs font-medium text-text-secondary'>No Team</span>;
-  return (
-    <div className='relative h-7 flex-1'>
-      {members.slice(0, 3).map((m, i) => (
-        <img
-          key={m}
-          src='/images/default-profile.jpg'
-          alt='avatar'
-          className='absolute top-0 z-[1] h-7 w-7 rounded-full border-2 border-border'
-          style={{ left: `${i * 15}px` }}
-        />
-      ))}
-      {members.slice(3).length !== 0 && (
-        <span
-          className='absolute z-[1] grid h-7 w-7 place-content-center rounded-full border border-border bg-background-secondary text-xs font-bold'
-          style={{ left: `${members.slice(0, 3).length * 15}px` }}
-          color='tertiary'
-        >
-          +{members.slice(3).length}
-        </span>
-      )}
-    </div>
-  );
-}
-
-function Progress({ tasks, statusColor, progress }) {
-  const completedTasks = tasks.filter((task) => task?.status === 'Completed');
-
-  return (
-    <div className='flex items-center gap-2'>
-      <span className='text-xs font-bold text-text-primary'>
-        {completedTasks.length}/{tasks.length}
-      </span>
-      <div className='relative w-full rounded-lg bg-background-tertiary py-1'>
-        <div className={`absolute top-0 h-full rounded-lg ${statusColor}`} style={{ width: `${progress}%` }}></div>
       </div>
     </div>
   );
@@ -117,6 +82,61 @@ function Date({ startDate, endDate }) {
       <div className='side -z-[1] overflow-hidden bg-red-500'>
         <span className='text-white'>{endDate}</span>
       </div>
+    </div>
+  );
+}
+
+function PriorityIndicator({ priority }) {
+  return (
+    <>
+      <div
+        className={`absolute -right-[1.2px] -top-[1.5px] h-[2px] w-16 rounded-lg ${PRIORITY_COLORS[priority]}`}
+      ></div>
+      <div className={`absolute -right-[1px] -top-[1.2px] h-16 w-[2px] rounded-lg ${PRIORITY_COLORS[priority]}`}></div>
+    </>
+  );
+}
+
+export function ProgressBar({ progress, status }) {
+  const color = STATUS_COLORS[status]?.bg;
+
+  return (
+    <div className='relative w-full rounded-lg bg-background-tertiary py-1'>
+      <div className={`absolute top-0 h-full rounded-lg ${color}`} style={{ width: `${progress}%` }}></div>
+    </div>
+  );
+}
+
+export function Members({ members, size = 'small' }) {
+  if (!members.length) return <div className='grid h-full place-content-center text-xs font-medium text-text-secondary'>No Team</div>;
+
+  const sizes = {
+    small: 'w-7 h-7',
+    large: 'w-9 h-9',
+  };
+
+  const wrapperWidth = (members.slice(0, 3).length + (members.length > 3 ? 1 : 0)) * 25;
+
+  return (
+    <div className='relative h-7' style={{ width: `${wrapperWidth}px` }}>
+      {members.slice(0, 3).map((m, i) => (
+        <img
+          key={m}
+          src='/images/default-profile.jpg'
+          alt='avatar'
+          className={`absolute top-0 z-[1] ${sizes[size]} rounded-full border-2 border-border`}
+          style={{ left: `${i * (size === 'small' ? 15 : 20)}px` }}
+        />
+      ))}
+      {members.slice(3).length !== 0 && (
+        <span
+          className={`absolute z-[1] grid ${sizes[size]} place-content-center rounded-full border border-border bg-background-secondary text-xs font-bold text-text-primary`}
+          style={{ left: `${members.slice(0, 3).length * (size === 'small' ? 15 : 20)}px` }}
+          color='tertiary'
+        >
+          +{members.slice(3).length}
+        </span>
+      )}
     </div>
   );
 }
