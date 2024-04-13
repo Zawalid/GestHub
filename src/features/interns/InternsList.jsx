@@ -1,5 +1,5 @@
 import { useInterns, useAddIntern, useDeleteIntern, useUpdateIntern } from './useInterns';
-import TableLayout from '@/layouts/TableLayout';
+import { TableLayout } from '@/layouts';
 
 export default function InternsList() {
   const { interns, isLoading, error } = useInterns();
@@ -12,7 +12,7 @@ export default function InternsList() {
       data={interns}
       isLoading={isLoading}
       error={error}
-      resourceName="Intern"
+      resourceName='Intern'
       columns={[
         { key: 'id', displayLabel: 'ID', visible: true, type: 'number' },
         {

@@ -9,7 +9,7 @@ export function AuthSwitcher({ size }) {
   return (
     <DropDown
       toggler={
-        <Button size={size} shape="icon">
+        <Button size={size} shape='icon'>
           <FaUserAlt />
         </Button>
       }

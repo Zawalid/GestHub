@@ -1,10 +1,10 @@
 import { useForm } from '@/hooks/useForm';
-import { Button, DropDown } from '../ui';
+import { Button, DropDown } from '../../components/ui';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { MdOutlineSchool } from 'react-icons/md';
 
-function Register() {
+export function Register() {
   const { t } = useTranslation();
   const {
     options: { isValid, formInputs, handleSubmit, getValue, setValue },
@@ -100,4 +100,3 @@ function Register() {
   );
 }
 
-export default Register;

@@ -1,5 +1,5 @@
 import { useForm } from '@/hooks/useForm';
-import { ModalFormLayout } from '@/layouts/ModalFormLayout';
+import { ModalFormLayout } from '@/layouts';
 
 export default function Password() {
   const {

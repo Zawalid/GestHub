@@ -8,7 +8,7 @@ export function LanguageSwitcher({ size }) {
   return (
     <DropDown
       toggler={
-        <Button size={size} shape="icon">
+        <Button size={size} shape='icon'>
           <IoLanguageOutline />
         </Button>
       }

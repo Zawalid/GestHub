@@ -3,10 +3,10 @@ import { Header } from '@/components/homepage/Header';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Outlet } from 'react-router-dom';
 
-function AuthLayout() {
+export function AuthLayout() {
   const [parent] = useAutoAnimate({ duration: 300 });
   return (
-    <div className=" flex h-screen flex-col justify-between">
+    <div className=' flex h-screen flex-col justify-between'>
       <Header />
       {/* <div className="z-10 self-start absolute right-0 flex w-full justify-between  p-3 gap-4">
         <Button size={"large"} onClick={() => navigate("/")} shape="icon">
@@ -18,7 +18,7 @@ function AuthLayout() {
         </div>
       </div> */}
 
-      <div ref={parent} className=" flex h-full w-full p-5 pb-10 md:p-0">
+      <div ref={parent} className=' flex h-full w-full p-5 pb-10 md:p-0'>
         <Outlet />
       </div>
       <Footer />
@@ -26,4 +26,3 @@ function AuthLayout() {
   );
 }
 
-export default AuthLayout;

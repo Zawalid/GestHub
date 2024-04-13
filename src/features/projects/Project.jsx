@@ -1,14 +1,9 @@
-import { Button, DropDown } from '@/components/ui';
-import {
-  IoEllipsisHorizontalSharp,
-  IoTrashOutline,
-  MdDriveFileRenameOutline,
-  FaPlus,
-  IoEyeOutline,
-} from '@/components/ui/Icons';
+import { Button } from '@/components/ui';
+import { IoTrashOutline, FaPlus, IoEyeOutline } from '@/components/ui/Icons';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { useDeleteProject } from './useProjects';
 import { PRIORITY_COLORS, STATUS_COLORS } from '@/utils/constants';
+import { useNavigate } from 'react-router-dom';
 
 export default function Project({ project, layout }) {
   const { id, name, description, startDate, endDate, status, priority, tasks, teamMembers, progress } = project;
@@ -30,7 +25,7 @@ export default function Project({ project, layout }) {
 
       <div className="space-y-2">
         <h3 className="line-clamp-2 text-lg font-semibold text-text-primary">{name}</h3>
-        <p className="line-clamp-2 text-sm text-text-secondary">{description || "No description"}</p>
+        <p className="line-clamp-2 text-sm text-text-secondary">{description || 'No description'}</p>
       </div>
       <Progress tasks={tasks} statusColor={STATUS_COLORS[status].bg} progress={progress} />
       <div className="mt-auto flex items-center justify-between ">
@@ -84,24 +79,17 @@ function Progress({ tasks, statusColor, progress }) {
 function Actions({ id }) {
   const { openModal } = useConfirmationModal();
   const { mutate } = useDeleteProject();
+  const navigate = useNavigate();
 
   return (
-    <DropDown
-      toggler={
-        <Button shape="icon" size="small">
-          <IoEllipsisHorizontalSharp />
-        </Button>
-      }
-    >
-      <DropDown.Option>
+    <div className="flex gap-1">
+      <Button shape="icon" size="small" onClick={() => navigate(id)}>
         <IoEyeOutline />
-        View Project
-      </DropDown.Option>
-      <DropDown.Option>
-        <MdDriveFileRenameOutline />
-        Edit Project
-      </DropDown.Option>
-      <DropDown.Option
+      </Button>
+      <Button
+        shape="icon"
+        color="delete"
+        size="small"
         onClick={() =>
           openModal({
             message: 'Are you sure you want to delete this project ?',
@@ -112,9 +100,8 @@ function Actions({ id }) {
         }
       >
         <IoTrashOutline />
-        Delete Project
-      </DropDown.Option>
-    </DropDown>
+      </Button>
+    </div>
   );
 }
 

@@ -17,7 +17,7 @@ export function ThemeSwitcher({ size }) {
   return (
     <DropDown
       toggler={
-        <Button size={size} shape="icon">
+        <Button size={size} shape='icon'>
           {icons[theme]}
         </Button>
       }
@@ -25,7 +25,7 @@ export function ThemeSwitcher({ size }) {
       {Object.keys(icons).map((icon) => (
         <DropDown.Option key={icon} onClick={() => dispatch(changeTheme(icon))} isCurrent={theme === icon}>
           {icons[icon]}
-          <span className="capitalize">{t(`header.theme.${icon}`)}</span>
+          <span className='capitalize'>{t(`header.theme.${icon}`)}</span>
         </DropDown.Option>
       ))}
     </DropDown>

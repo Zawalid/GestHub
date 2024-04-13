@@ -50,6 +50,7 @@ export default function ProjectsList({ onAddNewProject }) {
 
   return (
     <div className="flex flex-col gap-5">
+      
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <Operations.DropDown>

@@ -55,26 +55,26 @@ export default function Sidebar({ openSettings }) {
         isExpanded ? 'w-full  px-3 md:w-[250px]' : 'w-14 px-2'
       }`}
     >
-      <div className="flex items-center justify-between ">
+      <div className='flex items-center justify-between '>
         <img
-          src="/images/logo-MEN-Stage.png"
-          alt="logo"
+          src='/images/logo-MEN-Stage.png'
+          alt='logo'
           className={`object-contain transition-all duration-500 ${isExpanded ? 'w-28 scale-100' : 'w-0 scale-0'}`}
         />
         <Button
-          shape="icon"
+          shape='icon'
           className={`not-active self-center ${isExpanded ? '' : 'mx-auto'}`}
           onClick={() => setIsExpanded(!isExpanded)}
         >
           {isExpanded ? <BsLayoutSidebarInset /> : <BsLayoutSidebarInsetReverse />}
         </Button>
       </div>
-      <ul className="space-y-1">
+      <ul className='space-y-1'>
         {ROUTES[role]
           .filter((r) => !r.includes('/:'))
           .map((route) => (
             <li key={route}>
-              <NavLink to={`/app/${route}`} className="sidebar-element group">
+              <NavLink to={`/app/${route}`} className='sidebar-element group'>
                 {routesIcons[route]}
                 <span className={spanClass}>{t(`app.sidebar.${route}`)}</span>
               </NavLink>
@@ -82,12 +82,12 @@ export default function Sidebar({ openSettings }) {
           ))}
       </ul>
 
-      <div className="mt-auto">
-        <button className="sidebar-element group w-full" onClick={openSettings}>
+      <div className='mt-auto'>
+        <button className='sidebar-element group w-full' onClick={openSettings}>
           <IoSettingsOutline />
           <span className={spanClass}>{t('app.sidebar.settings')}</span>
         </button>
-        <button className="sidebar-element group w-full">
+        <button className='sidebar-element group w-full'>
           <FiLogOut />
           <span className={spanClass}>{t('app.sidebar.logout')}</span>
         </button>

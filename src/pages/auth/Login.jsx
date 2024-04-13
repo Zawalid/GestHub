@@ -1,9 +1,9 @@
 import { useForm } from "@/hooks/useForm";
-import { Button } from "../ui";
+import { Button } from "../../components/ui";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-function Login() {
+export function Login() {
   const { t } = useTranslation();
   const {
     options: { isValid, formInputs, handleSubmit },
@@ -62,4 +62,3 @@ function Login() {
   );
 }
 
-export default Login;
