@@ -11,7 +11,7 @@ export function InternDetails() {
 
   const render = () => {
     if (isLoading) return <Heading>Loading...</Heading>;
-    if (error) return <Heading>{error}</Heading>;
+    if (error) return <Heading>{error.message}</Heading>;
     if (!intern) return <Heading>Project not found</Heading>;
 
     return (

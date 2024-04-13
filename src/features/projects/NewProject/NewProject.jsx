@@ -7,6 +7,7 @@ import { StarterTasks } from './StarterTasks';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Summary } from './Summary';
 import { useAddProject } from '../useProjects';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const steps = [
   {
@@ -47,7 +48,10 @@ const defaultProject = {
   'Starter Tasks': [],
 };
 
-export default function NewProject({ isOpen, onClose }) {
+export default function NewProject() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [projectData, setProjectData] = useState(defaultProject);
   const [currentStep, setCurrentStep] = useState(steps[0]);
   const { mutate: addProject } = useAddProject();
@@ -55,6 +59,8 @@ export default function NewProject({ isOpen, onClose }) {
 
   const nextStep = steps.find((step) => step.number - 1 === currentStep.number);
   const backStep = steps.find((step) => step.number + 1 === currentStep.number);
+
+  const onClose = () => navigate('/app/projects');
 
   const getProps = () => {
     if (currentStep.title === 'Summary') return { projectData };
@@ -92,14 +98,14 @@ export default function NewProject({ isOpen, onClose }) {
 
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={location.pathname === '/app/projects/new'}
       onClose={onClose}
-      className="gap-6 p-5 md:h-[500px] md:w-4/5 md:border lg:w-3/5"
+      className='gap-6 p-5 md:h-[500px] md:w-4/5 md:border lg:w-3/5'
       closeButton={true}
       closeOnBlur={false}
     >
       <Steps steps={steps} currentStep={currentStep} />
-      <div className="h-full overflow-y-auto overflow-x-hidden" ref={parent}>
+      <div className='h-full overflow-y-auto overflow-x-hidden' ref={parent}>
         {cloneElement(currentStep.element, getProps())}
       </div>
 
@@ -124,17 +130,17 @@ export default function NewProject({ isOpen, onClose }) {
 
 function Steps({ steps, currentStep }) {
   return (
-    <div className="flex justify-center gap-6">
+    <div className='flex justify-center gap-6'>
       {steps.map((step) => (
-        <div className="flex flex-col items-center gap-2" key={step.title}>
-          <div className="relative h-2 w-16 overflow-hidden rounded-lg bg-background-secondary">
+        <div className='flex flex-col items-center gap-2' key={step.title}>
+          <div className='relative h-2 w-16 overflow-hidden rounded-lg bg-background-secondary'>
             <div
               className={`absolute left-0 h-full bg-primary transition-all duration-500
      ${currentStep.number >= step.number ? 'w-full' : 'w-0'}
      `}
             ></div>
           </div>
-          <span className="text-[10px] font-medium text-text-primary">{step.title}</span>
+          <span className='text-[10px] font-medium text-text-primary'>{step.title}</span>
         </div>
       ))}
     </div>
@@ -142,12 +148,12 @@ function Steps({ steps, currentStep }) {
 }
 function Buttons({ onNext, canGoNext, nextButtonText, onBack, canGoBack }) {
   return (
-    <div className="mt-auto flex justify-between gap-3">
-      <Button color="tertiary" display="with-icon" onClick={onBack} disabled={!canGoBack}>
+    <div className='mt-auto flex justify-between gap-3'>
+      <Button color='tertiary' display='with-icon' onClick={onBack} disabled={!canGoBack}>
         <IoChevronBackOutline />
         Back
       </Button>
-      <Button display="with-icon" onClick={onNext} disabled={!canGoNext}>
+      <Button display='with-icon' onClick={onNext} disabled={!canGoNext}>
         {nextButtonText}
         <IoChevronForwardOutline />
       </Button>

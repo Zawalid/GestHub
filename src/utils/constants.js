@@ -4,6 +4,7 @@ export const ROUTES = {
     'supervisors',
     'supervisors/:id',
     'projects',
+    'projects/new',
     'projects/:id',
     'demands',
     'offers',

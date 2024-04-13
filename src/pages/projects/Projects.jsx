@@ -3,10 +3,8 @@ import { Operations } from '@/components/shared/operations/Operations';
 import NewProject from '@/features/projects/NewProject/NewProject';
 import ProjectsList from '@/features/projects/ProjectsList';
 import { useProjects } from '@/features/projects/useProjects';
-import { useState } from 'react';
 
 export function Projects() {
-  const [isNewProjectOpen, setIsNewProjectOpen] = useState(false);
   const { projects, isLoading, error } = useProjects();
 
   const updateProjects = () => {
@@ -35,8 +33,8 @@ export function Projects() {
         { key: 'membersNumber', display: 'Members Number', type: 'number' },
         { key: 'progress', display: 'Progress', type: 'number' },
       ]}
-      defaultSortBy="startDate"
-      defaultDirection="asc"
+      defaultSortBy='startDate'
+      defaultDirection='asc'
       filters={{
         status: [
           { value: 'Not Started', checked: false },
@@ -49,15 +47,15 @@ export function Projects() {
           { value: 'High', checked: false },
         ],
       }}
-      defaultLayout="grid"
+      defaultLayout='grid'
       fieldsToSearch={['name']}
     >
-      <div className="flex flex-col justify-between gap-3 mobile:flex-row mobile:items-center">
+      <div className='flex flex-col justify-between gap-3 mobile:flex-row mobile:items-center'>
         <Heading>Projects</Heading>
         <Operations.Search />
       </div>
-      <ProjectsList onAddNewProject={() => setIsNewProjectOpen(true)} />
-      <NewProject isOpen={isNewProjectOpen} onClose={() => setIsNewProjectOpen(false)} />
+      <ProjectsList />
+      <NewProject />
     </Operations>
   );
 }

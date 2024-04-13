@@ -27,7 +27,7 @@ import {
   ProjectDetails,
   OfferDetails,
   Login,
-Register
+  Register,
 } from './pages';
 
 const queryClient = new QueryClient();
@@ -44,6 +44,7 @@ const routesElements = {
   'offers/:id': <OfferDetails />,
   demands: <Demands />,
   projects: <Projects />,
+  'projects/new': <Projects />,
   'projects/:id': <ProjectDetails />,
 };
 

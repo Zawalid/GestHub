@@ -71,7 +71,7 @@ export default function Sidebar({ openSettings }) {
       </div>
       <ul className='space-y-1'>
         {ROUTES[role]
-          .filter((r) => !r.includes('/:'))
+          .filter((r) => !r.includes('/'))
           .map((route) => (
             <li key={route}>
               <NavLink to={`/app/${route}`} className='sidebar-element group'>

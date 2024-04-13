@@ -5,6 +5,7 @@ import { InternsDropDown } from './InternsDropDown';
 import Task from '../Task';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { getIncrementedID } from '@/utils/helpers';
+import { DateTime } from 'luxon';
 
 export function StarterTasks({ updateStatus, updateState, state }) {
   const [currentTab, setCurrentTab] = useState('view');
@@ -138,6 +139,7 @@ function NewTask({ display, onCancel, currentTask, onSubmit }) {
         type: 'date',
         label: 'Due Date',
         rules: { required: false },
+        min :  DateTime.now().toISODate()
       },
     ],
     gridLayout: true,
