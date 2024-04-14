@@ -1,5 +1,5 @@
 import { useInterns, useAddIntern, useDeleteIntern, useUpdateIntern } from './useInterns';
-import { TableLayout } from '@/layouts';
+import { TableLayout } from '@/layouts/TableLayout';
 
 export default function InternsList() {
   const { interns, isLoading, error } = useInterns();

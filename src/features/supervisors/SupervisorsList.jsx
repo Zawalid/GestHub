@@ -1,5 +1,5 @@
 import { useSupervisors, useAddSupervisor, useDeleteSupervisor, useUpdateSupervisor } from './useSupervisors';
-import { TableLayout } from '@/layouts';
+import { TableLayout } from '@/layouts/TableLayout';
 
 export default function SupervisorsList() {
   const { supervisors, isLoading, error } = useSupervisors();

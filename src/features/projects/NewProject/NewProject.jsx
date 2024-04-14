@@ -100,7 +100,7 @@ export default function NewProject() {
     <Modal
       isOpen={location.pathname === '/app/projects/new'}
       onClose={onClose}
-      className='gap-6 p-5 md:h-[500px] md:w-4/5 md:border lg:w-3/5'
+      className='gap-6 p-5 md:h-[515px] md:w-4/5 md:border lg:w-3/5'
       closeButton={true}
       closeOnBlur={false}
     >

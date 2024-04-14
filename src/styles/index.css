@@ -39,8 +39,9 @@
     --primary-hover: rgb(138, 78, 44);
   }
 
-  --secondary: rgb(54, 61, 113);
-  --secondary-hover: rgb(47, 54, 113);
+  --secondary: rgb(122, 102, 255);
+  --secondary-hover: rgb(99, 71, 204);
+  
   color-scheme: light dark;
 }
 

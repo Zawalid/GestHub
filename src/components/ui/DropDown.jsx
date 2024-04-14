@@ -88,7 +88,7 @@ function SearchBar({ placeholder, query, onChange }) {
       placeholder={placeholder}
       query={query}
       onChange={onChange}
-      className="text-sm"
+      className="text-sm rounded-md mb-2"
     />
   );
 }

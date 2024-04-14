@@ -469,6 +469,82 @@
       "status": "Not Started",
       "teamMembers": [],
       "tasks": []
+    },
+    {
+      "id": "261c",
+      "name": "Test Project",
+      "description": "",
+      "startDate": "2024-04-16",
+      "endDate": "2024-04-18",
+      "priority": "None",
+      "status": "Not Started",
+      "teamMembers": [
+        {
+          "id": "1",
+          "firstName": "John",
+          "lastName": "Doe",
+          "email": "john.doe@example.com",
+          "phone": "123-456-7890",
+          "birthday": "1990-01-01",
+          "university": "Harvard University",
+          "major": "Computer Science",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        }
+      ],
+      "tasks": [
+        {
+          "id": 1,
+          "title": "Task Number 1",
+          "description": "This is taks number 1",
+          "dueDate": "",
+          "priority": "High",
+          "assignee": {
+            "id": "1",
+            "firstName": "John",
+            "lastName": "Doe",
+            "email": "john.doe@example.com",
+            "phone": "123-456-7890",
+            "birthday": "1990-01-01",
+            "university": "Harvard University",
+            "major": "Computer Science",
+            "startDate": "2022-01-01",
+            "endDate": "2022-06-01"
+          },
+          "status": "Not Started"
+        },
+        {
+          "id": 2,
+          "title": "Task Number 2",
+          "description": "This is taks number 2",
+          "dueDate": "2024-04-23",
+          "priority": "Medium",
+          "assignee": {
+            "id": "1bf0",
+            "firstName": "Walid",
+            "lastName": "Zakan",
+            "email": "walid.zakan@gmail.com",
+            "phone": "0682208346",
+            "birthday": "2024-05-02",
+            "password": "Abcs1234",
+            "confirmPassword": "Abcs1234"
+          },
+          "status": "Not Started"
+        },
+        {
+          "id": 3,
+          "title": "Task Number 3",
+          "description": "This is taks number 3",
+          "dueDate": "",
+          "priority": "Low",
+          "assignee": "None",
+          "status": "Not Started"
+        }
+      ],
+      "tasksNumber": 3,
+      "completedTasks": [],
+      "progress": 0,
+      "teamCount": 1
     }
   ],
   "absences": [

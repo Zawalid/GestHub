@@ -172,7 +172,7 @@ function NewTask({ display, onCancel, currentTask, onSubmit }) {
                   <span>{getValue('priority')}</span>
                 </DropDown.Toggler>
               }
-              options={{ className: 'h-[155px] overflow-auto' }}
+              // options={{ className: 'h-[155px] overflow-auto' }}
             >
               {['None', 'High', 'Medium', 'Low'].map((e) => (
                 <DropDown.Option key={e} onClick={() => setValue('priority', e)} isCurrent={e === getValue('priority')}>

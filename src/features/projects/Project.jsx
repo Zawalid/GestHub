@@ -4,6 +4,7 @@ import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { useDeleteProject } from './useProjects';
 import { PRIORITY_COLORS, STATUS_COLORS } from '@/utils/constants';
 import { useNavigate } from 'react-router-dom';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 export default function Project({ project, layout }) {
   const { id, name, description, startDate, endDate, status, priority, tasks, teamMembers, progress, completedTasks } =
@@ -108,27 +109,30 @@ export function ProgressBar({ progress, status }) {
 }
 
 export function Members({ members, size = 'small' }) {
-  if (!members.length) return <div className='grid h-full place-content-center text-xs font-medium text-text-secondary'>No Team</div>;
+  const [parent] = useAutoAnimate({ duration: 400 });
+
+  if (!members.length)
+    return <div className='grid h-full place-content-center text-xs font-medium text-text-secondary'>No Team</div>;
 
   const sizes = {
     small: 'w-7 h-7',
     large: 'w-9 h-9',
   };
 
-  const wrapperWidth = (members.slice(0, 3).length + (members.length > 3 ? 1 : 0)) * 25;
+  const wrapperWidth = members.length === 1 ? 36 : (members.slice(0, 3).length + (members.length > 3 ? 1 : 0)) * 25;
 
   return (
-    <div className='relative h-7' style={{ width: `${wrapperWidth}px` }}>
-      {members.slice(0, 3).map((m, i) => (
+    <div className='relative h-7' style={{ width: `${wrapperWidth}px` }} ref={parent}>
+      {members.slice(0, 3).map((member, i) => (
         <img
-          key={m}
-          src='/images/default-profile.jpg'
+          key={member.id}
+          src={member.image || '/images/default-profile.jpg'}
           alt='avatar'
           className={`absolute top-0 z-[1] ${sizes[size]} rounded-full border-2 border-border`}
           style={{ left: `${i * (size === 'small' ? 15 : 20)}px` }}
         />
       ))}
-      {members.slice(3).length !== 0 && (
+      {members.length > 3 && (
         <span
           className={`absolute z-[1] grid ${sizes[size]} place-content-center rounded-full border border-border bg-background-secondary text-xs font-bold text-text-primary`}
           style={{ left: `${members.slice(0, 3).length * (size === 'small' ? 15 : 20)}px` }}

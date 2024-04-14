@@ -4,6 +4,9 @@
   --normal-border: var(--border) !important;
 }
 
+.sonner-toast { 
+  @apply border border-border
+}
 .sonner-toast:not([data-type="loading"]) {
   & [data-icon] {
     height: calc(100% + 1px);
@@ -79,7 +82,7 @@
 }
 
 .tippy-content {
-  @apply p-0 !important;
+  @apply p-0 h-full !important;
 }
 
 .tippy-box[data-theme~="custom"] {

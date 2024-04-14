@@ -1,53 +1,17 @@
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { useProject } from '../useProjects';
 import { Members, ProgressBar } from '../Project';
 import { Button } from '@/components/ui';
-import { FaPlus } from 'react-icons/fa';
-import { PiListBold, RxViewVertical } from '@/components/ui/Icons';
-import { useState } from 'react';
+import { PiListBold, RxViewVertical, FaPlus } from '@/components/ui/Icons';
+import AddNewMember from './AddNewMember';
 
-export default function ProjectOverview() {
-  return (
-    <div className=''>
-      <Header />
-      <Tabs />
-    </div>
-  );
-}
-
-function Header() {
-  const { id } = useParams();
-  const { project } = useProject(id);
-
-  const { name, status, progress, teamMembers } = project || {};
-
-  return (
-    <div className='flex flex-col sm:items-center justify-between gap-5 sm:flex-row'>
-      <div className='flex-1 space-y-2'>
-        <h4 className='font-semibold text-text-primary'>{name}</h4>
-        <div className='grid grid-cols-[auto_min-content] items-center gap-2'>
-          <ProgressBar progress={progress} status={status} />
-          <span className='text-nowrap text-xs font-medium text-text-secondary'>{progress}% completed</span>
-        </div>
-      </div>
-      <div className='flex flex-1 items-center justify-between sm:justify-end gap-5'>
-        <div className=' h-9'>
-          <Members members={teamMembers} size='large' />
-        </div>
-        <Button display='with-icon' className='text-nowrap'>
-          <FaPlus />
-          New Member
-        </Button>
-      </div>
-    </div>
-  );
-}
 const tabs = {
   overview: { class: 'left-0 w-[65px]', element: null },
   tasks: {
     class: 'left-[98px] w-[40px]',
     element: (
-      <div className='flex gap-3 justify-between'>
+      <div className='flex justify-between gap-3'>
         <Button display='with-icon' size='small' color='tertiary'>
           <RxViewVertical />
           Board
@@ -62,12 +26,53 @@ const tabs = {
   notes: { class: 'left-[168px] w-[42px]', element: null },
 };
 
+export default function ProjectOverview() {
+  const [isOpen, setIsOpen] = useState();
+  return (
+    <div className=''>
+      <Header onAddNewMember={() => setIsOpen(true)} />
+      <Tabs />
+      <AddNewMember isOpen={isOpen} onClose={() => setIsOpen(false)} />
+    </div>
+  );
+}
+
+function Header({ onAddNewMember }) {
+  const { id } = useParams();
+  const { project } = useProject(id);
+
+  const { name, status, progress, teamMembers } = project || {};
+
+  return (
+    <div className='flex flex-col justify-between gap-5 sm:flex-row sm:items-center'>
+      <div className='flex-1 space-y-2'>
+        <h4 className='font-semibold text-text-primary'>{name}</h4>
+        <div className='grid grid-cols-[auto_min-content] items-center gap-2'>
+          <ProgressBar progress={progress} status={status} />
+          <span className='text-nowrap text-xs font-medium text-text-secondary'>{progress}% completed</span>
+        </div>
+      </div>
+      <div className='flex flex-1 items-center justify-between gap-5 sm:justify-end'>
+        <div className=' h-9'>
+          <Members members={teamMembers} size='large' />
+        </div>
+        <Button display='with-icon' className='text-nowrap' onClick={onAddNewMember}>
+          <FaPlus />
+          New Member
+        </Button>
+      </div>
+    </div>
+  );
+}
+
 function Tabs() {
   const params = useParams();
   const currentTab = tabs[params?.tab];
 
+  if (!currentTab) return;
+
   return (
-    <div className='relative mt-6 flex-col-reverse flex gap-3 mobile:flex-row mobile:items-center justify-between border-b-2 border-border py-3'>
+    <div className='relative mt-6 flex flex-col-reverse justify-between gap-3 border-b-2 border-border py-3 mobile:flex-row mobile:items-center'>
       <div className=' flex items-center gap-8'>
         <div
           className={`absolute -bottom-0.5 h-0.5 rounded-lg bg-primary transition-all duration-300 ${currentTab.class}`}
