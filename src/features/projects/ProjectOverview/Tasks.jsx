@@ -10,6 +10,55 @@ import { useProject, useUpdateProject } from '../useProjects';
 import { NewTask } from '../NewProject/StarterTasks';
 import { getIncrementedID } from '@/utils/helpers';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
+import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
+
+function getStyle(style, snapshot) {
+  if (!snapshot.isDropAnimating) {
+    return style;
+  }
+  return {
+    ...style,
+    // cannot be 0, but make it super tiny
+    transitionDuration: `0.0001s`,
+  };
+}
+
+const onDragEnd = (result, columns, setColumns) => {
+  if (!result.destination) return;
+  const { source, destination } = result;
+
+  if (source.droppableId !== destination.droppableId) {
+    const sourceColumn = columns[source.droppableId];
+    const destColumn = columns[destination.droppableId];
+    const sourceItems = [...sourceColumn.items];
+    const destItems = [...destColumn.items];
+    const [removed] = sourceItems.splice(source.index, 1);
+    destItems.splice(destination.index, 0, removed);
+    setColumns({
+      ...columns,
+      [source.droppableId]: {
+        ...sourceColumn,
+        items: sourceItems,
+      },
+      [destination.droppableId]: {
+        ...destColumn,
+        items: destItems,
+      },
+    });
+  } else {
+    const column = columns[source.droppableId];
+    const copiedItems = [...column.items];
+    const [removed] = copiedItems.splice(source.index, 1);
+    copiedItems.splice(destination.index, 0, removed);
+    setColumns({
+      ...columns,
+      [source.droppableId]: {
+        ...column,
+        items: copiedItems,
+      },
+    });
+  }
+};
 
 export default function Tasks() {
   const [parent] = useAutoAnimate({ duration: 400 });
@@ -131,7 +180,10 @@ function TasksGroup({ group, onAdd, onEdit, onDelete }) {
 
       <Droppable droppableId={group.name} type='TASK'>
         {(provided, snapshot) => (
-          <div className='min-h-[250px] pt-2' ref={provided.innerRef} {...provided.droppableProps}>
+          <div className='relative space-y-6 pt-2' ref={provided.innerRef} {...provided.droppableProps}>
+            {snapshot.isDraggingOver ? (
+              <div className='absolute z-10 h-[210px] w-full rounded-lg placeholder bg-background-secondary opacity-55'></div>
+            ) : null}
             <TasksList group={group} onEdit={onEdit} onDelete={onDelete} isDragging={snapshot.isDraggingOver} />
             {provided.placeholder}
           </div>
@@ -151,7 +203,7 @@ function TasksList({ group, onEdit, onDelete, isDragging }) {
           : 'No tasks marked as done. Complete some tasks to see them here!';
 
     return (
-      <div className='grid h-full place-content-center'>
+      <div className='grid mt-20 h-full place-content-center'>
         <p className='text-center text-sm font-medium text-text-secondary'>{message}</p>{' '}
       </div>
     );
@@ -159,15 +211,18 @@ function TasksList({ group, onEdit, onDelete, isDragging }) {
   return group.tasks.map((task, index) => (
     <Draggable key={`draggable-${task.id}`} draggableId={`draggable-${task.id}`} index={index} type='TASK'>
       {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          style={{ ...provided.draggableProps.style }}
-          className='h-[170px]'
-        >
-          <Task task={task} onEdit={onEdit} onDelete={onDelete} isDragging={snapshot.isDragging} />
-        </div>
+        <NaturalDragAnimation style={getStyle(provided.draggableProps.style, snapshot)} snapshot={snapshot}>
+          {(style) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              style={style}
+            >
+              <Task task={task} onEdit={onEdit} onDelete={onDelete} isDragging={snapshot.isDragging} />
+            </div>
+          )}
+        </NaturalDragAnimation>
       )}
     </Draggable>
   ));

@@ -8,13 +8,13 @@ export default function Task({ task, onDelete, onEdit, isDragging }) {
 
   return (
     <div
-      className={`relative flex h-[144px] flex-col gap-4 rounded-lg border border-border bg-background-secondary p-4 pt-6 shadow-sm transition-all duration-300 ${
+      className={`relative flex min-h-[144px] flex-col gap-4 rounded-lg border border-border bg-background-secondary p-4 pt-6 shadow-sm transition-all duration-300 ${
         isDragging ? 'scale-90 bg-background-tertiary' : ''
       }`}
     >
       <div className='space-y-2.5'>
         <div className='flex items-center justify-between gap-5'>
-          <h4 className='line-clamp-1 font-semibold text-text-primary'>{title || 'Untitled'}</h4>
+          <h4 className='line-clamp-2 font-semibold text-text-primary'>{title || 'Untitled'}</h4>
           {priority !== 'None' && (
             <span className={`rounded-md px-2 py-1 text-center text-xs ${PRIORITY_COLORS[priority]}`}>{priority}</span>
           )}

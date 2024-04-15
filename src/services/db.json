@@ -228,7 +228,7 @@
       "priority": "Medium",
       "tasks": [
         {
-          "id": 8,
+          "id": 7,
           "title": "dd",
           "description": "",
           "dueDate": "",
@@ -237,13 +237,31 @@
           "status": "To Do"
         },
         {
-          "id": 7,
+          "id": 8,
+          "title": "Add Drag And Drop to tasks",
+          "description": "Add the drag and drop functionality to the project's tasks so that it looks like a kanban board",
+          "dueDate": "",
+          "priority": "High",
+          "assignee": {
+            "id": "1bf0",
+            "firstName": "Walid",
+            "lastName": "Zakan",
+            "email": "walid.zakan@gmail.com",
+            "phone": "0682208346",
+            "birthday": "2024-05-02",
+            "password": "Abcs1234",
+            "confirmPassword": "Abcs1234"
+          },
+          "status": "In Progress"
+        },
+        {
+          "id": 9,
           "title": "dd",
           "description": "",
           "dueDate": "",
           "priority": "None",
           "assignee": "None",
-          "status": "To Do"
+          "status": "Done"
         }
       ],
       "teamMembers": [
