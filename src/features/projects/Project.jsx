@@ -6,6 +6,7 @@ import { PRIORITY_COLORS, STATUS_COLORS } from '@/utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { ToolTip } from '@/components/ui/ToolTip';
+import { formatDate } from '@/utils/helpers';
 
 export default function Project({ project, layout }) {
   const { id, name, description, startDate, endDate, status, priority, tasks, teamMembers, progress, completedTasks } =
@@ -76,12 +77,12 @@ function Actions({ id }) {
 
 function Date({ startDate, endDate }) {
   return (
-    <div className='project-date relative h-6 w-20'>
+    <div className='project-date relative h-6 w-fit text-nowrap'>
       <div className='side absolute z-[1] bg-background-secondary'>
-        <span className='text-text-secondary '>{startDate}</span>
+        <span className='text-text-secondary '>{formatDate(startDate)}</span>
       </div>
       <div className='side -z-[1] overflow-hidden bg-red-500'>
-        <span className='text-white'>{endDate}</span>
+        <span className='text-white'>{formatDate(endDate)}</span>
       </div>
     </div>
   );
@@ -103,7 +104,7 @@ export function ProgressBar({ progress, status }) {
 
   return (
     <div className='relative w-full rounded-lg bg-background-tertiary py-1'>
-      <div className={`absolute top-0 h-full rounded-lg ${color}`} style={{ width: `${progress}%` }}></div>
+      <div className={`absolute top-0 transition-all duration-500 h-full rounded-lg ${color}`} style={{ width: `${progress}%` }}></div>
     </div>
   );
 }

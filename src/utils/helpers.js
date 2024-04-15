@@ -1,4 +1,5 @@
 import { clsx } from 'clsx';
+import { DateTime } from 'luxon';
 import { twMerge } from 'tailwind-merge';
 
 export const cn = (...inputs) => twMerge(clsx(inputs));
@@ -15,6 +16,7 @@ export const objectDeepEquals = (a, b) => {
 
   return true;
 };
+
 export function formatTime(time) {
   const date = new Date(time);
   const formattedDate = date.toLocaleDateString('en-US', {
@@ -25,7 +27,10 @@ export function formatTime(time) {
 
   return formattedDate;
 }
-export function getIncrementedID(array) {
+
+export const getIncrementedID = (array) => {
   const ids = array.map((item) => item.id);
   return ids.length > 0 ? Math.max(...ids) + 1 : 1;
-}
+};
+
+export const formatDate = (date) => DateTime.fromISO(date).toLocaleString(DateTime.DATE_FULL);
