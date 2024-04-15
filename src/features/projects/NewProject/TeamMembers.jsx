@@ -115,7 +115,7 @@ export function Intern({ intern }) {
       />
       <div>
         <p className='mb-1 text-sm font-semibold text-text-primary'>{`${intern?.firstName} ${intern?.lastName}`}</p>
-        <p className='text-xs font-medium text-text-secondary'>{intern.email}</p>
+        <p className='text-xs font-medium text-text-secondary'>{intern?.email}</p>
       </div>
     </div>
   );

@@ -5,8 +5,9 @@ import { useMutate } from '@/hooks/useMutate';
 const getAdditionalProjectData = (project) => {
   if (!project) return null;
 
-  const completedTasks = project.tasks.filter((task) => task?.status === 'Completed');
-  const progress = (completedTasks.length / project.tasks.length) * 100;
+  const completedTasks = project.tasks.filter((task) => task?.status === 'Done');
+  const ratio = (completedTasks.length / project.tasks.length) * 100;
+  const progress = ratio ? (ratio % 1 === 0 ? Math.floor(ratio) : ratio.toFixed(1)) : 0;
   return {
     ...project,
     tasksNumber: project.tasks.length,
@@ -14,6 +15,13 @@ const getAdditionalProjectData = (project) => {
     progress,
     teamCount: project.teamMembers.length,
   };
+};
+
+const filterAdditionalProjectData = (project) => {
+  if (!project) return null;
+  // eslint-disable-next-line no-unused-vars
+  const { tasksNumber, completedTasks, progress, teamCount, ...rest } = project;
+  return rest;
 };
 
 // Queries
@@ -47,15 +55,16 @@ export const useProject = (id) => {
 export const useAddProject = () =>
   useMutate({
     queryKey: ['projects', 'add'],
-    mutationFn: addProject,
+    mutationFn: (data) => addProject(filterAdditionalProjectData(data)),
     loadingMessage: 'Adding project...',
     successMessage: 'Project added successfully',
     errorMessage: 'Failed to add project',
   });
-export const useUpdateProject = () =>
+export const useUpdateProject = ({ showToast } = {}) =>
   useMutate({
     queryKey: ['projects', 'update'],
-    mutationFn: ({ id, data }) => updateProject(id, data),
+    mutationFn: ({ id, data }) => updateProject(id, filterAdditionalProjectData(data)),
+    showToast,
     loadingMessage: 'Updating project...',
     successMessage: 'Project updated successfully',
     errorMessage: 'Failed to update project',

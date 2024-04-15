@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useRef } from 'react';
 
-export function useMutate({ queryKey, mutationFn, loadingMessage, successMessage, errorMessage }) {
+export function useMutate({ queryKey, mutationFn, showToast = true, loadingMessage, successMessage, errorMessage }) {
   const queryClient = useQueryClient();
   const toastId = useRef(null);
 
@@ -10,18 +10,18 @@ export function useMutate({ queryKey, mutationFn, loadingMessage, successMessage
     mutationKey: queryKey,
     mutationFn,
     onMutate: () => {
-      if (loadingMessage)
+      if (loadingMessage && showToast)
         toastId.current = toast.loading(loadingMessage, {
           id: toastId.current,
         });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(queryKey);
-      successMessage && toast.success(successMessage, { id: toastId.current });
+      successMessage && showToast && toast.success(successMessage, { id: toastId.current });
     },
     onError: (error) => {
       console.log(error);
-      errorMessage && toast.error(errorMessage, { id: toastId.current });
+      errorMessage && showToast && toast.error(errorMessage, { id: toastId.current });
     },
   });
 

@@ -5,6 +5,7 @@ import { useDeleteProject } from './useProjects';
 import { PRIORITY_COLORS, STATUS_COLORS } from '@/utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { ToolTip } from '@/components/ui/ToolTip';
 
 export default function Project({ project, layout }) {
   const { id, name, description, startDate, endDate, status, priority, tasks, teamMembers, progress, completedTasks } =
@@ -57,7 +58,6 @@ function Actions({ id }) {
       </Button>
       <Button
         shape='icon'
-        color='delete'
         size='small'
         onClick={() =>
           openModal({
@@ -124,13 +124,14 @@ export function Members({ members, size = 'small' }) {
   return (
     <div className='relative h-7' style={{ width: `${wrapperWidth}px` }} ref={parent}>
       {members.slice(0, 3).map((member, i) => (
-        <img
-          key={member.id}
-          src={member.image || '/images/default-profile.jpg'}
-          alt='avatar'
-          className={`absolute top-0 z-[1] ${sizes[size]} rounded-full border-2 border-border`}
-          style={{ left: `${i * (size === 'small' ? 15 : 20)}px` }}
-        />
+        <ToolTip key={member.id || member} content={<span>{`${member.firstName} ${member.lastName}`}</span>}>
+          <img
+            src={member.image || '/images/default-profile.jpg'}
+            alt={`${member.firstName} ${member.lastName}`}
+            className={`absolute top-0 z-[1] ${sizes[size]} rounded-full border-2 border-border`}
+            style={{ left: `${i * (size === 'small' ? 15 : 20)}px` }}
+          />
+        </ToolTip>
       ))}
       {members.length > 3 && (
         <span

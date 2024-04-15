@@ -5,12 +5,16 @@ import { Members, ProgressBar } from '../Project';
 import { Button } from '@/components/ui';
 import { PiListBold, RxViewVertical, FaPlus } from '@/components/ui/Icons';
 import AddNewMember from './AddNewMember';
+import Tasks from './Tasks';
+import Overview from './Overview';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 const tabs = {
-  overview: { class: 'left-0 w-[65px]', element: null },
+  overview: { class: 'left-0 w-[65px]', element: <Overview /> },
   tasks: {
     class: 'left-[98px] w-[40px]',
-    element: (
+    element: <Tasks />,
+    header: (
       <div className='flex justify-between gap-3'>
         <Button display='with-icon' size='small' color='tertiary'>
           <RxViewVertical />
@@ -28,12 +32,21 @@ const tabs = {
 
 export default function ProjectOverview() {
   const [isOpen, setIsOpen] = useState();
+  const currentTab = tabs[useParams()?.tab];
+  const [parent] = useAutoAnimate({ duration: 400 });
+
   return (
-    <div className=''>
+    <>
       <Header onAddNewMember={() => setIsOpen(true)} />
-      <Tabs />
+      <div className='flex flex-col overflow-hidden'>
+        <Tabs />
+        <div className='flex-1 flex overflow-auto pr-2 pt-4' ref={parent}>
+          {currentTab?.element}
+        </div>
+      </div>
+
       <AddNewMember isOpen={isOpen} onClose={() => setIsOpen(false)} />
-    </div>
+    </>
   );
 }
 
@@ -72,7 +85,7 @@ function Tabs() {
   if (!currentTab) return;
 
   return (
-    <div className='relative mt-6 flex flex-col-reverse justify-between gap-3 border-b-2 border-border py-3 mobile:flex-row mobile:items-center'>
+    <div className='relative flex flex-col-reverse justify-between gap-3 border-b-2 border-border py-3 mobile:flex-row mobile:items-center'>
       <div className=' flex items-center gap-8'>
         <div
           className={`absolute -bottom-0.5 h-0.5 rounded-lg bg-primary transition-all duration-300 ${currentTab.class}`}
@@ -87,7 +100,7 @@ function Tabs() {
           </Link>
         ))}
       </div>
-      {currentTab.element}
+      {currentTab.header}
     </div>
   );
 }

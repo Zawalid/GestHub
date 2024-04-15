@@ -230,7 +230,7 @@
         {
           "id": 1,
           "name": "Identify CRM requirements",
-          "status": "Completed"
+          "status": "Done"
         },
         {
           "id": 2,
@@ -240,12 +240,12 @@
         {
           "id": 3,
           "name": "Implement CRM system",
-          "status": "Completed"
+          "status": "Done"
         },
         {
           "id": 4,
           "name": "Train staff on CRM system",
-          "status": "Not Started"
+          "status": "To Do"
         }
       ],
       "teamMembers": [
@@ -267,22 +267,22 @@
         {
           "id": 1,
           "name": "Identify target audience",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 2,
           "name": "Create social media content",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 3,
           "name": "Schedule posts",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 4,
           "name": "Monitor campaign performance",
-          "status": "Not Started"
+          "status": "To Do"
         }
       ],
       "teamMembers": [
@@ -305,7 +305,7 @@
         {
           "id": 1,
           "name": "Identify platform requirements",
-          "status": "Completed"
+          "status": "Done"
         },
         {
           "id": 2,
@@ -315,17 +315,17 @@
         {
           "id": 3,
           "name": "Develop new platform",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 4,
           "name": "Test new platform",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 5,
           "name": "Deploy new platform",
-          "status": "Not Started"
+          "status": "To Do"
         }
       ],
       "teamMembers": [
@@ -349,27 +349,27 @@
         {
           "id": 1,
           "name": "Conduct market research",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 2,
           "name": "Design new product",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 3,
           "name": "Develop new product",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 4,
           "name": "Test new product",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 5,
           "name": "Launch new product",
-          "status": "Not Started"
+          "status": "To Do"
         }
       ],
       "teamMembers": [
@@ -392,7 +392,7 @@
         {
           "id": 1,
           "name": "Identify infrastructure requirements",
-          "status": "Completed"
+          "status": "Done"
         },
         {
           "id": 2,
@@ -402,12 +402,12 @@
         {
           "id": 3,
           "name": "Install new infrastructure",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 4,
           "name": "Test new infrastructure",
-          "status": "Not Started"
+          "status": "To Do"
         }
       ],
       "teamMembers": [
@@ -429,28 +429,30 @@
       "tasks": [
         {
           "id": 1,
-          "name": "Plan migration",
-          "status": "Completed"
+          "title": "fsdfsd",
+          "description": "",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": "None",
+          "status": "To Do"
         },
         {
           "id": 2,
-          "name": "Prepare new data center",
-          "status": "Completed"
+          "title": "fsdfsd",
+          "description": "",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": "None",
+          "status": "To Do"
         },
         {
           "id": 3,
-          "name": "Migrate data",
-          "status": "Completed"
-        },
-        {
-          "id": 4,
-          "name": "Test new data center",
-          "status": "Completed"
-        },
-        {
-          "id": 5,
-          "name": "Decommission old data center",
-          "status": "Completed"
+          "title": "fsdfsdfdddddddddddddddddddddfssdf fsdfsd sdfsdf  dsfs ",
+          "description": "",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": "None",
+          "status": "To Do"
         }
       ],
       "teamMembers": [
@@ -458,17 +460,6 @@
         "Nicole Kidman",
         "Dustin Hoffman"
       ]
-    },
-    {
-      "id": "dc9c",
-      "name": "fdf",
-      "description": "",
-      "startDate": "2024-04-13",
-      "endDate": "2024-04-18",
-      "priority": "None",
-      "status": "Not Started",
-      "teamMembers": [],
-      "tasks": []
     },
     {
       "id": "261c",
@@ -490,61 +481,64 @@
           "major": "Computer Science",
           "startDate": "2022-01-01",
           "endDate": "2022-06-01"
+        },
+        {
+          "id": "1bf0",
+          "firstName": "Walid",
+          "lastName": "Zakan",
+          "email": "walid.zakan@gmail.com",
+          "phone": "0682208346",
+          "birthday": "2024-05-02",
+          "password": "Abcs1234",
+          "confirmPassword": "Abcs1234"
+        },
+        {
+          "id": "9",
+          "firstName": "Grace",
+          "lastName": "Wilson",
+          "email": "grace.wilson@example.com",
+          "phone": "777-888-9999",
+          "birthday": "1998-09-09",
+          "university": "University of Michigan",
+          "major": "Information Technology",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        },
+        {
+          "id": "7",
+          "firstName": "Walid",
+          "lastName": "Biker",
+          "email": "walid.zakan@gmail.com",
+          "phone": "0682208346",
+          "birthday": "1996-07-07",
+          "university": "University of Illinois Urbana-Champaign",
+          "major": "Information Sciences",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01",
+          "password": "Ancd1234",
+          "confirmPassword": "Ancd1234"
         }
       ],
       "tasks": [
         {
           "id": 1,
-          "title": "Task Number 1",
-          "description": "This is taks number 1",
+          "title": "fdf",
+          "description": "",
           "dueDate": "",
-          "priority": "High",
-          "assignee": {
-            "id": "1",
-            "firstName": "John",
-            "lastName": "Doe",
-            "email": "john.doe@example.com",
-            "phone": "123-456-7890",
-            "birthday": "1990-01-01",
-            "university": "Harvard University",
-            "major": "Computer Science",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01"
-          },
-          "status": "Not Started"
+          "priority": "None",
+          "assignee": "None",
+          "status": "To Do"
         },
         {
           "id": 2,
-          "title": "Task Number 2",
-          "description": "This is taks number 2",
-          "dueDate": "2024-04-23",
-          "priority": "Medium",
-          "assignee": {
-            "id": "1bf0",
-            "firstName": "Walid",
-            "lastName": "Zakan",
-            "email": "walid.zakan@gmail.com",
-            "phone": "0682208346",
-            "birthday": "2024-05-02",
-            "password": "Abcs1234",
-            "confirmPassword": "Abcs1234"
-          },
-          "status": "Not Started"
-        },
-        {
-          "id": 3,
-          "title": "Task Number 3",
-          "description": "This is taks number 3",
+          "title": "fsdfsdf",
+          "description": "",
           "dueDate": "",
-          "priority": "Low",
+          "priority": "None",
           "assignee": "None",
-          "status": "Not Started"
+          "status": "In Progress"
         }
-      ],
-      "tasksNumber": 3,
-      "completedTasks": [],
-      "progress": 0,
-      "teamCount": 1
+      ]
     }
   ],
   "absences": [

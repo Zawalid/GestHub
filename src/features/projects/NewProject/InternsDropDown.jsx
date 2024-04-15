@@ -43,6 +43,7 @@ export function InternsDropDown({ getValue, setValue }) {
         }
         options={{
           shouldCloseOnClick: false,
+          placement : "bottom-end",
           className: 'max-h-[250px] overflow-x-hidden relative h-[230px] overflow-y-auto',
         }}
       >

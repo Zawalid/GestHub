@@ -46,7 +46,7 @@
 }
 
 * {
-  @apply box-border list-none;
+  @apply box-border list-none scroll-smooth
 }
 
 body {
