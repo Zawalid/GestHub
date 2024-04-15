@@ -522,5 +522,14 @@
       "date": "2025-09-02T00:00:00.000Z",
       "ville": "Casablanca"
     }
-  ]
+  ],
+  "offer": {
+    "id": 1,
+    "exp": "Expert",
+    "secteur": "devloppemnt",
+    "title": "devlopper backend",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
+    "date": "2024-04-03T00:00:00.000Z",
+    "ville": "rabat"
+  }
 }

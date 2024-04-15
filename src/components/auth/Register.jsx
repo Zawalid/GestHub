@@ -7,13 +7,7 @@ import { MdOutlineSchool } from "react-icons/md";
 function Register() {
   const { t } = useTranslation();
   const {
-    options: {
-      isValid,
-      formInputs,
-      handleSubmit,
-      getValue,
-      setValue,
-    },
+    options: { isValid, formInputs, handleSubmit, getValue, setValue },
   } = useForm({
     defaultValues: {
       email: "",
@@ -53,12 +47,9 @@ function Register() {
   });
   const levels = ["Bac+1", "Bac+2", "Bac+3", "Master"];
   return (
-    <div className="relative w-full md:w-3/4 lg:w-2/3 m-auto p-2 md:p-5 mt-10 flex flex-col space-y-4 ">
-      <h1 className="text-text-primary text-4xl">
-        {t("auth.login.title1")}{" "}
-        <span className="text-secondary">{t("auth.login.title2")}</span>
-      </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-2">
+    <div className="relative w-full p-2 md:p-5 flex flex-col justify-center h-full space-y-6 ">
+      <h1 className="text-text-primary text-4xl">{t("auth.login.title1")} </h1>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-4 gap-2">
         {formInputs.fullName}
         {formInputs.email}
         {formInputs.phone}
@@ -97,7 +88,11 @@ function Register() {
         {formInputs["confirmPassword"]}
       </div>
 
-      <Button className={"self-end"} disabled={!isValid} onClick={handleSubmit}>
+      <Button
+        className={"self-end w-full lg:w-min"}
+        disabled={!isValid}
+        onClick={handleSubmit}
+      >
         {t("auth.register.submit")}
       </Button>
       <p className="border-t border-border text-text-primary py-4 text-center flex gap-1 items-center justify-center">

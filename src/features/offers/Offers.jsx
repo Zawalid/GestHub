@@ -37,13 +37,13 @@ function Offers() {
       {isLoading && <Status status="loading" />}
       {!error && !isLoading && (
         <div className="p-1 md:p-5">
-          <h1 className="text-secondary font-bold text-3xl w-fit py-10 capitalize">
+          <h1 className="text-text-primary font-bold text-3xl w-fit py-10 capitalize">
             Offres de stage recentes
           </h1>
           <div className="grid gap-4  grid-cols-1 md:grid-cols-[auto,1fr]">
             <FilterAside className="hidden md:flex" />
             <div className="relative">
-              <div className="flex justify-between gap-2 ">
+              <div className="grid px-1 grid-cols-[1fr,auto] gap-2 ">
                 <SearchInput
                   className=" w-3/4"
                   onChange={(query) =>

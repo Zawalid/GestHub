@@ -66,7 +66,7 @@ function Content({ children, isOpen, className }) {
   return (
     <div
       className={cn(
-        "flex relative h-full w-full overflow-hidden flex-col rounded-xl border-border bg-background-primary transition-transform duration-200",
+        "flex relative h-full w-full overflow-hidden flex-col sm:rounded-xl border-border bg-background-primary transition-transform duration-200",
         className,
         isOpen ? "scale-100" : "scale-0"
       )}

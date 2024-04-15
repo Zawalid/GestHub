@@ -8,7 +8,7 @@ function About() {
   return (
     <div className="relative p-2 py-24 md:px-10 grid grid-cols-1 gap-3">
       <div>
-        <h1 className="text-center p-3 text-5xl text-secondary font-bold">
+        <h1 className="text-center p-3 text-5xl text-primary dark:text-text-primary font-bold">
           About DSI
         </h1>
       </div>

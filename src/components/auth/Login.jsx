@@ -1,10 +1,12 @@
 import { useForm } from "@/hooks/useForm";
 import { Button } from "../ui";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toLocalStorage } from "@/hooks/useLocalStorageState";
 
 function Login() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const {
     options: { isValid, formInputs, handleSubmit },
   } = useForm({
@@ -24,40 +26,50 @@ function Login() {
         label: t("auth.login.password.label"),
       },
     ],
-    onSubmit: (data) => console.log(data),
+    onSubmit: async (credentials) => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(credentials),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          localStorage.setItem("user", JSON.stringify(data.user));
+          localStorage.setItem("token", JSON.stringify(data ));
+          navigate("/app");
+        } else {
+          console.log("errrrrrrrr");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
     gridLayout: false,
   });
   return (
-    <div className=" grid grid-cols-1 md:grid-cols-[1fr,1fr]  h-full w-full">
-      <div className=" hidden md:flex  relative justify-center items-center bg-gradient-to-l from-background-tertiary -background-primary h-full ">
-        <img src="/SVG/login.svg" className="w-2/3" alt="" />
-      </div>
-      <div className="relative w-full h-full p-2 flex flex-col justify-center md:px-10 lg:px-20  rounded-xl md:bg-gradient-to-r from-background-tertiary -background-primary border-3 border-black ">
-        <h1 className="text-text-primary text-4xl my-10">
-          {t("auth.login.title1")}{" "}
-          <span className="text-secondary">{t("auth.login.title2")}</span>
-        </h1>
-        {formInputs["email"]}
-        {formInputs["password"]}
-        <Link to="/app">
-          <Button
-            className={"self-end my-4 w-full"}
-            disabled={!isValid}
-            onClick={(e) => handleSubmit(console.log(e))}
-          >
-            {t("auth.login.submit")}
-          </Button>
+    <div className="relative w-full h-full p-2 flex flex-col justify-center md:px-10 lg:px-20  ">
+      <h1 className="text-text-primary text-xl my-10">
+        {t("auth.login.title1")}{" "}
+      </h1>
+      {formInputs["email"]}
+      {formInputs["password"]}
+      <Button
+        className={"self-end my-4 w-full"}
+        disabled={!isValid}
+        onClick={() => handleSubmit()}
+      >
+        {t("auth.login.submit")}
+      </Button>
+      <p className=" border-t border-border text-text-primary py-4 text-center flex gap-1 items-center justify-center">
+        Dont have an account ?
+        <Link to="/register" className="underline text-primary font-bold">
+          Register Now
         </Link>
-        <p className=" border-t border-border text-text-primary py-4 text-center flex gap-1 items-center justify-center">
-          Dont have an account ?
-          <Link
-            to="/register"
-            className=" underline text-primary font-bold cursor-pointer text-sm "
-          >
-            Register Now
-          </Link>
-        </p>
-      </div>
+      </p>
     </div>
   );
 }

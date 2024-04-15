@@ -3,7 +3,7 @@ import Shade from "../ui/shade";
 
 export function Footer() {
   return (
-    <footer className="relative flex mt-auto items-center justify-center gap-6  shadow-md  bg-background-secondary px-5 py-3">
+    <footer className="relative flex mt-auto items-center justify-center gap-6  shadow-md  bg-background-secondary px-5 ">
       <SocialMedia />
       <Shade
         className=" absolute rotate-180 bottom-full left-0 w-full overflow-hidden leading-[0] "
