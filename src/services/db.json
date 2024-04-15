@@ -252,7 +252,7 @@
             "password": "Abcs1234",
             "confirmPassword": "Abcs1234"
           },
-          "status": "In Progress"
+          "status": "Done"
         },
         {
           "id": 9,
@@ -291,13 +291,13 @@
       "priority": "High",
       "tasks": [
         {
-          "id": 1,
-          "name": "Identify target audience",
+          "id": 2,
+          "name": "Create social media content",
           "status": "To Do"
         },
         {
-          "id": 2,
-          "name": "Create social media content",
+          "id": 1,
+          "name": "Identify target audience",
           "status": "To Do"
         },
         {
@@ -542,6 +542,18 @@
           "birthday": "1991-03-03",
           "university": "MIT",
           "major": "Software Engineering",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        },
+        {
+          "id": "4",
+          "firstName": "Alice",
+          "lastName": "Johnson",
+          "email": "alice.johnson@example.com",
+          "phone": "222-333-4444",
+          "birthday": "1993-04-04",
+          "university": "University of California, Berkeley",
+          "major": "Data Science",
           "startDate": "2022-01-01",
           "endDate": "2022-06-01"
         }

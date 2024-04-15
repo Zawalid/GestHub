@@ -12,53 +12,7 @@ import { getIncrementedID } from '@/utils/helpers';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
 
-function getStyle(style, snapshot) {
-  if (!snapshot.isDropAnimating) {
-    return style;
-  }
-  return {
-    ...style,
-    // cannot be 0, but make it super tiny
-    transitionDuration: `0.0001s`,
-  };
-}
-
-const onDragEnd = (result, columns, setColumns) => {
-  if (!result.destination) return;
-  const { source, destination } = result;
-
-  if (source.droppableId !== destination.droppableId) {
-    const sourceColumn = columns[source.droppableId];
-    const destColumn = columns[destination.droppableId];
-    const sourceItems = [...sourceColumn.items];
-    const destItems = [...destColumn.items];
-    const [removed] = sourceItems.splice(source.index, 1);
-    destItems.splice(destination.index, 0, removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...sourceColumn,
-        items: sourceItems,
-      },
-      [destination.droppableId]: {
-        ...destColumn,
-        items: destItems,
-      },
-    });
-  } else {
-    const column = columns[source.droppableId];
-    const copiedItems = [...column.items];
-    const [removed] = copiedItems.splice(source.index, 1);
-    copiedItems.splice(destination.index, 0, removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...column,
-        items: copiedItems,
-      },
-    });
-  }
-};
+const getStyle = (style, snapshot) => (snapshot.isDropAnimating ? { ...style, transitionDuration: `0.0001s` } : style);
 
 export default function Tasks() {
   const [parent] = useAutoAnimate({ duration: 400 });
@@ -155,6 +109,7 @@ export default function Tasks() {
         currentTask={currentTask}
         onAdd={onAddTask}
         onUpdate={onUpdateTask}
+        teamMembers={project?.teamMembers}
       />
     </DragDropContext>
   );
@@ -182,7 +137,7 @@ function TasksGroup({ group, onAdd, onEdit, onDelete }) {
         {(provided, snapshot) => (
           <div className='relative space-y-6 pt-2' ref={provided.innerRef} {...provided.droppableProps}>
             {snapshot.isDraggingOver ? (
-              <div className='absolute z-10 h-[210px] w-full rounded-lg placeholder bg-background-secondary opacity-55'></div>
+              <div className='placeholder absolute z-10 h-[210px] w-full rounded-lg bg-background-secondary opacity-55'></div>
             ) : null}
             <TasksList group={group} onEdit={onEdit} onDelete={onDelete} isDragging={snapshot.isDraggingOver} />
             {provided.placeholder}
@@ -203,7 +158,7 @@ function TasksList({ group, onEdit, onDelete, isDragging }) {
           : 'No tasks marked as done. Complete some tasks to see them here!';
 
     return (
-      <div className='grid mt-20 h-full place-content-center'>
+      <div className='mt-20 grid h-full place-content-center'>
         <p className='text-center text-sm font-medium text-text-secondary'>{message}</p>{' '}
       </div>
     );
@@ -213,12 +168,7 @@ function TasksList({ group, onEdit, onDelete, isDragging }) {
       {(provided, snapshot) => (
         <NaturalDragAnimation style={getStyle(provided.draggableProps.style, snapshot)} snapshot={snapshot}>
           {(style) => (
-            <div
-              ref={provided.innerRef}
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-              style={style}
-            >
+            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} style={style}>
               <Task task={task} onEdit={onEdit} onDelete={onDelete} isDragging={snapshot.isDragging} />
             </div>
           )}
@@ -228,7 +178,7 @@ function TasksList({ group, onEdit, onDelete, isDragging }) {
   ));
 }
 
-function AddNewTask({ currentGroup, onClose, currentTask, onAdd, onUpdate }) {
+function AddNewTask({ currentGroup, onClose, currentTask, onAdd, onUpdate, teamMembers }) {
   return (
     <Modal
       isOpen={currentGroup || currentTask}
@@ -242,6 +192,7 @@ function AddNewTask({ currentGroup, onClose, currentTask, onAdd, onUpdate }) {
           currentTask={currentTask}
           onCancel={onClose}
           onSubmit={(task) => (currentTask ? onUpdate(task) : onAdd(task))}
+          teamMembers={teamMembers}
         />
       </div>
     </Modal>

@@ -3,4 +3,4 @@
 - [ ] Add ErrorBoundary
 - [ ] Custom Error Component
 - [x] Go to prev page when deleting the last record
-- [ ] Interns dropdown only for team members
+- [x] Interns dropdown only for team members
