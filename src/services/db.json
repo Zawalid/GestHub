@@ -1,7 +1,7 @@
 {
   "interns": [
     {
-      "id": 1,
+      "id": "1",
       "firstName": "John",
       "lastName": "Doe",
       "email": "john.doe@example.com",
@@ -13,7 +13,7 @@
       "endDate": "2022-06-01"
     },
     {
-      "id": 3,
+      "id": "3",
       "firstName": "Bob",
       "lastName": "Smith",
       "email": "bob.smith@example.com",
@@ -25,7 +25,7 @@
       "endDate": "2022-06-01"
     },
     {
-      "id": 4,
+      "id": "4",
       "firstName": "Alice",
       "lastName": "Johnson",
       "email": "alice.johnson@example.com",
@@ -37,7 +37,7 @@
       "endDate": "2022-06-01"
     },
     {
-      "id": 5,
+      "id": "5",
       "firstName": "Charlie",
       "lastName": "Brown",
       "email": "charlie.brown@example.com",
@@ -49,7 +49,7 @@
       "endDate": "2022-06-01"
     },
     {
-      "id": 6,
+      "id": "6",
       "firstName": "David",
       "lastName": "Williams",
       "email": "david.williams@example.com",
@@ -61,7 +61,7 @@
       "endDate": "2022-06-01"
     },
     {
-      "id": 7,
+      "id": "7",
       "firstName": "Walid",
       "lastName": "Biker",
       "email": "walid.zakan@gmail.com",
@@ -75,7 +75,7 @@
       "confirmPassword": "Ancd1234"
     },
     {
-      "id": 8,
+      "id": "8",
       "firstName": "Frank",
       "lastName": "Lampard",
       "email": "frank.davis@example.com",
@@ -89,7 +89,7 @@
       "confirmPassword": "Ancd1234"
     },
     {
-      "id": 9,
+      "id": "9",
       "firstName": "Grace",
       "lastName": "Wilson",
       "email": "grace.wilson@example.com",
@@ -99,11 +99,21 @@
       "major": "Information Technology",
       "startDate": "2022-01-01",
       "endDate": "2022-06-01"
+    },
+    {
+      "id": "1bf0",
+      "firstName": "Walid",
+      "lastName": "Zakan",
+      "email": "walid.zakan@gmail.com",
+      "phone": "0682208346",
+      "birthday": "2024-05-02",
+      "password": "Abcs1234",
+      "confirmPassword": "Abcs1234"
     }
   ],
   "supervisors": [
     {
-      "id": 1,
+      "id": "1",
       "firstName": "William",
       "lastName": "Johnson",
       "email": "william.johnson@example.com",
@@ -111,7 +121,7 @@
       "department": "Software Development"
     },
     {
-      "id": 2,
+      "id": "2",
       "firstName": "Elizabeth",
       "lastName": "Smith",
       "email": "elizabeth.smith@example.com",
@@ -119,7 +129,7 @@
       "department": "Data Science"
     },
     {
-      "id": 3,
+      "id": "3",
       "firstName": "James",
       "lastName": "Brown",
       "email": "james.brown@example.com",
@@ -127,7 +137,7 @@
       "department": "Information Systems"
     },
     {
-      "id": 4,
+      "id": "4",
       "firstName": "Jennifer",
       "lastName": "Davis",
       "email": "jennifer.davis@example.com",
@@ -135,7 +145,7 @@
       "department": "Artificial Intelligence"
     },
     {
-      "id": 5,
+      "id": "5",
       "firstName": "Michael",
       "lastName": "Miller",
       "email": "michael.miller@example.com",
@@ -150,7 +160,7 @@
       "password": "Abcd123??",
       "department": "Abcd123??",
       "confirmPassword": "Abcd123??",
-      "id": 7
+      "id": "7"
     },
     {
       "firstName": "Walidjhjhhhh",
@@ -160,7 +170,7 @@
       "department": "Abcd123??",
       "password": "Abcd123??",
       "confirmPassword": "Abcd123??",
-      "id": 8
+      "id": "8"
     },
     {
       "firstName": "waliddsdd",
@@ -170,36 +180,36 @@
       "department": "fff",
       "password": "Abcd124?",
       "confirmPassword": "Abcd124?",
-      "id": 9
+      "id": "9"
     }
   ],
   "teams": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Team Alpha",
       "project": "Project A",
       "supervisorId": 1
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Team Beta",
       "project": "Project B",
       "supervisorId": 2
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Team Gamma",
       "project": "Project C",
       "supervisorId": 3
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Team Delta",
       "project": "Project D",
       "supervisorId": 4
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Team Epsilon",
       "project": "Project E",
       "supervisorId": 5
@@ -207,7 +217,7 @@
   ],
   "projects": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Customer Relationship Management System",
       "description": "Implement a new CRM system to better manage customer relationships.",
       "startDate": "2022-02-01",
@@ -220,7 +230,7 @@
         {
           "id": 1,
           "name": "Identify CRM requirements",
-          "status": "Completed"
+          "status": "Done"
         },
         {
           "id": 2,
@@ -230,12 +240,12 @@
         {
           "id": 3,
           "name": "Implement CRM system",
-          "status": "Completed"
+          "status": "Done"
         },
         {
           "id": 4,
           "name": "Train staff on CRM system",
-          "status": "Not Started"
+          "status": "To Do"
         }
       ],
       "teamMembers": [
@@ -244,7 +254,7 @@
       ]
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Social Media Campaign",
       "description": "Launch a new social media campaign to increase brand awareness.",
       "startDate": "2022-03-01",
@@ -257,22 +267,22 @@
         {
           "id": 1,
           "name": "Identify target audience",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 2,
           "name": "Create social media content",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 3,
           "name": "Schedule posts",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 4,
           "name": "Monitor campaign performance",
-          "status": "Not Started"
+          "status": "To Do"
         }
       ],
       "teamMembers": [
@@ -282,7 +292,7 @@
       ]
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "E-commerce Platform Upgrade",
       "description": "Upgrade the existing e-commerce platform to improve performance and user experience.",
       "startDate": "2022-04-01",
@@ -295,7 +305,7 @@
         {
           "id": 1,
           "name": "Identify platform requirements",
-          "status": "Completed"
+          "status": "Done"
         },
         {
           "id": 2,
@@ -305,17 +315,17 @@
         {
           "id": 3,
           "name": "Develop new platform",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 4,
           "name": "Test new platform",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 5,
           "name": "Deploy new platform",
-          "status": "Not Started"
+          "status": "To Do"
         }
       ],
       "teamMembers": [
@@ -326,7 +336,7 @@
       ]
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "New Product Development",
       "description": "Develop a new product to expand the company's product line.",
       "startDate": "2022-05-01",
@@ -339,27 +349,27 @@
         {
           "id": 1,
           "name": "Conduct market research",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 2,
           "name": "Design new product",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 3,
           "name": "Develop new product",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 4,
           "name": "Test new product",
-          "status": "Not Started"
+          "status": "To Do"
         },
         {
           "id": 5,
           "name": "Launch new product",
-          "status": "Not Started"
+          "status": "To Do"
         }
       ],
       "teamMembers": [
@@ -369,108 +379,112 @@
       ]
     },
     {
-      "id": 5,
-      "name": "IT Infrastructure Upgrade",
-      "description": "Upgrade the company's IT infrastructure to improve performance and security.",
-      "startDate": "2022-06-01",
-      "endDate": "2022-12-01",
-      "teamId": 10,
-      "status": "In Progress",
-      "supervisor": "Meryl Streep",
-      "priority": "Low",
-      "tasks": [
-        {
-          "id": 1,
-          "name": "Identify infrastructure requirements",
-          "status": "Completed"
-        },
-        {
-          "id": 2,
-          "name": "Select infrastructure vendors",
-          "status": "In Progress"
-        },
-        {
-          "id": 3,
-          "name": "Install new infrastructure",
-          "status": "Not Started"
-        },
-        {
-          "id": 4,
-          "name": "Test new infrastructure",
-          "status": "Not Started"
-        }
-      ],
-      "teamMembers": [
-        "Meryl Streep",
-        "Alec Baldwin",
-        "Steve Martin"
-      ]
-    },
-    {
-      "id": 6,
-      "name": "Data Center Migration",
-      "description": "Migrate the company's data center to a new location.",
-      "startDate": "2022-01-01",
-      "endDate": "2022-06-01",
-      "teamId": 11,
-      "status": "Completed",
-      "supervisor": "Tom Cruise",
+      "id": "44b2",
+      "name": "gestion stagaiares",
+      "description": "description de project ",
+      "startDate": "2024-04-15",
+      "endDate": "2024-05-15",
       "priority": "High",
+      "status": "Not Started",
+      "teamMembers": [
+        {
+          "id": "1bf0",
+          "firstName": "Walid",
+          "lastName": "Zakan",
+          "email": "walid.zakan@gmail.com",
+          "phone": "0682208346",
+          "birthday": "2024-05-02",
+          "password": "Abcs1234",
+          "confirmPassword": "Abcs1234"
+        },
+        {
+          "id": "6",
+          "firstName": "David",
+          "lastName": "Williams",
+          "email": "david.williams@example.com",
+          "phone": "444-555-6666",
+          "birthday": "1995-06-06",
+          "university": "University of Washington",
+          "major": "Human Centered Design & Engineering",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        },
+        {
+          "id": "3",
+          "firstName": "Bob",
+          "lastName": "Smith",
+          "email": "bob.smith@example.com",
+          "phone": "111-222-3333",
+          "birthday": "1991-03-03",
+          "university": "MIT",
+          "major": "Software Engineering",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        }
+      ],
       "tasks": [
         {
           "id": 1,
-          "name": "Plan migration",
-          "status": "Completed"
+          "title": "backend",
+          "description": "all apis with laravel",
+          "dueDate": "2024-04-17",
+          "priority": "High",
+          "assignee": {
+            "id": "1bf0",
+            "firstName": "Walid",
+            "lastName": "Zakan",
+            "email": "walid.zakan@gmail.com",
+            "phone": "0682208346",
+            "birthday": "2024-05-02",
+            "password": "Abcs1234",
+            "confirmPassword": "Abcs1234"
+          },
+          "status": "To Do"
         },
         {
           "id": 2,
-          "name": "Prepare new data center",
-          "status": "Completed"
-        },
-        {
-          "id": 3,
-          "name": "Migrate data",
-          "status": "Completed"
-        },
-        {
-          "id": 4,
-          "name": "Test new data center",
-          "status": "Completed"
-        },
-        {
-          "id": 5,
-          "name": "Decommission old data center",
-          "status": "Completed"
+          "title": "conception",
+          "description": "digarams ",
+          "dueDate": "2024-04-17",
+          "priority": "High",
+          "assignee": {
+            "id": "3",
+            "firstName": "Bob",
+            "lastName": "Smith",
+            "email": "bob.smith@example.com",
+            "phone": "111-222-3333",
+            "birthday": "1991-03-03",
+            "university": "MIT",
+            "major": "Software Engineering",
+            "startDate": "2022-01-01",
+            "endDate": "2022-06-01"
+          },
+          "status": "To Do"
         }
-      ],
-      "teamMembers": [
-        "Tom Cruise",
-        "Nicole Kidman",
-        "Dustin Hoffman"
       ]
     }
   ],
   "absences": [
     {
-      "id": 1,
+      "id": "1",
       "internId": 1,
       "date": "2022-01-15",
       "reason": "Sick leave"
     },
     {
-      "id": 3,
+      "id": "3",
       "internId": 3,
       "date": "2022-03-25",
       "reason": "Vacation"
     },
     {
-      "id": 4,
+      "id": "4",
       "internId": 4,
       "date": "2022-04-30",
       "reason": "Sick leave"
     },
     {
-      "id": 5,
+      "id": "5",
       "internId": 5,
       "date": "2022-05-05",
       "reason": "Personal leave"
@@ -478,7 +492,7 @@
   ],
   "offers": [
     {
-      "id": 1,
+      "id": "1",
       "exp": "Expert",
       "secteur": "devloppemnt",
       "title": "devlopper backend",
@@ -487,7 +501,7 @@
       "ville": "rabat"
     },
     {
-      "id": 3,
+      "id": "3",
       "exp": "intermediate",
       "secteur": "devloppemnt",
       "title": "devlopper frontend",
@@ -496,7 +510,7 @@
       "ville": "sale"
     },
     {
-      "id": 4,
+      "id": "4",
       "exp": "debutant",
       "secteur": "devops",
       "title": "engineer devops",
@@ -505,7 +519,7 @@
       "ville": "rabat"
     },
     {
-      "id": 5,
+      "id": "5",
       "exp": "Expert",
       "secteur": "testing",
       "title": "testeur ",
@@ -514,7 +528,7 @@
       "ville": "Casablanca"
     },
     {
-      "id": 6,
+      "id": "6",
       "exp": "Expert",
       "secteur": "Ui/Ux",
       "title": "Designer ",

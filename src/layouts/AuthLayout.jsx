@@ -5,7 +5,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { BiHome } from "react-icons/bi";
 import { Outlet, useNavigate } from "react-router-dom";
 
-function AuthLayout() {
+export function AuthLayout() {
   const [parent] = useAutoAnimate({ duration: 300 });
   const navigate = useNavigate();
   return (
@@ -37,4 +37,3 @@ function AuthLayout() {
   );
 }
 
-export default AuthLayout;

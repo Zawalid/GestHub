@@ -1,6 +1,6 @@
 import { Modal } from "@/components/ui";
 import { useForm } from "@/hooks/useForm";
-import { ModalFormLayout } from "@/layouts/ModalFormLayout";
+import { ModalFormLayout } from "@/layouts";
 import { useTable } from ".";
 import { useEffect } from "react";
 

@@ -1,13 +1,16 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { useSelector } from "react-redux";
-import { Toaster } from "sonner";
-import { FaSpinner } from "react-icons/fa6";
-import { useTheme } from "./hooks/useTheme";
-import "./styles/App.css";
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useSelector } from 'react-redux';
+import { Toaster } from 'sonner';
+import { FaSpinner } from 'react-icons/fa6';
 
-import AppLayout from "./layouts/AppLayout";
+import { useTheme } from './hooks/useTheme';
+import { ROUTES } from './utils/constants';
+import './styles/App.css';
+
+import { AppLayout, AuthLayout, HomePageLayout } from './layouts';
 import {
   Overview,
   Absences,
@@ -19,30 +22,34 @@ import {
   Offers,
   Demands,
   Projects,
-} from "./pages";
-import { ROUTES } from "./utils/constants";
-import HomePageLayout from "./layouts/HomePageLayout";
-import OfferDetails from "./pages/OfferDetails";
-import SupervisorDetails from "./features/supervisors/SupervisorDetails";
-import InternDetails from "./features/interns/InternDetails";
-import AuthLayout from "./layouts/AuthLayout";
-import Login from "./components/auth/Login";
-import Register from "./components/auth/Register";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
+  SupervisorDetails,
+  InternDetails,
+  ProjectDetails,
+  OfferDetails,
+  Login,
+  Register,
+} from './pages';
+
+import Tasks from './features/projects/ProjectOverview/Tasks';
+import ProjectOverview from './features/projects/ProjectOverview/Overview';
 
 const queryClient = new QueryClient();
 
 const routesElements = {
   overview: <Overview />,
   supervisors: <Supervisors />,
-  "supervisors/:id": <SupervisorDetails />,
+  'supervisors/:id': <SupervisorDetails />,
   interns: <Interns />,
-  "interns/:id": <InternDetails />,
+  'interns/:id': <InternDetails />,
   teams: <Teams />,
   absences: <Absences />,
   offers: <Offers />,
+  'offers/:id': <OfferDetails />,
   demands: <Demands />,
   projects: <Projects />,
+  'projects/new': <Projects />,
+  'projects/:id': <ProjectDetails />,
+  'projects/:id/:tab': <ProjectDetails />,
 };
 
 export default function App() {
@@ -51,52 +58,55 @@ export default function App() {
   const [parent] = useAutoAnimate({ duration: 300 });
 
   return (
-    <div className="w-full h-dvh" ref={parent}>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <BrowserRouter>
-          <Routes>
-            <Route element={<AuthLayout />}>
-              <Route path="login" index element={<Login />} />
-              <Route path="register" element={<Register />} />
-            </Route>
-            <Route path="/" element={<HomePageLayout />}>
-              <Route index element={<HomePage />} />
-              <Route path="/offer/:id" element={<OfferDetails />} />
-            </Route>
-            <Route path="app" element={<AppLayout />}>
-              <Route index element={<Navigate to="/app/overview" />} />
-              {/* Routes of every role */}
-              <Route path="overview" element={<Overview />} />
-              <Route path="absences" element={<Absences />} />
+    <>
+      <div className='h-dvh w-full' ref={parent}>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <BrowserRouter>
+            <Routes>
+              {/* Auth */}
+              <Route element={<AuthLayout />}>
+                <Route path='login' index element={<Login />} />
+                <Route path='register' element={<Register />} />
+              </Route>
+              {/* HomePage */}
+              <Route path='/' element={<HomePageLayout />}>
+                <Route index element={<HomePage />} />
+              </Route>
+              {/* App */}
+              <Route path='app' element={<AppLayout />}>
+                <Route index element={<Navigate to='/app/overview' />} />
+                {/* Routes of every role */}
+                <Route path='overview' element={<Overview />} />
+                <Route path='absences' element={<Absences />} />
 
-              {/*  Routes of specific role */}
-              {ROUTES[role].map((route) => (
-                <Route
-                  key={route}
-                  path={route}
-                  element={routesElements[route]}
-                />
-              ))}
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+                {/*  Routes of specific role */}
+                {ROUTES[role].map((route) => (
+                  <Route key={route} path={route} element={routesElements[route]} />
+                ))}
 
-        <Toaster
-          icons={{
-            loading: (
-              <FaSpinner className="animate-spin text-lg text-text-secondary" />
-            ),
-          }}
-          position={window.innerWidth < 768 ? "bottom-center" : "bottom-right"}
-          theme={theme}
-          toastOptions={{
-            className: "sonner-toast",
-            duration: 2000,
-          }}
-        />
-      </QueryClientProvider>
-    </div>
+                {/* <Route path='projects/:id' element={<ProjectDetails />}>
+                  <Route index element={<Navigate to='overview' />} />
+                  <Route path='overview' element={<ProjectOverview />} />
+                  <Route path='tasks' element={<Tasks />} />
+                </Route> */}
+              </Route>
+              <Route path='*' element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </QueryClientProvider>
+      </div>
+      <Toaster
+        icons={{
+          loading: <FaSpinner className='animate-spin text-lg text-text-secondary' />,
+        }}
+        position={window.innerWidth < 768 ? 'bottom-center' : 'bottom-right'}
+        theme={theme}
+        toastOptions={{
+          className: 'sonner-toast',
+          duration: 2000,
+        }}
+      />
+    </>
   );
 }

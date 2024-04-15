@@ -10,7 +10,7 @@ export const options = {
   shouldCloseOnClick: false,
 };
 
-export function DropDown({ children }) {
+export function ActionsDropDown({ children }) {
   const { isLoading,error } = useOperations();
   return (
     <D

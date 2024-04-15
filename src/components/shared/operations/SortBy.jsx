@@ -5,7 +5,7 @@ import {
   PiSortAscending,
 } from "@/components/ui/Icons";
 import { useOperations } from "./useOperations";
-import { options } from "./DropDown";
+import { options } from "./ActionsDropDown";
 
 export function SortBy() {
   const { sortBy, onSort, sortOptions } = useOperations();

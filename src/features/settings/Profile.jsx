@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { ProfileImage } from "./ProfileImage";
 import { useForm } from "@/hooks/useForm";
-import { ModalFormLayout } from "@/layouts/ModalFormLayout";
+import { ModalFormLayout } from "@/layouts";
 import { updateUser } from "@/app/reducer";
 
 export default function Profile() {

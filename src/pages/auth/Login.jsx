@@ -1,10 +1,9 @@
 import { useForm } from "@/hooks/useForm";
-import { Button } from "../ui";
+import { Button } from "../../components/ui";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
-import { toLocalStorage } from "@/hooks/useLocalStorageState";
 
-function Login() {
+export function Login() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const {
@@ -74,4 +73,3 @@ function Login() {
   );
 }
 
-export default Login;

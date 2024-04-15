@@ -1,9 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-const getSystemTheme = () =>
-  window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+const getSystemTheme = () => (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 const getTheme = () => {
-  const theme = window.localStorage.getItem("theme");
+  const theme = window.localStorage.getItem('theme');
   if (theme) return theme;
   return getSystemTheme();
 };
@@ -11,35 +10,31 @@ const getTheme = () => {
 const initialState = {
   theme: getTheme(),
   user: {
-    role: "admin",
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@gmail.com",
+    role: 'admin',
+    firstName: 'John',
+    lastName: 'Doe',
+    email: 'john.doe@gmail.com',
     image: null,
-    phone: "0682828882",
-    birthday: "1998-12-12",
+    phone: '0682828882',
+    birthday: '1998-12-12',
   },
 };
 
 const appSlice = createSlice({
   initialState,
-  name: "app",
+  name: 'app',
   reducers: {
     changeTheme(state, action) {
       state.theme = action.payload;
-      window.localStorage.setItem("theme", action.payload);
+      window.localStorage.setItem('theme', action.payload);
 
-      const theme =
-        action.payload === "system" ? getSystemTheme() : action.payload;
+      const theme = action.payload === 'system' ? getSystemTheme() : action.payload;
 
       document.documentElement.className = `${theme} theme-transition`;
-      setTimeout(
-        () => document.documentElement.classList.remove("theme-transition"),
-        400
-      );
+      setTimeout(() => document.documentElement.classList.remove('theme-transition'), 400);
     },
     updateUser(state, action) {
-      console.log(action)
+      console.log(action);
       state.user = { ...state.user, ...action.payload };
     },
   },

@@ -1,28 +1,21 @@
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form';
 
 export function useReactHookForm({ defaultValues, submit, mode }) {
   let defValues;
-  if (defaultValues && typeof defaultValues === "function") {
+  if (defaultValues && typeof defaultValues === 'function') {
     defaultValues().then((v) => (defValues = v));
   } else defValues = defaultValues;
 
   const {
     handleSubmit,
     reset,
-    formState: {
-      isDirty: isUpdated,
-      errors,
-      dirtyFields,
-      isLoading,
-      isSubmitting,
-      isValid,
-    },
+    formState: { isDirty: isUpdated, errors, dirtyFields, isLoading, isSubmitting, isValid },
     control,
     setValue,
     watch,
   } = useForm({
     defaultValues,
-    mode: mode || "onSubmit",
+    mode: mode || 'onSubmit',
   });
 
   const onSubmit = () => {
