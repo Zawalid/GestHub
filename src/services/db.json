@@ -228,29 +228,37 @@
       "priority": "Medium",
       "tasks": [
         {
-          "id": 1,
-          "name": "Identify CRM requirements",
-          "status": "Done"
+          "id": 8,
+          "title": "dd",
+          "description": "",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": "None",
+          "status": "To Do"
         },
         {
-          "id": 2,
-          "name": "Select CRM vendor",
-          "status": "In Progress"
-        },
-        {
-          "id": 3,
-          "name": "Implement CRM system",
-          "status": "Done"
-        },
-        {
-          "id": 4,
-          "name": "Train staff on CRM system",
+          "id": 7,
+          "title": "dd",
+          "description": "",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": "None",
           "status": "To Do"
         }
       ],
       "teamMembers": [
-        "Emma Watson",
-        "Daniel Radcliffe"
+        {
+          "id": "1",
+          "firstName": "John",
+          "lastName": "Doe",
+          "email": "john.doe@example.com",
+          "phone": "123-456-7890",
+          "birthday": "1990-01-01",
+          "university": "Harvard University",
+          "major": "Computer Science",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        }
       ]
     },
     {

@@ -57,7 +57,7 @@ export default function Tasks() {
       onConfirm: () => updateGroups(tasks, task.status, 'delete'),
     });
   };
-  
+
   // Drag And Drop Methods
   const handleDragEnd = (result) => {
     const { source, destination } = result;
@@ -79,7 +79,10 @@ export default function Tasks() {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className='grid h-full grid-cols-[repeat(3,100%)] mobile:grid-cols-[repeat(3,minmax(300px,1fr))] gap-5 w-full ' ref={parent}>
+      <div
+        className='grid h-full w-full grid-cols-[repeat(3,100%)] gap-5 mobile:grid-cols-[repeat(3,minmax(300px,1fr))] '
+        ref={parent}
+      >
         {Object.keys(groups).map((group) => (
           <TasksGroup
             key={group}
@@ -127,9 +130,9 @@ function TasksGroup({ group, onAdd, onEdit, onDelete }) {
       </div>
 
       <Droppable droppableId={group.name} type='TASK'>
-        {(provided) => (
-          <div className='pt-2 min-h-[250px]' ref={provided.innerRef} {...provided.droppableProps}>
-            <TasksList group={group} onEdit={onEdit} onDelete={onDelete} />
+        {(provided, snapshot) => (
+          <div className='min-h-[250px] pt-2' ref={provided.innerRef} {...provided.droppableProps}>
+            <TasksList group={group} onEdit={onEdit} onDelete={onDelete} isDragging={snapshot.isDraggingOver} />
             {provided.placeholder}
           </div>
         )}
@@ -138,8 +141,8 @@ function TasksGroup({ group, onAdd, onEdit, onDelete }) {
   );
 }
 
-function TasksList({ group, onEdit, onDelete }) {
-  if (!group.tasks.length) {
+function TasksList({ group, onEdit, onDelete, isDragging }) {
+  if (!group.tasks.length && !isDragging) {
     const message =
       group.name === 'To Do'
         ? 'No tasks to do. Feel free to add some!'
@@ -161,7 +164,8 @@ function TasksList({ group, onEdit, onDelete }) {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           style={{ ...provided.draggableProps.style }}
-          className='h-[170px]'         >
+          className='h-[170px]'
+        >
           <Task task={task} onEdit={onEdit} onDelete={onDelete} isDragging={snapshot.isDragging} />
         </div>
       )}

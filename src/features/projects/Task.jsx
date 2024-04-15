@@ -9,7 +9,7 @@ export default function Task({ task, onDelete, onEdit, isDragging }) {
   return (
     <div
       className={`relative flex h-[144px] flex-col gap-4 rounded-lg border border-border bg-background-secondary p-4 pt-6 shadow-sm transition-all duration-300 ${
-        isDragging ? 'scale-90 opacity-70' : ''
+        isDragging ? 'scale-90 bg-background-tertiary' : ''
       }`}
     >
       <div className='space-y-2.5'>
@@ -23,7 +23,7 @@ export default function Task({ task, onDelete, onEdit, isDragging }) {
       </div>
 
       <div className='flex flex-1 items-center justify-between border-t border-border pt-3'>
-        {assignee === 'None' ? (
+        {typeof assignee !== 'object' ? (
           <div className='flex items-center gap-1 text-xs font-medium text-text-secondary'>
             <LuUser />
             <span>N/A</span>
