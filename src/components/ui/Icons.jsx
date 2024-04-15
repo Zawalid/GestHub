@@ -33,7 +33,7 @@ export { BsPeople, BsLayoutSidebarInset, BsLayoutSidebarInsetReverse,BsCalendar4
 export { RiTeamLine } from 'react-icons/ri';
 export { LiaUserTieSolid } from 'react-icons/lia';
 export { FiLogOut, FiSettings, FiPhone } from 'react-icons/fi';
-export { LuCalendarX } from 'react-icons/lu';
+export { LuCalendarX,LuUser  } from 'react-icons/lu';
 export {
   MdDriveFileRenameOutline,
   MdDownload,
