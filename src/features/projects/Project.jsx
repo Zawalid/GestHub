@@ -104,7 +104,7 @@ export function ProgressBar({ progress, status }) {
 
   return (
     <div className='relative w-full rounded-lg bg-background-tertiary py-1'>
-      <div className={`absolute top-0 h-full rounded-lg ${color}`} style={{ width: `${progress}%` }}></div>
+      <div className={`absolute top-0 transition-all duration-500 h-full rounded-lg ${color}`} style={{ width: `${progress}%` }}></div>
     </div>
   );
 }

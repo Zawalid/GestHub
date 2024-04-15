@@ -3,11 +3,15 @@ import { PRIORITY_COLORS } from '@/utils/constants';
 import { formatDate } from '@/utils/helpers';
 import { ToolTip } from '@/components/ui/ToolTip';
 
-export default function Task({ task, onDelete, onEdit }) {
-  const { id, title, description, dueDate, priority, assignee } = task;
+export default function Task({ task, onDelete, onEdit, isDragging }) {
+  const { title, description, dueDate, priority, assignee } = task;
 
   return (
-    <div className='relative flex h-[144px] flex-col gap-4 rounded-lg border border-border bg-background-secondary p-4 pt-6 shadow-sm'>
+    <div
+      className={`relative flex h-[144px] flex-col gap-4 rounded-lg border border-border bg-background-secondary p-4 pt-6 shadow-sm transition-all duration-300 ${
+        isDragging ? 'scale-90 opacity-70' : ''
+      }`}
+    >
       <div className='space-y-2.5'>
         <div className='flex items-center justify-between gap-5'>
           <h4 className='line-clamp-1 font-semibold text-text-primary'>{title || 'Untitled'}</h4>
@@ -29,7 +33,7 @@ export default function Task({ task, onDelete, onEdit }) {
             <img
               src={assignee.image || '/images/default-profile.jpg'}
               alt={`${assignee.firstName} ${assignee.lastName}`}
-              className='rounded-full border-2 w-7 h-7 border-border'
+              className='h-7 w-7 rounded-full border-2 border-border'
             />
           </ToolTip>
         )}
@@ -46,7 +50,7 @@ export default function Task({ task, onDelete, onEdit }) {
           <button
             className='px-2 py-1 text-text-primary transition-colors duration-300 hover:bg-background-primary'
             key={i}
-            onClick={() => b.onClick(id)}
+            onClick={() => b.onClick(task)}
           >
             {b.icon}
           </button>
