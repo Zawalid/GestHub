@@ -228,15 +228,6 @@
       "priority": "Medium",
       "tasks": [
         {
-          "id": 7,
-          "title": "dd",
-          "description": "",
-          "dueDate": "",
-          "priority": "None",
-          "assignee": "None",
-          "status": "To Do"
-        },
-        {
           "id": 8,
           "title": "Add Drag And Drop to tasks",
           "description": "Add the drag and drop functionality to the project's tasks so that it looks like a kanban board",
@@ -252,7 +243,16 @@
             "password": "Abcs1234",
             "confirmPassword": "Abcs1234"
           },
-          "status": "Done"
+          "status": "To Do"
+        },
+        {
+          "id": 7,
+          "title": "dd",
+          "description": "",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": "None",
+          "status": "To Do"
         },
         {
           "id": 9,
@@ -575,7 +575,7 @@
             "password": "Abcs1234",
             "confirmPassword": "Abcs1234"
           },
-          "status": "To Do"
+          "status": "In Progress"
         },
         {
           "id": 2,
@@ -595,6 +595,45 @@
             "startDate": "2022-01-01",
             "endDate": "2022-06-01"
           },
+          "status": "In Progress"
+        }
+      ]
+    },
+    {
+      "id": "0b4c",
+      "name": "d",
+      "description": "",
+      "startDate": "2024-04-22",
+      "endDate": "2024-05-09",
+      "priority": "None",
+      "status": "Not Started",
+      "teamMembers": [],
+      "tasks": [
+        {
+          "id": 2,
+          "title": "d",
+          "description": "",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": "None",
+          "status": "To Do"
+        },
+        {
+          "id": 3,
+          "title": "ds",
+          "description": "",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": "None",
+          "status": "To Do"
+        },
+        {
+          "id": 4,
+          "title": "dd",
+          "description": "",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": "None",
           "status": "To Do"
         }
       ]

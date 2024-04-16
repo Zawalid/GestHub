@@ -8,7 +8,7 @@ import { getIncrementedID } from '@/utils/helpers';
 import { Intern } from './TeamMembers';
 import { MdOutlineDoNotDisturb } from 'react-icons/md';
 
-export function StarterTasks({ updateStatus, updateState, state,teamMembers }) {
+export function StarterTasks({ updateStatus, updateState, state, teamMembers }) {
   const [currentTab, setCurrentTab] = useState('view');
   const [tasks, setTasks] = useState(state);
   const [currentTask, setCurrentTask] = useState(null);
@@ -68,20 +68,21 @@ function TasksList({ tasks, setTasks, setCurrentTask, setCurrentTab, display }) 
       );
     return (
       <div
-        className='grid flex-1 grid-cols-[repeat(auto-fill,minmax(250px,1fr))]  gap-x-4 gap-y-6 overflow-auto pr-1.5'
+        className='grid flex-1 grid-cols-[repeat(auto-fill,minmax(250px,1fr))]  gap-x-4  gap-y-6 overflow-auto pr-1.5 pt-5'
         ref={parent}
       >
         {tasks.map((task) => (
-          <Task
-            key={task.id}
-            task={task}
-            onEdit={(id) => {
-              setCurrentTask(tasks.find((t) => t.id === id));
-              setCurrentTab('add');
-            }}
-            onDelete={(id) => setTasks((prev) => prev.filter((t) => t.id !== id))}
-            onUpdate={(task) => setTasks((prev) => prev.map((t) => (t.id === task.id ? task : t)))}
-          />
+          <div className='min-w-[250px] flex-1' key={task.id}>
+            <Task
+              task={task}
+              onEdit={(id) => {
+                setCurrentTask(tasks.find((t) => t.id === id));
+                setCurrentTab('add');
+              }}
+              onDelete={(task) => setTasks((prev) => prev.filter((t) => t.id !== task.id))}
+              onUpdate={(task) => setTasks((prev) => prev.map((t) => (t.id === task.id ? task : t)))}
+            />
+          </div>
         ))}
       </div>
     );

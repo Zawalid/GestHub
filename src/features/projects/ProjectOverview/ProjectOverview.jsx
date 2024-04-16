@@ -27,7 +27,6 @@ const tabs = {
       </div>
     ),
   },
-  notes: { class: 'left-[168px] w-[42px]', element: null },
 };
 
 export default function ProjectOverview() {

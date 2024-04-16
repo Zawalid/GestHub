@@ -11,18 +11,20 @@ import { formatDate } from '@/utils/helpers';
 export default function Project({ project, layout }) {
   const { id, name, description, startDate, endDate, status, priority, tasks, teamMembers, progress, completedTasks } =
     project;
+  const navigate = useNavigate();
 
   return (
     <div
-      className={`relative grid grid-rows-[24px_auto_20px_28px] gap-3 rounded-lg rounded-tr-none border border-border bg-background-disabled p-3 shadow-md ${
+      className={`relative grid cursor-pointer grid-rows-[24px_auto_20px_28px] gap-3 rounded-lg rounded-tr-none border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95 ${
         layout === 'grid' ? 'h-[240px]' : ''
       }`}
+      onClick={() =>  navigate(id)}
     >
       <PriorityIndicator priority={priority} />
 
       <div className='flex items-center justify-between gap-5'>
         <Date startDate={startDate} endDate={endDate} />
-        <Actions id={id} />
+        {/* <Actions id={id} /> */}
       </div>
 
       <div className='space-y-2'>
@@ -104,7 +106,10 @@ export function ProgressBar({ progress, status }) {
 
   return (
     <div className='relative w-full rounded-lg bg-background-tertiary py-1'>
-      <div className={`absolute top-0 transition-all duration-500 h-full rounded-lg ${color}`} style={{ width: `${progress}%` }}></div>
+      <div
+        className={`absolute top-0 h-full rounded-lg transition-all duration-500 ${color}`}
+        style={{ width: `${progress}%` }}
+      ></div>
     </div>
   );
 }

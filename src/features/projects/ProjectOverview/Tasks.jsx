@@ -135,9 +135,9 @@ function TasksGroup({ group, onAdd, onEdit, onDelete }) {
 
       <Droppable droppableId={group.name} type='TASK'>
         {(provided, snapshot) => (
-          <div className='relative space-y-6 pt-2' ref={provided.innerRef} {...provided.droppableProps}>
+          <div className='relative flex flex-col gap-6 pt-2' ref={provided.innerRef} {...provided.droppableProps}>
             {snapshot.isDraggingOver ? (
-              <div className='placeholder absolute z-10 h-[210px] w-full rounded-lg bg-background-secondary opacity-55'></div>
+              <div className='placeholder absolute z-10 h-[190px] w-full rounded-lg bg-background-secondary opacity-55'></div>
             ) : null}
             <TasksList group={group} onEdit={onEdit} onDelete={onDelete} isDragging={snapshot.isDraggingOver} />
             {provided.placeholder}
