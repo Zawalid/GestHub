@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
 import { createContext, useContext } from "react";
 import { toLocalStorage } from "@/hooks/useLocalStorageState";
 import { useOffers } from "./useOffers";
@@ -13,13 +12,11 @@ function OffersProvider({ children }) {
   const [storedoffers, setStoredOffers] = useState(toLocalStorage("offers"));
   const [isShowStor, setisShowStor] = useState(false);
   const secteurs = new Set(offers?.map((e) => e.secteur));
-  const exp = new Set(offers?.map((e) => e.exp));
+  const experiences = new Set(offers?.map((e) => e.experience));
   const [filterdSect, setFilterdSect] = useState([]);
   const [filterdExp, setFilterdExp] = useState([]);
   const [selectAllSect, setselectAllSect] = useState(false);
   const [selectAllexp, setselectAllexp] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get("search") || "";
   const value = {
     error,
     isLoading,
@@ -29,7 +26,7 @@ function OffersProvider({ children }) {
     showStored,
     filterByDate,
     secteurs,
-    exp,
+    experiences,
     setFilterdSect,
     filterdSect,
     setFilterdExp,
@@ -38,9 +35,7 @@ function OffersProvider({ children }) {
     selectAllSect,
     selectAllexp,
     selectAll,
-    searchParams,
-    setSearchParams,
-    query,
+
   };
 
   //set data from react Query to state
@@ -72,7 +67,7 @@ function OffersProvider({ children }) {
       setFiltredoffers(offers);
     }
     if (filterdExp.length > 0 && filterdSect.length == 0) {
-      setFiltredoffers(offers.filter((e) => filterdExp.includes(e.exp)));
+      setFiltredoffers(offers.filter((e) => filterdExp.includes(e.experience)));
     }
     if (filterdSect.length > 0 && filterdExp.length == 0) {
       setFiltredoffers(offers.filter((e) => filterdSect.includes(e.secteur)));
@@ -80,25 +75,12 @@ function OffersProvider({ children }) {
     if (filterdSect.length > 0 && filterdExp.length > 0) {
       setFiltredoffers(
         offers.filter(
-          (e) => filterdSect.includes(e.secteur) && filterdExp.includes(e.exp)
+          (e) => filterdSect.includes(e.secteur) && filterdExp.includes(e.experience)
         )
       );
     }
   }, [filterdSect, filterdExp, isShowStor, offers]);
-  //search effect
-  useEffect(() => {
-    query.length > 2
-      ? setFiltredoffers((e) =>
-          e?.filter((e) =>
-            (e.title + e.description)
-              .trim()
-              .toLocaleLowerCase()
-              .includes(query.trim().toLocaleLowerCase())
-          )
-        )
-      : setFiltredoffers(offers);
-    return setFiltredoffers((e) => e);
-  }, [query, offers]);
+
   //Filter Offers by date
   function filterByDate(e, interval) {
     function dateInterval(interval) {

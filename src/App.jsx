@@ -44,7 +44,7 @@ const routesElements = {
   teams: <Teams />,
   absences: <Absences />,
   offers: <Offers />,
-  'offers/:id': <OfferDetails />,
+  'offers/:id': <Offers />,
   demands: <Demands />,
   projects: <Projects />,
   'projects/new': <Projects />,
@@ -72,6 +72,8 @@ export default function App() {
               {/* HomePage */}
               <Route path='/' element={<HomePageLayout />}>
                 <Route index element={<HomePage />} />
+                <Route path='/offers/:id' element={<HomePage />} />
+
               </Route>
               {/* App */}
               <Route path='app' element={<AppLayout />}>

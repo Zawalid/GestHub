@@ -294,7 +294,7 @@
     {
       "id": "3",
       "name": "E-commerce Platform Upgrade",
-      "description": "Upgrade the existing e-commerce platform to improve performance and user experience.",
+      "description": "Upgrade the existing e-commerce platform to improve performance and user experienceerience.",
       "startDate": "2022-04-01",
       "endDate": "2022-10-01",
       "teamId": 8,
@@ -338,7 +338,7 @@
     {
       "id": "4",
       "name": "New Product Development",
-      "description": "Develop a new product to expand the company's product line.",
+      "description": "Develop a new product to experienceand the company's product line.",
       "startDate": "2022-05-01",
       "endDate": "2023-05-01",
       "teamId": 9,
@@ -462,6 +462,111 @@
           "status": "To Do"
         }
       ]
+    },
+    {
+      "id": "b913",
+      "name": "rr",
+      "description": "rrrr\n",
+      "startDate": "2024-04-16",
+      "endDate": "2024-04-19",
+      "priority": "High",
+      "status": "Not Started",
+      "teamMembers": [
+        {
+          "id": "1",
+          "firstName": "John",
+          "lastName": "Doe",
+          "email": "john.doe@example.com",
+          "phone": "123-456-7890",
+          "birthday": "1990-01-01",
+          "university": "Harvard University",
+          "major": "Computer Science",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        },
+        {
+          "id": "5",
+          "firstName": "Charlie",
+          "lastName": "Brown",
+          "email": "charlie.brown@example.com",
+          "phone": "333-444-5555",
+          "birthday": "1994-05-05",
+          "university": "Carnegie Mellon University",
+          "major": "Artificial Intelligence",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        }
+      ],
+      "tasks": []
+    },
+    {
+      "id": "7889",
+      "name": "gestion stagiaires",
+      "description": "description",
+      "startDate": "2024-04-16",
+      "endDate": "2024-04-24",
+      "priority": "None",
+      "status": "Not Started",
+      "teamMembers": [
+        {
+          "id": "4",
+          "firstName": "Alice",
+          "lastName": "Johnson",
+          "email": "alice.johnson@example.com",
+          "phone": "222-333-4444",
+          "birthday": "1993-04-04",
+          "university": "University of California, Berkeley",
+          "major": "Data Science",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        },
+        {
+          "id": "3",
+          "firstName": "Bob",
+          "lastName": "Smith",
+          "email": "bob.smith@example.com",
+          "phone": "111-222-3333",
+          "birthday": "1991-03-03",
+          "university": "MIT",
+          "major": "Software Engineering",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        },
+        {
+          "id": "1",
+          "firstName": "John",
+          "lastName": "Doe",
+          "email": "john.doe@example.com",
+          "phone": "123-456-7890",
+          "birthday": "1990-01-01",
+          "university": "Harvard University",
+          "major": "Computer Science",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        }
+      ],
+      "tasks": [
+        {
+          "id": 1,
+          "title": "backend laravel",
+          "description": "api /database .... ",
+          "dueDate": "2024-04-23",
+          "priority": "High",
+          "assignee": {
+            "id": "1",
+            "firstName": "John",
+            "lastName": "Doe",
+            "email": "john.doe@example.com",
+            "phone": "123-456-7890",
+            "birthday": "1990-01-01",
+            "university": "Harvard University",
+            "major": "Computer Science",
+            "startDate": "2022-01-01",
+            "endDate": "2022-06-01"
+          },
+          "status": "To Do"
+        }
+      ]
     }
   ],
   "absences": [
@@ -493,57 +598,82 @@
   "offers": [
     {
       "id": "1",
-      "exp": "Expert",
+      "experience": "Expert",
       "secteur": "devloppemnt",
       "title": "devlopper backend",
+      "status":"urgent",
+      "skills": [
+        "nodejs",
+        "express",
+        "mongodb",
+        "laravel",
+        "MySql"
+      ],
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
       "date": "2024-04-03T00:00:00.000Z",
+      "direction": "DSI",
       "ville": "rabat"
     },
     {
       "id": "3",
-      "exp": "intermediate",
+      "experience": "intermediate",
       "secteur": "devloppemnt",
       "title": "devlopper frontend",
+      "skills": [
+        "JavaScript",
+        "react",
+        "angular",
+        "vuejs"
+      ],
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
       "date": "2024-04-04T00:00:00.000Z",
+      "direction": "DSI",
       "ville": "sale"
     },
     {
       "id": "4",
-      "exp": "debutant",
+      "experience": "debutant",
       "secteur": "devops",
       "title": "engineer devops",
+      "skills": [
+        "docker",
+        "kubernetes",
+        "jenkins"
+      ],
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
       "date": "2024-04-30T00:00:00.000Z",
+      "direction": "DSI",
       "ville": "rabat"
     },
     {
       "id": "5",
-      "exp": "Expert",
-      "secteur": "testing",
+      "experience": "Expert",
+      "secteur": "Testing",
       "title": "testeur ",
+      "skills": [
+        "selenium",
+        "cypress",
+        "postman"
+      ],
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
       "date": "2024-09-02T00:00:00.000Z",
+      "direction": "DSI",
       "ville": "Casablanca"
     },
     {
       "id": "6",
-      "exp": "Expert",
+      "experience": "Expert",
       "secteur": "Ui/Ux",
       "title": "Designer ",
+      "skills": [
+        "figma",
+        " adobe xd",
+        "sketch"
+      ],
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
       "date": "2025-09-02T00:00:00.000Z",
+      "direction": "DSI",
       "ville": "Casablanca"
     }
-  ],
-  "offer": {
-    "id": 1,
-    "exp": "Expert",
-    "secteur": "devloppemnt",
-    "title": "devlopper backend",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
-    "date": "2024-04-03T00:00:00.000Z",
-    "ville": "rabat"
-  }
+  ]
 }

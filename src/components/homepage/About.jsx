@@ -46,7 +46,7 @@ function About() {
           <DsiLocation />
         </div>
       </div>
-      <Shade className="absolute top-0 left-0 w-full overflow-hidden leading-[0]" />
+      <Shade className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-0" />
     </div>
   );
 }

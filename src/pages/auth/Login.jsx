@@ -37,11 +37,11 @@ export function Login() {
         if (response.ok) {
           const data = await response.json();
           console.log(data);
-          localStorage.setItem("user", JSON.stringify(data.user));
-          localStorage.setItem("token", JSON.stringify(data ));
+          localStorage.setItem("userId", JSON.stringify(data.user));
+          localStorage.setItem("token", JSON.stringify(data.token ));
           navigate("/app");
         } else {
-          console.log("errrrrrrrr");
+          console.log("error");
         }
       } catch (err) {
         console.log(err);

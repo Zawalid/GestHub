@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -87,10 +87,10 @@ export default function Sidebar({ openSettings }) {
           <IoSettingsOutline />
           <span className={spanClass}>{t('app.sidebar.settings')}</span>
         </button>
-        <button className='sidebar-element group w-full'>
+        <Link to='/' className='sidebar-element group w-full'>
           <FiLogOut />
           <span className={spanClass}>{t('app.sidebar.logout')}</span>
-        </button>
+        </Link>
       </div>
     </aside>
   );

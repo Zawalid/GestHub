@@ -16,7 +16,7 @@ export function FilterAside({ className }) {
   ];
   const {
     secteurs,
-    exp,
+    experiences,
     setFilterdSect,
     setFilterdExp,
     filterByDate,
@@ -27,24 +27,24 @@ export function FilterAside({ className }) {
     <div
       className={`flex w-56 min-h-screen flex-col shadow-xl text-text-primary border border-border rounded-lg capitalize ${className}`}
     >
-      <h1 className="flex items-center gap-3 font-bold bg-background-tertiary text-text-primary p-1 rounded-t-lg ">
+      <h1 className="flex  items-center gap-3 font-bold bg-background-tertiary text-text-primary p-1 rounded-t-lg ">
         <CiFilter /> Filter
       </h1>
       <div className="">
         <div className="flex items-center border-y border-border justify-between p-2 pe-4 hover:bg-background-tertiary gap-2 text-sm font-bold cursor-pointer">
-          Saved
+          Favoris
           <CheckBox onClick={(e) => showStored(e)} />
         </div>
 
         <div
-          className="flex items-center border-y border-border justify-between p-2 pe-4 hover:bg-background-tertiary gap-2 text-sm font-bold cursor-pointer"
+          className="flex items-center border-b border-border justify-between p-2 pe-4 hover:bg-background-tertiary gap-2 text-sm font-bold cursor-pointer"
           onClick={() => setdatesIsOpen((e) => !e)}
         >
           Date
           <IoIosArrowDown />
         </div>
         <div
-          className=" px-6 text-text-secondary overflow-hidden transition-[height] flex flex-col justify-around  duration-500"
+          className=" px-6  text-text-secondary overflow-hidden transition-[height] flex flex-col justify-around  duration-500"
           style={{
             height: datesIsOpen ? `${dates.length * 30}px` : "0px",
           }}
@@ -61,7 +61,7 @@ export function FilterAside({ className }) {
         </div>
 
         <div
-          className="flex items-center border-y border-border justify-between hover:bg-background-tertiary p-2 pe-4  gap-2 text-sm font-bold cursor-pointer"
+          className="flex items-center border-b border-border justify-between hover:bg-background-tertiary p-2 pe-4  gap-2 text-sm font-bold cursor-pointer"
           onClick={() => setsectIsOpen((e) => !e)}
         >
           Secteur
@@ -84,7 +84,7 @@ export function FilterAside({ className }) {
         </div>
 
         <div
-          className="flex items-center border-y border-border justify-between p-2 pe-4 hover:bg-background-tertiary gap-2 text-sm font-bold cursor-pointer"
+          className="flex items-center border-b border-border justify-between p-2 pe-4 hover:bg-background-tertiary gap-2 text-sm font-bold cursor-pointer"
           onClick={() => setexpIsOpen((e) => !e)}
         >
           Experience
@@ -93,10 +93,10 @@ export function FilterAside({ className }) {
         <div
           className=" px-6 text-text-secondary overflow-hidden transition-[height] flex flex-col justify-around  duration-500"
           style={{
-            height: expIsOpen ? `${[...exp].length * 30}px` : "0px",
+            height: expIsOpen ? `${[...experiences].length * 30}px` : "0px",
           }}
         >
-          {[...exp].map((exp, i) => (
+          {[...experiences].map((exp, i) => (
             <span key={i} className="flex items-center gap-2 justify-between">
               {exp}
               <CheckBox
