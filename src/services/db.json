@@ -228,35 +228,55 @@
       "priority": "Medium",
       "tasks": [
         {
-          "id": 8,
-          "title": "Add Drag And Drop to tasks",
-          "description": "Add the drag and drop functionality to the project's tasks so that it looks like a kanban board",
-          "dueDate": "",
-          "priority": "High",
-          "assignee": {
-            "id": "1bf0",
-            "firstName": "Walid",
-            "lastName": "Zakan",
-            "email": "walid.zakan@gmail.com",
-            "phone": "0682208346",
-            "birthday": "2024-05-02",
-            "password": "Abcs1234",
-            "confirmPassword": "Abcs1234"
-          },
-          "status": "To Do"
-        },
-        {
           "id": 7,
           "title": "dd",
           "description": "",
           "dueDate": "",
-          "priority": "None",
+          "priority": "High",
           "assignee": "None",
-          "status": "To Do"
+          "status": "In Progress"
         },
         {
           "id": 9,
           "title": "dd",
+          "description": "",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": {
+            "id": "1",
+            "firstName": "John",
+            "lastName": "Doe",
+            "email": "john.doe@example.com",
+            "phone": "123-456-7890",
+            "birthday": "1990-01-01",
+            "university": "Harvard University",
+            "major": "Computer Science",
+            "startDate": "2022-01-01",
+            "endDate": "2022-06-01"
+          },
+          "status": "In Progress"
+        },
+        {
+          "id": 13,
+          "title": "ddddddddddd",
+          "description": "",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": "None",
+          "status": "In Progress"
+        },
+        {
+          "id": 10,
+          "title": "dfdfdf",
+          "description": "",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": "None",
+          "status": "Done"
+        },
+        {
+          "id": 11,
+          "title": "dfsdfsdfsfsdf",
           "description": "",
           "dueDate": "",
           "priority": "None",
@@ -373,6 +393,11 @@
       "priority": "High",
       "tasks": [
         {
+          "id": 5,
+          "name": "Launch new product",
+          "status": "To Do"
+        },
+        {
           "id": 1,
           "name": "Conduct market research",
           "status": "To Do"
@@ -380,22 +405,17 @@
         {
           "id": 2,
           "name": "Design new product",
-          "status": "To Do"
-        },
-        {
-          "id": 3,
-          "name": "Develop new product",
-          "status": "To Do"
+          "status": "In Progress"
         },
         {
           "id": 4,
           "name": "Test new product",
-          "status": "To Do"
+          "status": "In Progress"
         },
         {
-          "id": 5,
-          "name": "Launch new product",
-          "status": "To Do"
+          "id": 3,
+          "name": "Develop new product",
+          "status": "Done"
         }
       ],
       "teamMembers": [
@@ -610,8 +630,8 @@
       "teamMembers": [],
       "tasks": [
         {
-          "id": 2,
-          "title": "d",
+          "id": 4,
+          "title": "dd",
           "description": "",
           "dueDate": "",
           "priority": "None",
@@ -625,16 +645,16 @@
           "dueDate": "",
           "priority": "None",
           "assignee": "None",
-          "status": "To Do"
+          "status": "Done"
         },
         {
-          "id": 4,
-          "title": "dd",
+          "id": 2,
+          "title": "d",
           "description": "",
           "dueDate": "",
           "priority": "None",
           "assignee": "None",
-          "status": "To Do"
+          "status": "Done"
         }
       ]
     }

@@ -1,32 +1,17 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { useProject } from '../useProjects';
 import { Members, ProgressBar } from '../Project';
 import { Button } from '@/components/ui';
-import { PiListBold, RxViewVertical, FaPlus } from '@/components/ui/Icons';
+import { FaPlus } from '@/components/ui/Icons';
 import AddNewMember from './AddNewMember';
 import Tasks from './Tasks';
 import Overview from './Overview';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 const tabs = {
   overview: { class: 'left-0 w-[65px]', element: <Overview /> },
-  tasks: {
-    class: 'left-[98px] w-[40px]',
-    element: <Tasks />,
-    header: (
-      <div className='flex justify-between gap-3'>
-        <Button display='with-icon' size='small' color='tertiary'>
-          <RxViewVertical />
-          Board
-        </Button>
-        <Button display='with-icon' size='small' color='tertiary'>
-          <PiListBold />
-          List
-        </Button>
-      </div>
-    ),
-  },
+  tasks: { class: 'left-[98px] w-[40px]', element: <Tasks /> },
 };
 
 export default function ProjectOverview() {
@@ -39,7 +24,7 @@ export default function ProjectOverview() {
       <Header onAddNewMember={() => setIsOpen(true)} />
       <div className='flex flex-col overflow-hidden'>
         <Tabs />
-        <div className='flex-1 flex overflow-auto pr-2 pt-4' ref={parent}>
+        <div className='flex flex-1 overflow-auto pr-2 pt-4' ref={parent}>
           {currentTab?.element}
         </div>
       </div>
@@ -84,7 +69,10 @@ function Tabs() {
   if (!currentTab) return;
 
   return (
-    <div className='relative flex flex-col-reverse justify-between gap-3 border-b-2 border-border py-3 mobile:flex-row mobile:items-center'>
+    <div
+      className='relative flex flex-col-reverse justify-between gap-3 border-b-2 border-border py-3 mobile:flex-row mobile:items-center'
+      id='tabs'
+    >
       <div className=' flex items-center gap-8'>
         <div
           className={`absolute -bottom-0.5 h-0.5 rounded-lg bg-primary transition-all duration-300 ${currentTab.class}`}
@@ -99,7 +87,6 @@ function Tabs() {
           </Link>
         ))}
       </div>
-      {currentTab.header}
     </div>
   );
 }

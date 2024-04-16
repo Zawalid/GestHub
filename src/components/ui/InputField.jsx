@@ -81,6 +81,7 @@ export const InputField = forwardRef(
     },
     ref
   ) => {
+    console.log(type)
     const icon = showIcon && (icons[name] || icons[type]);
 
     return (

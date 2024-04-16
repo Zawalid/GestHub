@@ -87,6 +87,7 @@ export default function InternsList() {
         {
           name: 'phone',
           label: 'Phone Number',
+          type : 'phone'
         },
         {
           name: 'birthday',

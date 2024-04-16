@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { toast } from 'sonner';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { FaPlus } from '@/components/ui/Icons';
+import { FaPlus, PiListBold, RxViewVertical } from '@/components/ui/Icons';
 import { Button, Modal } from '@/components/ui';
 import Task from '../Task';
 import { useProject, useUpdateProject } from '../useProjects';
@@ -11,12 +11,13 @@ import { NewTask } from '../NewProject/StarterTasks';
 import { getIncrementedID } from '@/utils/helpers';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
+import { createPortal } from 'react-dom';
 
 const getStyle = (style, snapshot) => (snapshot.isDropAnimating ? { ...style, transitionDuration: `0.0001s` } : style);
 
 export default function Tasks() {
   const [parent] = useAutoAnimate({ duration: 400 });
-  const { id } = useParams();
+  const { id } = useParams() 
   const { project } = useProject(id);
   const [groups, setGroups] = useState(() => {
     const groups = { 'To Do': [], 'In Progress': [], Done: [] };
@@ -25,6 +26,7 @@ export default function Tasks() {
   });
   const [currentGroup, setCurrentGroup] = useState(null);
   const [currentTask, setCurrentTask] = useState(null);
+  const [layout, setLayout] = useState('board');
   const { mutate } = useUpdateProject({ showToast: false });
   const { openModal } = useConfirmationModal();
 
@@ -81,42 +83,117 @@ export default function Tasks() {
   };
 
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
-      <div
-        className='grid h-full w-full grid-cols-[repeat(3,100%)] gap-5 mobile:grid-cols-[repeat(3,minmax(300px,1fr))] '
-        ref={parent}
-      >
-        {Object.keys(groups).map((group) => (
-          <TasksGroup
-            key={group}
-            group={{
-              name: group,
-              tasks: groups[group],
-              color: group === 'To Do' ? 'bg-red-500' : group === 'Done' ? 'bg-green-500' : 'bg-blue-500',
-            }}
-            onAdd={() => setCurrentGroup(group)}
-            onEdit={(task) => setCurrentTask(task)}
-            onDelete={onDeleteTask}
-          />
-        ))}
-      </div>
-      <AddNewTask
-        currentGroup={currentGroup}
-        onClose={() => {
-          setCurrentGroup(null);
-          setCurrentTask(null);
-        }}
-        currentTask={currentTask}
-        onAdd={onAddTask}
-        onUpdate={onUpdateTask}
-        teamMembers={project?.teamMembers}
-      />
-    </DragDropContext>
+    <>
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <div
+          className={` h-full w-full ${
+            layout === 'board'
+              ? 'grid  grid-cols-[repeat(3,100%)] gap-5 mobile:grid-cols-[repeat(3,minmax(300px,1fr))] '
+              : 'flex flex-col gap-8'
+          }`}
+          ref={parent}
+        >
+          {Object.keys(groups).map((group) => (
+            <TasksGroup
+              key={group}
+              group={{
+                name: group,
+                tasks: groups[group],
+                color: group === 'To Do' ? 'bg-red-500' : group === 'Done' ? 'bg-green-500' : 'bg-blue-500',
+              }}
+              onAdd={() => setCurrentGroup(group)}
+              onEdit={(task) => setCurrentTask(task)}
+              onDelete={onDeleteTask}
+              layout={layout}
+            />
+          ))}
+        </div>
+        <AddNewTask
+          currentGroup={currentGroup}
+          onClose={() => {
+            setCurrentGroup(null);
+            setCurrentTask(null);
+          }}
+          currentTask={currentTask}
+          onAdd={onAddTask}
+          onUpdate={onUpdateTask}
+          teamMembers={project?.teamMembers}
+        />
+      </DragDropContext>
+      {createPortal(
+        <div className='flex justify-between gap-3'>
+          <Button
+            display='with-icon'
+            size='small'
+            color='tertiary'
+            state={layout === 'board' ? 'active' : null}
+            onClick={() => setLayout('board')}
+          >
+            <RxViewVertical />
+            Board
+          </Button>
+          <Button
+            display='with-icon'
+            size='small'
+            color='tertiary'
+            state={layout === 'list' ? 'active' : null}
+            onClick={() => setLayout('list')}
+          >
+            <PiListBold />
+            List
+          </Button>
+        </div>,
+        document.getElementById('tabs') || document.body
+      )}
+    </>
   );
 }
 
-function TasksGroup({ group, onAdd, onEdit, onDelete }) {
+function TasksGroup({ group, onAdd, onEdit, onDelete, layout }) {
   const [parent] = useAutoAnimate({ duration: 400 });
+
+  const droppable = () => {
+    return (
+      <Droppable droppableId={group.name} type='TASK'>
+        {(provided, snapshot) => (
+          <div
+            className={`relative flex flex-col ${layout === 'board' ? 'gap-6 pt-2' : 'flex-1 gap-3'}`}
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            {snapshot.isDraggingOver ? (
+              <div
+                className={`placeholder absolute z-10 w-full rounded-lg bg-background-secondary opacity-55 ${layout === 'board' ? ' h-[190px]' : 'h-10'}`}
+              ></div>
+            ) : null}
+            <TasksList
+              group={group}
+              onEdit={onEdit}
+              onDelete={onDelete}
+              isDragging={snapshot.isDraggingOver}
+              layout={layout}
+            />
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    );
+  };
+
+  if (layout === 'list')
+    return (
+      <div className='flex flex-col gap-3 border-b border-border pb-3'>
+        <div className='grid grid-cols-[auto_repeat(3,100px)] items-center gap-4 border-b border-border'>
+          <div className={`w-fit rounded-t-md p-1 px-4 ${group.color}`}>
+            <h5 className='text-sm font-medium text-white'>{group.name}</h5>
+          </div>
+          <span className='text-nowrap text-sm font-medium uppercase text-text-secondary'>Assignee</span>
+          <span className='text-nowrap text-sm font-medium uppercase text-text-secondary'>Due Date</span>
+          <span className='text-nowrap text-sm font-medium uppercase text-text-secondary'>Priority</span>
+        </div>
+        {droppable()}
+      </div>
+    );
 
   return (
     <div className='flex flex-col gap-5 rounded-lg border border-border p-3' ref={parent}>
@@ -133,22 +210,12 @@ function TasksGroup({ group, onAdd, onEdit, onDelete }) {
         </Button>
       </div>
 
-      <Droppable droppableId={group.name} type='TASK'>
-        {(provided, snapshot) => (
-          <div className='relative flex flex-col gap-6 pt-2' ref={provided.innerRef} {...provided.droppableProps}>
-            {snapshot.isDraggingOver ? (
-              <div className='placeholder absolute z-10 h-[190px] w-full rounded-lg bg-background-secondary opacity-55'></div>
-            ) : null}
-            <TasksList group={group} onEdit={onEdit} onDelete={onDelete} isDragging={snapshot.isDraggingOver} />
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+      {droppable()}
     </div>
   );
 }
 
-function TasksList({ group, onEdit, onDelete, isDragging }) {
+function TasksList({ group, onEdit, onDelete, isDragging, layout }) {
   if (!group.tasks.length && !isDragging) {
     const message =
       group.name === 'To Do'
@@ -158,8 +225,8 @@ function TasksList({ group, onEdit, onDelete, isDragging }) {
           : 'No tasks marked as done. Complete some tasks to see them here!';
 
     return (
-      <div className='mt-20 grid h-full place-content-center'>
-        <p className='text-center text-sm font-medium text-text-secondary'>{message}</p>{' '}
+      <div className={`grid place-content-center ${layout === 'board' ? 'mt-20' : ' h-[100px]'}`}>
+        <p className='text-center text-sm font-medium text-text-secondary'>{message}</p>
       </div>
     );
   }
@@ -169,7 +236,7 @@ function TasksList({ group, onEdit, onDelete, isDragging }) {
         <NaturalDragAnimation style={getStyle(provided.draggableProps.style, snapshot)} snapshot={snapshot}>
           {(style) => (
             <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} style={style}>
-              <Task task={task} onEdit={onEdit} onDelete={onDelete} isDragging={snapshot.isDragging} />
+              <Task task={task} onEdit={onEdit} onDelete={onDelete} layout={layout} />
             </div>
           )}
         </NaturalDragAnimation>
