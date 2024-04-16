@@ -18,6 +18,7 @@ const initialState = {
     phone: '0682828882',
     birthday: '1998-12-12',
   },
+  isAuthenticated: true,
 };
 
 const appSlice = createSlice({
@@ -33,6 +34,14 @@ const appSlice = createSlice({
       document.documentElement.className = `${theme} theme-transition`;
       setTimeout(() => document.documentElement.classList.remove('theme-transition'), 400);
     },
+    logUserIn(state, action) {
+      state.user = action.payload;
+      state.isAuthenticated = true;
+    },
+    logUserOut(state) {
+      state.user = null;
+      state.isAuthenticated = false;
+    },
     updateUser(state, action) {
       console.log(action);
       state.user = { ...state.user, ...action.payload };
@@ -40,5 +49,5 @@ const appSlice = createSlice({
   },
 });
 
-export const { changeTheme, updateUser } = appSlice.actions;
+export const { changeTheme, logUserIn, logUserOut, updateUser } = appSlice.actions;
 export default appSlice.reducer;
