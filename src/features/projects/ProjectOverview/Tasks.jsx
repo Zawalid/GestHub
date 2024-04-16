@@ -1,41 +1,102 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { IoEllipsisHorizontalSharp, FaPlus } from '@/components/ui/Icons';
+import { toast } from 'sonner';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { FaPlus } from '@/components/ui/Icons';
 import { Button, Modal } from '@/components/ui';
 import Task from '../Task';
 import { useProject, useUpdateProject } from '../useProjects';
 import { NewTask } from '../NewProject/StarterTasks';
 import { getIncrementedID } from '@/utils/helpers';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
-import { toast } from 'sonner';
+import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
+
+const getStyle = (style, snapshot) => (snapshot.isDropAnimating ? { ...style, transitionDuration: `0.0001s` } : style);
 
 export default function Tasks() {
   const [parent] = useAutoAnimate({ duration: 400 });
   const { id } = useParams();
   const { project } = useProject(id);
-  const [currentGroup, setCurrentGroup] = useState(null);
-  const [currentTask, setCurrentTask] = useState(null);
-
-  const groups = useMemo(() => {
+  const [groups, setGroups] = useState(() => {
     const groups = { 'To Do': [], 'In Progress': [], Done: [] };
     project.tasks.forEach((task) => groups[task.status] && (groups[task.status] = [...groups[task.status], task]));
     return groups;
-  }, [project?.tasks]);
+  });
+  const [currentGroup, setCurrentGroup] = useState(null);
+  const [currentTask, setCurrentTask] = useState(null);
+  const { mutate } = useUpdateProject({ showToast: false });
+  const { openModal } = useConfirmationModal();
+
+  // Tasks Methods
+  const updateGroups = (tasks, group, action) => {
+    const newGroups = { ...groups, [group]: tasks };
+    setGroups(newGroups);
+    mutate(
+      { id, data: { ...project, tasks: Object.values(newGroups).flat() } },
+      {
+        onSuccess: () => toast.success(`Task ${action}d successfully`),
+        onError: () => toast.error(`Failed to ${action} task`),
+      }
+    );
+  };
+  const onAddTask = (task) => {
+    const tasks = [
+      ...project.tasks.filter((t) => t.status === task.status),
+      { id: getIncrementedID(project.tasks), ...task },
+    ];
+    updateGroups(tasks, task.status, 'add');
+  };
+  const onUpdateTask = (task) => {
+    const tasks = project.tasks.filter((t) => t.status === task.status).map((t) => (t.id === task.id ? task : t));
+    updateGroups(tasks, task.status, 'update');
+  };
+  const onDeleteTask = (task) => {
+    const tasks = [...project.tasks.filter((t) => t.status === task.status).filter((t) => t.id !== task.id)];
+    openModal({
+      message: 'Are you sure you want to delete this task ?',
+      title: 'Delete Task',
+      confirmText: 'Delete',
+      onConfirm: () => updateGroups(tasks, task.status, 'delete'),
+    });
+  };
+
+  // Drag And Drop Methods
+  const handleDragEnd = (result) => {
+    const { source, destination } = result;
+    if (!destination) return;
+
+    const { droppableId: sourceGroup, index: sourceIndex } = source;
+    const { droppableId: destinationGroup, index: destinationIndex } = destination;
+
+    if (sourceGroup === destinationGroup && sourceIndex === destinationIndex) return;
+    // Clone the groups
+    const newGroups = { ...groups };
+    // Remove the task from one group and place it in the other
+    const [movedTask] = newGroups[sourceGroup].splice(sourceIndex, 1);
+    newGroups[destinationGroup].splice(destinationIndex, 0, { ...movedTask, status: destinationGroup });
+    // Update the groups and database
+    setGroups(newGroups);
+    mutate({ id, data: { ...project, tasks: Object.values(newGroups).flat() } });
+  };
 
   return (
-    <>
+    <DragDropContext onDragEnd={handleDragEnd}>
       <div
-        className='grid h-full gap-6 grid-cols-[repeat(3,minmax(300px,1fr))] '
+        className='grid h-full w-full grid-cols-[repeat(3,100%)] gap-5 mobile:grid-cols-[repeat(3,minmax(300px,1fr))] '
         ref={parent}
       >
         {Object.keys(groups).map((group) => (
           <TasksGroup
             key={group}
-            group={{ name: group, tasks: groups[group] }}
+            group={{
+              name: group,
+              tasks: groups[group],
+              color: group === 'To Do' ? 'bg-red-500' : group === 'Done' ? 'bg-green-500' : 'bg-blue-500',
+            }}
             onAdd={() => setCurrentGroup(group)}
-            onEdit={(id) => setCurrentTask(project.tasks.find((t) => t.id === id))}
-            currentProject={{ id, project }}
+            onEdit={(task) => setCurrentTask(task)}
+            onDelete={onDeleteTask}
           />
         ))}
       </div>
@@ -46,78 +107,78 @@ export default function Tasks() {
           setCurrentTask(null);
         }}
         currentTask={currentTask}
-        currentProject={{ id, project }}
+        onAdd={onAddTask}
+        onUpdate={onUpdateTask}
+        teamMembers={project?.teamMembers}
       />
-    </>
+    </DragDropContext>
   );
 }
 
-function TasksGroup({ group, onAdd, onEdit, currentProject: { id, project } }) {
-  const { mutate } = useUpdateProject({ showToast: false });
-  const { openModal } = useConfirmationModal();
+function TasksGroup({ group, onAdd, onEdit, onDelete }) {
   const [parent] = useAutoAnimate({ duration: 400 });
 
-  const onDelete = (taskId) => {
-    openModal({
-      message: 'Are you sure you want to delete this task ?',
-      title: 'Delete Task',
-      confirmText: 'Delete',
-      onConfirm: () =>
-        mutate(
-          { id, data: { ...project, tasks: project.tasks.filter((t) => t.id !== taskId) } },
-          {
-            onSuccess: () => toast.success('Task deleted successfully'),
-            onError: () => toast.error('Failed to delete task'),
-          }
-        ),
-    });
-  };
-
-  const render = () => {
-    if (!group.tasks.length) {
-      const message =
-        group.name === 'To Do'
-          ? 'No tasks to do. Feel free to add some!'
-          : group.name === 'In Progress'
-            ? 'No tasks in progress. Start working on something!'
-            : 'No tasks marked as done. Complete some tasks to see them here!';
-
-      return (
-        <div className='grid h-full place-content-center'>
-          <p className='text-center text-sm font-medium text-text-secondary'>{message}</p>{' '}
-        </div>
-      );
-    }
-    return group.tasks.map((task) => <Task key={task.id} task={task} onEdit={onEdit} onDelete={onDelete} />);
-  };
-
   return (
-    <div className='flex flex-col gap-5' ref={parent}>
-      <div className='flex items-center justify-between'>
+    <div className='flex flex-col gap-5 rounded-lg border border-border p-3' ref={parent}>
+      <div className='flex items-center justify-between rounded-lg bg-background-secondary px-3 py-2'>
         <div className='flex items-center gap-2'>
-          <h5 className='font-medium text-text-primary'>{group.name}</h5>
-          <span className='rounded-lg bg-background-secondary px-2 py-1 text-sm text-text-primary'>
+          <span className={`mt-[1px] rounded-full p-1 ${group.color}`}></span>
+          <h5 className='mr-3 font-medium text-text-primary'>{group.name}</h5>
+          <span className='rounded-lg border border-border bg-background-tertiary px-2 py-0.5 text-sm text-text-primary'>
             {group.tasks.length}
           </span>
         </div>
-        <Button shape='icon' size='small'>
-          <IoEllipsisHorizontalSharp />
+        <Button className='h-6 w-7' size='small' onClick={onAdd}>
+          <FaPlus />
         </Button>
       </div>
-      <Button display='with-icon' color='secondary' className='justify-center' onClick={onAdd}>
-        <FaPlus />
-        <span>Add New Task</span>
-      </Button>
-      <div className='min-h-[250px] space-y-6' ref={parent}>
-        {render()}
-      </div>
+
+      <Droppable droppableId={group.name} type='TASK'>
+        {(provided, snapshot) => (
+          <div className='relative space-y-6 pt-2' ref={provided.innerRef} {...provided.droppableProps}>
+            {snapshot.isDraggingOver ? (
+              <div className='placeholder absolute z-10 h-[210px] w-full rounded-lg bg-background-secondary opacity-55'></div>
+            ) : null}
+            <TasksList group={group} onEdit={onEdit} onDelete={onDelete} isDragging={snapshot.isDraggingOver} />
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </div>
   );
 }
 
-function AddNewTask({ currentGroup, onClose, currentTask, currentProject: { id, project } }) {
-  const { mutate } = useUpdateProject({ showToast: false });
+function TasksList({ group, onEdit, onDelete, isDragging }) {
+  if (!group.tasks.length && !isDragging) {
+    const message =
+      group.name === 'To Do'
+        ? 'No tasks to do. Feel free to add some!'
+        : group.name === 'In Progress'
+          ? 'No tasks in progress. Start working on something!'
+          : 'No tasks marked as done. Complete some tasks to see them here!';
 
+    return (
+      <div className='mt-20 grid h-full place-content-center'>
+        <p className='text-center text-sm font-medium text-text-secondary'>{message}</p>{' '}
+      </div>
+    );
+  }
+  return group.tasks.map((task, index) => (
+    <Draggable key={`draggable-${task.id}`} draggableId={`draggable-${task.id}`} index={index} type='TASK'>
+      {(provided, snapshot) => (
+        <NaturalDragAnimation style={getStyle(provided.draggableProps.style, snapshot)} snapshot={snapshot}>
+          {(style) => (
+            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} style={style}>
+              <Task task={task} onEdit={onEdit} onDelete={onDelete} isDragging={snapshot.isDragging} />
+            </div>
+          )}
+        </NaturalDragAnimation>
+      )}
+    </Draggable>
+  ));
+}
+
+function AddNewTask({ currentGroup, onClose, currentTask, onAdd, onUpdate, teamMembers }) {
   return (
     <Modal
       isOpen={currentGroup || currentTask}
@@ -130,23 +191,8 @@ function AddNewTask({ currentGroup, onClose, currentTask, currentProject: { id, 
           status={currentGroup || currentTask?.status}
           currentTask={currentTask}
           onCancel={onClose}
-          onSubmit={(task) =>
-            mutate(
-              {
-                id,
-                data: {
-                  ...project,
-                  tasks: currentTask
-                    ? project.tasks.map((t) => (t.id === task.id ? task : t))
-                    : [...project.tasks, { id: getIncrementedID(project.tasks), ...task }],
-                },
-              },
-              {
-                onSuccess: () => toast.success('Task updated successfully'),
-                onError: () => toast.error('Failed to update task'),
-              }
-            )
-          }
+          onSubmit={(task) => (currentTask ? onUpdate(task) : onAdd(task))}
+          teamMembers={teamMembers}
         />
       </div>
     </Modal>

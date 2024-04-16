@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { DateTime } from 'luxon';
 import { Button, DropDown } from '@/components/ui';
 import { useForm } from '@/hooks/useForm';
-import { InternsDropDown } from './InternsDropDown';
 import Task from '../Task';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { getIncrementedID } from '@/utils/helpers';
-import { DateTime } from 'luxon';
+import { Intern } from './TeamMembers';
+import { MdOutlineDoNotDisturb } from 'react-icons/md';
 
-export function StarterTasks({ updateStatus, updateState, state }) {
+export function StarterTasks({ updateStatus, updateState, state,teamMembers }) {
   const [currentTab, setCurrentTab] = useState('view');
   const [tasks, setTasks] = useState(state);
   const [currentTask, setCurrentTask] = useState(null);
@@ -46,6 +47,7 @@ export function StarterTasks({ updateStatus, updateState, state }) {
               return [...prev, { id: getIncrementedID(tasks), ...task }];
             });
           }}
+          teamMembers={teamMembers}
         />
       </div>
     </div>
@@ -100,7 +102,7 @@ function TasksList({ tasks, setTasks, setCurrentTask, setCurrentTab, display }) 
   );
 }
 
-export function NewTask({ className, status, onCancel, currentTask, onSubmit }) {
+export function NewTask({ className, status, onCancel, currentTask, onSubmit, teamMembers }) {
   const defaultTask = {
     title: '',
     description: '',
@@ -160,7 +162,7 @@ export function NewTask({ className, status, onCancel, currentTask, onSubmit }) 
           {formInputs['description']}
         </div>
         <div className='flex flex-1 flex-col gap-3.5'>
-          <InternsDropDown getValue={getValue} setValue={setValue} />
+          <InternsDropDown teamMembers={teamMembers} getValue={getValue} setValue={setValue} />
           <div className='flex flex-col gap-1.5'>
             <label className='text-sm font-medium text-text-tertiary'>Priority</label>
             <DropDown
@@ -193,5 +195,41 @@ export function NewTask({ className, status, onCancel, currentTask, onSubmit }) 
         </Button>
       </div>
     </>
+  );
+}
+
+function InternsDropDown({ teamMembers, getValue, setValue }) {
+  return (
+    <div className='flex flex-col gap-1.5'>
+      <label className='text-sm font-medium capitalize text-text-tertiary'>Assignee</label>
+      <DropDown
+        toggler={
+          <DropDown.Toggler>
+            {getValue('assignee') === 'None' ? 'None' : <Intern intern={getValue('assignee')} />}
+          </DropDown.Toggler>
+        }
+        options={{
+          shouldCloseOnClick: false,
+          placement: 'bottom-end',
+          className: 'overflow-y-auto',
+        }}
+      >
+        {teamMembers?.map((intern) => (
+          <DropDown.Option
+            size='small'
+            key={intern.id}
+            className='capitalize'
+            onClick={() => setValue('assignee', intern)}
+            isCurrent={intern === getValue('assignee')}
+          >
+            <Intern intern={intern} />
+          </DropDown.Option>
+        ))}
+        <DropDown.Option onClick={() => setValue('assignee', 'None')} isCurrent={'None' === getValue('assignee')}>
+          <MdOutlineDoNotDisturb size={20} />
+          <span className='text-base'>None</span>
+        </DropDown.Option>
+      </DropDown>
+    </div>
   );
 }

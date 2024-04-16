@@ -75,6 +75,7 @@ export default function NewProject() {
       updateStatus: (stepStatus) => {
         setCurrentStep((prev) => ({ ...prev, stepStatus }));
       },
+      ...(currentStep.title === 'Starter Tasks' && { teamMembers: projectData['Team Members'] }),
     };
   };
 
