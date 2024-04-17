@@ -49,7 +49,7 @@ export function Register() {
   const levels = ['Bac+1', 'Bac+2', 'Bac+3', 'Master'];
  return (
     <div className="relative w-full p-2 md:p-5 flex flex-col justify-center h-full space-y-6 ">
-      <h1 className="text-text-primary text-4xl">{t("auth.login.title1")} </h1>
+      <h1 className="mb-8 text-2xl font-bold text-text-primary sm:text-3xl">{t("auth.register.title1")} </h1>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-4 gap-2">
         {formInputs.fullName}
         {formInputs.email}
@@ -90,19 +90,19 @@ export function Register() {
       </div>
 
       <Button
-        className={"self-end w-full lg:w-min"}
+        className={" w-full"}
         disabled={!isValid}
         onClick={handleSubmit}
       >
         {t("auth.register.submit")}
       </Button>
       <p className="border-t border-border text-text-primary py-4 text-center flex gap-1 items-center justify-center">
-        you have an account alraedy ?
+        Already  have an account ?
         <Link
           to="/login"
-          className=" underline text-primary font-bold cursor-pointer text-sm "
+          className="ml-2 underline text-primary font-bold cursor-pointer text-sm "
         >
-          Login Now
+          Login 
         </Link>
       </p>
     </div>

@@ -223,10 +223,19 @@
       "startDate": "2022-02-01",
       "endDate": "2022-07-01",
       "teamId": 6,
-      "status": "In Progress",
+      "status": "Completed",
       "supervisor": "Emma Watson",
       "priority": "Medium",
       "tasks": [
+        {
+          "id": 10,
+          "title": "dfdfdf",
+          "description": "",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": "None",
+          "status": "In Progress"
+        },
         {
           "id": 7,
           "title": "dd",
@@ -264,15 +273,6 @@
           "priority": "None",
           "assignee": "None",
           "status": "In Progress"
-        },
-        {
-          "id": 10,
-          "title": "dfdfdf",
-          "description": "",
-          "dueDate": "",
-          "priority": "None",
-          "assignee": "None",
-          "status": "Done"
         },
         {
           "id": 11,
@@ -655,6 +655,64 @@
           "priority": "None",
           "assignee": "None",
           "status": "Done"
+        }
+      ]
+    },
+    {
+      "id": "6345",
+      "name": "gestion des projects",
+      "description": "hdjhsjkdhasdjk",
+      "startDate": "2024-03-19",
+      "endDate": "2024-05-09",
+      "priority": "Low",
+      "status": "Not Started",
+      "teamMembers": [
+        {
+          "id": "1",
+          "firstName": "John",
+          "lastName": "Doe",
+          "email": "john.doe@example.com",
+          "phone": "123-456-7890",
+          "birthday": "1990-01-01",
+          "university": "Harvard University",
+          "major": "Computer Science",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        },
+        {
+          "id": "4",
+          "firstName": "Alice",
+          "lastName": "Johnson",
+          "email": "alice.johnson@example.com",
+          "phone": "222-333-4444",
+          "birthday": "1993-04-04",
+          "university": "University of California, Berkeley",
+          "major": "Data Science",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        },
+        {
+          "id": "3",
+          "firstName": "Bob",
+          "lastName": "Smith",
+          "email": "bob.smith@example.com",
+          "phone": "111-222-3333",
+          "birthday": "1991-03-03",
+          "university": "MIT",
+          "major": "Software Engineering",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        }
+      ],
+      "tasks": [
+        {
+          "id": 1,
+          "title": "hhss",
+          "description": "",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": "None",
+          "status": "To Do"
         }
       ]
     }

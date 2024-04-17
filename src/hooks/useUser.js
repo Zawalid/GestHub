@@ -1,15 +1,10 @@
-import { useMutation } from '@tanstack/react-query';
-import { axiosFetch } from '.';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { useDispatch } from 'react-redux';
 import { logUserIn, logUserOut } from '@/app/reducer';
-
-const login = async (email, password) => await axiosFetch('auth/login', 'POST', { email, password });
-
-const register = async (user) => await axiosFetch('auth/register', 'POST', user);
-
-const logout = async () => await axiosFetch('/auth/logout', 'POST', null);
+import { login, register, logout, getUser } from '@/services/usersAPI';
+import { useEffect } from 'react';
 
 const useRedirect = (isLogout) => {
   const navigate = useNavigate();
@@ -64,4 +59,18 @@ export function useLogout() {
   });
 
   return { logout: mutate, isLoggingOut: isPending, error };
+}
+
+export function useUser() {
+  const dispatch = useDispatch();
+  const { data, error, isPending } = useQuery({
+    queryKey: ['user'],
+    queryFn: getUser,
+  });
+
+  useEffect(() => {
+    if (data) dispatch(logUserIn(data));
+  }, [data, dispatch]);
+
+  return { user: data, isAuthenticated: Boolean(data), isLoading: isPending, error };
 }
