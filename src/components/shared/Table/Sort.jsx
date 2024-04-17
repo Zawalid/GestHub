@@ -26,7 +26,7 @@ export function Sort({ column }) {
           {sortBy === column.key ? icons[direction] : <FaSort size={12} />}
         </Button>
       }
-      options={{ placement: "bottom-end", className: "w-28 text-xs" }}
+      options={{  className: "w-28 text-xs" }}
     >
       <DropDown.Option onClick={() => sort("asc")}>
         {icons.asc}

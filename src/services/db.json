@@ -228,22 +228,22 @@
       "priority": "Medium",
       "tasks": [
         {
-          "id": 10,
-          "title": "dfdfdf",
+          "id": 13,
+          "title": "ddddddddddd",
           "description": "",
           "dueDate": "",
           "priority": "None",
           "assignee": "None",
-          "status": "In Progress"
+          "status": "To Do"
         },
         {
-          "id": 7,
-          "title": "dd",
+          "id": 11,
+          "title": "dfsdfsdfsfsdf",
           "description": "",
           "dueDate": "",
-          "priority": "High",
+          "priority": "None",
           "assignee": "None",
-          "status": "In Progress"
+          "status": "To Do"
         },
         {
           "id": 9,
@@ -263,30 +263,64 @@
             "startDate": "2022-01-01",
             "endDate": "2022-06-01"
           },
-          "status": "In Progress"
+          "status": "To Do"
         },
         {
-          "id": 13,
-          "title": "ddddddddddd",
+          "id": 10,
+          "title": "dfdfdf",
           "description": "",
           "dueDate": "",
           "priority": "None",
           "assignee": "None",
-          "status": "In Progress"
+          "status": "To Do"
         },
         {
-          "id": 11,
-          "title": "dfsdfsdfsfsdf",
+          "id": 7,
+          "title": "dd",
           "description": "",
           "dueDate": "",
-          "priority": "None",
+          "priority": "High",
           "assignee": "None",
           "status": "Done"
         }
       ],
       "teamMembers": [
-        "Emma Watson",
-        "Daniel Radcliffe"
+        {
+          "id": "1",
+          "firstName": "John",
+          "lastName": "Doe",
+          "email": "john.doe@example.com",
+          "phone": "123-456-7890",
+          "birthday": "1990-01-01",
+          "university": "Harvard University",
+          "major": "Computer Science",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        },
+        {
+          "id": "3",
+          "firstName": "Bob",
+          "lastName": "Smith",
+          "email": "bob.smith@example.com",
+          "phone": "111-222-3333",
+          "birthday": "1991-03-03",
+          "university": "MIT",
+          "major": "Software Engineering",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        },
+        {
+          "id": "4",
+          "firstName": "Alice",
+          "lastName": "Johnson",
+          "email": "alice.johnson@example.com",
+          "phone": "222-333-4444",
+          "birthday": "1993-04-04",
+          "university": "University of California, Berkeley",
+          "major": "Data Science",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        }
       ]
     },
     {
@@ -339,9 +373,14 @@
       "priority": "High",
       "tasks": [
         {
-          "id": 1,
-          "name": "Identify platform requirements",
-          "status": "Done"
+          "id": 4,
+          "name": "Test new platform",
+          "status": "To Do"
+        },
+        {
+          "id": 5,
+          "name": "Deploy new platform",
+          "status": "To Do"
         },
         {
           "id": 2,
@@ -351,17 +390,12 @@
         {
           "id": 3,
           "name": "Develop new platform",
-          "status": "To Do"
+          "status": "Done"
         },
         {
-          "id": 4,
-          "name": "Test new platform",
-          "status": "To Do"
-        },
-        {
-          "id": 5,
-          "name": "Deploy new platform",
-          "status": "To Do"
+          "id": 1,
+          "name": "Identify platform requirements",
+          "status": "Done"
         }
       ],
       "teamMembers": [

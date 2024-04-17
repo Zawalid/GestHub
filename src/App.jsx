@@ -26,7 +26,6 @@ import {
   SupervisorDetails,
   InternDetails,
   ProjectDetails,
-  OfferDetails,
   Login,
   Register,
 } from './pages';
@@ -84,7 +83,6 @@ export default function App() {
               <Route path='/' element={<HomePageLayout />}>
                 <Route index element={<HomePage />} />
                 <Route path='/offers/:id' element={<HomePage />} />
-
               </Route>
               {/* App */}
               <Route

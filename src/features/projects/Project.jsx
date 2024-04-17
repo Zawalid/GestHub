@@ -1,7 +1,3 @@
-import { Button } from '@/components/ui';
-import { IoTrashOutline, IoEyeOutline } from '@/components/ui/Icons';
-import { useConfirmationModal } from '@/hooks/useConfirmationModal';
-import { useDeleteProject } from './useProjects';
 import { PRIORITY_COLORS, STATUS_COLORS } from '@/utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
@@ -18,7 +14,7 @@ export default function Project({ project, layout }) {
       className={`relative grid cursor-pointer grid-rows-[24px_auto_20px_28px] gap-3 rounded-lg rounded-tr-none border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95 ${
         layout === 'grid' ? 'h-[240px]' : ''
       }`}
-      onClick={() =>  navigate(id)}
+      onClick={() => navigate(id)}
     >
       <PriorityIndicator priority={priority} />
 
@@ -45,34 +41,6 @@ export default function Project({ project, layout }) {
           {status || 'Not Started'}
         </p>
       </div>
-    </div>
-  );
-}
-
-function Actions({ id }) {
-  const { openModal } = useConfirmationModal();
-  const { mutate } = useDeleteProject();
-  const navigate = useNavigate();
-
-  return (
-    <div className='flex gap-1'>
-      <Button shape='icon' size='small' onClick={() => navigate(id)}>
-        <IoEyeOutline />
-      </Button>
-      <Button
-        shape='icon'
-        size='small'
-        onClick={() =>
-          openModal({
-            message: 'Are you sure you want to delete this project ?',
-            title: 'Delete Project',
-            confirmText: 'Delete',
-            onConfirm: () => mutate(id),
-          })
-        }
-      >
-        <IoTrashOutline />
-      </Button>
     </div>
   );
 }

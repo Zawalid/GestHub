@@ -75,8 +75,8 @@ function TasksList({ tasks, setTasks, setCurrentTask, setCurrentTab, display }) 
           <div className='min-w-[250px] flex-1' key={task.id}>
             <Task
               task={task}
-              onEdit={(id) => {
-                setCurrentTask(tasks.find((t) => t.id === id));
+              onEdit={(task) => {
+                setCurrentTask(tasks.find((t) => t.id === task.id));
                 setCurrentTab('add');
               }}
               onDelete={(task) => setTasks((prev) => prev.filter((t) => t.id !== task.id))}
@@ -211,7 +211,6 @@ function InternsDropDown({ teamMembers, getValue, setValue }) {
         }
         options={{
           shouldCloseOnClick: false,
-          placement: 'bottom-end',
           className: 'overflow-y-auto',
         }}
       >

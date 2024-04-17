@@ -22,7 +22,6 @@ export function Actions({ onUpdate, onDelete, row }) {
           <IoEllipsisHorizontalSharp />
         </Button>
       }
-      options={{ placement: "bottom-end" }}
     >
       <Link to={`${location.pathname}/${row.id}`} replace={true}>
         <DropDown.Option>

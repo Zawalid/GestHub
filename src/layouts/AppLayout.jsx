@@ -28,7 +28,7 @@ function Main() {
   return (
     <ModalProvider>
       <main
-        className='grid flex-1 grid-rows-[min-content_auto] gap-5 overflow-y-auto overflow-x-hidden rounded-xl bg-background-primary p-3 sm:rounded-2xl sm:p-5'
+        className='flex flex-1 flex-col gap-5 overflow-y-auto overflow-x-hidden rounded-xl bg-background-primary p-3 sm:rounded-2xl sm:p-5'
         ref={parent}
       >
         <Outlet />

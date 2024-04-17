@@ -83,7 +83,7 @@ export default function Tasks() {
   };
 
   return (
-    <>
+    <div className='flex-1 overflow-auto pr-2'>
       <DragDropContext onDragEnd={handleDragEnd}>
         <div
           className={` h-full w-full ${
@@ -145,7 +145,7 @@ export default function Tasks() {
         </div>,
         document.getElementById('tabs') || document.body
       )}
-    </>
+    </div>
   );
 }
 

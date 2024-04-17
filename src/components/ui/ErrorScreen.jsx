@@ -1,6 +1,6 @@
 import { Button } from '.';
 
-export function ErrorScreen() {
+export function ErrorScreen({ error }) {
   return (
     <div className='flex h-screen w-full max-w-screen-xl items-center justify-center  bg-background-primary px-4 md:px-8'>
       <div className='max-w-xl space-y-5 text-center'>
@@ -13,6 +13,7 @@ export function ErrorScreen() {
         <Button className='mx-auto' onClick={() => location.reload()}>
           Try Again
         </Button>
+        <p>{error.message}</p>
       </div>
     </div>
   );
