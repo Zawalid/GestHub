@@ -4,7 +4,6 @@ import { DateTime } from 'luxon';
 import { useEffect } from 'react';
 
 export function BasicInfo({ updateStatus, updateState, state }) {
-  const today = DateTime.now().toISODate();
   const {
     options: { isValid, formInputs, values, getValue, setValue },
   } = useForm({
@@ -31,13 +30,11 @@ export function BasicInfo({ updateStatus, updateState, state }) {
         name: 'startDate',
         type: 'date',
         label: 'Start Date',
-        min: today,
       },
       {
         name: 'endDate',
         type: 'date',
         label: 'End Date',
-        min: today,
         rules: {
           validate: (val, getValue) => {
             return (
@@ -79,7 +76,7 @@ export function BasicInfo({ updateStatus, updateState, state }) {
               </DropDown.Toggler>
             }
           >
-            {['None', 'High', 'Medium', 'Small'].map((e) => (
+            {['None', 'High', 'Medium', 'Low'].map((e) => (
               <DropDown.Option key={e} onClick={() => setValue('priority', e)} isCurrent={e === getValue('priority')}>
                 {e}
               </DropDown.Option>

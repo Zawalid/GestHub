@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { useSelector } from 'react-redux';
+import { ErrorBoundary } from 'react-error-boundary';
 import { Toaster } from 'sonner';
 import { FaSpinner } from 'react-icons/fa6';
 
@@ -30,8 +31,8 @@ import {
   Register,
 } from './pages';
 
-import Tasks from './features/projects/ProjectOverview/Tasks';
-import ProjectOverview from './features/projects/ProjectOverview/Overview';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { ErrorScreen } from './components/ui/ErrorScreen';
 
 const queryClient = new QueryClient();
 
@@ -58,7 +59,17 @@ export default function App() {
   const [parent] = useAutoAnimate({ duration: 300 });
 
   return (
-    <>
+    <ErrorBoundary
+      FallbackComponent={ErrorScreen}
+      onError={(error, stack) => {
+        console.log(
+          '%c%s',
+          'color: #ffffff;font-weight : bold; background: #ff0000; padding : 10px 20px; border-radius : 10px',
+          `Error : ${error}`
+        );
+        console.log(stack?.componentStack);
+      }}
+    >
       <div className='h-dvh w-full' ref={parent}>
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={false} />
@@ -76,7 +87,14 @@ export default function App() {
 
               </Route>
               {/* App */}
-              <Route path='app' element={<AppLayout />}>
+              <Route
+                path='app'
+                element={
+                  <ProtectedRoute>
+                    <AppLayout />
+                  </ProtectedRoute>
+                }
+              >
                 <Route index element={<Navigate to='/app/overview' />} />
                 {/* Routes of every role */}
                 <Route path='overview' element={<Overview />} />
@@ -109,6 +127,6 @@ export default function App() {
           duration: 2000,
         }}
       />
-    </>
+    </ErrorBoundary>
   );
 }

@@ -7,7 +7,7 @@ import Settings from '../features/settings/Settings';
 import AppBar from '../components/AppBar';
 import { ModalProvider } from '@/context/ConfirmationModal';
 
-export  function AppLayout() {
+export function AppLayout() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   return (

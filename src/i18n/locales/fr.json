@@ -30,7 +30,7 @@
     },
     "auth": {
         "login": {
-            "title1": "Bienvenue à",
+            "title1": "Bienvenue",
             "title2": "MenStage", 
             "email": {
                 "label": "Adresse e-mail",  
@@ -43,7 +43,7 @@
             "submit": "Se connecter"
         },
         "register":{
-  "title1": "Bienvenue à",
+  "title1": "Bienvenue",
   "title2": "Stage",
   "email": {
     "label": "Votre e-mail",

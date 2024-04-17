@@ -63,6 +63,7 @@ export default function SupervisorsList() {
         {
           name: 'phone',
           label: 'Phone Number',
+          type : 'phone'
         },
         {
           name: 'department',

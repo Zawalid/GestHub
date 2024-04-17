@@ -97,7 +97,6 @@ const rules = {
 const getRules = (name, type, fieldRules) => {
   return {
     required: `Please enter your ${name}`,
-    ...(rules[name] && rules[name]),
     ...(rules[type] && rules[type]),
     ...(fieldRules && fieldRules),
   };
@@ -137,6 +136,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
               setValue(name, e.target.value);
             }}
             errorMessage={errors?.[name]?.message}
+            type={type || 'text'}
             {...field}
           />
         );

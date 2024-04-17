@@ -33,12 +33,17 @@ const appSlice = createSlice({
       document.documentElement.className = `${theme} theme-transition`;
       setTimeout(() => document.documentElement.classList.remove('theme-transition'), 400);
     },
+    logUserIn(state, action) {
+      state.user = action.payload;
+    },
+    logUserOut(state) {
+      state.user = null;
+    },
     updateUser(state, action) {
-      console.log(action);
       state.user = { ...state.user, ...action.payload };
     },
   },
 });
 
-export const { changeTheme, updateUser } = appSlice.actions;
+export const { changeTheme, logUserIn, logUserOut, updateUser } = appSlice.actions;
 export default appSlice.reducer;

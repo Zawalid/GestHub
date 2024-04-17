@@ -18,11 +18,6 @@ export const ROUTES = {
   supervisor: ['overview', 'projects', 'projects/:id', 'interns', 'interns/:id', 'teams', 'absences'],
   intern: ['overview', 'absences'],
 };
-export const routes = [
-  { label: 'home', path: '/' },
-  { label: 'offers', path: '#offers' },
-  { label: 'about', path: '#about' },
-];
 
 export const PAGE_LIMIT = 5;
 

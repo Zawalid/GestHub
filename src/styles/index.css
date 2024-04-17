@@ -20,6 +20,8 @@
     /* --primary: #ffae5c; */
     --primary: rgb(246, 162, 40);
     --primary-hover: rgb(204, 138, 62);
+
+    color-scheme: light;
   }
 
   /** Dark Mode */
@@ -37,16 +39,16 @@
     --border: rgba(255, 255, 255, 0.1);
     --primary: rgb(181, 117, 62);
     --primary-hover: rgb(138, 78, 44);
+
+    color-scheme: dark;
   }
 
   --secondary: rgb(122, 102, 255);
   --secondary-hover: rgb(99, 71, 204);
-  
-  color-scheme: light dark;
 }
 
 * {
-  @apply box-border list-none scroll-smooth
+  @apply box-border list-none scroll-smooth;
 }
 
 body {
@@ -80,3 +82,7 @@ html.theme-transition {
 .no_scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* input[type='date'] {
+  color-scheme: auto;
+} */

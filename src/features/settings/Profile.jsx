@@ -37,6 +37,7 @@ export default function Profile() {
       {
         name: "phone",
         label: "Phone Number",
+        type : 'phone'
       },
       {
         name: "birthday",

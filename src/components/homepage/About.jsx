@@ -36,10 +36,10 @@ function About() {
             <div className="space-y-2">
               <h2 className=" font-bold text-primary">Email Address</h2>
               <a
-                href="mailto:contact@dsi.ma"
+                href="mailto:stagiaire@men.gov.ma"
                 className="text-sm font-medium text-text-secondary "
               >
-                contact@dsi.ma
+                stagiaire@men.gov.ma
               </a>
             </div>
           </div>
