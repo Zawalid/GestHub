@@ -183,67 +183,38 @@
       "id": "9"
     }
   ],
-  "teams": [
-    {
-      "id": "1",
-      "name": "Team Alpha",
-      "project": "Project A",
-      "supervisorId": 1
-    },
-    {
-      "id": "2",
-      "name": "Team Beta",
-      "project": "Project B",
-      "supervisorId": 2
-    },
-    {
-      "id": "3",
-      "name": "Team Gamma",
-      "project": "Project C",
-      "supervisorId": 3
-    },
-    {
-      "id": "4",
-      "name": "Team Delta",
-      "project": "Project D",
-      "supervisorId": 4
-    },
-    {
-      "id": "5",
-      "name": "Team Epsilon",
-      "project": "Project E",
-      "supervisorId": 5
-    }
-  ],
   "projects": [
     {
       "id": "1",
-      "name": "Customer Relationship Management System",
+      "name": "Customer Relationship Management ",
       "description": "Implement a new CRM system to better manage customer relationships.",
       "startDate": "2022-02-01",
       "endDate": "2022-07-01",
       "teamId": 6,
-      "status": "Completed",
+      "status": "In Progress",
       "supervisor": "Emma Watson",
-      "priority": "Medium",
+      "projectManager": "Emma Watson",
+      "priority": "High",
       "tasks": [
-        {
-          "id": 14,
-          "title": "fffdsfsd",
-          "description": "",
-          "dueDate": "",
-          "priority": "None",
-          "assignee": "None",
-          "status": "To Do"
-        },
         {
           "id": 11,
           "title": "dfsdfsdfsfsdf",
           "description": "",
           "dueDate": "",
           "priority": "None",
-          "assignee": "None",
-          "status": "In Progress"
+          "assignee": {
+            "id": "6",
+            "firstName": "David",
+            "lastName": "Williams",
+            "email": "david.williams@example.com",
+            "phone": "444-555-6666",
+            "birthday": "1995-06-06",
+            "university": "University of Washington",
+            "major": "Human Centered Design & Engineering",
+            "startDate": "2022-01-01",
+            "endDate": "2022-06-01"
+          },
+          "status": "To Do"
         },
         {
           "id": 13,
@@ -252,7 +223,7 @@
           "dueDate": "",
           "priority": "None",
           "assignee": "None",
-          "status": "Done"
+          "status": "In Progress"
         },
         {
           "id": 7,
@@ -261,10 +232,43 @@
           "dueDate": "",
           "priority": "High",
           "assignee": "None",
+          "status": "In Progress"
+        },
+        {
+          "id": 14,
+          "title": "fffdsfsd",
+          "description": "",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": {
+            "id": "6",
+            "firstName": "David",
+            "lastName": "Williams",
+            "email": "david.williams@example.com",
+            "phone": "444-555-6666",
+            "birthday": "1995-06-06",
+            "university": "University of Washington",
+            "major": "Human Centered Design & Engineering",
+            "startDate": "2022-01-01",
+            "endDate": "2022-06-01"
+          },
           "status": "Done"
         }
       ],
-      "teamMembers": []
+      "teamMembers": [
+        {
+          "id": "6",
+          "firstName": "David",
+          "lastName": "Williams",
+          "email": "david.williams@example.com",
+          "phone": "444-555-6666",
+          "birthday": "1995-06-06",
+          "university": "University of Washington",
+          "major": "Human Centered Design & Engineering",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        }
+      ]
     },
     {
       "id": "2",
@@ -475,32 +479,61 @@
           "status": "To Do"
         }
       ]
-    }
-  ],
-  "absences": [
-    {
-      "id": "1",
-      "internId": 1,
-      "date": "2022-01-15",
-      "reason": "Sick leave"
     },
     {
-      "id": "3",
-      "internId": 3,
-      "date": "2022-03-25",
-      "reason": "Vacation"
-    },
-    {
-      "id": "4",
-      "internId": 4,
-      "date": "2022-04-30",
-      "reason": "Sick leave"
-    },
-    {
-      "id": "5",
-      "internId": 5,
-      "date": "2022-05-05",
-      "reason": "Personal leave"
+      "id": "7cae",
+      "name": "fdsf",
+      "description": "fsdf",
+      "startDate": "2024-04-08",
+      "endDate": "2024-05-01",
+      "priority": "High",
+      "status": "In Progress",
+      "teamMembers": [
+        {
+          "id": "3",
+          "firstName": "Bob",
+          "lastName": "Smith",
+          "email": "bob.smith@example.com",
+          "phone": "111-222-3333",
+          "birthday": "1991-03-03",
+          "university": "MIT",
+          "major": "Software Engineering",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        },
+        {
+          "id": "4",
+          "firstName": "Alice",
+          "lastName": "Johnson",
+          "email": "alice.johnson@example.com",
+          "phone": "222-333-4444",
+          "birthday": "1993-04-04",
+          "university": "University of California, Berkeley",
+          "major": "Data Science",
+          "startDate": "2022-01-01",
+          "endDate": "2022-06-01"
+        }
+      ],
+      "tasks": [
+        {
+          "id": 2,
+          "title": "fsdf",
+          "description": "fsdf",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": "None",
+          "status": "To Do"
+        },
+        {
+          "id": 1,
+          "title": "ewe",
+          "description": "",
+          "dueDate": "",
+          "priority": "High",
+          "assignee": "None",
+          "status": "Done"
+        }
+      ]
     }
   ],
   "offers": [

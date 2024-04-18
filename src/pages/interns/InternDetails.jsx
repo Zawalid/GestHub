@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useIntern } from '../../features/interns/useInterns';
 import { BackButton } from '@/components/ui';
 import { useEffect } from 'react';
+import { changeTitle } from '@/utils/helpers';
 
 export function InternDetails() {
   const { id } = useParams();
@@ -10,7 +11,7 @@ export function InternDetails() {
   const { firstName, lastName, email, phone, birthday, major, university, startDate, endDate } = intern || {};
 
   useEffect(() => {
-    document.title = `${firstName} ${lastName}`;
+    changeTitle(`${firstName} ${lastName}`);
   }, [firstName, lastName]);
 
   const render = () => {
@@ -35,7 +36,7 @@ export function InternDetails() {
 
   return (
     <>
-     <BackButton />
+      <BackButton />
       <Heading>InternDetails</Heading>
       {render()}
     </>

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useSupervisor } from '../../features/supervisors/useSupervisors';
 import { BackButton } from '@/components/ui';
 import { useEffect } from 'react';
+import { changeTitle } from '@/utils/helpers';
 
 export function SupervisorDetails() {
   const { id } = useParams();
@@ -10,7 +11,7 @@ export function SupervisorDetails() {
   const { firstName, lastName, email, phone, department } = supervisor || {};
 
   useEffect(() => {
-    document.title = `${firstName} ${lastName}`;
+    changeTitle(`${firstName} ${lastName}`);
   }, [firstName, lastName]);
 
   const render = () => {

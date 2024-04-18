@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { useDeleteProject, useProject, useUpdateProject } from '../useProjects';
-import { Button, DropDown } from '@/components/ui';
+import { Button, DropDown, Modal } from '@/components/ui';
 import {
   BsListCheck,
   IoEllipsisHorizontalSharp,
   IoTrashOutline,
+  MdDriveFileRenameOutline,
   MdOutlineGroupAdd,
   MdOutlineGroupRemove,
   TbProgressCheck,
@@ -14,8 +15,10 @@ import {
 import AddNewMember from './AddNewMember';
 import { STATUS_COLORS } from '@/utils/constants';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
+import { BasicInfo } from '../NewProject/BasicInfo';
 
 export default function Overview() {
+  const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
   const { project } = useProject(id);
   const { name, status, progress } = project || {};
@@ -32,9 +35,10 @@ export default function Overview() {
             </p>
           </div>
         </div>
-        <Actions id={id} />
+        <Actions id={id} onEdit={() => setIsOpen(true)} />
       </div>
       <TeamMembers project={project} />
+      <EditProject isOpen={isOpen} onClose={() => setIsOpen(false)} project={project} />
     </div>
   );
 }
@@ -87,7 +91,7 @@ function Progress({ progress, status }) {
   );
 }
 
-function Actions({ id }) {
+function Actions({ id, onEdit }) {
   const { openModal } = useConfirmationModal();
   const { mutate } = useDeleteProject();
   const navigate = useNavigate();
@@ -101,6 +105,10 @@ function Actions({ id }) {
       }
       options={{ className: 'w-[200px]' }}
     >
+      <DropDown.Option onClick={onEdit}>
+        <MdDriveFileRenameOutline />
+        Edit Project
+      </DropDown.Option>
       <DropDown.Option
         onClick={() =>
           openModal({
@@ -133,7 +141,7 @@ function TeamMembers({ project }) {
       </div>
       {project?.teamMembers.length === 0 ? (
         <div className='grid h-[250px] place-content-center'>
-          <p className='text-text-secondary text-center'>No team members have been added to this project yet.</p>
+          <p className='text-center text-text-secondary'>No team members have been added to this project yet.</p>
         </div>
       ) : (
         <div className='grid auto-cols-[250px] grid-flow-col gap-6 overflow-auto pb-2' ref={parent}>
@@ -198,10 +206,7 @@ function Member({ member, project }) {
           alt='avatar'
           className='mx-auto h-16 w-16 rounded-full border border-border object-cover shadow-md'
         />
-        <div className='space-y-1 text-center'>
-          <h3 className='font-semibold text-text-primary'>{`${firstName} ${lastName}`}</h3>
-          <p className='text-xs text-text-tertiary'>Front End Developer</p>
-        </div>
+        <h3 className='font-semibold text-center text-text-primary'>{`${firstName} ${lastName}`}</h3>
       </div>
       <div className='mb-5 flex items-center justify-between'>
         <div className='flex items-center gap-1 text-text-secondary'>
@@ -219,5 +224,39 @@ function Member({ member, project }) {
         </Button>
       </Link>
     </div>
+  );
+}
+
+function EditProject({ isOpen, onClose, project }) {
+  const { id, name, description, startDate, endDate, priority } = project || {};
+  const { mutate } = useUpdateProject();
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      className='relative flex flex-col gap-4 p-5 sm:h-fit sm:w-[400px] sm:border'
+      closeOnBlur={false}
+    >
+      <div className='flex h-full flex-col gap-5'>
+        <BasicInfo
+          state={{ name, description, startDate, endDate, priority }}
+          onSubmit={(data) => mutate({ id, data: { ...project, ...data } })}
+          actionButtons={({ handleSubmit, reset, isUpdated, isValid }) => {
+            return (
+              <div className='mt-auto grid grid-cols-2 gap-4'>
+                <Button color='tertiary' onClick={() => reset(onClose)}>
+                  Cancel
+                </Button>
+                <Button color='secondary' onClick={() => handleSubmit(onClose)} disabled={!isUpdated || !isValid}>
+                  Update Project
+                </Button>
+              </div>
+            );
+          }}
+        />
+        <div></div>
+      </div>
+    </Modal>
   );
 }

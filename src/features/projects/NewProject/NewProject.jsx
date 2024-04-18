@@ -13,7 +13,7 @@ const steps = [
   {
     number: 1,
     title: 'Basic Info',
-    element: <BasicInfo />,
+    element: <BasicInfo className='mobile:flex-row mobile:items-center' />,
     stepStatus: 'uncompleted',
   },
   {

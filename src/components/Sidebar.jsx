@@ -20,6 +20,7 @@ import {
 
 import { ROUTES } from '../utils/constants';
 import { Button } from './ui';
+import { capitalize, changeTitle } from '@/utils/helpers';
 
 const routesIcons = {
   overview: <IoHomeOutline />,
@@ -35,7 +36,7 @@ const routesIcons = {
 export default function Sidebar({ openSettings }) {
   const [isExpanded, setIsExpanded] = useState(window.matchMedia('(min-width: 1024px)').matches);
   const role = useSelector((state) => state.user?.role);
-  const currentTab = useLocation().pathname.split('/')[2];
+  const location = useLocation().pathname.split('/');
   const { t } = useTranslation();
 
   const spanClass = `transition-transform origin-left duration-500 text-sm text-text-secondary ${
@@ -51,8 +52,8 @@ export default function Sidebar({ openSettings }) {
   }, [isExpanded]);
 
   useEffect(() => {
-    document.title = currentTab[0].toUpperCase() + currentTab.slice(1);
-  }, [currentTab]);
+    if (location.length === 3) changeTitle(capitalize(location[2]));
+  }, [location]);
 
   return (
     <aside

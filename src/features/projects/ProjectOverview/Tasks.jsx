@@ -17,7 +17,7 @@ const getStyle = (style, snapshot) => (snapshot.isDropAnimating ? { ...style, tr
 
 export default function Tasks() {
   const [parent] = useAutoAnimate({ duration: 400 });
-  const { id } = useParams() 
+  const { id } = useParams();
   const { project } = useProject(id);
   const [groups, setGroups] = useState(() => {
     const groups = { 'To Do': [], 'In Progress': [], Done: [] };
@@ -30,12 +30,20 @@ export default function Tasks() {
   const { mutate } = useUpdateProject({ showToast: false });
   const { openModal } = useConfirmationModal();
 
-  // Tasks Methods
-  const updateGroups = (tasks, group, action) => {
-    const newGroups = { ...groups, [group]: tasks };
+  // Project Methods
+  const getProjectStatus = (tasks) => {
+    const notStarted = tasks.every((task) => task.status === 'To Do');
+    const isCompleted = tasks.every((task) => task.status === 'Done');
+    const status = notStarted ? 'Not Started' : isCompleted ? 'Completed' : 'In Progress';
+    return status;
+  };
+  const updateGroups = (groupTasks, group, action) => {
+    const newGroups = { ...groups, [group]: groupTasks };
+    const tasks = Object.values(newGroups).flat();
+
     setGroups(newGroups);
     mutate(
-      { id, data: { ...project, tasks: Object.values(newGroups).flat() } },
+      { id, data: { ...project, tasks, status: getProjectStatus(tasks) } },
       {
         onSuccess: () => toast.success(`Task ${action}d successfully`),
         onError: () => toast.error(`Failed to ${action} task`),
@@ -77,9 +85,10 @@ export default function Tasks() {
     // Remove the task from one group and place it in the other
     const [movedTask] = newGroups[sourceGroup].splice(sourceIndex, 1);
     newGroups[destinationGroup].splice(destinationIndex, 0, { ...movedTask, status: destinationGroup });
+    const tasks = Object.values(newGroups).flat();
     // Update the groups and database
     setGroups(newGroups);
-    mutate({ id, data: { ...project, tasks: Object.values(newGroups).flat() } });
+    mutate({ id, data: { ...project, tasks, status: getProjectStatus(tasks) } });
   };
 
   return (

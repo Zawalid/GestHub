@@ -12,8 +12,6 @@ export const ROUTES = {
     'offers/:id',
     'interns',
     'interns/:id',
-    'teams',
-    'absences',
   ],
   supervisor: ['overview', 'projects', 'projects/:id', 'interns', 'interns/:id', 'teams', 'absences'],
   intern: ['overview', 'absences'],

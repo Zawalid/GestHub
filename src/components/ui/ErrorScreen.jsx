@@ -7,8 +7,7 @@ export function ErrorScreen({ error }) {
         <h3 className='font-semibold text-red-500'>Unexpected Error</h3>
         <p className='text-4xl font-semibold text-text-primary sm:text-5xl'>Oops !! Something went wrong</p>
         <p className='text-text-secondary'>
-          We&apos;re not exactly sure what happened, but something went wrong. If you need immediate help please{' '}
-          <span className='font-semibold underline'>let us know</span>
+          We&apos;re not exactly sure what happened, but something went wrong.
         </p>
         <Button className='mx-auto' onClick={() => location.reload()}>
           Try Again

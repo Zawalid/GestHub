@@ -34,3 +34,7 @@ export const getIncrementedID = (array) => {
 };
 
 export const formatDate = (date) => DateTime.fromISO(date).toLocaleString(DateTime.DATE_FULL);
+
+export const changeTitle = (title) => (document.title = title || 'Loading...');
+
+export const capitalize = (string) => string?.charAt(0).toUpperCase() + string?.slice(1);
