@@ -23,7 +23,7 @@ export function Actions({ onUpdate, onDelete, row }) {
         </Button>
       }
     >
-      <Link to={`${location.pathname}/${row.id}`} replace={true}>
+      <Link to={`${location.pathname}/${row.id}`}>
         <DropDown.Option>
           <IoEyeOutline />
           View

@@ -1,12 +1,12 @@
+import { useNavigate } from 'react-router-dom';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { FaPlus } from 'react-icons/fa6';
 import { Operations } from '@/components/shared/operations/Operations';
+import { useOperations } from '@/components/shared/operations/useOperations';
 import Project from './Project';
 import { Button } from '@/components/ui';
-import { FaPlus } from 'react-icons/fa6';
-import { useOperations } from '@/components/shared/operations/useOperations';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Status } from '@/components/ui/Status';
 import ProjectsSkeleton from './ProjectsSkeleton';
-import { useNavigate } from 'react-router-dom';
 
 export default function ProjectsList() {
   const { data: projects, isLoading, error, layout, appliedFiltersNumber, query } = useOperations();

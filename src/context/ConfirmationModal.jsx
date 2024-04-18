@@ -45,7 +45,7 @@ export function ModalProvider({ children }) {
       {createPortal(
         <Modal
           isOpen={isModalOpen}
-          className='h-fit w-fit max-w-[90%] flex-col gap-5 border  py-3 shadow-sm child-padding sm:max-w-[600px] sm:py-4'
+          className='h-fit w-fit max-w-[90%] flex-col gap-5 border  py-3 shadow-sm child-padding sm:max-w-[450px] sm:py-4'
           overlayClassName='z-50'
           closeOnBlur={false}
         >
@@ -53,9 +53,9 @@ export function ModalProvider({ children }) {
             <div className='grid h-6 w-6 place-content-center rounded-full bg-[#F57800] text-white sm:h-8 sm:w-8 sm:text-lg'>
               <PiWarningFill />
             </div>
-            <h1 className='text-xl font-bold text-text-primary   sm:text-2xl'>{options.title}</h1>
+            <h1 className='text-xl font-semibold text-text-primary   sm:text-2xl'>{options.title}</h1>
           </div>
-          <h4 className='text-sm font-medium text-text-secondary sm:text-base'>{options.message}</h4>
+          <p className='text-sm text-text-secondary sm:text-base'>{options.message}</p>
 
           <div className='mt-3 flex  items-center justify-end gap-3 border-t border-border pt-3'>
             <Button color='tertiary' onClick={onCancel}>

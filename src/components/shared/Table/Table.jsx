@@ -1,9 +1,8 @@
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { cloneElement, useRef } from "react";
-
 import { Sort } from "./Sort";
 import { useTable } from ".";
-import {Status} from "@/components/ui/Status";
+import {Status} from "@/components/ui/";
 
 export function Table({ actions }) {
   const { columns, rows, error } = useTable();

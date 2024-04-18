@@ -1,8 +1,12 @@
 export { Button } from "./Button";
+export { BackButton } from "./BackButton";
 export { CheckBox } from "./CheckBox";
+export { ConfirmationModal } from "./ConfirmationModal";
 export { DropDown } from "./DropDown";
 export { InputField } from "./InputField";
 export { Modal } from "./Modal";
+export { PasswordInput } from "./PasswordInput";
 export { SearchInput } from "./SearchInput";
+export { Status } from "./Status";
 export { Switch } from "./Switch";
-export { ConfirmationModal } from "./ConfirmationModal";
+export { ToolTip } from "./ToolTip";

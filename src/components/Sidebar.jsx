@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -35,6 +35,7 @@ const routesIcons = {
 export default function Sidebar({ openSettings }) {
   const [isExpanded, setIsExpanded] = useState(window.matchMedia('(min-width: 1024px)').matches);
   const role = useSelector((state) => state.user?.role);
+  const currentTab = useLocation().pathname.split('/')[2];
   const { t } = useTranslation();
 
   const spanClass = `transition-transform origin-left duration-500 text-sm text-text-secondary ${
@@ -48,6 +49,10 @@ export default function Sidebar({ openSettings }) {
 
     return () => window.removeEventListener('resize', onresize);
   }, [isExpanded]);
+
+  useEffect(() => {
+    document.title = currentTab[0].toUpperCase() + currentTab.slice(1);
+  }, [currentTab]);
 
   return (
     <aside

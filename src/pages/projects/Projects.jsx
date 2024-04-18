@@ -17,7 +17,7 @@ export function Projects() {
         { key: 'startDate', display: 'Start Date', type: 'date' },
         { key: 'endDate', display: 'End Date', type: 'date' },
         { key: 'tasksNumber', display: 'Tasks Number', type: 'number' },
-        { key: 'membersNumber', display: 'Members Number', type: 'number' },
+        { key: 'teamCount', display: 'Members Number', type: 'number' },
         { key: 'progress', display: 'Progress', type: 'number' },
       ]}
       defaultSortBy='startDate'

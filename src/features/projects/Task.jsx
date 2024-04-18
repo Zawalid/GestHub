@@ -66,7 +66,7 @@ function Assignee({ assignee }) {
   ) : (
     <ToolTip content={<span>{`${assignee.firstName} ${assignee.lastName}`}</span>}>
       <img
-        src={assignee.image || '/images/default-profile.jpg'}
+        src={assignee.avatar || '/images/default-profile.jpg'}
         alt={`${assignee.firstName} ${assignee.lastName}`}
         className='h-7 w-7 rounded-full border-2 border-border'
       />

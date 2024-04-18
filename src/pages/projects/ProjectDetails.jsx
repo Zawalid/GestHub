@@ -13,6 +13,10 @@ export function ProjectDetails() {
     if (!['overview', 'tasks', 'notes'].includes(tab)) navigate(`/app/projects/${id}/overview`);
   }, [id, tab, navigate]);
 
+  useEffect(() => {
+    document.title = `${project?.name}`;
+  }, [project?.name]);
+
   if (isLoading) return <Heading>Loading...</Heading>;
   if (error) return <Heading>{error.message}</Heading>;
   if (!project) return <Heading>Project not found</Heading>;

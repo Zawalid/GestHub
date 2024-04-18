@@ -5,8 +5,7 @@ import { ToolTip } from '@/components/ui/ToolTip';
 import { formatDate } from '@/utils/helpers';
 
 export default function Project({ project, layout }) {
-  const { id, name, description, startDate, endDate, status, priority, tasks, teamMembers, progress, completedTasks } =
-    project;
+  const { id, name, description, startDate, endDate, status, priority, teamMembers } = project;
   const navigate = useNavigate();
 
   return (
@@ -17,24 +16,12 @@ export default function Project({ project, layout }) {
       onClick={() => navigate(id)}
     >
       <PriorityIndicator priority={priority} />
-
-      <div className='flex items-center justify-between gap-5'>
-        <Date startDate={startDate} endDate={endDate} />
-        {/* <Actions id={id} /> */}
-      </div>
-
+      <Date startDate={startDate} endDate={endDate} />
       <div className='space-y-2'>
         <h3 className='line-clamp-2 text-lg font-semibold text-text-primary'>{name}</h3>
         <p className='line-clamp-2 text-sm text-text-secondary'>{description || 'No description'}</p>
       </div>
-
-      <div className='flex items-center gap-2'>
-        <span className='text-xs font-bold text-text-primary'>
-          {completedTasks.length}/{tasks.length}
-        </span>
-        <ProgressBar progress={progress} status={status} />
-      </div>
-
+      <ProgressBar project={project} />
       <div className='mt-auto flex items-center justify-between '>
         <Members members={teamMembers} />
         <p className={`w-fit rounded-md p-2 py-1 text-xs text-white ${STATUS_COLORS[status || 'Not Started']?.bg}`}>
@@ -69,20 +56,26 @@ function PriorityIndicator({ priority }) {
   );
 }
 
-export function ProgressBar({ progress, status }) {
+function ProgressBar({ project }) {
+  const { status, tasks, progress, completedTasks } = project;
   const color = STATUS_COLORS[status]?.bg;
 
   return (
-    <div className='relative w-full rounded-lg bg-background-tertiary py-1'>
-      <div
-        className={`absolute top-0 h-full rounded-lg transition-all duration-500 ${color}`}
-        style={{ width: `${progress}%` }}
-      ></div>
+    <div className='flex items-center gap-2'>
+      <span className='text-xs font-bold text-text-primary'>
+        {completedTasks.length}/{tasks.length}
+      </span>
+      <div className='relative w-full rounded-lg bg-background-tertiary py-1'>
+        <div
+          className={`absolute top-0 h-full rounded-lg transition-all duration-500 ${color}`}
+          style={{ width: `${progress}%` }}
+        ></div>
+      </div>
     </div>
   );
 }
 
-export function Members({ members, size = 'small' }) {
+function Members({ members, size = 'small' }) {
   const [parent] = useAutoAnimate({ duration: 400 });
 
   if (!members.length)
@@ -100,7 +93,7 @@ export function Members({ members, size = 'small' }) {
       {members.slice(0, 3).map((member, i) => (
         <ToolTip key={member.id || member} content={<span>{`${member.firstName} ${member.lastName}`}</span>}>
           <img
-            src={member.image || '/images/default-profile.jpg'}
+            src={member.avatar || '/images/default-profile.jpg'}
             alt={`${member.firstName} ${member.lastName}`}
             className={`absolute top-0 z-[1] ${sizes[size]} rounded-full border-2 border-border`}
             style={{ left: `${i * (size === 'small' ? 15 : 20)}px` }}

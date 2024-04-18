@@ -1,14 +1,15 @@
 /* eslint-disable react-refresh/only-export-components */
-import { CheckBox, SearchInput } from '@/components/ui';
-import { useInterns } from '../../interns/useInterns';
-import { Status } from '@/components/ui/Status';
-import { useEffect, useState } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { CheckBox, SearchInput, Status } from '@/components/ui';
+import { useInterns } from '../../interns/useInterns';
+import { useEffect, useState } from 'react';
 
 export const getSearchedInterns = (interns, query) =>
-  interns?.filter((intern) =>
-    `${intern.firstName} ${intern.lastName}`.trim().toLowerCase().includes(query.trim().toLowerCase())
-  );
+  interns
+    ?.filter((intern) =>
+      `${intern.firstName} ${intern.lastName}`.trim().toLowerCase().includes(query.trim().toLowerCase())
+    )
+    .sort((a, b) => a.firstName.localeCompare(b.firstName));
 export const renderInternsStatus = (isLoading, error, searchedInterns, render) => {
   if (isLoading) return <Status status='loading' size='small' />;
   if (error) return <Status status='error' heading={error?.message} size='small' />;
@@ -58,12 +59,12 @@ export function TeamMembers({ updateStatus, updateState, state }) {
   );
 }
 
-export function AllInterns({ children, teamMembers, setTeamMembers }) {
+export function AllInterns({ children, teamMembers, setTeamMembers, filter }) {
   const { interns, error, isLoading } = useInterns();
   const [query, setQuery] = useState('');
   const [parent] = useAutoAnimate({ duration: 400 });
 
-  const searchedInterns = getSearchedInterns(interns, query);
+  const searchedInterns = getSearchedInterns(filter ? filter(interns) : interns, query);
 
   const render = () => {
     return searchedInterns?.map((intern) => {
@@ -109,7 +110,7 @@ export function Intern({ intern }) {
   return (
     <div className='flex items-center gap-2'>
       <img
-        src={intern?.image || '/images/default-profile.jpg'}
+        src={intern?.avatar || '/images/default-profile.jpg'}
         alt={intern?.firstName}
         className='h-8 w-8 rounded-full border border-border'
       />

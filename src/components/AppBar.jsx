@@ -21,7 +21,7 @@ function UserInfo() {
     <div className='flex items-center gap-3'>
       <img
         className='h-8 w-8 rounded-full border-2 border-border object-cover text-center text-xs text-text-tertiary '
-        src={user?.image || '/images/default-profile.jpg'}
+        src={user?.avatar || '/images/default-profile.jpg'}
         alt='profile image'
       />
       <div>

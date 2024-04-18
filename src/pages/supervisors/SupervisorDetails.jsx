@@ -1,13 +1,17 @@
 import { Heading } from '@/components/Heading';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSupervisor } from '../../features/supervisors/useSupervisors';
-import { Button } from '@/components/ui';
-import { IoChevronBack } from 'react-icons/io5';
+import { BackButton } from '@/components/ui';
+import { useEffect } from 'react';
 
-export  function SupervisorDetails() {
+export function SupervisorDetails() {
   const { id } = useParams();
   const { supervisor, isLoading, error } = useSupervisor(id);
   const { firstName, lastName, email, phone, department } = supervisor || {};
+
+  useEffect(() => {
+    document.title = `${firstName} ${lastName}`;
+  }, [firstName, lastName]);
 
   const render = () => {
     if (isLoading) return <Heading>Loading...</Heading>;
@@ -15,7 +19,7 @@ export  function SupervisorDetails() {
     if (!supervisor) return <Heading>Project not found</Heading>;
 
     return (
-      <div className="">
+      <div className=''>
         <p>{firstName}</p>
         <p>{lastName}</p>
         <p>{email}</p>
@@ -27,13 +31,7 @@ export  function SupervisorDetails() {
 
   return (
     <>
-      <Link to="/app/supervisors" replace={true}>
-        <Button color="tertiary" display="with-icon" size="small">
-          <IoChevronBack />
-          Back
-        </Button>
-      </Link>
-
+      <BackButton />
       <Heading>SupervisorDetails</Heading>
       {render()}
     </>

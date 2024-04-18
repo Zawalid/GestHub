@@ -228,8 +228,8 @@
       "priority": "Medium",
       "tasks": [
         {
-          "id": 13,
-          "title": "ddddddddddd",
+          "id": 14,
+          "title": "fffdsfsd",
           "description": "",
           "dueDate": "",
           "priority": "None",
@@ -243,36 +243,16 @@
           "dueDate": "",
           "priority": "None",
           "assignee": "None",
-          "status": "To Do"
+          "status": "In Progress"
         },
         {
-          "id": 9,
-          "title": "dd",
-          "description": "",
-          "dueDate": "",
-          "priority": "None",
-          "assignee": {
-            "id": "1",
-            "firstName": "John",
-            "lastName": "Doe",
-            "email": "john.doe@example.com",
-            "phone": "123-456-7890",
-            "birthday": "1990-01-01",
-            "university": "Harvard University",
-            "major": "Computer Science",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01"
-          },
-          "status": "To Do"
-        },
-        {
-          "id": 10,
-          "title": "dfdfdf",
+          "id": 13,
+          "title": "ddddddddddd",
           "description": "",
           "dueDate": "",
           "priority": "None",
           "assignee": "None",
-          "status": "To Do"
+          "status": "Done"
         },
         {
           "id": 7,
@@ -284,44 +264,7 @@
           "status": "Done"
         }
       ],
-      "teamMembers": [
-        {
-          "id": "1",
-          "firstName": "John",
-          "lastName": "Doe",
-          "email": "john.doe@example.com",
-          "phone": "123-456-7890",
-          "birthday": "1990-01-01",
-          "university": "Harvard University",
-          "major": "Computer Science",
-          "startDate": "2022-01-01",
-          "endDate": "2022-06-01"
-        },
-        {
-          "id": "3",
-          "firstName": "Bob",
-          "lastName": "Smith",
-          "email": "bob.smith@example.com",
-          "phone": "111-222-3333",
-          "birthday": "1991-03-03",
-          "university": "MIT",
-          "major": "Software Engineering",
-          "startDate": "2022-01-01",
-          "endDate": "2022-06-01"
-        },
-        {
-          "id": "4",
-          "firstName": "Alice",
-          "lastName": "Johnson",
-          "email": "alice.johnson@example.com",
-          "phone": "222-333-4444",
-          "birthday": "1993-04-04",
-          "university": "University of California, Berkeley",
-          "major": "Data Science",
-          "startDate": "2022-01-01",
-          "endDate": "2022-06-01"
-        }
-      ]
+      "teamMembers": []
     },
     {
       "id": "2",

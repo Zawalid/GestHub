@@ -9,7 +9,7 @@ export const axiosFetch = async (resource, method, data) => {
     });
     return response.data;
   } catch (e) {
-    console.log(e);
+    console.log(e?.message);
     throw Error(getAxiosErrorMessage(e.code));
   }
 };

@@ -9,8 +9,10 @@ import { ToolTip } from '@/components/ui/ToolTip';
 export default function AddNewMember({ isOpen, onClose }) {
   const { id } = useParams();
   const { project } = useProject(id);
-  const [teamMembers, setTeamMembers] = useState(project.teamMembers);
+  const [members, setMembers] = useState([]);
   const { mutate } = useUpdateProject();
+
+  const close = () => (onClose(), setMembers([]));
 
   return (
     <Modal
@@ -20,44 +22,34 @@ export default function AddNewMember({ isOpen, onClose }) {
       closeOnBlur={false}
     >
       <h1 className='mb-2 text-lg font-bold text-text-primary'>Add New Member</h1>
-      <AllInterns teamMembers={teamMembers} setTeamMembers={setTeamMembers}>
+      <AllInterns
+        teamMembers={members}
+        setTeamMembers={setMembers}
+        filter={(interns) => interns?.filter((intern) => !project.teamMembers.map((m) => m.id).includes(intern.id))}
+      >
         <ToolTip content={<span>Uncheck All</span>}>
-          <Button
-            shape='icon'
-            className='relative ml-3'
-            disabled={teamMembers.length === 0}
-            onClick={() => setTeamMembers([])}
-          >
+          <Button shape='icon' className='relative ml-3' disabled={members.length === 0} onClick={() => setMembers([])}>
             <RiCheckboxMultipleBlankLine />
             <span
               className={`absolute -right-2 -top-2 h-5 w-5 rounded-full bg-primary text-center text-xs font-bold leading-5 text-white transition-transform duration-300 ${
-                teamMembers.length > 0 ? 'scale-100' : 'scale-0'
+                members.length > 0 ? 'scale-100' : 'scale-0'
               }`}
             >
-              {teamMembers.length}
+              {members.length}
             </span>
           </Button>
         </ToolTip>
       </AllInterns>
       <div className='mt-2 grid grid-cols-2 gap-4'>
-        <Button
-          color='tertiary'
-          onClick={() => {
-            onClose();
-            setTeamMembers(project.teamMembers);
-          }}
-        >
+        <Button color='tertiary' onClick={close}>
           Cancel
         </Button>
         <Button
           color='secondary'
-          disabled={
-            teamMembers.length === project.teamMembers.length &&
-            project.teamMembers.map((t) => t.id).every((id) => teamMembers.map((t) => t.id).includes(id))
-          }
+          disabled={members.length === 0}
           onClick={() => {
-            mutate({ id, data: { ...project, teamMembers, teamCount: teamMembers.length } });
-            onClose();
+            mutate({ id, data: { ...project, teamMembers: [...project.teamMembers, ...members] } });
+            close();
           }}
         >
           Save
