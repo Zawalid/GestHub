@@ -9,8 +9,8 @@
       "birthday": "1990-01-01",
       "university": "Harvard University",
       "major": "Computer Science",
-      "startDate": "2022-01-01",
-      "endDate": "2022-06-01"
+      "startDate": "2024-01-01",
+      "endDate": "2024-06-01"
     },
     {
       "id": "3",
@@ -21,8 +21,8 @@
       "birthday": "1991-03-03",
       "university": "MIT",
       "major": "Software Engineering",
-      "startDate": "2022-01-01",
-      "endDate": "2022-06-01"
+      "startDate": "2024-01-01",
+      "endDate": "2024-06-01"
     },
     {
       "id": "4",
@@ -33,8 +33,8 @@
       "birthday": "1993-04-04",
       "university": "University of California, Berkeley",
       "major": "Data Science",
-      "startDate": "2022-01-01",
-      "endDate": "2022-06-01"
+      "startDate": "2024-01-01",
+      "endDate": "2024-06-01"
     },
     {
       "id": "5",
@@ -45,8 +45,8 @@
       "birthday": "1994-05-05",
       "university": "Carnegie Mellon University",
       "major": "Artificial Intelligence",
-      "startDate": "2022-01-01",
-      "endDate": "2022-06-01"
+      "startDate": "2024-01-01",
+      "endDate": "2024-06-01"
     },
     {
       "id": "6",
@@ -57,8 +57,8 @@
       "birthday": "1995-06-06",
       "university": "University of Washington",
       "major": "Human Centered Design & Engineering",
-      "startDate": "2022-01-01",
-      "endDate": "2022-06-01"
+      "startDate": "2024-01-01",
+      "endDate": "2024-06-01"
     },
     {
       "id": "7",
@@ -69,8 +69,8 @@
       "birthday": "1996-07-07",
       "university": "University of Illinois Urbana-Champaign",
       "major": "Information Sciences",
-      "startDate": "2022-01-01",
-      "endDate": "2022-06-01",
+      "startDate": "2024-01-01",
+      "endDate": "2024-06-01",
       "password": "Ancd1234",
       "confirmPassword": "Ancd1234"
     },
@@ -83,8 +83,8 @@
       "birthday": "1997-08-08",
       "university": "University of Texas at Austin",
       "major": "Computer Engineering",
-      "startDate": "2022-01-01",
-      "endDate": "2022-06-01",
+      "startDate": "2024-01-01",
+      "endDate": "2024-06-01",
       "password": "Ancd1234",
       "confirmPassword": "Ancd1234"
     },
@@ -97,8 +97,8 @@
       "birthday": "1998-09-09",
       "university": "University of Michigan",
       "major": "Information Technology",
-      "startDate": "2022-01-01",
-      "endDate": "2022-06-01"
+      "startDate": "2024-01-01",
+      "endDate": "2024-06-01"
     },
     {
       "id": "1bf0",
@@ -188,8 +188,8 @@
       "id": "1",
       "name": "Customer Relationship Management ",
       "description": "Implement a new CRM system to better manage customer relationships.",
-      "startDate": "2022-06-01",
-      "endDate": "2022-07-01",
+      "startDate": "2024-06-01",
+      "endDate": "2024-07-01",
       "teamId": 6,
       "status": "In Progress",
       "supervisor": "Emma Watson",
@@ -202,18 +202,7 @@
           "description": "",
           "dueDate": "",
           "priority": "None",
-          "assignee": {
-            "id": "6",
-            "firstName": "David",
-            "lastName": "Williams",
-            "email": "david.williams@example.com",
-            "phone": "444-555-6666",
-            "birthday": "1995-06-06",
-            "university": "University of Washington",
-            "major": "Human Centered Design & Engineering",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01"
-          },
+          "assignee": "None",
           "status": "To Do"
         },
         {
@@ -240,66 +229,42 @@
           "description": "",
           "dueDate": "",
           "priority": "None",
-          "assignee": {
-            "id": "6",
-            "firstName": "David",
-            "lastName": "Williams",
-            "email": "david.williams@example.com",
-            "phone": "444-555-6666",
-            "birthday": "1995-06-06",
-            "university": "University of Washington",
-            "major": "Human Centered Design & Engineering",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01"
-          },
+          "assignee": "None",
           "status": "Done"
         }
       ],
-      "teamMembers": [
-        {
-          "id": "6",
-          "firstName": "David",
-          "lastName": "Williams",
-          "email": "david.williams@example.com",
-          "phone": "444-555-6666",
-          "birthday": "1995-06-06",
-          "university": "University of Washington",
-          "major": "Human Centered Design & Engineering",
-          "startDate": "2022-01-01",
-          "endDate": "2022-06-01"
-        }
-      ]
+      "teamMembers": []
     },
     {
       "id": "2",
       "name": "Social Media Campaign",
       "description": "Launch a new social media campaign to increase brand awareness.",
-      "startDate": "2022-03-01",
-      "endDate": "2022-04-01",
+      "startDate": "2024-04-01",
+      "endDate": "2024-05-01",
       "teamId": 7,
-      "status": "Not Started",
+      "status": "In Progress",
       "supervisor": "Tom Hanks",
-      "priority": "High",
+      "priority": "None",
       "tasks": [
-        {
-          "id": 1,
-          "name": "Identify target audience",
-          "status": "To Do"
-        },
         {
           "id": 2,
           "name": "Create social media content",
           "status": "To Do"
         },
         {
-          "id": 3,
-          "name": "Schedule posts",
-          "status": "To Do"
-        },
-        {
           "id": 4,
           "name": "Monitor campaign performance",
           "status": "To Do"
+        },
+        {
+          "id": 1,
+          "name": "Identify target audience",
+          "status": "In Progress"
+        },
+        {
+          "id": 3,
+          "name": "Schedule posts",
+          "status": "In Progress"
         }
       ],
       "teamMembers": [
@@ -312,8 +277,8 @@
       "id": "3",
       "name": "E-commerce Platform Upgrade",
       "description": "Upgrade the existing e-commerce platform to improve performance and user experienceerience.",
-      "startDate": "2022-04-01",
-      "endDate": "2022-10-01",
+      "startDate": "2024-04-01",
+      "endDate": "2024-10-01",
       "teamId": 8,
       "status": "In Progress",
       "supervisor": "Julia Roberts",
@@ -349,15 +314,27 @@
         "Julia Roberts",
         "Richard Gere",
         "Hector Elizondo",
-        "Rupert Grint"
+        "Rupert Grint",
+        {
+          "id": "4",
+          "firstName": "Alice",
+          "lastName": "Johnson",
+          "email": "alice.johnson@example.com",
+          "phone": "222-333-4444",
+          "birthday": "1993-04-04",
+          "university": "University of California, Berkeley",
+          "major": "Data Science",
+          "startDate": "2024-01-01",
+          "endDate": "2024-06-01"
+        }
       ]
     },
     {
       "id": "4",
       "name": "New Product Development",
       "description": "Develop a new product to experienceand the company's product line.",
-      "startDate": "2022-05-01",
-      "endDate": "2023-05-01",
+      "startDate": "2024-05-01",
+      "endDate": "2024-05-01",
       "teamId": 9,
       "status": "Not Started",
       "supervisor": "Brad Pitt",
@@ -400,7 +377,7 @@
       "name": "gestion stagaiares",
       "description": "description de project ",
       "startDate": "2024-04-15",
-      "endDate": "2024-05-15",
+      "endDate": "2024-04-14",
       "priority": "High",
       "status": "Not Started",
       "teamMembers": [
@@ -423,8 +400,8 @@
           "birthday": "1995-06-06",
           "university": "University of Washington",
           "major": "Human Centered Design & Engineering",
-          "startDate": "2022-01-01",
-          "endDate": "2022-06-01"
+          "startDate": "2024-01-01",
+          "endDate": "2024-06-01"
         },
         {
           "id": "3",
@@ -435,8 +412,8 @@
           "birthday": "1991-03-03",
           "university": "MIT",
           "major": "Software Engineering",
-          "startDate": "2022-01-01",
-          "endDate": "2022-06-01"
+          "startDate": "2024-01-01",
+          "endDate": "2024-06-01"
         }
       ],
       "tasks": [
@@ -473,8 +450,8 @@
             "birthday": "1991-03-03",
             "university": "MIT",
             "major": "Software Engineering",
-            "startDate": "2022-01-01",
-            "endDate": "2022-06-01"
+            "startDate": "2024-01-01",
+            "endDate": "2024-06-01"
           },
           "status": "To Do"
         }
@@ -498,8 +475,8 @@
           "birthday": "1991-03-03",
           "university": "MIT",
           "major": "Software Engineering",
-          "startDate": "2022-01-01",
-          "endDate": "2022-06-01"
+          "startDate": "2024-01-01",
+          "endDate": "2024-06-01"
         },
         {
           "id": "4",
@@ -510,8 +487,8 @@
           "birthday": "1993-04-04",
           "university": "University of California, Berkeley",
           "major": "Data Science",
-          "startDate": "2022-01-01",
-          "endDate": "2022-06-01"
+          "startDate": "2024-01-01",
+          "endDate": "2024-06-01"
         }
       ],
       "tasks": [

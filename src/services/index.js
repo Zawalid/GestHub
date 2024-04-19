@@ -1,14 +1,12 @@
 import axios from 'axios';
 
-axios.defaults.withCredentials = true;
-
-export const axiosFetch = async (resource, method, data) => {
+export const axiosFetch = async (resource, method, data, isAuth) => {
   try {
     const response = await axios({
       method: method || 'GET',
-      url: `${import.meta.env.VITE_API_URL}/${resource}`,
+      url: `${isAuth ? import.meta.env.VITE_AUTH_URL : import.meta.env.VITE_API_URL}/${resource}`,
       data: data,
-      credentials: 'include',
+      withCredentials: isAuth,
     });
     return response.data;
   } catch (e) {

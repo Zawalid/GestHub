@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { DateTime } from 'luxon';
 import { Button, DropDown } from '@/components/ui';
 import { useForm } from '@/hooks/useForm';
 import Task from '../Task';
@@ -143,7 +142,6 @@ export function NewTask({ className, status, onCancel, currentTask, onSubmit, te
         type: 'date',
         label: 'Due Date',
         rules: { required: false },
-        min: DateTime.now().toISODate(),
       },
     ],
     gridLayout: true,

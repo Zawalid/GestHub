@@ -16,6 +16,7 @@ export {
   IoEyeOutline,
   IoTrashOutline,
   IoSettingsOutline,
+  IoFlag
 } from 'react-icons/io5';
 export {
   PiCheckBold,

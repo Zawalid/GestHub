@@ -13,7 +13,7 @@ export const ROUTES = {
     'interns',
     'interns/:id',
   ],
-  supervisor: ['overview', 'projects', 'projects/:id', 'interns', 'interns/:id', 'teams', 'absences'],
+  supervisor: ['overview', 'projects', 'projects/new', 'projects/:id', 'projects/:id/:tab', 'interns', 'interns/:id'],
   intern: ['overview', 'absences'],
 };
 
@@ -26,7 +26,7 @@ export const STATUS_COLORS = {
 };
 
 export const PRIORITY_COLORS = {
-  Low: 'bg-green-600',
-  Medium: 'bg-orange-500',
-  High: 'bg-red-500',
+  Low: { bg: 'bg-green-600', text: 'text-green-600' },
+  Medium: { bg: 'bg-orange-500', text: 'text-orange-500' },
+  High: { bg: 'bg-red-500', text: 'text-red-500' },
 };

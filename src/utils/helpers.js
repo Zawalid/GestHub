@@ -38,3 +38,5 @@ export const formatDate = (date) => DateTime.fromISO(date).toLocaleString(DateTi
 export const changeTitle = (title) => (document.title = title || 'Loading...');
 
 export const capitalize = (string) => string?.charAt(0).toUpperCase() + string?.slice(1);
+
+export const getProgress = (ratio) => +(ratio ? (ratio % 1 === 0 ? Math.floor(ratio) : ratio.toFixed(1)) : 0);

@@ -62,6 +62,5 @@ export function useUser() {
     queryFn: getUser,
   });
 
-
-  return { user: data?.data, isAuthenticated: Boolean(data), isLoading: isPending, error };
+  return { user: data, isAuthenticated: Boolean(data), isLoading: isPending, error };
 }

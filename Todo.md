@@ -11,4 +11,4 @@
 - [ ] Add translations to all the content
 - [ ] Add illustrations across app (No projects yet / no team members...)
 - [ ] Add meaningful error messages
-- [ ] 
+- [ ] Login or register when clicking enter

@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { useDeleteProject, useProject, useUpdateProject } from '../useProjects';
-import { Button, DropDown, Modal } from '@/components/ui';
+import { Button, DropDown, Modal, ToolTip } from '@/components/ui';
 import {
   BsListCheck,
   IoEllipsisHorizontalSharp,
+  IoFlag,
   IoTrashOutline,
   MdDriveFileRenameOutline,
   MdOutlineGroupAdd,
@@ -13,15 +14,17 @@ import {
   TbProgressCheck,
 } from '@/components/ui/Icons';
 import AddNewMember from './AddNewMember';
-import { STATUS_COLORS } from '@/utils/constants';
+import { PRIORITY_COLORS, STATUS_COLORS } from '@/utils/constants';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { BasicInfo } from '../NewProject/BasicInfo';
+import { formatDate, getProgress } from '@/utils/helpers';
+import { DateTime } from 'luxon';
 
 export default function Overview() {
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
   const { project } = useProject(id);
-  const { name, status, progress } = project || {};
+  const { name, status, progress, priority } = project || {};
 
   return (
     <div className='flex flex-1 flex-col gap-6 overflow-auto pr-2'>
@@ -29,16 +32,28 @@ export default function Overview() {
         <div className='grid gap-2 sm:grid-cols-[70px_auto]'>
           <Progress progress={progress} status={status} />
           <div className='space-y-3'>
-            <h4 className='font-semibold text-text-primary sm:text-xl'>{name}</h4>
+            <h4 className='flex items-center gap-2 font-semibold text-text-primary sm:text-xl'>
+              <span>{name}</span>
+              <ToolTip
+                content={
+                  <span className='text-xs text-text-secondary'>{priority === 'None' ? 'No' : priority} Priority</span>
+                }
+              >
+                <span>
+                  <IoFlag className={`cursor-pointer ${PRIORITY_COLORS[priority]?.text}`} />
+                </span>
+              </ToolTip>
+            </h4>
             <p className={`w-fit rounded-md p-2 py-1 text-xs text-white ${STATUS_COLORS[status || 'Not Started']?.bg}`}>
               {status || 'Not Started'}
             </p>
           </div>
         </div>
         <Actions id={id} onEdit={() => setIsOpen(true)} />
+        <EditProject isOpen={isOpen} onClose={() => setIsOpen(false)} project={project} />
       </div>
+      <Details project={project} />
       <TeamMembers project={project} />
-      <EditProject isOpen={isOpen} onClose={() => setIsOpen(false)} project={project} />
     </div>
   );
 }
@@ -126,22 +141,157 @@ function Actions({ id, onEdit }) {
   );
 }
 
+function EditProject({ isOpen, onClose, project }) {
+  const { id, name, description, startDate, endDate, priority } = project || {};
+  const { mutate } = useUpdateProject();
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      className='relative flex flex-col gap-6 p-5 sm:h-fit sm:w-[400px] sm:border'
+      closeOnBlur={false}
+    >
+      <BasicInfo
+        state={{ name, description, startDate, endDate, priority }}
+        onSubmit={(data) => mutate({ id, data: { ...project, ...data } })}
+        actionButtons={({ handleSubmit, reset, isUpdated, isValid }) => {
+          return (
+            <div className='mt-auto grid grid-cols-2 gap-4'>
+              <Button color='tertiary' onClick={() => reset(onClose)}>
+                Cancel
+              </Button>
+              <Button color='secondary' onClick={() => handleSubmit(onClose)} disabled={!isUpdated || !isValid}>
+                Update Project
+              </Button>
+            </div>
+          );
+        }}
+      />
+    </Modal>
+  );
+}
+
+function Details({ project }) {
+  const { description, startDate, endDate, status, supervisor, projectManager } = project || {};
+  return (
+    <div className='space-y-6 rounded-lg border border-border p-3' id='details'>
+      <h2 className='font-semibold text-text-primary mobile:text-lg'>
+        <a href='#details'>
+          <span className='text-primary'># </span>
+          Project Details
+        </a>
+      </h2>
+
+      <TimeLine startDate={startDate} endDate={endDate} status={status} />
+      <div className='flex gap-5 divide-x-2 divide-border'>
+        <div className='flex flex-1 flex-col gap-2'>
+          <label className='text-sm font-medium text-text-tertiary'>Description</label>
+          <textarea
+            placeholder='This project has no description...'
+            rows='4'
+            readOnly
+            className='resize-none rounded-lg bg-background-secondary p-3 text-sm text-text-primary outline-none placeholder:text-sm
+          '
+            value={description}
+          ></textarea>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TimeLine({ startDate, endDate, status }) {
+  const [progress, setProgress] = useState(0);
+
+  const today = DateTime.fromISO(DateTime.now().toISO());
+  const start = DateTime.fromISO(startDate);
+  const end = DateTime.fromISO(endDate);
+
+  const currentDay = Math.ceil(today.diff(start, 'days').toObject().days);
+  const duration = Math.ceil(end.diff(start, 'days').toObject().days);
+  const daysLeft = Math.floor(end.diff(today, 'days').toObject().days);
+  const daysToStart = Math.ceil(start.diff(today, 'days').toObject().days);
+  console.log(daysToStart);
+
+  const isOverdue = daysLeft <= 0;
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      const progress = getProgress((currentDay / duration) * 100);
+      setProgress(progress);
+    }, 500);
+
+    return () => clearTimeout(id);
+  }, [currentDay, duration]);
+
+  return (
+    <div className='space-y-2 '>
+      <label className='text-sm font-medium text-text-tertiary'>Timeline</label>
+      <div className='flex justify-between'>
+        <div className='flex items-center gap-2'>
+          <span className='h-2 w-2 rounded-full bg-blue-500'></span>
+          <ToolTip content={<span className='text-xs text-text-secondary'>Start Date</span>}>
+            <span className='text-sm font-medium text-text-secondary'>{formatDate(startDate)}</span>
+          </ToolTip>
+        </div>
+        <div className='flex items-center gap-2'>
+          <span className='h-2 w-2 rounded-full bg-red-500'></span>
+          <ToolTip content={<span className='text-xs text-text-secondary'>End Date</span>}>
+            <span className='text-sm font-medium text-text-secondary'>{formatDate(endDate)}</span>
+          </ToolTip>
+        </div>
+      </div>
+      <div className='relative w-full rounded-lg bg-background-tertiary py-1'>
+        <div
+          className={`absolute top-0 h-full max-w-full rounded-lg transition-all duration-[3s] ${
+            isOverdue ? 'bg-red-500' : STATUS_COLORS[status]?.bg
+          }`}
+          style={{ width: `${isOverdue ? 100 : progress}%` }}
+        >
+          <ToolTip
+            content={
+              <span className='text-xs text-text-secondary'>
+                {isOverdue
+                  ? 'The project is overdue'
+                  : daysToStart > 0
+                    ? `The project will start in ${daysToStart} days`
+                    : `${daysLeft} days left until the project ends`}{' '}
+              </span>
+            }
+          >
+            <span className='absolute -top-0.5 right-0 h-3 w-3 rounded-full bg-text-primary'></span>
+          </ToolTip>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function TeamMembers({ project }) {
   const [isOpen, setIsOpen] = useState();
   const [parent] = useAutoAnimate({ duration: 400 });
 
   return (
-    <div className='space-y-6 rounded-lg border border-border p-3'>
+    <div className='space-y-6 rounded-lg border border-border p-3' id='team'>
       <div className='flex items-center justify-between'>
-        <h2 className='text-lg font-semibold text-text-tertiary'>Team Members</h2>
+        <h2 className='font-semibold text-text-primary mobile:text-lg'>
+          <a href='#team'>
+            <span className='text-primary'># </span>
+            Team Members
+          </a>
+        </h2>
         <Button display='with-icon' color='secondary' className='text-nowrap' onClick={() => setIsOpen(true)}>
           <MdOutlineGroupAdd size={18} />
           New Member
         </Button>
       </div>
       {project?.teamMembers.length === 0 ? (
-        <div className='grid h-[250px] place-content-center'>
-          <p className='text-center text-text-secondary'>No team members have been added to this project yet.</p>
+        <div className='grid h-[250px] place-content-center place-items-center gap-3'>
+          <img src='/SVG/team.svg' alt='' className='w-[200px] mobile:w-[250px]' />
+          <p className='moobile:text-base text-center text-sm text-text-secondary'>
+            No team members have been added to this project yet.
+          </p>
         </div>
       ) : (
         <div className='grid auto-cols-[250px] grid-flow-col gap-6 overflow-auto pb-2' ref={parent}>
@@ -206,7 +356,7 @@ function Member({ member, project }) {
           alt='avatar'
           className='mx-auto h-16 w-16 rounded-full border border-border object-cover shadow-md'
         />
-        <h3 className='font-semibold text-center text-text-primary'>{`${firstName} ${lastName}`}</h3>
+        <h3 className='text-center font-semibold text-text-primary'>{`${firstName} ${lastName}`}</h3>
       </div>
       <div className='mb-5 flex items-center justify-between'>
         <div className='flex items-center gap-1 text-text-secondary'>
@@ -224,39 +374,5 @@ function Member({ member, project }) {
         </Button>
       </Link>
     </div>
-  );
-}
-
-function EditProject({ isOpen, onClose, project }) {
-  const { id, name, description, startDate, endDate, priority } = project || {};
-  const { mutate } = useUpdateProject();
-
-  return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      className='relative flex flex-col gap-4 p-5 sm:h-fit sm:w-[400px] sm:border'
-      closeOnBlur={false}
-    >
-      <div className='flex h-full flex-col gap-5'>
-        <BasicInfo
-          state={{ name, description, startDate, endDate, priority }}
-          onSubmit={(data) => mutate({ id, data: { ...project, ...data } })}
-          actionButtons={({ handleSubmit, reset, isUpdated, isValid }) => {
-            return (
-              <div className='mt-auto grid grid-cols-2 gap-4'>
-                <Button color='tertiary' onClick={() => reset(onClose)}>
-                  Cancel
-                </Button>
-                <Button color='secondary' onClick={() => handleSubmit(onClose)} disabled={!isUpdated || !isValid}>
-                  Update Project
-                </Button>
-              </div>
-            );
-          }}
-        />
-        <div></div>
-      </div>
-    </Modal>
   );
 }

@@ -10,18 +10,33 @@ import ProjectsSkeleton from './ProjectsSkeleton';
 
 export default function ProjectsList() {
   const { data: projects, isLoading, error, layout, appliedFiltersNumber, query } = useOperations();
+  const navigate = useNavigate();
   const [parent] = useAutoAnimate({ duration: 500 });
+
+  const onAdd = () => navigate('/app/projects/new');
 
   const render = () => {
     if (isLoading) return <ProjectsSkeleton layout={layout} />;
-    if (error) return <Status status='error' heading={error.message} message='Try again later' />;
+    if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
+    if (projects.length === 0 && !query) {
+      return (
+        <div className='absolute grid h-full w-full place-content-center place-items-center gap-5'>
+          <img src='/SVG/projects.svg' alt='' className='w-[200px]' />
+          <div className='space-y-2 text-center'>
+            <h2 className='font-medium text-text-primary'> It appears there are currently no projects available</h2>
+            <p className='text-sm text-text-secondary'>Start by creating a new one.</p>{' '}
+          </div>
+          <Button onClick={onAdd}>New Project</Button>
+        </div>
+      );
+    }
     if (projects.length === 0 && query)
       return (
         <Status status='noResults' heading='No projects found' message='Try changing your search query or filters' />
       );
     return (
       <>
-        {!appliedFiltersNumber && !query && <NewProject layout={layout} />}
+        {!appliedFiltersNumber && !query && <NewProject layout={layout} onAdd={onAdd} />}
         {projects?.map((project) => (
           <Project key={project.id} project={project} layout={layout} />
         ))}
@@ -30,7 +45,7 @@ export default function ProjectsList() {
   };
 
   return (
-    <div className='flex flex-col h-full gap-5'>
+    <div className='flex h-full flex-col gap-5'>
       <div className='flex items-center justify-between gap-3'>
         <div className='flex items-center gap-3'>
           <Operations.DropDown>
@@ -56,16 +71,14 @@ export default function ProjectsList() {
   );
 }
 
-function NewProject({ layout }) {
-  const navigate = useNavigate();
-
+function NewProject({ layout, onAdd }) {
   return (
     <Button
       color='tertiary'
       className={`group flex items-center justify-center rounded-lg   border  border-border bg-background-disabled p-3 shadow-md ${
         layout === 'grid' ? 'h-[240px] flex-col gap-2' : 'w- h-20 gap-4'
       }`}
-      onClick={() => navigate('/app/projects/new')}
+      onClick={onAdd}
     >
       <div className='flex h-10 w-10 items-center justify-center rounded-full bg-background-secondary p-1 text-text-tertiary hover:bg-background-tertiary group-hover:bg-background-tertiary'>
         <FaPlus />

@@ -17,7 +17,7 @@ export default function Task({ task, onDelete, onEdit, layout }) {
         <span className='text-xs font-medium text-text-secondary'>
           {task.dueDate ? formatDate(task.dueDate) : 'N/A'}
         </span>
-        <span className={`rounded-md px-2 py-1 text-center text-xs ${PRIORITY_COLORS[task.priority]}`}>
+        <span className={`rounded-md px-2 py-1 text-center text-xs ${PRIORITY_COLORS[task.priority]?.bg}`}>
           {task.priority}
         </span>
       </div>
@@ -29,7 +29,7 @@ export default function Task({ task, onDelete, onEdit, layout }) {
         <div className='flex items-center justify-between gap-5'>
           <h4 className='line-clamp-2 font-semibold text-text-primary'>{title || 'Untitled'}</h4>
           {priority !== 'None' && (
-            <span className={`rounded-md px-2 py-1 text-center text-xs ${PRIORITY_COLORS[priority]}`}>{priority}</span>
+            <span className={`rounded-md px-2 py-1 text-center text-xs ${PRIORITY_COLORS[priority]?.bg}`}>{priority}</span>
           )}
         </div>
         <p className='line-clamp-2 text-xs text-text-secondary'>{description || 'No description'}</p>
