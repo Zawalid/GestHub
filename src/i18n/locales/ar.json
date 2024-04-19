@@ -73,7 +73,7 @@
     "label": "كلمة المرور",
     "placeholder": "أدخل كلمة المرور"
   },
-  "confirmePassword": {
+  "confirmPassword": {
     "label": "تأكيد كلمة المرور",
     "placeholder": "أعد كتابة كلمة المرور"
   },

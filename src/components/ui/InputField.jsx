@@ -17,6 +17,7 @@ const input = tv({
   base: 'input-field relative py-1 rounded-lg bg-background-secondary px-2 overflow-hidden border border-border w-full',
   variants: {
     icon: { true: 'pl-9' },
+    disabled: { true: 'bg-background-disabled' },
   },
 });
 
@@ -34,19 +35,19 @@ function Label({ label, message }) {
   if (!label) return null;
 
   return (
-    <div className="flex items-center gap-2">
-      <label className="text-sm font-medium text-text-tertiary">{label}</label>
+    <div className='flex items-center gap-2'>
+      <label className='text-sm font-medium text-text-tertiary'>{label}</label>
       {message && (
         <Tippy
           content={message.split('\n').map((msg, index) => (
-            <p key={index} className="text-white">
+            <p key={index} className='text-white'>
               {msg}
             </p>
           ))}
-          placement="top"
-          className=" rounded-lg bg-red-500 p-2 text-xs font-semibold text-white"
+          placement='top'
+          className=' rounded-lg bg-red-500 p-2 text-xs font-semibold text-white'
         >
-          <span className="cursor-pointer text-red-500">
+          <span className='cursor-pointer text-red-500'>
             <MdError />
           </span>
         </Tippy>
@@ -67,26 +68,13 @@ function Icon({ icon, className = '' }) {
 }
 
 export const InputField = forwardRef(
-  (
-    {
-      children,
-      type,
-      className,
-      name,
-      errorMessage,
-      label,
-      showIcon = true,
-      iconClassName,
-      ...props
-    },
-    ref
-  ) => {
+  ({ children, type, className, name, errorMessage, label, showIcon = true, iconClassName, ...props }, ref) => {
     const icon = showIcon && (icons[name] || icons[type]);
 
     return (
-      <div className="space-y-1.5">
+      <div className='space-y-1.5'>
         <Label label={label} message={errorMessage} />
-        <div className={cn(input({ icon: Boolean(icon) }), className)}>
+        <div className={cn(input({ icon: Boolean(icon), disabled: props.disabled }), className)}>
           {showIcon && <Icon icon={icon} className={iconClassName} />}
           {type === 'textarea' ? (
             <textarea ref={ref} {...props}></textarea>

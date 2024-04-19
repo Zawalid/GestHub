@@ -1,6 +1,6 @@
 import '@/styles/loading.css';
 
-export default function LoadingScreen() {
+export function LoadingScreen() {
   return (
     <div className='relative grid h-screen place-content-center place-items-center gap-4'>
       <div className='spinner'>

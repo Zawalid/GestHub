@@ -58,13 +58,7 @@ const button = tv({
 });
 
 export const Button = forwardRef(
-  (
-    { children, isLoading, disabled, onClick, className, type, size, color, state, display, shape,  ...props },
-    ref
-  ) => {
-
-  
-
+  ({ children, isLoading, disabled, onClick, className, type, size, color, state, display, shape, ...props }, ref) => {
     return (
       <button
         className={cn(
@@ -86,7 +80,7 @@ export const Button = forwardRef(
         {isLoading ? (
           <div className='flex items-center gap-3 text-white'>
             <FaSpinner className='animate-spin' />
-            <span>{`${children.split(' ')[0]}ing ${children.split(' ')[1]}...`}</span>
+            {children}
           </div>
         ) : (
           children

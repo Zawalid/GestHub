@@ -1,14 +1,9 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeTheme } from '../app/reducer';
+import { useContext } from 'react';
+import { ThemeContext } from '@/context/ThemeContext';
 
 export function useTheme() {
-  const theme = useSelector((state) => state.theme);
-  const dispatch = useDispatch();
+  const context = useContext(ThemeContext);
+  if (!context) throw new Error('useTheme must be used within a ModalProvider');
 
-  useEffect(() => {
-    dispatch(changeTheme(theme));
-  }, [theme, dispatch]);
-
-  return theme;
+  return context;
 }

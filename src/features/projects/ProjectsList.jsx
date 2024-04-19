@@ -15,7 +15,7 @@ export default function ProjectsList() {
   const render = () => {
     if (isLoading) return <ProjectsSkeleton layout={layout} />;
     if (error) return <Status status='error' heading={error.message} message='Try again later' />;
-    if (projects.length === 0)
+    if (projects.length === 0 && query)
       return (
         <Status status='noResults' heading='No projects found' message='Try changing your search query or filters' />
       );
@@ -30,7 +30,7 @@ export default function ProjectsList() {
   };
 
   return (
-    <div className='flex flex-col gap-5'>
+    <div className='flex flex-col h-full gap-5'>
       <div className='flex items-center justify-between gap-3'>
         <div className='flex items-center gap-3'>
           <Operations.DropDown>

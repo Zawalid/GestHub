@@ -88,8 +88,9 @@ const rules = {
   },
   password: {
     pattern: {
-      value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\W]{8,}$/,
-      message: 'Password must contain at least 8 characters, one uppercase letter, one lowercase letter and one number',
+      value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      message:
+        'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one symbol',
     },
   },
 };

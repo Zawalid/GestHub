@@ -6,4 +6,9 @@
 - [x] Interns dropdown only for team members
 - [ ] Fix dates
 - [ ] Remove error message from error screen
-- [ ] Rename confirmPassword to password_confirmation
+- [x] Rename confirmPassword to password_confirmation
+- [ ] Discuss the levels dynamicity
+- [ ] Add translations to all the content
+- [ ] Add illustrations across app (No projects yet / no team members...)
+- [ ] Add meaningful error messages
+- [ ] 

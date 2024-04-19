@@ -100,7 +100,7 @@ export default function InternsList() {
           label: ' Password',
         },
         {
-          name: 'confirmPassword',
+          name: 'password_confirmation',
           type: 'password',
           label: 'Confirm  Password',
           rules: { validate: (pass, getValue) => pass === getValue('password') || "Passwords don't match" },

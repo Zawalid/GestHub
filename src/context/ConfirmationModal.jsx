@@ -11,7 +11,7 @@ const DEFAULT_OPTIONS = {
 };
 export const ModalContext = createContext();
 
-export function ModalProvider({ children }) {
+export function ConfirmationModalProvider({ children }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [options, setOptions] = useState(DEFAULT_OPTIONS);
 

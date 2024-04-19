@@ -39,7 +39,7 @@ export function Filter() {
             <span className="capitalize">{key}</span>
           </DropDown.Title>
           {filters[key].map(({ value, checked }) => (
-            <DropDown.Option key={value} className="justify-between">
+            <DropDown.Option key={value} className="justify-between capitalize">
               {value}
               <CheckBox
                 checked={checked}

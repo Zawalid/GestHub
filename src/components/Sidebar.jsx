@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -21,6 +20,8 @@ import {
 import { ROUTES } from '../utils/constants';
 import { Button } from './ui';
 import { capitalize, changeTitle } from '@/utils/helpers';
+import { useLogout, useUser } from '@/hooks/useUser';
+import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 
 const routesIcons = {
   overview: <IoHomeOutline />,
@@ -35,9 +36,11 @@ const routesIcons = {
 
 export default function Sidebar({ openSettings }) {
   const [isExpanded, setIsExpanded] = useState(window.matchMedia('(min-width: 1024px)').matches);
-  const role = useSelector((state) => state.user?.role);
-  const location = useLocation().pathname.split('/');
+  const { user } = useUser();
+  const { logout, isLoggingOut } = useLogout();
+  const { openModal } = useConfirmationModal();
   const { t } = useTranslation();
+  const location = useLocation().pathname.split('/');
 
   const spanClass = `transition-transform origin-left duration-500 text-sm text-text-secondary ${
     isExpanded ? 'md:scale-100' : 'scale-0'
@@ -76,8 +79,8 @@ export default function Sidebar({ openSettings }) {
         </Button>
       </div>
       <ul className='space-y-1'>
-        {ROUTES[role]
-          .filter((r) => !r.includes('/'))
+        {ROUTES[user?.role || 'admin']
+          ?.filter((r) => !r.includes('/'))
           .map((route) => (
             <li key={route}>
               <NavLink to={`/app/${route}`} className='sidebar-element group'>
@@ -93,10 +96,20 @@ export default function Sidebar({ openSettings }) {
           <IoSettingsOutline />
           <span className={spanClass}>{t('app.sidebar.settings')}</span>
         </button>
-        <Link to='/' className='sidebar-element group w-full'>
+        <button
+          className='sidebar-element group w-full'
+          onClick={() =>
+            openModal({
+              message: 'You are about to log out. Do you wish to proceed?',
+              title: 'Logout',
+              confirmText: 'Logout',
+              onConfirm: logout,
+            })
+          }
+        >
           <FiLogOut />
-          <span className={spanClass}>{t('app.sidebar.logout')}</span>
-        </Link>
+          <span className={spanClass}>{isLoggingOut ? 'Logging Out...' : t('app.sidebar.logout')}</span>
+        </button>
       </div>
     </aside>
   );

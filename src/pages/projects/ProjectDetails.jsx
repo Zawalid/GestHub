@@ -1,9 +1,9 @@
-import { Heading } from '@/components/Heading';
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useProject } from '../../features/projects/useProjects';
 import ProjectOverview from '@/features/projects/ProjectOverview/ProjectOverview';
-import { useEffect } from 'react';
 import { capitalize, changeTitle } from '@/utils/helpers';
+import { Status } from '@/components/ui';
 
 export function ProjectDetails() {
   const { id, tab } = useParams();
@@ -15,12 +15,22 @@ export function ProjectDetails() {
   }, [id, tab, navigate]);
 
   useEffect(() => {
-    changeTitle(`${project?.name} | ${capitalize(tab)}`)
-  }, [project?.name,tab]);
+    changeTitle(project ? `${project?.name} | ${capitalize(tab)}` : 'Project Not Found');
+  }, [project, tab]);
 
-  if (isLoading) return <Heading>Loading...</Heading>;
-  if (error) return <Heading>{error.message}</Heading>;
-  if (!project) return <Heading>Project not found</Heading>;
+  if (isLoading) return <Status status='loading' />;
+  if (error)
+    return (
+      <Status
+        status='error'
+        heading={error.message === 'Not found' && "Sorry, we couldn't find the project you're looking for."}
+        message={
+          error.message === 'Not found'
+            ? 'Please check the project ID or contact your administrator if you believe this is an error.'
+            : error.message
+        }
+      />
+    );
 
   return <ProjectOverview />;
 }

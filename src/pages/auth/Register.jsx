@@ -3,15 +3,24 @@ import { Button, DropDown } from '../../components/ui';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { MdOutlineSchool } from 'react-icons/md';
+import { useRegister } from '@/hooks/useUser';
 
 export function Register() {
   const { t } = useTranslation();
+  const { register, isRegistering } = useRegister();
+
+
   const {
     options: { isValid, formInputs, handleSubmit, getValue, setValue },
   } = useForm({
     defaultValues: {
+      fullName: '',
       email: '',
+      phone: '',
+      city: '',
+      academicLevel: 'Bac+2',
       password: '',
+      password_confirmation: '',
     },
     fields: [
       {
@@ -32,80 +41,72 @@ export function Register() {
         label: t('auth.register.city.label'),
       },
       {
+        name: 'academicLevel',
+        hidden: true,
+      },
+      {
         name: 'password',
         type: 'password',
         label: t('auth.register.password.label'),
       },
       {
-        name: 'confirmPassword',
+        name: 'password_confirmation',
         type: 'password',
-        label: t('auth.register.confirmePassword.label'),
+        label: t('auth.register.confirmPassword.label'),
         rules: { validate: (pass, getValue) => pass === getValue('password') || "Passwords don't match" },
       },
     ],
-    onSubmit: (data) => console.log(data),
-    gridLayout: true,
+    onSubmit: register,
   });
-  const levels = ['Bac+1', 'Bac+2', 'Bac+3', 'Master'];
- return (
-    <div className="relative w-full p-2 md:p-5 flex flex-col justify-center h-full space-y-6 ">
-      <h1 className="mb-8 text-2xl font-bold text-text-primary sm:text-3xl">{t("auth.register.title1")} </h1>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-4 gap-2">
+
+  
+  return (
+    <div className='relative flex h-full w-full flex-col justify-center space-y-6 p-2 md:p-5 '>
+      <h1 className='mb-8 text-2xl font-bold text-text-primary sm:text-3xl'>{t('auth.register.title1')} </h1>
+      <div className='grid grid-cols-1 gap-2 gap-x-4 lg:grid-cols-2'>
         {formInputs.fullName}
         {formInputs.email}
         {formInputs.phone}
         {formInputs.city}
-        <div className="gap-1.5 flex flex-col">
-          <label className="font-medium text-text-tertiary text-sm">
-            Niveau Scolaire
-          </label>
+        <div className='flex flex-col gap-1.5'>
+          <label className='text-sm font-medium text-text-tertiary'>Academic Level</label>
           <DropDown
             toggler={
               <DropDown.Toggler>
-                <span className="capitalize  flex relative items-center ps-7  gap-3 ">
-                  <span className=" bg-background-tertiary py-[6px] px-[5px] text-text-tertiary z-10 -left-2 rounded-l-lg absolute">
-                    <MdOutlineSchool className="text-lg" />
+                <span className='relative  flex items-center gap-3 ps-7  capitalize '>
+                  <span className=' absolute -left-2 z-10 rounded-l-lg bg-background-tertiary px-[5px] py-[6px] text-text-tertiary'>
+                    <MdOutlineSchool className='text-lg' />
                   </span>
-                  <span className="absolute">
-                    {levels.at(getValue("NiveauScolaire"))}
-                  </span>
+                  <span className='absolute'>{getValue('academicLevel')}</span>
                 </span>
               </DropDown.Toggler>
             }
           >
-            {levels.map((e, i) => (
+            {['Bac+1', 'Bac+2', 'Bac+3', 'Master'].map((e) => (
               <DropDown.Option
                 key={e}
-                className="capitalize"
-                onClick={() => setValue("NiveauScolaire", i)}
-                isCurrent={e === levels.at(getValue("NiveauScolaire"))}
+                className='capitalize'
+                onClick={() => setValue('academicLevel', e)}
+                isCurrent={e === getValue('academicLevel')}
               >
                 {e}
               </DropDown.Option>
             ))}
           </DropDown>
         </div>
-        {formInputs["password"]}
-        {formInputs["confirmPassword"]}
+        {formInputs['password']}
+        {formInputs['password_confirmation']}
       </div>
 
-      <Button
-        className={" w-full"}
-        disabled={!isValid}
-        onClick={handleSubmit}
-      >
-        {t("auth.register.submit")}
+      <Button className={'w-full'} disabled={!isValid} isLoading={isRegistering} onClick={handleSubmit}>
+        {isRegistering ? 'Registering...' : t('auth.register.submit')}
       </Button>
-      <p className="border-t border-border text-text-primary py-4 text-center flex gap-1 items-center justify-center">
-        Already  have an account ?
-        <Link
-          to="/login"
-          className="ml-2 underline text-primary font-bold cursor-pointer text-sm "
-        >
-          Login 
+      <p className='flex items-center justify-center gap-1 border-t border-border py-4 text-center text-text-primary'>
+        Already have an account ?
+        <Link to='/login' className='ml-2 cursor-pointer text-sm font-bold text-primary underline '>
+          Login
         </Link>
       </p>
     </div>
   );
 }
-

@@ -1,9 +1,5 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { useSelector } from 'react-redux';
-import { ErrorBoundary } from 'react-error-boundary';
 import { Toaster } from 'sonner';
 import { FaSpinner } from 'react-icons/fa6';
 
@@ -31,9 +27,7 @@ import {
 } from './pages';
 
 import { ProtectedRoute } from './components/ProtectedRoute';
-import { ErrorScreen } from './components/ui/ErrorScreen';
-
-const queryClient = new QueryClient();
+import { useUser } from './hooks/useUser';
 
 const routesElements = {
   overview: <Overview />,
@@ -53,66 +47,45 @@ const routesElements = {
 };
 
 export default function App() {
-  const theme = useTheme();
-  const role = useSelector((state) => state.user?.role);
+  const { theme } = useTheme();
+  const { user } = useUser();
   const [parent] = useAutoAnimate({ duration: 300 });
 
   return (
-    <ErrorBoundary
-      FallbackComponent={ErrorScreen}
-      onError={(error, stack) => {
-        console.log(
-          '%c%s',
-          'color: #ffffff;font-weight : bold; background: #ff0000; padding : 10px 20px; border-radius : 10px',
-          `Error : ${error}`
-        );
-        console.log(stack?.componentStack);
-      }}
-    >
+    <>
       <div className='h-dvh w-full' ref={parent}>
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <BrowserRouter>
-            <Routes>
-              {/* Auth */}
-              <Route element={<AuthLayout />}>
-                <Route path='login' index element={<Login />} />
-                <Route path='register' element={<Register />} />
-              </Route>
-              {/* HomePage */}
-              <Route path='/' element={<HomePageLayout />}>
-                <Route index element={<HomePage />} />
-                <Route path='/offers/:id' element={<HomePage />} />
-              </Route>
-              {/* App */}
-              <Route
-                path='app'
-                element={
-                  <ProtectedRoute>
-                    <AppLayout />
-                  </ProtectedRoute>
-                }
-              >
-                <Route index element={<Navigate to='/app/overview' />} />
-                {/* Routes of every role */}
-                <Route path='overview' element={<Overview />} />
-                <Route path='absences' element={<Absences />} />
-
-                {/*  Routes of specific role */}
-                {ROUTES[role].map((route) => (
-                  <Route key={route} path={route} element={routesElements[route]} />
-                ))}
-
-                {/* <Route path='projects/:id' element={<ProjectDetails />}>
-                  <Route index element={<Navigate to='overview' />} />
-                  <Route path='overview' element={<ProjectOverview />} />
-                  <Route path='tasks' element={<Tasks />} />
-                </Route> */}
-              </Route>
-              <Route path='*' element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </QueryClientProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* Auth */}
+            <Route element={<AuthLayout />}>
+              <Route path='login' index element={<Login />} />
+              <Route path='register' element={<Register />} />
+            </Route>
+            {/* HomePage */}
+            <Route path='/' element={<HomePageLayout />}>
+              <Route index element={<HomePage />} />
+              <Route path='offers/:id' element={<HomePage />} />
+            </Route>
+            {/* App */}
+            <Route
+              path='app'
+              element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<Navigate to='/app/overview' />} />
+              {/* Routes of every role */}
+              <Route path='overview' element={<Overview />} />
+              {/*  Routes of specific role */}
+              {ROUTES[user?.role || 'admin']?.map((route) => (
+                <Route key={route} path={route} element={routesElements[route]} />
+              ))}
+            </Route>
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
       </div>
       <Toaster
         icons={{
@@ -125,6 +98,6 @@ export default function App() {
           duration: 2000,
         }}
       />
-    </ErrorBoundary>
+    </>
   );
 }

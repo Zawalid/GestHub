@@ -1,13 +1,21 @@
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/components/ThemeSwitcher';
 import { Button } from '@/components/ui';
+import { useUser } from '@/hooks/useUser';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useEffect } from 'react';
 import { BiHome } from 'react-icons/bi';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 export function AuthLayout() {
+  const { isLoading, isAuthenticated } = useUser();
   const [parent] = useAutoAnimate({ duration: 300 });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated && !isLoading) navigate('/app');
+  }, [isAuthenticated, isLoading, navigate]);
+
   return (
     <div className=' grid h-full w-full  grid-cols-1 md:grid-cols-[1fr,1fr]'>
       <div className=' -background-primary relative hidden  h-screen items-center justify-center bg-gradient-to-l from-background-tertiary md:flex  '>

@@ -1,51 +1,49 @@
-import { useDispatch, useSelector } from "react-redux";
-import { ProfileImage } from "./ProfileImage";
-import { useForm } from "@/hooks/useForm";
-import { ModalFormLayout } from "@/layouts";
-import { updateUser } from "@/app/reducer";
+import { ProfileImage } from './ProfileImage';
+import { useForm } from '@/hooks/useForm';
+import { ModalFormLayout } from '@/layouts';
+import { useUser } from '@/hooks/useUser';
 
 export default function Profile() {
-  const user = useSelector((state) => state.user) || {};
-  const dispatch = useDispatch();
+  const { user } = useUser();
 
   const {
     Form,
     options: { isUpdated, isValid, handleSubmit, reset, setValue, getValue },
   } = useForm({
     defaultValues: {
-      image: user.avatar,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      phone: user.phone,
-      birthday: user.birthday,
+      image: user?.avatar || '',
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
+      email: user?.email || '',
+      phone: user?.phone || '',
+      birthday: user?.birthday || '',
     },
     fields: [
       {
-        name: "firstName",
-        label: "First Name",
+        name: 'firstName',
+        label: 'First Name',
       },
       {
-        name: "lastName",
-        label: "Last Name",
+        name: 'lastName',
+        label: 'Last Name',
       },
       {
-        name: "email",
-        type: "email",
-        label: "Email Address",
+        name: 'email',
+        type: 'email',
+        label: 'Email Address',
       },
       {
-        name: "phone",
-        label: "Phone Number",
-        type : 'phone'
+        name: 'phone',
+        label: 'Phone Number',
+        type: 'phone',
       },
       {
-        name: "birthday",
-        type: "date",
-        label: "Birthday",
+        name: 'birthday',
+        type: 'date',
+        label: 'Birthday',
       },
     ],
-    onSubmit: (data) => dispatch(updateUser(data)),
+    onSubmit: (data) => console.log(data),
     gridLayout: true,
   });
 
@@ -60,13 +58,10 @@ export default function Profile() {
         disabled: !isUpdated,
       }}
     >
-      <div className="space-y-5">
+      <div className='space-y-5'>
         <div>
-          <h3 className="mb-3 font-bold text-text-secondary">Image</h3>
-          <ProfileImage
-            image={getValue("image")}
-            onChange={(image) => setValue("image", image)}
-          />
+          <h3 className='mb-3 font-bold text-text-secondary'>Image</h3>
+          <ProfileImage image={getValue('image')} onChange={(image) => setValue('image', image)} />
         </div>
 
         {Form}

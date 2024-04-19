@@ -65,7 +65,7 @@
         "label": "Password ",
         "placeholder": ""
       },
-      "confirmePassword": {
+      "confirmPassword": {
         "label": "Confirme Password",
         "placeholder": ""
       },
