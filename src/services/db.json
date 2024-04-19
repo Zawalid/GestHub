@@ -190,7 +190,6 @@
       "description": "Implement a new CRM system to better manage customer relationships.",
       "startDate": "2024-06-01",
       "endDate": "2024-07-01",
-      "teamId": 6,
       "status": "In Progress",
       "supervisor": "Emma Watson",
       "projectManager": "Emma Watson",
@@ -240,8 +239,7 @@
       "name": "Social Media Campaign",
       "description": "Launch a new social media campaign to increase brand awareness.",
       "startDate": "2024-04-01",
-      "endDate": "2024-05-01",
-      "teamId": 7,
+      "endDate": "2024-05-10",
       "status": "In Progress",
       "supervisor": "Tom Hanks",
       "priority": "None",
@@ -279,42 +277,42 @@
       "description": "Upgrade the existing e-commerce platform to improve performance and user experienceerience.",
       "startDate": "2024-04-01",
       "endDate": "2024-10-01",
-      "teamId": 8,
       "status": "In Progress",
-      "supervisor": "Julia Roberts",
+      "supervisor": "1",
       "priority": "High",
       "tasks": [
         {
           "id": 4,
           "name": "Test new platform",
-          "status": "To Do"
+          "status": "To Do",
+          "assignee": "None"
         },
         {
           "id": 5,
           "name": "Deploy new platform",
-          "status": "To Do"
+          "status": "To Do",
+          "assignee": "None"
         },
         {
           "id": 2,
           "name": "Design new platform",
-          "status": "In Progress"
+          "status": "In Progress",
+          "assignee": "None"
         },
         {
           "id": 3,
           "name": "Develop new platform",
-          "status": "Done"
+          "status": "Done",
+          "assignee": "None"
         },
         {
           "id": 1,
           "name": "Identify platform requirements",
-          "status": "Done"
+          "status": "Done",
+          "assignee": "None"
         }
       ],
       "teamMembers": [
-        "Julia Roberts",
-        "Richard Gere",
-        "Hector Elizondo",
-        "Rupert Grint",
         {
           "id": "4",
           "firstName": "Alice",
@@ -326,8 +324,21 @@
           "major": "Data Science",
           "startDate": "2024-01-01",
           "endDate": "2024-06-01"
+        },
+        {
+          "id": "3",
+          "firstName": "Bob",
+          "lastName": "Smith",
+          "email": "bob.smith@example.com",
+          "phone": "111-222-3333",
+          "birthday": "1991-03-03",
+          "university": "MIT",
+          "major": "Software Engineering",
+          "startDate": "2024-01-01",
+          "endDate": "2024-06-01"
         }
-      ]
+      ],
+      "projectManager": "4"
     },
     {
       "id": "4",
@@ -335,7 +346,6 @@
       "description": "Develop a new product to experienceand the company's product line.",
       "startDate": "2024-05-01",
       "endDate": "2024-05-01",
-      "teamId": 9,
       "status": "Not Started",
       "supervisor": "Brad Pitt",
       "priority": "High",

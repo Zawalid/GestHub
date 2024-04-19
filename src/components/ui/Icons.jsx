@@ -28,6 +28,7 @@ export {
   PiArrowRight,
   PiX,
   PiSortAscending,
+  PiCrown 
 } from 'react-icons/pi';
 export { BiSolidCity } from 'react-icons/bi';
 export {
@@ -48,7 +49,8 @@ export {
   MdOutlineSortByAlpha,
   MdOutlineNotStarted,
   MdOutlineGroupRemove,
-  MdOutlineGroupAdd 
+  MdOutlineGroupAdd, 
+  MdManageAccounts 
 } from 'react-icons/md';
 export { FaSpinner, FaSort, FaPlus, FaRegCircleCheck } from 'react-icons/fa6';
 

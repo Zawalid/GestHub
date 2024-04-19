@@ -9,8 +9,10 @@ import {
   IoFlag,
   IoTrashOutline,
   MdDriveFileRenameOutline,
+  MdManageAccounts,
   MdOutlineGroupAdd,
   MdOutlineGroupRemove,
+  PiCrown,
   TbProgressCheck,
 } from '@/components/ui/Icons';
 import AddNewMember from './AddNewMember';
@@ -173,30 +175,22 @@ function EditProject({ isOpen, onClose, project }) {
 }
 
 function Details({ project }) {
-  const { description, startDate, endDate, status, supervisor, projectManager } = project || {};
-  return (
-    <div className='space-y-6 rounded-lg border border-border p-3' id='details'>
-      <h2 className='font-semibold text-text-primary mobile:text-lg'>
-        <a href='#details'>
-          <span className='text-primary'># </span>
-          Project Details
-        </a>
-      </h2>
+  const { description, startDate, endDate, status} = project || {};
 
-      <TimeLine startDate={startDate} endDate={endDate} status={status} />
-      <div className='flex gap-5 divide-x-2 divide-border'>
-        <div className='flex flex-1 flex-col gap-2'>
-          <label className='text-sm font-medium text-text-tertiary'>Description</label>
-          <textarea
-            placeholder='This project has no description...'
-            rows='4'
-            readOnly
-            className='resize-none rounded-lg bg-background-secondary p-3 text-sm text-text-primary outline-none placeholder:text-sm
+  return (
+    <div className='space-y-6 rounded-lg  border-border '>
+      <div className='flex  flex-1 flex-col gap-2'>
+        <label className='text-sm font-medium text-text-tertiary'>Description</label>
+        <textarea
+          placeholder='This project has no description...'
+          rows='4'
+          readOnly
+          className='resize-none rounded-lg bg-background-secondary p-3 text-sm text-text-primary outline-none placeholder:text-sm
           '
-            value={description}
-          ></textarea>
-        </div>
+          value={description}
+        ></textarea>
       </div>
+      <TimeLine startDate={startDate} endDate={endDate} status={status} />
     </div>
   );
 }
@@ -212,7 +206,6 @@ function TimeLine({ startDate, endDate, status }) {
   const duration = Math.ceil(end.diff(start, 'days').toObject().days);
   const daysLeft = Math.floor(end.diff(today, 'days').toObject().days);
   const daysToStart = Math.ceil(start.diff(today, 'days').toObject().days);
-  console.log(daysToStart);
 
   const isOverdue = daysLeft <= 0;
 
@@ -226,16 +219,16 @@ function TimeLine({ startDate, endDate, status }) {
   }, [currentDay, duration]);
 
   return (
-    <div className='space-y-2 '>
+    <div className='space-y-3 '>
       <label className='text-sm font-medium text-text-tertiary'>Timeline</label>
       <div className='flex justify-between'>
-        <div className='flex items-center gap-2'>
+        <div className='flex items-center gap-1.5'>
           <span className='h-2 w-2 rounded-full bg-blue-500'></span>
           <ToolTip content={<span className='text-xs text-text-secondary'>Start Date</span>}>
             <span className='text-sm font-medium text-text-secondary'>{formatDate(startDate)}</span>
           </ToolTip>
         </div>
-        <div className='flex items-center gap-2'>
+        <div className='flex items-center gap-1.5'>
           <span className='h-2 w-2 rounded-full bg-red-500'></span>
           <ToolTip content={<span className='text-xs text-text-secondary'>End Date</span>}>
             <span className='text-sm font-medium text-text-secondary'>{formatDate(endDate)}</span>
@@ -247,7 +240,7 @@ function TimeLine({ startDate, endDate, status }) {
           className={`absolute top-0 h-full max-w-full rounded-lg transition-all duration-[3s] ${
             isOverdue ? 'bg-red-500' : STATUS_COLORS[status]?.bg
           }`}
-          style={{ width: `${isOverdue ? 100 : progress}%` }}
+          style={{ width: daysToStart > 0 ? '12px' : `${isOverdue ? 100 : progress}%` }}
         >
           <ToolTip
             content={
@@ -273,14 +266,9 @@ function TeamMembers({ project }) {
   const [parent] = useAutoAnimate({ duration: 400 });
 
   return (
-    <div className='space-y-6 rounded-lg border border-border p-3' id='team'>
+    <div className='space-y-6 rounded-lg border border-border p-3'>
       <div className='flex items-center justify-between'>
-        <h2 className='font-semibold text-text-primary mobile:text-lg'>
-          <a href='#team'>
-            <span className='text-primary'># </span>
-            Team Members
-          </a>
-        </h2>
+        <h2 className='font-semibold text-text-primary mobile:text-lg'>Team Members</h2>
         <Button display='with-icon' color='secondary' className='text-nowrap' onClick={() => setIsOpen(true)}>
           <MdOutlineGroupAdd size={18} />
           New Member
@@ -312,7 +300,7 @@ function Member({ member, project }) {
   const { openModal } = useConfirmationModal();
   const { mutate } = useUpdateProject();
 
-  const { id: projectId, tasks, teamMembers } = project || {};
+  const { id: projectId, tasks, teamMembers, projectManager } = project || {};
   const { id, avatar, firstName, lastName } = member;
 
   const assignedTasks = tasks.filter((task) => task.assignee?.id === id);
@@ -321,16 +309,11 @@ function Member({ member, project }) {
   return (
     <div className='rounded-lg border border-border bg-background-disabled p-5 pt-3'>
       <div className='flex items-center justify-between'>
-        <DropDown
-          toggler={
-            <Button shape='icon' size='small'>
-              <IoEllipsisHorizontalSharp />
-            </Button>
-          }
-          options={{ className: 'w-[200px]', placement: 'bottom-start' }}
-        >
-          <DropDown.Option
-            onClick={() =>
+        <ToolTip content={<span className='text-xs text-text-secondary'> Remove Member</span>}>
+          <Button
+            shape='icon'
+            size=''
+            onClick={() => {
               openModal({
                 message: 'Are you sure you want to remove this member from this project ?',
                 title: 'Remove Member',
@@ -340,23 +323,87 @@ function Member({ member, project }) {
                     return assignedTasks.map((t) => t.id).includes(task.id) ? { ...task, assignee: 'None' } : task;
                   });
                   const updatedTeam = teamMembers.filter((member) => member.id !== id);
-                  mutate({ id: projectId, data: { ...project, teamMembers: updatedTeam, tasks: updatedTasks } });
+                  mutate({
+                    id: projectId,
+                    data: { ...project, teamMembers: updatedTeam, tasks: updatedTasks, projectManager: null },
+                  });
                 },
-              })
-            }
+              });
+            }}
+          >
+            <span>
+              <MdOutlineGroupRemove />
+            </span>
+          </Button>
+        </ToolTip>
+        <ToolTip content={<span className='text-xs text-text-secondary'> Make Manager</span>}>
+          <Button
+            shape='icon'
+            size=''
+            disabled={id === projectManager}
+            onClick={() => mutate({ id: projectId, data: { ...project, projectManager: id } })}
+          >
+            <span>
+              <MdManageAccounts />
+            </span>
+          </Button>
+        </ToolTip>
+
+        {/* <DropDown
+          toggler={
+            <Button shape='icon' size='small'>
+              <IoEllipsisHorizontalSharp />
+            </Button>
+          }
+          options={{ placement: 'bottom-start' }}
+        >
+          <DropDown.Option
+           onClick={() => {
+              openModal({
+                message: 'Are you sure you want to remove this member from this project ?',
+                title: 'Remove Member',
+                confirmText: 'Remove',
+                onConfirm: () => {
+                  const updatedTasks = tasks.map((task) => {
+                    return assignedTasks.map((t) => t.id).includes(task.id) ? { ...task, assignee: 'None' } : task;
+                  });
+                  const updatedTeam = teamMembers.filter((member) => member.id !== id);
+                  mutate({
+                    id: projectId,
+                    data: { ...project, teamMembers: updatedTeam, tasks: updatedTasks, projectManager: null },
+                  });
+                },
+              });
+            }}
           >
             <MdOutlineGroupRemove />
             Remove Member
           </DropDown.Option>
-        </DropDown>
+          <DropDown.Option
+            disabled={id === projectManager}
+            onClick={() => mutate({ id: projectId, data: { ...project, projectManager: id } })}
+          >
+            <MdManageAccounts />
+            Make Manager
+          </DropDown.Option>
+        </DropDown> */}
       </div>
-      <div className='mb-8 mt-3 space-y-3'>
+      <div className='relative mb-8 mt-5 space-y-3 text-center'>
+        <PiCrown
+          className={`absolute -top-5 left-1/2 -translate-x-1/2 text-2xl text-primary transition-transform duration-300 
+        ${id === projectManager ? 'scale-100' : 'scale-0'}
+        `}
+        />
         <img
           src={avatar || '/images/default-profile.jpg'}
           alt='avatar'
           className='mx-auto h-16 w-16 rounded-full border border-border object-cover shadow-md'
         />
-        <h3 className='text-center font-semibold text-text-primary'>{`${firstName} ${lastName}`}</h3>
+        <h3 className='font-semibold text-text-primary'>{`${firstName} ${lastName}`}</h3>
+        <p className='text-sm font-medium text-text-secondary'>
+          {' '}
+          {id === projectManager ? 'Project Manager' : 'Team Member'}
+        </p>
       </div>
       <div className='mb-5 flex items-center justify-between'>
         <div className='flex items-center gap-1 text-text-secondary'>
