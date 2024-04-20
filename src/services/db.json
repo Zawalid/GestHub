@@ -473,7 +473,7 @@
       "description": "Description for Project 4",
       "startDate": "2024-01-01",
       "endDate": "2024-12-31",
-      "status": "In Progress",
+      "status": "Completed",
       "supervisor": "5",
       "priority": "None",
       "tasks": [
@@ -499,6 +499,13 @@
           "firstName": "Eva",
           "lastName": "Miller",
           "email": "evamiller@example.com",
+          "avatar": null
+        },
+        {
+          "id": "3",
+          "firstName": "Alice",
+          "lastName": "Smith",
+          "email": "alicesmith@example.com",
           "avatar": null
         }
       ],
@@ -553,6 +560,18 @@
           "status": "To Do"
         }
       ]
+    },
+    {
+      "id": "c33f",
+      "description": "",
+      "startDate": "2024-04-10",
+      "endDate": "2024-04-24",
+      "priority": "None",
+      "subject": "dsda",
+      "status": "Not Started",
+      "teamMembers": [],
+      "tasks": [],
+      "supervisor": 5
     }
   ],
   "offers": [

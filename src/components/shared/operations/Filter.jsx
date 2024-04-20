@@ -34,9 +34,9 @@ export function Filter() {
       togglerDisabled={isLoading || error}
     >
       {Object.keys(filters).map((key) => (
-        <>
-          <DropDown.Title key={key}>
-            <span className="capitalize">{key}</span>
+        <div key={key}>
+          <DropDown.Title className='capitalize mb-1' >
+            {key}
           </DropDown.Title>
           {filters[key].map(({ value, checked }) => (
             <DropDown.Option key={value} className="justify-between capitalize">
@@ -51,9 +51,9 @@ export function Filter() {
           ))}
 
           <DropDown.Divider key={`${key}-divider`} />
-        </>
+        </div>
       ))}
-      <DropDown.Option
+      <DropDown.Option key='reset'
         onClick={() => onFilter(null, true)}
         disabled={appliedFiltersNumber === 0}
       >

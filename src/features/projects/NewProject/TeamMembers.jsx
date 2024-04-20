@@ -80,10 +80,11 @@ export function AllInterns({ children, teamMembers, setTeamMembers, filter }) {
           <CheckBox
             checked={isChosen}
             onChange={() => {
+              const { id, firstName, lastName, email, avatar } = intern;
               setTeamMembers((prev) => {
-                return prev.map((i) => i.id).includes(intern.id)
-                  ? prev.filter((i) => i.id !== intern.id)
-                  : [...prev, intern];
+                return prev.map((i) => i.id).includes(id)
+                  ? prev.filter((i) => i.id !== id)
+                  : [...prev, { id, firstName, lastName, email, avatar }];
               });
             }}
           />

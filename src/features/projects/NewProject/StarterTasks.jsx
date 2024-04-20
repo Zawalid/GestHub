@@ -212,17 +212,20 @@ function InternsDropDown({ teamMembers, getValue, setValue }) {
           className: 'overflow-y-auto',
         }}
       >
-        {teamMembers?.map((intern) => (
-          <DropDown.Option
-            size='small'
-            key={intern.id}
-            className='capitalize'
-            onClick={() => setValue('assignee', intern)}
-            isCurrent={intern === getValue('assignee')}
-          >
-            <Intern intern={intern} />
-          </DropDown.Option>
-        ))}
+        {teamMembers?.map((intern) => {
+          const { id, firstName, lastName, email, avatar } = intern;
+          return (
+            <DropDown.Option
+              size='small'
+              key={id}
+              className='capitalize'
+              onClick={() => setValue('assignee', { id, firstName, lastName, email, avatar })}
+              isCurrent={intern === getValue('assignee')}
+            >
+              <Intern intern={intern} />
+            </DropDown.Option>
+          );
+        })}
         <DropDown.Option onClick={() => setValue('assignee', 'None')} isCurrent={'None' === getValue('assignee')}>
           <MdOutlineDoNotDisturb size={20} />
           <span className='text-base'>None</span>

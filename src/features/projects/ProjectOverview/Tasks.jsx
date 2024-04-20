@@ -24,10 +24,6 @@ export default function Tasks() {
   const [groups, setGroups] = useState(() => {
     const groups = { 'To Do': [], 'In Progress': [], Done: [] };
     project.tasks
-      // .filter((task) => {
-      //   if (user?.role === 'supervisor' || +user?.id === +project?.projectManager) return true;
-      //   return task.assignee === 'None' || +task.assignee?.id === +user?.id;
-      // })
       .forEach((task) => groups[task.status] && (groups[task.status] = [...groups[task.status], task]));
     return groups;
   });

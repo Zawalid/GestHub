@@ -13,6 +13,6 @@
 - [x] Add illustrations across app (No projects yet / no team members...)
 - [x] Login or register when clicking enter
 - [ ] remove the retry functionality of react query when fetching the user
-- [ ] Add project manager when creating a new project
+- [x] Add project manager when creating a new project
 - [ ] Improve the settings design
 - [ ] sort projects by creation date or update date as well
