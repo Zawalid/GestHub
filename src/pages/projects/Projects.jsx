@@ -3,13 +3,15 @@ import { Operations } from '@/components/shared/operations/Operations';
 import NewProject from '@/features/projects/NewProject/NewProject';
 import ProjectsList from '@/features/projects/ProjectsList';
 import { useProjects } from '@/features/projects/useProjects';
+import { useUser } from '@/hooks/useUser';
 
 export function Projects() {
   const { projects, isLoading, error } = useProjects();
+  const { user } = useUser();
 
   return (
     <Operations
-      data={projects}
+      data={user?.role === 'intern' ? projects?.filter((p) => user?.projects?.includes(+p.id)) : projects}
       isLoading={isLoading}
       error={error}
       sortOptions={[
@@ -35,14 +37,14 @@ export function Projects() {
         ],
       }}
       defaultLayout='grid'
-      fieldsToSearch={['name']}
+      fieldsToSearch={['subject']}
     >
       <div className='flex flex-col justify-between gap-3 mobile:flex-row mobile:items-center'>
         <Heading>Projects</Heading>
         <Operations.Search />
       </div>
       <ProjectsList />
-      <NewProject />
+      {user?.role === 'supervisor' && <NewProject />}
     </Operations>
   );
 }

@@ -6,6 +6,7 @@
 - [x] Interns dropdown only for team members
 - [x] Fix dates
 - [ ] Remove error message from error screen
+- [ ] Disable react devtools
 - [x] Rename confirmPassword to password_confirmation
 - [x] Discuss the levels dynamicity
 - [ ] Add translations to all the content

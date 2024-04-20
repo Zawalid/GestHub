@@ -11,7 +11,7 @@ export function ProtectedRoute({ children }) {
   // return children;
 
   useEffect(() => {
-    if (!isAuthenticated && !isLoading) navigate('/login');
+    if (!isAuthenticated && !isLoading) navigate('/login', { replace: true });
   }, [isAuthenticated, isLoading, navigate]);
 
   if (isLoading) return <LoadingScreen />;

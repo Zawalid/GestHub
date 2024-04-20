@@ -8,7 +8,7 @@ import { changeTitle } from '@/utils/helpers';
 export function InternDetails() {
   const { id } = useParams();
   const { intern, isLoading, error } = useIntern(id);
-  const { firstName, lastName, email, phone, birthday, major, university, startDate, endDate } = intern || {};
+  const { firstName, lastName, email, phone, academicLevel, establishment, startDate, endDate } = intern || {};
 
   useEffect(() => {
     changeTitle(`${firstName} ${lastName}`);
@@ -25,9 +25,8 @@ export function InternDetails() {
         <p>{lastName}</p>
         <p>{email}</p>
         <p>{phone}</p>
-        <p>{birthday}</p>
-        <p>{major}</p>
-        <p>{university}</p>
+        <p>{academicLevel}</p>
+        <p>{establishment}</p>
         <p>{startDate}</p>
         <p>{endDate}</p>
       </div>

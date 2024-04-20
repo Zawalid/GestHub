@@ -7,9 +7,11 @@ import { Button } from '@/components/ui';
 import { Status } from '@/components/ui/Status';
 import ProjectsSkeleton from './ProjectsSkeleton';
 import Project from './Project';
+import { useUser } from '@/hooks/useUser';
 
 export default function ProjectsList() {
   const { data: projects, isLoading, error, layout, appliedFiltersNumber, query } = useOperations();
+  const {user} = useUser();
   const navigate = useNavigate();
   const [parent] = useAutoAnimate({ duration: 500 });
 
@@ -36,7 +38,7 @@ export default function ProjectsList() {
       );
     return (
       <>
-        {!appliedFiltersNumber && !query && <NewProject layout={layout} onAdd={onAdd} />}
+        {!appliedFiltersNumber && !query && user?.role === 'supervisor' && <NewProject layout={layout} onAdd={onAdd} />}
         {projects?.map((project) => (
           <Project key={project.id} project={project} layout={layout} />
         ))}

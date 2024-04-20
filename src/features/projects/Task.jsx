@@ -3,7 +3,7 @@ import { PRIORITY_COLORS } from '@/utils/constants';
 import { formatDate } from '@/utils/helpers';
 import { ToolTip } from '@/components/ui/ToolTip';
 
-export default function Task({ task, onDelete, onEdit, layout }) {
+export default function Task({ task, onDelete, onEdit, layout, canManipulateTasks }) {
   const { title, description, dueDate, priority, assignee } = task;
 
   if (layout === 'list')
@@ -17,7 +17,7 @@ export default function Task({ task, onDelete, onEdit, layout }) {
         <span className='text-xs font-medium text-text-secondary'>
           {task.dueDate ? formatDate(task.dueDate) : 'N/A'}
         </span>
-        <span className={`rounded-md px-2 py-1 text-center text-xs ${PRIORITY_COLORS[task.priority]?.bg}`}>
+        <span className={`rounded-md px-2 py-1 text-center text-xs text-white ${PRIORITY_COLORS[task.priority]?.bg}`}>
           {task.priority}
         </span>
       </div>
@@ -29,7 +29,9 @@ export default function Task({ task, onDelete, onEdit, layout }) {
         <div className='flex items-center justify-between gap-5'>
           <h4 className='line-clamp-2 font-semibold text-text-primary'>{title || 'Untitled'}</h4>
           {priority !== 'None' && (
-            <span className={`rounded-md px-2 py-1 text-center text-xs ${PRIORITY_COLORS[priority]?.bg}`}>{priority}</span>
+            <span className={`rounded-md px-2 py-1 text-center text-xs text-white ${PRIORITY_COLORS[priority]?.bg}`}>
+              {priority}
+            </span>
           )}
         </div>
         <p className='line-clamp-2 text-xs text-text-secondary'>{description || 'No description'}</p>
@@ -42,20 +44,22 @@ export default function Task({ task, onDelete, onEdit, layout }) {
           {dueDate ? <span>{formatDate(dueDate)}</span> : <span>N/A</span>}
         </div>
       </div>
-      <div className='absolute -top-3 left-1/2 flex -translate-x-1/2 divide-x divide-border overflow-hidden rounded-full border border-border bg-background-secondary shadow-md'>
-        {[
-          { icon: <MdDriveFileRenameOutline />, onClick: onEdit },
-          { icon: <IoTrashOutline />, onClick: onDelete },
-        ].map((b, i) => (
-          <button
-            className='px-2 py-1 text-text-primary transition-colors duration-300 hover:bg-background-primary'
-            key={i}
-            onClick={() => b.onClick(task)}
-          >
-            {b.icon}
-          </button>
-        ))}
-      </div>
+      {canManipulateTasks && (
+        <div className='absolute -top-3 left-1/2 flex -translate-x-1/2 divide-x divide-border overflow-hidden rounded-full border border-border bg-background-secondary shadow-md'>
+          {[
+            { icon: <MdDriveFileRenameOutline />, onClick: onEdit },
+            { icon: <IoTrashOutline />, onClick: onDelete },
+          ].map((b, i) => (
+            <button
+              className='px-2 py-1 text-text-primary transition-colors duration-300 hover:bg-background-primary'
+              key={i}
+              onClick={() => b.onClick(task)}
+            >
+              {b.icon}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

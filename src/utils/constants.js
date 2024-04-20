@@ -1,20 +1,7 @@
 export const ROUTES = {
-  admin: [
-    'overview',
-    'supervisors',
-    'supervisors/:id',
-    'projects',
-    'projects/new',
-    'projects/:id',
-    'projects/:id/:tab',
-    'demands',
-    'offers',
-    'offers/:id',
-    'interns',
-    'interns/:id',
-  ],
+  admin: ['overview', 'supervisors', 'supervisors/:id', 'demands', 'offers', 'offers/:id', 'interns', 'interns/:id'],
   supervisor: ['overview', 'projects', 'projects/new', 'projects/:id', 'projects/:id/:tab', 'interns', 'interns/:id'],
-  intern: ['overview', 'absences'],
+  intern: ['overview', 'projects', 'projects/:id', 'projects/:id/:tab', 'interns/:id'],
 };
 
 export const PAGE_LIMIT = 5;

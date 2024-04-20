@@ -37,7 +37,8 @@ export {
   BsListCheck,
   BsLayoutSidebarInsetReverse,
   BsCalendar4Event,
-  BsBuilding 
+  BsBuilding ,
+  BsFillInfoCircleFill 
 } from 'react-icons/bs';
 export { RiTeamLine } from 'react-icons/ri';
 export { LiaUserTieSolid } from 'react-icons/lia';

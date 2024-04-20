@@ -2,21 +2,38 @@ import { PRIORITY_COLORS, STATUS_COLORS } from '@/utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { ToolTip } from '@/components/ui/ToolTip';
-import { formatDate } from '@/utils/helpers';
+import { cn, formatDate } from '@/utils/helpers';
+import { useUser } from '@/hooks/useUser';
+import { SiAdguard } from 'react-icons/si';
+import { Button } from '@/components/ui';
 
 export default function Project({ project, layout }) {
   const { id, subject, description, startDate, endDate, status, priority, teamMembers } = project;
   const navigate = useNavigate();
+  const { user } = useUser();
+
+  const canViewProject = ['intern', 'supervisor'].includes(user?.role) && user?.projects?.includes(+id);
 
   return (
     <div
-      className={`relative grid cursor-pointer grid-rows-[24px_auto_20px_28px] gap-3 rounded-lg rounded-tr-none border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95 ${
-        layout === 'grid' ? 'h-[240px]' : ''
-      }`}
-      onClick={() => navigate(String(id))}
+      className={cn(
+        'relative grid grid-rows-[24px_auto_20px_28px] gap-3 rounded-lg rounded-tr-none border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300',
+        layout === 'grid' && 'h-[240px]',
+        canViewProject ? 'cursor-pointer' : 'opacity-50'
+      )}
+      onClick={() => canViewProject && navigate(String(id))}
     >
       <PriorityIndicator priority={priority} />
-      <Date startDate={startDate} endDate={endDate} />
+      <div className='flex items-center justify-between'>
+        <Date startDate={startDate} endDate={endDate} />
+        {user?.role === 'supervisor' && user?.projects?.includes(+id) && (
+          <ToolTip content={<span className='text-xs text-text-secondary'>Under Your Supervision</span>}>
+            <Button shape='icon' size='small' className='bg-primary text-white hover:bg-primary'>
+              <SiAdguard />
+            </Button>
+          </ToolTip>
+        )}
+      </div>
       <div className='space-y-2'>
         <h3 className='line-clamp-2 text-lg font-semibold text-text-primary'>{subject}</h3>
         <p className='line-clamp-2 text-sm text-text-secondary'>{description || 'No description'}</p>

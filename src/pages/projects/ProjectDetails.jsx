@@ -11,7 +11,7 @@ export function ProjectDetails() {
   const { project, isLoading, error } = useProject(+id);
 
   useEffect(() => {
-    if (!['overview', 'tasks', 'notes'].includes(tab)) navigate(`/app/projects/${id}/overview`);
+    if (!['overview', 'tasks', 'notes'].includes(tab)) navigate(`/app/projects/${id}/overview`,{replace : true});
   }, [id, tab, navigate]);
 
   useEffect(() => {

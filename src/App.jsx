@@ -75,7 +75,7 @@ export default function App() {
                 </ProtectedRoute>
               }
             >
-              <Route index element={<Navigate to='/app/overview' />} />
+              <Route index element={<Navigate to='/app/overview' replace={true} />} />
               {/* Routes of every role */}
               <Route path='overview' element={<Overview />} />
               {/*  Routes of specific role */}

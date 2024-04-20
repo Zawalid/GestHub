@@ -12,6 +12,7 @@ import { getIncrementedID } from '@/utils/helpers';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
 import { createPortal } from 'react-dom';
+import { useUser } from '@/hooks/useUser';
 
 const getStyle = (style, snapshot) => (snapshot.isDropAnimating ? { ...style, transitionDuration: `0.0001s` } : style);
 
@@ -19,9 +20,15 @@ export default function Tasks() {
   const [parent] = useAutoAnimate({ duration: 400 });
   const { id } = useParams();
   const { project } = useProject(id);
+  const { user } = useUser();
   const [groups, setGroups] = useState(() => {
     const groups = { 'To Do': [], 'In Progress': [], Done: [] };
-    project.tasks.forEach((task) => groups[task.status] && (groups[task.status] = [...groups[task.status], task]));
+    project.tasks
+      // .filter((task) => {
+      //   if (user?.role === 'supervisor' || +user?.id === +project?.projectManager) return true;
+      //   return task.assignee === 'None' || +task.assignee?.id === +user?.id;
+      // })
+      .forEach((task) => groups[task.status] && (groups[task.status] = [...groups[task.status], task]));
     return groups;
   });
   const [currentGroup, setCurrentGroup] = useState(null);
@@ -29,6 +36,9 @@ export default function Tasks() {
   const [layout, setLayout] = useState('board');
   const { mutate } = useUpdateProject({ showToast: false });
   const { openModal } = useConfirmationModal();
+
+  const canManipulateTasks =
+    user?.role === 'supervisor' || (user?.role === 'intern' && +user?.id === +project?.projectManager);
 
   // Project Methods
   const getProjectStatus = (tasks) => {
@@ -114,20 +124,23 @@ export default function Tasks() {
               onEdit={(task) => setCurrentTask(task)}
               onDelete={onDeleteTask}
               layout={layout}
+              canManipulateTasks={canManipulateTasks}
             />
           ))}
         </div>
-        <AddNewTask
-          currentGroup={currentGroup}
-          onClose={() => {
-            setCurrentGroup(null);
-            setCurrentTask(null);
-          }}
-          currentTask={currentTask}
-          onAdd={onAddTask}
-          onUpdate={onUpdateTask}
-          teamMembers={project?.teamMembers}
-        />
+        {canManipulateTasks && (
+          <AddNewTask
+            currentGroup={currentGroup}
+            onClose={() => {
+              setCurrentGroup(null);
+              setCurrentTask(null);
+            }}
+            currentTask={currentTask}
+            onAdd={onAddTask}
+            onUpdate={onUpdateTask}
+            teamMembers={project?.teamMembers}
+          />
+        )}
       </DragDropContext>
       {createPortal(
         <div className='flex justify-between gap-3'>
@@ -158,7 +171,7 @@ export default function Tasks() {
   );
 }
 
-function TasksGroup({ group, onAdd, onEdit, onDelete, layout }) {
+function TasksGroup({ group, onAdd, onEdit, onDelete, layout, canManipulateTasks }) {
   const [parent] = useAutoAnimate({ duration: 400 });
 
   const droppable = () => {
@@ -181,6 +194,7 @@ function TasksGroup({ group, onAdd, onEdit, onDelete, layout }) {
               onDelete={onDelete}
               isDragging={snapshot.isDraggingOver}
               layout={layout}
+              canManipulateTasks={canManipulateTasks}
             />
             {provided.placeholder}
           </div>
@@ -214,9 +228,11 @@ function TasksGroup({ group, onAdd, onEdit, onDelete, layout }) {
             {group.tasks.length}
           </span>
         </div>
-        <Button className='h-6 w-7' size='small' onClick={onAdd}>
-          <FaPlus />
-        </Button>
+        {canManipulateTasks && (
+          <Button className='h-6 w-7' size='small' onClick={onAdd}>
+            <FaPlus />
+          </Button>
+        )}
       </div>
 
       {droppable()}
@@ -224,7 +240,9 @@ function TasksGroup({ group, onAdd, onEdit, onDelete, layout }) {
   );
 }
 
-function TasksList({ group, onEdit, onDelete, isDragging, layout }) {
+function TasksList({ group, onEdit, onDelete, isDragging, layout, canManipulateTasks }) {
+  const { user } = useUser();
+
   if (!group.tasks.length && !isDragging) {
     const message =
       group.name === 'To Do'
@@ -240,12 +258,24 @@ function TasksList({ group, onEdit, onDelete, isDragging, layout }) {
     );
   }
   return group.tasks.map((task, index) => (
-    <Draggable key={`draggable-${task.id}`} draggableId={`draggable-${task.id}`} index={index} type='TASK'>
+    <Draggable
+      key={`draggable-${task.id}`}
+      draggableId={`draggable-${task.id}`}
+      index={index}
+      type='TASK'
+      isDragDisabled={!canManipulateTasks && +user?.id !== +task.assignee.id}
+    >
       {(provided, snapshot) => (
         <NaturalDragAnimation style={getStyle(provided.draggableProps.style, snapshot)} snapshot={snapshot}>
           {(style) => (
             <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} style={style}>
-              <Task task={task} onEdit={onEdit} onDelete={onDelete} layout={layout} />
+              <Task
+                task={task}
+                onEdit={onEdit}
+                onDelete={onDelete}
+                layout={layout}
+                canManipulateTasks={canManipulateTasks}
+              />
             </div>
           )}
         </NaturalDragAnimation>
