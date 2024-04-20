@@ -22,7 +22,6 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",
     "luxon": "^3.4.4",
-    "natural-drag-animation-rbdnd": "^2.1.1",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",

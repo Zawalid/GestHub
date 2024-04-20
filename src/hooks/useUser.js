@@ -63,7 +63,7 @@ export function useUser() {
   });
 
   return {
-    user: { ...data },
+    user: { ...data, role: 'intern', projects: [1, 2], id: 5 },
     isAuthenticated: Boolean(data),
     isLoading: isPending,
     error,

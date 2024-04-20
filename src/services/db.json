@@ -286,28 +286,6 @@
       "priority": "Low",
       "tasks": [
         {
-          "id": 3,
-          "title": "fdsf",
-          "description": "dsfdf",
-          "dueDate": "",
-          "priority": "None",
-          "assignee": {
-            "id": "5",
-            "firstName": "Charlie",
-            "lastName": "Brown",
-            "email": "charliebrown@example.com",
-            "avatar": null,
-            "phone": "+212612345672",
-            "academicLevel": "Bachelor",
-            "establishment": "University of Tangier",
-            "startDate": "2024-01-01",
-            "endDate": "2024-12-31",
-            "role": "intern",
-            "projects": []
-          },
-          "status": "To Do"
-        },
-        {
           "id": 4,
           "title": "fdfdf",
           "description": "fdfdf",
@@ -328,6 +306,28 @@
             "projects": []
           },
           "status": "To Do"
+        },
+        {
+          "id": 3,
+          "title": "fdsf",
+          "description": "dsfdf",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": {
+            "id": "5",
+            "firstName": "Charlie",
+            "lastName": "Brown",
+            "email": "charliebrown@example.com",
+            "avatar": null,
+            "phone": "+212612345672",
+            "academicLevel": "Bachelor",
+            "establishment": "University of Tangier",
+            "startDate": "2024-01-01",
+            "endDate": "2024-12-31",
+            "role": "intern",
+            "projects": []
+          },
+          "status": "In Progress"
         },
         {
           "id": 2,

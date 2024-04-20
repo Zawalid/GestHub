@@ -10,7 +10,6 @@ import { useProject, useUpdateProject } from '../useProjects';
 import { NewTask } from '../NewProject/StarterTasks';
 import { getIncrementedID } from '@/utils/helpers';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
-import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
 import { createPortal } from 'react-dom';
 import { useUser } from '@/hooks/useUser';
 
@@ -23,8 +22,7 @@ export default function Tasks() {
   const { user } = useUser();
   const [groups, setGroups] = useState(() => {
     const groups = { 'To Do': [], 'In Progress': [], Done: [] };
-    project.tasks
-      .forEach((task) => groups[task.status] && (groups[task.status] = [...groups[task.status], task]));
+    project.tasks.forEach((task) => groups[task.status] && (groups[task.status] = [...groups[task.status], task]));
     return groups;
   });
   const [currentGroup, setCurrentGroup] = useState(null);
@@ -262,19 +260,20 @@ function TasksList({ group, onEdit, onDelete, isDragging, layout, canManipulateT
       isDragDisabled={!canManipulateTasks && +user?.id !== +task.assignee.id}
     >
       {(provided, snapshot) => (
-        <NaturalDragAnimation style={getStyle(provided.draggableProps.style, snapshot)} snapshot={snapshot}>
-          {(style) => (
-            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} style={style}>
-              <Task
-                task={task}
-                onEdit={onEdit}
-                onDelete={onDelete}
-                layout={layout}
-                canManipulateTasks={canManipulateTasks}
-              />
-            </div>
-          )}
-        </NaturalDragAnimation>
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          style={getStyle(provided.draggableProps.style, snapshot)}
+        >
+          <Task
+            task={task}
+            onEdit={onEdit}
+            onDelete={onDelete}
+            layout={layout}
+            canManipulateTasks={canManipulateTasks}
+          />
+        </div>
       )}
     </Draggable>
   ));
