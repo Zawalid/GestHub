@@ -8,14 +8,14 @@ import { Status } from '@/components/ui';
 export function ProjectDetails() {
   const { id, tab } = useParams();
   const navigate = useNavigate();
-  const { project, isLoading, error } = useProject(id);
+  const { project, isLoading, error } = useProject(+id);
 
   useEffect(() => {
     if (!['overview', 'tasks', 'notes'].includes(tab)) navigate(`/app/projects/${id}/overview`);
   }, [id, tab, navigate]);
 
   useEffect(() => {
-    changeTitle(project ? `${project?.name} | ${capitalize(tab)}` : 'Project Not Found');
+    changeTitle(project ? `${project?.subject} | ${capitalize(tab)}` : 'Project Not Found');
   }, [project, tab]);
 
   if (isLoading) return <Status status='loading' />;

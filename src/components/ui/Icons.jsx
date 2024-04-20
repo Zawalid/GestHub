@@ -16,7 +16,8 @@ export {
   IoEyeOutline,
   IoTrashOutline,
   IoSettingsOutline,
-  IoFlag
+  IoFlag,
+  IoSchool 
 } from 'react-icons/io5';
 export {
   PiCheckBold,
@@ -30,13 +31,13 @@ export {
   PiSortAscending,
   PiCrown 
 } from 'react-icons/pi';
-export { BiSolidCity } from 'react-icons/bi';
 export {
   BsPeople,
   BsLayoutSidebarInset,
   BsListCheck,
   BsLayoutSidebarInsetReverse,
   BsCalendar4Event,
+  BsBuilding 
 } from 'react-icons/bs';
 export { RiTeamLine } from 'react-icons/ri';
 export { LiaUserTieSolid } from 'react-icons/lia';

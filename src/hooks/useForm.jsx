@@ -1,7 +1,7 @@
 import { InputField } from '@/components/ui';
 import { PasswordInput } from '@/components/ui/PasswordInput';
 import { objectDeepEquals } from '@/utils/helpers';
-import { cloneElement, useEffect, useMemo, useState } from 'react';
+import { cloneElement, useCallback, useEffect, useMemo, useState } from 'react';
 
 const getError = (value, rules, getValue) => {
   if (!rules) return null;
@@ -82,7 +82,7 @@ const rules = {
   },
   phone: {
     pattern: {
-      value: /^(\+212\s)?(05|06|07)\d{8}$/,
+      value: /^(\+212\s?0?|0)(5|6|7)\d{8}$/,
       message: 'Invalid phone number format. \n Ex: +212 0637814207 or 0637814207',
     },
   },
@@ -103,7 +103,7 @@ const getRules = (name, type, fieldRules) => {
   };
 };
 
-export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
+export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, submitOnEnter }) {
   const [defaultValues, setDefaultValues] = useState(def);
   const [values, setValues] = useState(def);
   const [isUpdated, setIsUpdated] = useState(false);
@@ -150,6 +150,25 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
     setIsUpdated(!objectDeepEquals(values, defaultValues));
   }, [values, defaultValues]);
 
+  // Submit handler
+  const handleSubmit = useCallback(
+    (callback, resetToDefaults) => {
+      onSubmit?.(values);
+      typeof callback === 'function' && callback?.(values);
+      resetToDefaults ? setValues(defaultValues) : setDefaultValues(values);
+    },
+    [defaultValues, onSubmit, values]
+  );
+
+  useEffect(() => {
+    if (!submitOnEnter || !isValid) return;
+
+    const onEnter = (e) => e.key === 'Enter' && handleSubmit();
+    window.addEventListener('keydown', onEnter);
+
+    return () => window.removeEventListener('keydown', onEnter);
+  }, [handleSubmit, submitOnEnter,isValid]);
+
   // Validate fields
   const validate = (name, value, rules) => {
     const err = getError(value, rules, getValue);
@@ -175,12 +194,6 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
     setValues(values);
     setDefaultValues(values);
   };
-  // Submit handler
-  const handleSubmit = (callback, resetToDefaults) => {
-    onSubmit?.(values);
-    typeof callback === 'function' && callback?.(values);
-    resetToDefaults ? setValues(defaultValues) : setDefaultValues(values);
-  };
 
   // Reset handler
   const reset = (callback) => {
@@ -193,7 +206,10 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit }) {
     Form: (
       <form
         className={`grid gap-x-5 gap-y-3 ${gridLayout ? ' md:grid-cols-2' : ''} `}
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
       >
         {Object.keys(formInputs).map((key) => {
           return cloneElement(formInputs[key], { key });

@@ -10,8 +10,8 @@ export function BasicInfo({ updateStatus, updateState, state, onSubmit, classNam
     defaultValues: state || {},
     fields: [
       {
-        name: 'name',
-        label: 'Name',
+        name: 'subject',
+        label: 'Subject',
         placeholder: "Project's Name",
       },
       {
@@ -61,7 +61,7 @@ export function BasicInfo({ updateStatus, updateState, state, onSubmit, classNam
     <>
       <div className={`flex h-full w-full flex-col gap-5 ${className}`}>
         <div className='flex flex-col gap-5 mobile:flex-1'>
-          {formInputs['name']}
+          {formInputs['subject']}
           {formInputs['description']}
         </div>
         <div className='flex flex-col gap-5 mobile:flex-1'>

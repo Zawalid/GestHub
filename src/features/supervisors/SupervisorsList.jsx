@@ -39,12 +39,6 @@ export default function SupervisorsList() {
           visible: true,
           type: 'string',
         },
-        {
-          key: 'department',
-          displayLabel: 'Department',
-          visible: true,
-          type: 'string',
-        },
       ]}
       formFields={[
         {
@@ -66,10 +60,6 @@ export default function SupervisorsList() {
           type : 'phone'
         },
         {
-          name: 'department',
-          label: 'Department',
-        },
-        {
           name: 'password',
           type: 'password',
           label: ' Password',
@@ -86,9 +76,8 @@ export default function SupervisorsList() {
         lastName: '',
         email: '',
         phone: '',
-        department: '',
       }}
-      fieldsToSearch={['firstName', 'lastName', 'email', 'department']}
+      fieldsToSearch={['firstName', 'lastName', 'email']}
       downloadOptions={{
         csvFileName: 'Supervisors',
         pdfFileName: 'Supervisors',

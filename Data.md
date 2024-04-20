@@ -1,6 +1,7 @@
 ## Persons
 id
-fullName
+firstName
+lastName
 email
 password
 phone
@@ -15,7 +16,7 @@ null
 
 
 ## Interns
-projectId
+projects
 projectLink
 report
 certificate

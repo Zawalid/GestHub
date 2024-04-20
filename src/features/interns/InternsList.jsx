@@ -40,20 +40,14 @@ export default function InternsList() {
           type: 'string',
         },
         {
-          key: 'birthday',
-          displayLabel: 'Birthday',
-          visible: true,
-          type: 'date',
-        },
-        {
-          key: 'university',
-          displayLabel: 'University',
+          key: 'academicLevel',
+          displayLabel: 'Academic Level',
           visible: true,
           type: 'string',
         },
         {
-          key: 'major',
-          displayLabel: 'Major',
+          key: 'establishment',
+          displayLabel: 'Establishment',
           visible: true,
           type: 'string',
         },
@@ -90,8 +84,23 @@ export default function InternsList() {
           type : 'phone'
         },
         {
-          name: 'birthday',
-          label: 'Birthday',
+          name: 'academicLevel',
+          label: 'Academic Level',
+          type: 'academicLevel',
+        },
+        {
+          name: 'establishment',
+          label: 'Establishment',
+          type: 'establishment',
+        },
+        {
+          name: 'startDate',
+          label: 'Start Date',
+          type: 'date',
+        },
+        {
+          name: 'endDate',
+          label: 'End Date',
           type: 'date',
         },
         {
@@ -111,9 +120,12 @@ export default function InternsList() {
         lastName: '',
         email: '',
         phone: '',
-        birthday: '',
+        academicLevel: '',
+        establishment : '',
+        startDate : '',
+        endDate : '',
       }}
-      fieldsToSearch={['firstName', 'lastName', 'email', 'major', 'university']}
+      fieldsToSearch={['firstName', 'lastName', 'email', 'academicLevel', 'establishment']}
       downloadOptions={{
         csvFileName: 'Interns',
         pdfFileName: 'Interns',

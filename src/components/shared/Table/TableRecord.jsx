@@ -1,6 +1,6 @@
 import { Modal } from "@/components/ui";
 import { useForm } from "@/hooks/useForm";
-import { ModalFormLayout } from "@/layouts";
+import { ModalFormLayout } from "@/layouts/ModalFormLayout";
 import { useTable } from ".";
 import { useEffect } from "react";
 
@@ -37,7 +37,7 @@ export function TableRecord() {
   return (
     <Modal
       isOpen={isOpen}
-      className="p-5 sm:w-3/4 lg:w-1/2 md:border  sm:h-fit"
+      className="p-5 sm:w-3/4 sm:h-5/6 lg:w-1/2 md:border  md:h-fit"
       closeOnBlur={false}
     >
       <div className="flex items-center">

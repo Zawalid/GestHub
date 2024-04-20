@@ -13,7 +13,7 @@ export function Projects() {
       isLoading={isLoading}
       error={error}
       sortOptions={[
-        { key: 'name', display: 'Name', type: 'string' },
+        { key: 'subject', display: 'Subject', type: 'string' },
         { key: 'startDate', display: 'Start Date', type: 'date' },
         { key: 'endDate', display: 'End Date', type: 'date' },
         { key: 'tasksNumber', display: 'Tasks Number', type: 'number' },

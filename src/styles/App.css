@@ -91,7 +91,11 @@
 }
 
 .progress-ring__circle {
-  transition: stroke-dashoffset 0.35s;
+  transition: stroke-dashoffset 3s;
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
+  -webkit-transition: stroke-dashoffset 3s;
+  -moz-transition: stroke-dashoffset 3s;
+  -ms-transition: stroke-dashoffset 3s;
+  -o-transition: stroke-dashoffset 3s;
 }

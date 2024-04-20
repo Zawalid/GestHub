@@ -4,11 +4,14 @@
 - [x] Custom Error Component
 - [x] Go to prev page when deleting the last record
 - [x] Interns dropdown only for team members
-- [ ] Fix dates
+- [x] Fix dates
 - [ ] Remove error message from error screen
 - [x] Rename confirmPassword to password_confirmation
-- [ ] Discuss the levels dynamicity
+- [x] Discuss the levels dynamicity
 - [ ] Add translations to all the content
-- [ ] Add illustrations across app (No projects yet / no team members...)
-- [ ] Add meaningful error messages
-- [ ] Login or register when clicking enter
+- [x] Add illustrations across app (No projects yet / no team members...)
+- [x] Login or register when clicking enter
+- [ ] remove the retry functionality of react query when fetching the user
+- [ ] Add project manager when creating a new project
+- [ ] Improve the settings design
+- [ ] sort projects by creation date or update date as well

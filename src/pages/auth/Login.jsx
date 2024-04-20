@@ -18,15 +18,20 @@ export function Login() {
       { name: 'password', type: 'password', label: t('auth.login.password.label') },
     ],
     onSubmit: login,
+    submitOnEnter : true
   });
+  
 
   return (
     <div className='relative flex h-full w-full flex-col justify-center gap-3 p-2 md:px-10 lg:px-20  '>
       <h1 className='mb-8 text-2xl font-bold text-text-primary sm:text-3xl'>{t('auth.login.title1')}</h1>
-
       {Form}
-
-      <Button className={'my-4 w-full self-end'} disabled={!isValid} onClick={handleSubmit} isLoading={isLogging}>
+      <Button
+        className={'my-4 w-full self-end'}
+        disabled={!isValid}
+        onClick={handleSubmit}
+        isLoading={isLogging}
+      >
         {isLogging ? 'Logging In...' : t('auth.login.submit')}
       </Button>
 

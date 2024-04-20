@@ -4,521 +4,487 @@
       "id": "1",
       "firstName": "John",
       "lastName": "Doe",
-      "email": "john.doe@example.com",
-      "phone": "123-456-7890",
-      "birthday": "1990-01-01",
-      "university": "Harvard University",
-      "major": "Computer Science",
+      "email": "johndoe@example.com",
+      "avatar": null,
+      "phone": "+212612345678",
+      "academicLevel": "Bachelor",
+      "establishment": "University of Casablanca",
       "startDate": "2024-01-01",
-      "endDate": "2024-06-01"
+      "endDate": "2024-12-31",
+      "role": "intern",
+      "projects": []
+    },
+    {
+      "id": "2",
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "email": "janedoe@example.com",
+      "avatar": null,
+      "phone": "+212612345679",
+      "academicLevel": "Master",
+      "establishment": "University of Marrakech",
+      "startDate": "2024-01-01",
+      "endDate": "2024-12-31",
+      "role": "intern",
+      "projects": []
     },
     {
       "id": "3",
-      "firstName": "Bob",
+      "firstName": "Alice",
       "lastName": "Smith",
-      "email": "bob.smith@example.com",
-      "phone": "111-222-3333",
-      "birthday": "1991-03-03",
-      "university": "MIT",
-      "major": "Software Engineering",
+      "email": "alicesmith@example.com",
+      "avatar": null,
+      "phone": "+212612345670",
+      "academicLevel": "Bachelor",
+      "establishment": "University of Rabat",
       "startDate": "2024-01-01",
-      "endDate": "2024-06-01"
+      "endDate": "2024-12-31",
+      "role": "intern",
+      "projects": []
     },
     {
       "id": "4",
-      "firstName": "Alice",
+      "firstName": "Bob",
       "lastName": "Johnson",
-      "email": "alice.johnson@example.com",
-      "phone": "222-333-4444",
-      "birthday": "1993-04-04",
-      "university": "University of California, Berkeley",
-      "major": "Data Science",
+      "email": "bobjohnson@example.com",
+      "avatar": null,
+      "phone": "+212612345671",
+      "academicLevel": "Master",
+      "establishment": "University of Fes",
       "startDate": "2024-01-01",
-      "endDate": "2024-06-01"
+      "endDate": "2024-12-31",
+      "role": "intern",
+      "projects": []
     },
     {
       "id": "5",
       "firstName": "Charlie",
       "lastName": "Brown",
-      "email": "charlie.brown@example.com",
-      "phone": "333-444-5555",
-      "birthday": "1994-05-05",
-      "university": "Carnegie Mellon University",
-      "major": "Artificial Intelligence",
+      "email": "charliebrown@example.com",
+      "avatar": null,
+      "phone": "+212612345672",
+      "academicLevel": "Bachelor",
+      "establishment": "University of Tangier",
       "startDate": "2024-01-01",
-      "endDate": "2024-06-01"
+      "endDate": "2024-12-31",
+      "role": "intern",
+      "projects": []
     },
     {
       "id": "6",
       "firstName": "David",
       "lastName": "Williams",
-      "email": "david.williams@example.com",
-      "phone": "444-555-6666",
-      "birthday": "1995-06-06",
-      "university": "University of Washington",
-      "major": "Human Centered Design & Engineering",
+      "email": "davidwilliams@example.com",
+      "avatar": null,
+      "phone": "+212612345673",
+      "academicLevel": "Master",
+      "establishment": "University of Agadir",
       "startDate": "2024-01-01",
-      "endDate": "2024-06-01"
+      "endDate": "2024-12-31",
+      "role": "intern",
+      "projects": []
     },
     {
       "id": "7",
-      "firstName": "Walid",
-      "lastName": "Biker",
-      "email": "walid.zakan@gmail.com",
-      "phone": "0682208346",
-      "birthday": "1996-07-07",
-      "university": "University of Illinois Urbana-Champaign",
-      "major": "Information Sciences",
+      "firstName": "Eva",
+      "lastName": "Miller",
+      "email": "evamiller@example.com",
+      "avatar": null,
+      "phone": "+212612345674",
+      "academicLevel": "Bachelor",
+      "establishment": "University of Meknes",
       "startDate": "2024-01-01",
-      "endDate": "2024-06-01",
-      "password": "Ancd1234",
-      "confirmPassword": "Ancd1234"
+      "endDate": "2024-12-31",
+      "role": "intern",
+      "projects": []
     },
     {
       "id": "8",
       "firstName": "Frank",
-      "lastName": "Lampard",
-      "email": "frank.davis@example.com",
-      "phone": "0682208346",
-      "birthday": "1997-08-08",
-      "university": "University of Texas at Austin",
-      "major": "Computer Engineering",
+      "lastName": "Davis",
+      "email": "frankdavis@example.com",
+      "avatar": null,
+      "phone": "+212612345675",
+      "academicLevel": "Master",
+      "establishment": "University of Kenitra",
       "startDate": "2024-01-01",
-      "endDate": "2024-06-01",
-      "password": "Ancd1234",
-      "confirmPassword": "Ancd1234"
+      "endDate": "2024-12-31",
+      "role": "intern",
+      "projects": []
     },
     {
       "id": "9",
       "firstName": "Grace",
       "lastName": "Wilson",
-      "email": "grace.wilson@example.com",
-      "phone": "777-888-9999",
-      "birthday": "1998-09-09",
-      "university": "University of Michigan",
-      "major": "Information Technology",
+      "email": "gracewilson@example.com",
+      "avatar": null,
+      "phone": "+212612345676",
+      "academicLevel": "Bachelor",
+      "establishment": "University of Oujda",
       "startDate": "2024-01-01",
-      "endDate": "2024-06-01"
+      "endDate": "2024-12-31",
+      "role": "intern",
+      "projects": []
     },
     {
-      "id": "1bf0",
-      "firstName": "Walid",
-      "lastName": "Zakan",
-      "email": "walid.zakan@gmail.com",
-      "phone": "0682208346",
-      "birthday": "2024-05-02",
-      "password": "Abcs1234",
-      "confirmPassword": "Abcs1234"
+      "id": "10",
+      "firstName": "Harry",
+      "lastName": "Moore",
+      "email": "harrymoore@example.com",
+      "avatar": null,
+      "phone": "+212612345677",
+      "academicLevel": "Master",
+      "establishment": "University of Safi",
+      "startDate": "2024-01-01",
+      "endDate": "2024-12-31",
+      "role": "intern",
+      "projects": []
     }
   ],
   "supervisors": [
     {
       "id": "1",
-      "firstName": "William",
-      "lastName": "Johnson",
-      "email": "william.johnson@example.com",
-      "phone": "999-888-7777",
-      "department": "Software Development"
+      "firstName": "Lauraa",
+      "lastName": "Smith",
+      "email": "laura.smith@example.com",
+      "avatar": null,
+      "phone": "+212612345678",
+      "role": "supervisor",
+      "projects": [
+        "1",
+        "5"
+      ],
+      "password": "Laura123?"
     },
     {
       "id": "2",
-      "firstName": "Elizabeth",
-      "lastName": "Smith",
-      "email": "elizabeth.smith@example.com",
-      "phone": "888-777-6666",
-      "department": "Data Science"
+      "firstName": "James",
+      "lastName": "Johnson",
+      "email": "james.johnson@example.com",
+      "avatar": null,
+      "phone": "+212612345679",
+      "role": "supervisor",
+      "projects": [
+        "2",
+        "6"
+      ]
     },
     {
       "id": "3",
-      "firstName": "James",
-      "lastName": "Brown",
-      "email": "james.brown@example.com",
-      "phone": "777-666-5555",
-      "department": "Information Systems"
+      "firstName": "Patricia",
+      "lastName": "Williams",
+      "email": "patricia.williams@example.com",
+      "avatar": null,
+      "phone": "+212612345670",
+      "role": "supervisor",
+      "projects": [
+        "3",
+        "7"
+      ]
     },
     {
       "id": "4",
-      "firstName": "Jennifer",
-      "lastName": "Davis",
-      "email": "jennifer.davis@example.com",
-      "phone": "666-555-4444",
-      "department": "Artificial Intelligence"
+      "firstName": "Robert",
+      "lastName": "Brown",
+      "email": "robert.brown@example.com",
+      "avatar": null,
+      "phone": "+212612345671",
+      "role": "supervisor",
+      "projects": [
+        "4",
+        "8"
+      ]
     },
     {
       "id": "5",
+      "firstName": "Jennifer",
+      "lastName": "Jones",
+      "email": "jennifer.jones@example.com",
+      "avatar": null,
+      "phone": "+212612345672",
+      "role": "supervisor",
+      "projects": [
+        "5",
+        "9"
+      ]
+    },
+    {
+      "id": "6",
       "firstName": "Michael",
       "lastName": "Miller",
       "email": "michael.miller@example.com",
-      "phone": "555-444-3333",
-      "department": "Human Centered Design & Engineering"
+      "avatar": null,
+      "phone": "+212612345673",
+      "role": "supervisor",
+      "projects": [
+        "6",
+        "10"
+      ]
     },
     {
-      "firstName": "Walid",
-      "lastName": "Zakan",
-      "email": "walid.zakan@gmail.com",
-      "phone": "0682208346",
-      "password": "Abcd123??",
-      "department": "Abcd123??",
-      "confirmPassword": "Abcd123??",
-      "id": "7"
+      "id": "7",
+      "firstName": "Linda",
+      "lastName": "Davis",
+      "email": "linda.davis@example.com",
+      "avatar": null,
+      "phone": "+212612345674",
+      "role": "supervisor",
+      "projects": [
+        "7",
+        "11"
+      ]
     },
     {
-      "firstName": "Walidjhjhhhh",
-      "lastName": "Zakanhhhh",
-      "email": "walid.zakan@gmail.com",
-      "phone": "0682208346",
-      "department": "Abcd123??",
-      "password": "Abcd123??",
-      "confirmPassword": "Abcd123??",
-      "id": "8"
+      "id": "8",
+      "firstName": "William",
+      "lastName": "Garcia",
+      "email": "william.garcia@example.com",
+      "avatar": null,
+      "phone": "+212612345675",
+      "role": "supervisor",
+      "projects": [
+        "8",
+        "12"
+      ]
     },
     {
-      "firstName": "waliddsdd",
-      "lastName": "zakan",
-      "email": "walid.zakan@gmail.com",
-      "phone": "0682208346",
-      "department": "fff",
-      "password": "Abcd124?",
-      "confirmPassword": "Abcd124?",
-      "id": "9"
+      "id": "9",
+      "firstName": "Elizabeth",
+      "lastName": "Rodriguez",
+      "email": "elizabeth.rodriguez@example.com",
+      "avatar": null,
+      "phone": "+212612345676",
+      "role": "supervisor",
+      "projects": [
+        "9",
+        "13"
+      ]
+    },
+    {
+      "id": "10",
+      "firstName": "Joseph",
+      "lastName": "Martinez",
+      "email": "joseph.martinez@example.com",
+      "avatar": null,
+      "phone": "+212612345677",
+      "role": "supervisor",
+      "projects": [
+        "10",
+        "14"
+      ]
     }
   ],
   "projects": [
     {
       "id": "1",
-      "name": "Customer Relationship Management ",
-      "description": "Implement a new CRM system to better manage customer relationships.",
-      "startDate": "2024-06-01",
-      "endDate": "2024-07-01",
+      "subject": "Project 1",
+      "description": "Description for Project 1",
+      "startDate": "2024-01-01",
+      "endDate": "2024-12-31",
       "status": "In Progress",
-      "supervisor": "Emma Watson",
-      "projectManager": "Emma Watson",
-      "priority": "High",
+      "supervisor": "1",
+      "priority": "Low",
       "tasks": [
         {
-          "id": 11,
-          "title": "dfsdfsdfsfsdf",
-          "description": "",
-          "dueDate": "",
-          "priority": "None",
-          "assignee": "None",
-          "status": "To Do"
+          "id": "1",
+          "title": "Task 1",
+          "description": "Description for Task 1",
+          "dueDate": "2024-02-01",
+          "status": "In Progress",
+          "priority": "Medium",
+          "assignee": {
+            "id": "1",
+            "firstName": "John",
+            "lastName": "Doe",
+            "email": "johndoe@example.com",
+            "avatar": null
+          }
         },
         {
-          "id": 13,
-          "title": "ddddddddddd",
-          "description": "",
+          "id": 2,
+          "title": "dsda",
+          "description": "dsadasd",
           "dueDate": "",
           "priority": "None",
-          "assignee": "None",
-          "status": "In Progress"
-        },
-        {
-          "id": 7,
-          "title": "dd",
-          "description": "",
-          "dueDate": "",
-          "priority": "High",
-          "assignee": "None",
-          "status": "In Progress"
-        },
-        {
-          "id": 14,
-          "title": "fffdsfsd",
-          "description": "",
-          "dueDate": "",
-          "priority": "None",
-          "assignee": "None",
+          "assignee": {
+            "id": "2",
+            "firstName": "Jane",
+            "lastName": "Doe",
+            "email": "janedoe@example.com",
+            "avatar": null
+          },
           "status": "Done"
         }
       ],
-      "teamMembers": []
+      "teamMembers": [
+        {
+          "id": "2",
+          "firstName": "Jane",
+          "lastName": "Doe",
+          "email": "janedoe@example.com",
+          "avatar": null
+        }
+      ],
+      "projectManager": "2"
     },
     {
       "id": "2",
-      "name": "Social Media Campaign",
-      "description": "Launch a new social media campaign to increase brand awareness.",
-      "startDate": "2024-04-01",
-      "endDate": "2024-05-10",
+      "subject": "Project 2",
+      "description": "Description for Project 2",
+      "startDate": "2024-01-01",
+      "endDate": "2024-12-31",
       "status": "In Progress",
-      "supervisor": "Tom Hanks",
-      "priority": "None",
+      "supervisor": "2",
+      "priority": "Medium",
       "tasks": [
         {
-          "id": 2,
-          "name": "Create social media content",
-          "status": "To Do"
-        },
-        {
-          "id": 4,
-          "name": "Monitor campaign performance",
-          "status": "To Do"
-        },
-        {
-          "id": 1,
-          "name": "Identify target audience",
-          "status": "In Progress"
-        },
-        {
-          "id": 3,
-          "name": "Schedule posts",
-          "status": "In Progress"
-        }
-      ],
-      "teamMembers": [
-        "Tom Hanks",
-        "Meg Ryan",
-        "Bill Pullman"
-      ]
-    },
-    {
-      "id": "3",
-      "name": "E-commerce Platform Upgrade",
-      "description": "Upgrade the existing e-commerce platform to improve performance and user experienceerience.",
-      "startDate": "2024-04-01",
-      "endDate": "2024-10-01",
-      "status": "In Progress",
-      "supervisor": "1",
-      "priority": "High",
-      "tasks": [
-        {
-          "id": 4,
-          "name": "Test new platform",
-          "status": "To Do",
-          "assignee": "None"
-        },
-        {
-          "id": 5,
-          "name": "Deploy new platform",
-          "status": "To Do",
-          "assignee": "None"
-        },
-        {
-          "id": 2,
-          "name": "Design new platform",
+          "id": "2",
+          "title": "Task 2",
+          "description": "Description for Task 2",
+          "dueDate": "2024-02-01",
           "status": "In Progress",
-          "assignee": "None"
-        },
-        {
-          "id": 3,
-          "name": "Develop new platform",
-          "status": "Done",
-          "assignee": "None"
-        },
-        {
-          "id": 1,
-          "name": "Identify platform requirements",
-          "status": "Done",
-          "assignee": "None"
+          "priority": "High",
+          "assignee": {
+            "id": "3",
+            "firstName": "Alice",
+            "lastName": "Smith",
+            "email": "alicesmith@example.com",
+            "avatar": null
+          }
         }
       ],
       "teamMembers": [
         {
           "id": "4",
-          "firstName": "Alice",
-          "lastName": "Johnson",
-          "email": "alice.johnson@example.com",
-          "phone": "222-333-4444",
-          "birthday": "1993-04-04",
-          "university": "University of California, Berkeley",
-          "major": "Data Science",
-          "startDate": "2024-01-01",
-          "endDate": "2024-06-01"
-        },
-        {
-          "id": "3",
           "firstName": "Bob",
-          "lastName": "Smith",
-          "email": "bob.smith@example.com",
-          "phone": "111-222-3333",
-          "birthday": "1991-03-03",
-          "university": "MIT",
-          "major": "Software Engineering",
-          "startDate": "2024-01-01",
-          "endDate": "2024-06-01"
+          "lastName": "Johnson",
+          "email": "bobjohnson@example.com",
+          "avatar": null
         }
       ],
       "projectManager": "4"
     },
     {
+      "id": "3",
+      "subject": "Project 3",
+      "description": "Description for Project 3",
+      "startDate": "2024-01-01",
+      "endDate": "2024-12-31",
+      "status": "Not Started",
+      "supervisor": "1",
+      "priority": "High",
+      "tasks": [
+        {
+          "id": "1",
+          "title": "Task 1",
+          "description": "Description for Task 1",
+          "dueDate": "2024-02-01",
+          "status": "To Do",
+          "priority": "Medium",
+          "assignee": {
+            "id": "1",
+            "firstName": "John",
+            "lastName": "Doe",
+            "email": "johndoe@example.com",
+            "avatar": null
+          }
+        }
+      ],
+      "teamMembers": [
+        {
+          "id": "2",
+          "firstName": "Jane",
+          "lastName": "Doe",
+          "email": "janedoe@example.com",
+          "avatar": null
+        }
+      ],
+      "projectManager": "2"
+    },
+    {
       "id": "4",
-      "name": "New Product Development",
-      "description": "Develop a new product to experienceand the company's product line.",
-      "startDate": "2024-05-01",
-      "endDate": "2024-05-01",
-      "status": "Not Started",
-      "supervisor": "Brad Pitt",
-      "priority": "High",
-      "tasks": [
-        {
-          "id": 5,
-          "name": "Launch new product",
-          "status": "To Do"
-        },
-        {
-          "id": 1,
-          "name": "Conduct market research",
-          "status": "To Do"
-        },
-        {
-          "id": 2,
-          "name": "Design new product",
-          "status": "In Progress"
-        },
-        {
-          "id": 4,
-          "name": "Test new product",
-          "status": "In Progress"
-        },
-        {
-          "id": 3,
-          "name": "Develop new product",
-          "status": "Done"
-        }
-      ],
-      "teamMembers": [
-        "Brad Pitt",
-        "Angelina Jolie",
-        "Morgan Freeman"
-      ]
-    },
-    {
-      "id": "44b2",
-      "name": "gestion stagaiares",
-      "description": "description de project ",
-      "startDate": "2024-04-15",
-      "endDate": "2024-04-14",
-      "priority": "High",
-      "status": "Not Started",
-      "teamMembers": [
-        {
-          "id": "1bf0",
-          "firstName": "Walid",
-          "lastName": "Zakan",
-          "email": "walid.zakan@gmail.com",
-          "phone": "0682208346",
-          "birthday": "2024-05-02",
-          "password": "Abcs1234",
-          "confirmPassword": "Abcs1234"
-        },
-        {
-          "id": "6",
-          "firstName": "David",
-          "lastName": "Williams",
-          "email": "david.williams@example.com",
-          "phone": "444-555-6666",
-          "birthday": "1995-06-06",
-          "university": "University of Washington",
-          "major": "Human Centered Design & Engineering",
-          "startDate": "2024-01-01",
-          "endDate": "2024-06-01"
-        },
-        {
-          "id": "3",
-          "firstName": "Bob",
-          "lastName": "Smith",
-          "email": "bob.smith@example.com",
-          "phone": "111-222-3333",
-          "birthday": "1991-03-03",
-          "university": "MIT",
-          "major": "Software Engineering",
-          "startDate": "2024-01-01",
-          "endDate": "2024-06-01"
-        }
-      ],
-      "tasks": [
-        {
-          "id": 1,
-          "title": "backend",
-          "description": "all apis with laravel",
-          "dueDate": "2024-04-17",
-          "priority": "High",
-          "assignee": {
-            "id": "1bf0",
-            "firstName": "Walid",
-            "lastName": "Zakan",
-            "email": "walid.zakan@gmail.com",
-            "phone": "0682208346",
-            "birthday": "2024-05-02",
-            "password": "Abcs1234",
-            "confirmPassword": "Abcs1234"
-          },
-          "status": "In Progress"
-        },
-        {
-          "id": 2,
-          "title": "conception",
-          "description": "digarams ",
-          "dueDate": "2024-04-17",
-          "priority": "High",
-          "assignee": {
-            "id": "3",
-            "firstName": "Bob",
-            "lastName": "Smith",
-            "email": "bob.smith@example.com",
-            "phone": "111-222-3333",
-            "birthday": "1991-03-03",
-            "university": "MIT",
-            "major": "Software Engineering",
-            "startDate": "2024-01-01",
-            "endDate": "2024-06-01"
-          },
-          "status": "To Do"
-        }
-      ]
-    },
-    {
-      "id": "7cae",
-      "name": "fdsf",
-      "description": "fsdf",
-      "startDate": "2024-04-08",
-      "endDate": "2024-05-01",
-      "priority": "High",
+      "subject": "Project 4",
+      "description": "Description for Project 4",
+      "startDate": "2024-01-01",
+      "endDate": "2024-12-31",
       "status": "In Progress",
+      "supervisor": "5",
+      "priority": "None",
+      "tasks": [
+        {
+          "id": "5",
+          "title": "Task 5",
+          "description": "Description for Task 5",
+          "dueDate": "2024-02-01",
+          "status": "Done",
+          "priority": "High",
+          "assignee": {
+            "id": "6",
+            "firstName": "David",
+            "lastName": "Williams",
+            "email": "davidwilliams@example.com",
+            "avatar": null
+          }
+        }
+      ],
+      "teamMembers": [
+        {
+          "id": "7",
+          "firstName": "Eva",
+          "lastName": "Miller",
+          "email": "evamiller@example.com",
+          "avatar": null
+        }
+      ],
+      "projectManager": "7"
+    },
+    {
+      "id": "5",
+      "subject": "sdsad",
+      "description": "",
+      "startDate": "2024-04-24",
+      "endDate": "2024-05-11",
+      "priority": "None",
+      "status": "Not Started",
       "teamMembers": [
         {
           "id": "3",
-          "firstName": "Bob",
+          "firstName": "Alice",
           "lastName": "Smith",
-          "email": "bob.smith@example.com",
-          "phone": "111-222-3333",
-          "birthday": "1991-03-03",
-          "university": "MIT",
-          "major": "Software Engineering",
+          "email": "alicesmith@example.com",
+          "avatar": null,
+          "phone": "+212612345670",
+          "academicLevel": "Bachelor",
+          "establishment": "University of Rabat",
           "startDate": "2024-01-01",
-          "endDate": "2024-06-01"
+          "endDate": "2024-12-31",
+          "role": "intern",
+          "projects": []
         },
         {
           "id": "4",
-          "firstName": "Alice",
+          "firstName": "Bob",
           "lastName": "Johnson",
-          "email": "alice.johnson@example.com",
-          "phone": "222-333-4444",
-          "birthday": "1993-04-04",
-          "university": "University of California, Berkeley",
-          "major": "Data Science",
+          "email": "bobjohnson@example.com",
+          "avatar": null,
+          "phone": "+212612345671",
+          "academicLevel": "Master",
+          "establishment": "University of Fes",
           "startDate": "2024-01-01",
-          "endDate": "2024-06-01"
+          "endDate": "2024-12-31",
+          "role": "intern",
+          "projects": []
         }
       ],
       "tasks": [
         {
-          "id": 2,
-          "title": "fsdf",
-          "description": "fsdf",
+          "id": 1,
+          "title": "dsa",
+          "description": "dsad",
           "dueDate": "",
           "priority": "None",
           "assignee": "None",
           "status": "To Do"
-        },
-        {
-          "id": 1,
-          "title": "ewe",
-          "description": "",
-          "dueDate": "",
-          "priority": "High",
-          "assignee": "None",
-          "status": "Done"
         }
       ]
     }
@@ -526,81 +492,32 @@
   "offers": [
     {
       "id": "1",
-      "experience": "Expert",
-      "secteur": "devloppemnt",
-      "title": "devlopper backend",
+      "title": "",
+      "description": "",
+      "sector": "",
+      "experience": "",
       "skills": [
-        "nodejs",
-        "express",
-        "mongodb",
-        "laravel",
-        "MySql"
+        "",
+        ""
       ],
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
-      "date": "2024-04-03T00:00:00.000Z",
-      "direction": "DSI",
-      "ville": "rabat"
-    },
+      "publicationDate": "",
+      "duration": "",
+      "direction": "",
+      "city": "",
+      "visibility": "",
+      "status": "",
+      "type": ""
+    }
+  ],
+  "demands": [
     {
-      "id": "3",
-      "experience": "intermediate",
-      "secteur": "devloppemnt",
-      "title": "devlopper frontend",
-      "skills": [
-        "JavaScript",
-        "react",
-        "angular",
-        "vuejs"
-      ],
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
-      "date": "2024-04-04T00:00:00.000Z",
-      "direction": "DSI",
-      "ville": "sale"
-    },
-    {
-      "id": "4",
-      "experience": "debutant",
-      "secteur": "devops",
-      "title": "engineer devops",
-      "skills": [
-        "docker",
-        "kubernetes",
-        "jenkins"
-      ],
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
-      "date": "2024-04-30T00:00:00.000Z",
-      "direction": "DSI",
-      "ville": "rabat"
-    },
-    {
-      "id": "5",
-      "experience": "Expert",
-      "secteur": "Testing",
-      "title": "testeur ",
-      "skills": [
-        "selenium",
-        "cypress",
-        "postman"
-      ],
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
-      "date": "2024-09-02T00:00:00.000Z",
-      "direction": "DSI",
-      "ville": "Casablanca"
-    },
-    {
-      "id": "6",
-      "experience": "Expert",
-      "secteur": "Ui/Ux",
-      "title": "Designer ",
-      "skills": [
-        "figma",
-        " adobe xd",
-        "sketch"
-      ],
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga perferendis et quam nostrum assumenda, consequuntur cum suscipit ut aliquam, possimus, harum ullam repellat animi rem iste ex ipsam inventore porro.",
-      "date": "2025-09-02T00:00:00.000Z",
-      "direction": "DSI",
-      "ville": "Casablanca"
+      "id": "1",
+      "offer_id": "",
+      "user_id": "",
+      "startDate": "",
+      "endDate": "",
+      "cv": "",
+      "internshipDemand": ""
     }
   ]
-}
+} 

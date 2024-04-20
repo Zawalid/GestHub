@@ -83,10 +83,11 @@ export default function NewProject() {
     const project = {
       ...projectData['Basic Info'],
       status: 'Not Started',
-      // teamMembers: projectData['Team Members'].map((t) => t.id),
-      // tasks: projectData['Starter Tasks'].map((t) => t.id),
       teamMembers: projectData['Team Members'],
       tasks: projectData['Starter Tasks'],
+      // supervisor : user.id // If the user is supervisor
+      // teamMembers: projectData['Team Members'].map((t) => t.id),
+      // tasks: projectData['Starter Tasks'].map((t) => t.id),
     };
     addProject(project, {
       onSuccess: () => {

@@ -5,19 +5,26 @@ import { useUser } from '@/hooks/useUser';
 
 export default function Profile() {
   const { user } = useUser();
+  const defaultUser = {
+    image: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    // Conditionally : if the user is and intern/user
+    ...(['intern', 'user'].includes(user?.role) && {
+      academicLevel: '',
+      establishment: '',
+      startDate: '',
+      endDate: '',
+    }),
+  };
 
   const {
     Form,
     options: { isUpdated, isValid, handleSubmit, reset, setValue, getValue },
   } = useForm({
-    defaultValues: {
-      image: user?.avatar || '',
-      firstName: user?.firstName || '',
-      lastName: user?.lastName || '',
-      email: user?.email || '',
-      phone: user?.phone || '',
-      birthday: user?.birthday || '',
-    },
+    defaultValues: { ...defaultUser, ...user },
     fields: [
       {
         name: 'firstName',
@@ -37,11 +44,29 @@ export default function Profile() {
         label: 'Phone Number',
         type: 'phone',
       },
-      {
-        name: 'birthday',
-        type: 'date',
-        label: 'Birthday',
-      },
+      // Conditionally : if the user is and intern/user
+      ...(['intern', 'user'].includes(user?.role) ? [
+        {
+          name: 'academicLevel',
+          type: 'academicLevel',
+          label: 'Academic Level',
+        },
+        {
+          name: 'establishment',
+          type: 'establishment',
+          label: 'Establishment',
+        },
+        {
+          name: 'startDate',
+          label: 'Start Date',
+          type: 'date',
+        },
+        {
+          name: 'endDate',
+          label: 'End Date',
+          type: 'date',
+        },
+      ] : []),
     ],
     onSubmit: (data) => console.log(data),
     gridLayout: true,

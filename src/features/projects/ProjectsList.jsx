@@ -3,10 +3,10 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { FaPlus } from 'react-icons/fa6';
 import { Operations } from '@/components/shared/operations/Operations';
 import { useOperations } from '@/components/shared/operations/useOperations';
-import Project from './Project';
 import { Button } from '@/components/ui';
 import { Status } from '@/components/ui/Status';
 import ProjectsSkeleton from './ProjectsSkeleton';
+import Project from './Project';
 
 export default function ProjectsList() {
   const { data: projects, isLoading, error, layout, appliedFiltersNumber, query } = useOperations();
@@ -18,7 +18,7 @@ export default function ProjectsList() {
   const render = () => {
     if (isLoading) return <ProjectsSkeleton layout={layout} />;
     if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
-    if (projects.length === 0 && !query) {
+    if (projects.length === 0 && !query && !appliedFiltersNumber) {
       return (
         <div className='absolute grid h-full w-full place-content-center place-items-center gap-5'>
           <img src='/SVG/projects.svg' alt='' className='w-[200px]' />
@@ -30,7 +30,7 @@ export default function ProjectsList() {
         </div>
       );
     }
-    if (projects.length === 0 && query)
+    if (projects.length === 0 && (query || appliedFiltersNumber))
       return (
         <Status status='noResults' heading='No projects found' message='Try changing your search query or filters' />
       );

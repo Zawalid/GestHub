@@ -9,23 +9,27 @@ export function Register() {
   const { t } = useTranslation();
   const { register, isRegistering } = useRegister();
 
-
   const {
     options: { isValid, formInputs, handleSubmit, getValue, setValue },
   } = useForm({
     defaultValues: {
-      fullName: '',
+      firstName: '',
+      lastName: '',
       email: '',
       phone: '',
-      city: '',
+      establishment: '',
       academicLevel: 'Bac+2',
       password: '',
       password_confirmation: '',
     },
     fields: [
       {
-        name: 'fullName',
-        label: t('auth.register.fullName.label'),
+        name: 'firstName',
+        label: 'First Name',
+      },
+      {
+        name: 'lastName',
+        label: 'Last Name',
       },
       {
         name: 'email',
@@ -37,12 +41,14 @@ export function Register() {
         label: t('auth.register.phone.label'),
       },
       {
-        name: 'city',
-        label: t('auth.register.city.label'),
+        name: 'establishment',
+        label: 'Establishment',
+        type: 'establishment',
       },
       {
         name: 'academicLevel',
         hidden: true,
+        type: 'academicLevel',
       },
       {
         name: 'password',
@@ -57,17 +63,18 @@ export function Register() {
       },
     ],
     onSubmit: register,
+    submitOnEnter : true
   });
 
-  
   return (
     <div className='relative flex h-full w-full flex-col justify-center space-y-6 p-2 md:p-5 '>
       <h1 className='mb-8 text-2xl font-bold text-text-primary sm:text-3xl'>{t('auth.register.title1')} </h1>
       <div className='grid grid-cols-1 gap-2 gap-x-4 lg:grid-cols-2'>
-        {formInputs.fullName}
+        {formInputs.firstName}
+        {formInputs.lastName}
         {formInputs.email}
         {formInputs.phone}
-        {formInputs.city}
+        {formInputs.establishment}
         <div className='flex flex-col gap-1.5'>
           <label className='text-sm font-medium text-text-tertiary'>Academic Level</label>
           <DropDown
@@ -82,7 +89,7 @@ export function Register() {
               </DropDown.Toggler>
             }
           >
-            {['Bac+1', 'Bac+2', 'Bac+3', 'Master'].map((e) => (
+            {['Bac+1', 'Bac+2', 'Bac+3', 'Master', 'Doctorate'].map((e) => (
               <DropDown.Option
                 key={e}
                 className='capitalize'

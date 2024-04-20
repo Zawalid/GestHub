@@ -1,24 +1,23 @@
-import { Button, DropDown } from "@/components/ui";
+import { Button, DropDown } from '@/components/ui';
 import {
   IoEllipsisHorizontalSharp,
   IoEyeOutline,
   IoTrashOutline,
   MdDriveFileRenameOutline,
-} from "@/components/ui/Icons";
-import { useTable } from ".";
-import { Link, useLocation } from "react-router-dom";
-import { useConfirmationModal } from "@/hooks/useConfirmationModal";
+} from '@/components/ui/Icons';
+import { useTable } from '.';
+import { Link, useLocation } from 'react-router-dom';
+import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 
 export function Actions({ onUpdate, onDelete, row }) {
-  const { showForm, confirmOptions, resourceName, rows, onPrevPage } =
-    useTable();
+  const { showForm, confirmOptions, resourceName, rows, onPrevPage } = useTable();
   const location = useLocation();
   const { openModal } = useConfirmationModal();
 
   return (
     <DropDown
       toggler={
-        <Button shape="icon">
+        <Button shape='icon'>
           <IoEllipsisHorizontalSharp />
         </Button>
       }
@@ -33,10 +32,19 @@ export function Actions({ onUpdate, onDelete, row }) {
         onClick={() =>
           showForm({
             defaultValues: row,
-            onSubmit: (data) => onUpdate({ id: row.id, data }),
+            onSubmit: (data) => {
+              // eslint-disable-next-line no-unused-vars
+              const {password_confirmation,...rest} = data
+              onUpdate({ id: row.id, data : rest });
+            },
             isOpen: true,
-            submitButtonText: "Save Changes",
-            heading: `Update ${resourceName} #${row.id}`,
+            submitButtonText: 'Save Changes',
+            heading: (
+              <>
+                Update {resourceName} <span className='text-primary'>#</span>
+                {row.id}
+              </>
+            ),
           })
         }
       >

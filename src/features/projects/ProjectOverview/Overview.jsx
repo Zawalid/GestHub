@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { DateTime } from 'luxon';
 import { useDeleteProject, useProject, useUpdateProject } from '../useProjects';
 import { Button, DropDown, Modal, ToolTip } from '@/components/ui';
 import {
@@ -17,25 +18,24 @@ import {
 } from '@/components/ui/Icons';
 import AddNewMember from './AddNewMember';
 import { PRIORITY_COLORS, STATUS_COLORS } from '@/utils/constants';
-import { useConfirmationModal } from '@/hooks/useConfirmationModal';
+import { useConfirmationModal, useAnimatedProgress } from '@/hooks';
 import { BasicInfo } from '../NewProject/BasicInfo';
-import { formatDate, getProgress } from '@/utils/helpers';
-import { DateTime } from 'luxon';
+import { formatDate } from '@/utils/helpers';
 
 export default function Overview() {
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
   const { project } = useProject(id);
-  const { name, status, progress, priority } = project || {};
+  const { subject, status, progress, priority } = project || {};
 
   return (
     <div className='flex flex-1 flex-col gap-6 overflow-auto pr-2'>
       <div className='flex justify-between gap-5'>
-        <div className='grid gap-2 sm:grid-cols-[70px_auto]'>
+        <div className='grid flex-1 gap-2 sm:grid-cols-[70px_auto]'>
           <Progress progress={progress} status={status} />
           <div className='space-y-3'>
             <h4 className='flex items-center gap-2 font-semibold text-text-primary sm:text-xl'>
-              <span>{name}</span>
+              <span>{subject}</span>
               <ToolTip
                 content={
                   <span className='text-xs text-text-secondary'>{priority === 'None' ? 'No' : priority} Priority</span>
@@ -60,14 +60,15 @@ export default function Overview() {
   );
 }
 
-function Progress({ progress, status }) {
+function Progress({ progress: pr, status }) {
+  const progress = useAnimatedProgress(pr);
   return (
     <>
       <div className='flex items-center gap-2 sm:hidden'>
         <span className='text-xs font-medium text-text-primary'>{progress}%</span>
         <div className='relative w-full rounded-lg bg-background-tertiary py-1'>
           <div
-            className={`absolute top-0 h-full rounded-lg transition-all duration-500 ${STATUS_COLORS[status].bg}`}
+            className={`absolute top-0 h-full rounded-lg transition-all duration-[3s] ${STATUS_COLORS[status]?.bg}`}
             style={{ width: `${progress}%` }}
           ></div>
         </div>
@@ -91,7 +92,7 @@ function Progress({ progress, status }) {
             fill='transparent'
           ></circle>
           <circle
-            className={`progress-ring__circle  stroke-current ${STATUS_COLORS[status].text}`}
+            className={`progress-ring__circle  stroke-current ${STATUS_COLORS[status]?.text}`}
             strokeWidth='6'
             strokeLinecap='round'
             cx='50'
@@ -144,7 +145,7 @@ function Actions({ id, onEdit }) {
 }
 
 function EditProject({ isOpen, onClose, project }) {
-  const { id, name, description, startDate, endDate, priority } = project || {};
+  const { id, subject, description, startDate, endDate, priority } = project || {};
   const { mutate } = useUpdateProject();
 
   return (
@@ -155,7 +156,7 @@ function EditProject({ isOpen, onClose, project }) {
       closeOnBlur={false}
     >
       <BasicInfo
-        state={{ name, description, startDate, endDate, priority }}
+        state={{ subject, description, startDate, endDate, priority }}
         onSubmit={(data) => mutate({ id, data: { ...project, ...data } })}
         actionButtons={({ handleSubmit, reset, isUpdated, isValid }) => {
           return (
@@ -175,7 +176,7 @@ function EditProject({ isOpen, onClose, project }) {
 }
 
 function Details({ project }) {
-  const { description, startDate, endDate, status} = project || {};
+  const { description, startDate, endDate, status } = project || {};
 
   return (
     <div className='space-y-6 rounded-lg  border-border '>
@@ -196,8 +197,6 @@ function Details({ project }) {
 }
 
 function TimeLine({ startDate, endDate, status }) {
-  const [progress, setProgress] = useState(0);
-
   const today = DateTime.fromISO(DateTime.now().toISO());
   const start = DateTime.fromISO(startDate);
   const end = DateTime.fromISO(endDate);
@@ -206,17 +205,9 @@ function TimeLine({ startDate, endDate, status }) {
   const duration = Math.ceil(end.diff(start, 'days').toObject().days);
   const daysLeft = Math.floor(end.diff(today, 'days').toObject().days);
   const daysToStart = Math.ceil(start.diff(today, 'days').toObject().days);
-
   const isOverdue = daysLeft <= 0;
 
-  useEffect(() => {
-    const id = setTimeout(() => {
-      const progress = getProgress((currentDay / duration) * 100);
-      setProgress(progress);
-    }, 500);
-
-    return () => clearTimeout(id);
-  }, [currentDay, duration]);
+  const progress = useAnimatedProgress((currentDay / duration) * 100);
 
   return (
     <div className='space-y-3 '>

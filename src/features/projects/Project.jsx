@@ -5,7 +5,7 @@ import { ToolTip } from '@/components/ui/ToolTip';
 import { formatDate } from '@/utils/helpers';
 
 export default function Project({ project, layout }) {
-  const { id, name, description, startDate, endDate, status, priority, teamMembers } = project;
+  const { id, subject, description, startDate, endDate, status, priority, teamMembers } = project;
   const navigate = useNavigate();
 
   return (
@@ -13,12 +13,12 @@ export default function Project({ project, layout }) {
       className={`relative grid cursor-pointer grid-rows-[24px_auto_20px_28px] gap-3 rounded-lg rounded-tr-none border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95 ${
         layout === 'grid' ? 'h-[240px]' : ''
       }`}
-      onClick={() => navigate(id)}
+      onClick={() => navigate(String(id))}
     >
       <PriorityIndicator priority={priority} />
       <Date startDate={startDate} endDate={endDate} />
       <div className='space-y-2'>
-        <h3 className='line-clamp-2 text-lg font-semibold text-text-primary'>{name}</h3>
+        <h3 className='line-clamp-2 text-lg font-semibold text-text-primary'>{subject}</h3>
         <p className='line-clamp-2 text-sm text-text-secondary'>{description || 'No description'}</p>
       </div>
       <ProgressBar project={project} />
@@ -51,7 +51,9 @@ function PriorityIndicator({ priority }) {
       <div
         className={`absolute -right-[1.2px] -top-[1.5px] h-[2px] w-16 rounded-lg ${PRIORITY_COLORS[priority]?.bg}`}
       ></div>
-      <div className={`absolute -right-[1px] -top-[1.2px] h-16 w-[2px] rounded-lg ${PRIORITY_COLORS[priority]?.bg}`}></div>
+      <div
+        className={`absolute -right-[1px] -top-[1.2px] h-16 w-[2px] rounded-lg ${PRIORITY_COLORS[priority]?.bg}`}
+      ></div>
     </>
   );
 }

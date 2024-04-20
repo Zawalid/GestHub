@@ -7,8 +7,8 @@ export function Summary({ projectData }) {
     defaultValues: projectData['Basic Info'],
     fields: [
       {
-        name: 'name',
-        label: 'Name',
+        name: 'subject',
+        label: 'Subject',
         showIcon: false,
         readOnly: true,
       },
@@ -48,7 +48,7 @@ export function Summary({ projectData }) {
       </p>
       <div className="mt-8 flex flex-col gap-5 mobile:flex-row ">
         <div className="flex flex-1 flex-col gap-5">
-          {formInputs['name']}
+          {formInputs['subject']}
           {formInputs['description']}
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-medium text-text-tertiary">Priority</label>
