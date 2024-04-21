@@ -577,21 +577,105 @@
   "offers": [
     {
       "id": "1",
-      "title": "",
-      "description": "",
-      "sector": "",
-      "experience": "",
+      "title": "Frontend Developer",
+      "description": "We are looking for a skilled Frontend Developer with expertise in JavaScript, React, and CSS. The ideal candidate will have a strong understanding of responsive design and experience with modern JavaScript frameworks.",
+      "sector": "IT",
+      "experience": "Expert",
       "skills": [
-        "",
-        ""
+        "JavaScript",
+        "React",
+        "CSS",
+        "HTML",
+        "Git"
       ],
-      "publicationDate": "",
-      "duration": "",
-      "direction": "",
-      "city": "",
-      "visibility": "",
+      "publicationDate": "2022-01-01",
+      "duration": 6,
+      "direction": "DSI",
+      "city": "Rabat",
+      "visibility": "Visible",
+      "status": "Urgent",
+      "type": "Remote"
+    },
+    {
+      "id": "2",
+      "title": "Data Analyst",
+      "description": "We are seeking a Data Analyst with strong analytical skills and experience with financial reporting systems. The candidate should be proficient in Python and Excel.",
+      "sector": "Finance",
+      "experience": "Intermediate",
+      "skills": [
+        "Excel",
+        "Python",
+        "Data Analysis",
+        "SQL"
+      ],
+      "publicationDate": "2022-01-02",
+      "duration": 12,
+      "direction": "DSI",
+      "city": "Rabat",
+      "visibility": "Hidden",
       "status": "",
-      "type": ""
+      "type": "Hybrid"
+    },
+    {
+      "id": "3",
+      "title": "Digital Marketing Specialist",
+      "description": "We are looking for a Digital Marketing Specialist with experience in SEO and content creation. The ideal candidate will have a proven track record of driving growth through digital marketing campaigns.",
+      "sector": "Marketing",
+      "experience": "Beginner",
+      "skills": [
+        "SEO",
+        "Content Creation",
+        "Google Analytics",
+        "Social Media Marketing"
+      ],
+      "publicationDate": "2022-01-03",
+      "duration": 3,
+      "direction": "DSI",
+      "city": "Rabat",
+      "visibility": "Visible",
+      "status": "",
+      "type": "Onsite"
+    },
+    {
+      "id": "4",
+      "title": "Backend Developer",
+      "description": "We are seeking a Backend Developer with expertise in Java and Spring Boot. The candidate should have a strong understanding of microservice architecture and RESTful API design.",
+      "sector": "IT",
+      "experience": "Expert",
+      "skills": [
+        "Java",
+        "Spring Boot",
+        "RESTful API",
+        "Microservices",
+        "SQL"
+      ],
+      "publicationDate": "2022-01-04",
+      "duration": 12,
+      "direction": "DSI",
+      "city": "Rabat",
+      "visibility": "Hidden",
+      "status": "",
+      "type": "Remote"
+    },
+    {
+      "id": "5",
+      "title": "Graphic Designer",
+      "description": "We are looking for a Graphic Designer with experience in Adobe Purgentoshop and Illustrator. The ideal candidate will have a strong portfolio of creative design projects.",
+      "sector": "Design",
+      "experience": "Intermediate",
+      "skills": [
+        "Purgentoshop",
+        "Illustrator",
+        "Graphic Design",
+        "Creative Design"
+      ],
+      "publicationDate": "2022-01-05",
+      "duration": 6,
+      "direction": "DSI",
+      "city": "Rabat",
+      "visibility": "Visible",
+      "status": "Urgent",
+      "type": "Hybrid"
     }
   ],
   "demands": [

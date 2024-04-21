@@ -34,8 +34,8 @@ export function Filter() {
       togglerDisabled={isLoading || error}
     >
       {Object.keys(filters).map((key) => (
-        <div key={key}>
-          <DropDown.Title className='capitalize mb-1' >
+        <div key={key} className="space-y-1">
+          <DropDown.Title className='capitalize' >
             {key}
           </DropDown.Title>
           {filters[key].map(({ value, checked }) => (

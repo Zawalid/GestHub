@@ -4,7 +4,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { ToolTip } from '@/components/ui/ToolTip';
 import { canViewProject, cn, formatDate } from '@/utils/helpers';
 import { useUser } from '@/hooks/useUser';
-import { SiAdguard } from 'react-icons/si';
+import { SiAdguard, SiPantheon } from 'react-icons/si';
 import { Button } from '@/components/ui';
 
 export default function Project({ project, layout }) {
@@ -15,9 +15,10 @@ export default function Project({ project, layout }) {
   return (
     <div
       className={cn(
-        'relative grid grid-rows-[24px_auto_20px_28px] gap-3 rounded-lg rounded-tr-none border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300',
+        'relative grid grid-rows-[24px_auto_20px_28px] gap-3 rounded-lg border  border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95',
         layout === 'grid' && 'h-[240px]',
-        canViewProject(user, project) ? 'cursor-pointer' : 'opacity-50'
+        canViewProject(user, project) ? 'cursor-pointer' : 'opacity-50',
+        priority !== 'None' && 'rounded-tr-none'
       )}
       onClick={() => canViewProject(user, project) && navigate(String(id))}
     >
@@ -63,12 +64,12 @@ function Date({ startDate, endDate }) {
 function PriorityIndicator({ priority }) {
   return (
     <>
-      <div
+      <SiPantheon
         className={`absolute -right-[1.2px] -top-[1.5px] h-[2px] w-16 rounded-lg ${PRIORITY_COLORS[priority]?.bg}`}
-      ></div>
-      <div
+      ></SiPantheon>
+      <SiPantheon
         className={`absolute -right-[1px] -top-[1.2px] h-16 w-[2px] rounded-lg ${PRIORITY_COLORS[priority]?.bg}`}
-      ></div>
+      ></SiPantheon>
     </>
   );
 }

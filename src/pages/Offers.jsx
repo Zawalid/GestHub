@@ -1,13 +1,14 @@
 import { Heading } from '@/components/Heading';
 import { Operations } from '@/components/shared/operations/Operations';
-// import NewOffer from '@/features/offers/NewOffer/NewOffer';
-import OffersList from '@/features/offers/OffersList';
 import { useOffers } from '@/features/offers/useOffers';
-import { useUser } from '@/hooks/useUser';
+import OffersList from '@/features/offers/OffersList';
+import { Button } from '@/components/ui';
+import { FaPlus } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 export function Offers() {
   const { offers, isLoading, error } = useOffers();
-  const { user } = useUser();
+  const navigate = useNavigate();
 
   return (
     <Operations
@@ -27,21 +28,30 @@ export function Offers() {
           { value: 'Intermediate', checked: false },
           { value: 'Beginner', checked: false },
         ],
-        status: [
-          { value: 'Low', checked: false },
-          { value: 'Medium', checked: false },
-          { value: 'High', checked: false },
+        type: [
+          { value: 'Onsite', checked: false },
+          { value: 'Hybrid', checked: false },
+          { value: 'Remote', checked: false },
         ],
+        visibility: [
+          { value: 'Visible', checked: false },
+          { value: 'Hidden', checked: false },
+        ],
+        status: [{ value: 'Urgent', checked: false }],
       }}
       defaultLayout='grid'
       fieldsToSearch={['title']}
     >
       <div className='flex flex-col justify-between gap-3 mobile:flex-row mobile:items-center'>
         <Heading>Offers</Heading>
-        <Operations.Search />
+        <div className='flex items-center gap-3'>
+          <Operations.Search />
+          <Button shape='icon' onClick={() => navigate('/app/offers/new')}>
+            <FaPlus />
+          </Button>
+        </div>
       </div>
       <OffersList />
-      {/* {user?.role === 'supervisor' && <NewOffer />} */}
     </Operations>
   );
 }

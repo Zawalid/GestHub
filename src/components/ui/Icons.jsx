@@ -17,7 +17,7 @@ export {
   IoTrashOutline,
   IoSettingsOutline,
   IoFlag,
-  IoSchool 
+  IoSchool , 
 } from 'react-icons/io5';
 export {
   PiCheckBold,
@@ -52,9 +52,10 @@ export {
   MdOutlineNotStarted,
   MdOutlineGroupRemove,
   MdOutlineGroupAdd, 
-  MdManageAccounts 
+  MdManageAccounts ,
+  MdOutlineLocationOn
 } from 'react-icons/md';
-export { FaSpinner, FaSort, FaPlus, FaRegCircleCheck } from 'react-icons/fa6';
+export { FaSpinner, FaSort , FaPlus, FaRegCircleCheck } from 'react-icons/fa6';
 
 export { HiMiniXMark } from 'react-icons/hi2';
 export { RxDashboard, RxViewVertical } from 'react-icons/rx';
