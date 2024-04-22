@@ -11,23 +11,41 @@ export default function NewOffer() {
   const navigate = useNavigate();
   const { mutate } = useAddOffer();
 
-  const onClose = () => navigate('/app/offers');
+  return (
+    <Modal
+      isOpen={location.pathname === '/app/offers/new'}
+      className='p-5 md:h-[515px] md:w-4/5 md:border lg:w-3/5'
+      closeOnBlur={false}
+    >
+      <h1 className='mb-5 text-2xl font-bold text-text-primary'>New Offer</h1>
+      <OfferForm
+        defaultValues={{
+          title: '',
+          description: '',
+          duration: 3,
+          city: 'Rabat',
+          direction: 'DSI',
+          sector: 'IT',
+          type: 'Hybrid',
+          experience: 'Beginner',
+          isUrgent: false,
+          skills: [],
+        }}
+        onSubmit={(data) =>
+          mutate({ ...data, visibility: 'visible', publicationDate: new Date().toISOString().split('T')[0] })
+        }
+        onClose={() => navigate('/app/offers')}
+        type='add'
+      />
+    </Modal>
+  );
+}
 
+export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
   const {
-    options: { isValid, formInputs, getValue, setValue, handleSubmit, reset },
+    options: { isUpdated, isValid, formInputs, getValue, setValue, handleSubmit, reset },
   } = useForm({
-    defaultValues: {
-      title: '',
-      description: '',
-      duration: 3,
-      city: 'Rabat',
-      direction: 'DSI',
-      sector: 'IT',
-      type: 'Hybrid',
-      experience: 'Beginner',
-      isUrgent: false,
-      skills: [],
-    },
+    defaultValues,
     fields: [
       {
         name: 'title',
@@ -83,81 +101,73 @@ export default function NewOffer() {
         hidden: true,
       },
     ],
-    onSubmit: (data) => mutate({ ...data, visibility: 'visible' }),
+    onSubmit,
   });
 
   return (
-    <Modal
-      isOpen={location.pathname === '/app/offers/new'}
-      onClose={onClose}
-      className='p-5 md:h-[515px] md:w-4/5 md:border lg:w-3/5'
-      closeOnBlur={false}
+    <ModalFormLayout
+      submitButton={{
+        text: type === 'add' ? 'Add Offer' : 'Update Offer',
+        disabled: type === 'add' ? !isValid : !isValid || !isUpdated,
+        onClick: () => handleSubmit(onClose, true),
+      }}
+      cancelButton={{ onClick: () => reset(onClose) }}
     >
-      <h1 className='mb-5 text-2xl font-bold text-text-primary'>New Offer</h1>
-      <ModalFormLayout
-        submitButton={{
-          text: 'Add Offer',
-          disabled: !isValid,
-          onClick: () => handleSubmit(onClose, true),
-        }}
-        cancelButton={{ onClick: () => reset(onClose) }}
-      >
-        <div className='flex flex-col gap-5 mobile:flex-row'>
-          <div className='flex flex-col gap-5 mobile:flex-1'>
-            {formInputs['title']}
-            {formInputs['description']}
-            <Sector getValue={getValue} setValue={setValue} />
-            <div className='flex flex-col gap-1.5'>
-              <label className='text-sm font-medium text-text-tertiary'>Type</label>
-              <DropDown
-                toggler={
-                  <DropDown.Toggler>
-                    <span>{getValue('type')}</span>
-                  </DropDown.Toggler>
-                }
-              >
-                {['Onsite', 'Hybrid', 'Remote'].map((e) => (
-                  <DropDown.Option key={e} onClick={() => setValue('type', e)} isCurrent={e === getValue('type')}>
-                    {e}
-                  </DropDown.Option>
-                ))}
-              </DropDown>
-            </div>
+      <div className='flex flex-col gap-5 mobile:flex-row'>
+        <div className='flex flex-col gap-5 mobile:flex-1'>
+          {formInputs['title']}
+          {formInputs['description']}
+          <Sector getValue={getValue} setValue={setValue} />
+          <div className='flex flex-col gap-1.5'>
+            <label className='text-sm font-medium text-text-tertiary'>Type</label>
+            <DropDown
+              toggler={
+                <DropDown.Toggler>
+                  <span>{getValue('type')}</span>
+                </DropDown.Toggler>
+              }
+            >
+              {['Onsite', 'Hybrid', 'Remote'].map((e) => (
+                <DropDown.Option key={e} onClick={() => setValue('type', e)} isCurrent={e === getValue('type')}>
+                  {e}
+                </DropDown.Option>
+              ))}
+            </DropDown>
           </div>
-          <div className='flex flex-col gap-5 mobile:flex-1'>
-            {formInputs['city']}
-            {formInputs['direction']}
-            {formInputs['duration']}
-            <div className='flex flex-col gap-2'>
-              <label className='text-sm font-medium text-text-tertiary'>Experience</label>
-              <DropDown
-                toggler={
-                  <DropDown.Toggler>
-                    <span>{getValue('experience')}</span>
-                  </DropDown.Toggler>
-                }
-              >
-                {['Expert', 'Intermediate', 'Beginner'].map((e) => (
-                  <DropDown.Option
-                    key={e}
-                    onClick={() => setValue('experience', e)}
-                    isCurrent={e === getValue('experience')}
-                  >
-                    {e}
-                  </DropDown.Option>
-                ))}
-              </DropDown>
-            </div>
+        </div>
+        <div className='flex flex-col gap-5 mobile:flex-1'>
+          {formInputs['city']}
+          {formInputs['direction']}
+          {formInputs['duration']}
+          <div className='flex flex-col gap-2'>
+            <label className='text-sm font-medium text-text-tertiary'>Experience</label>
+            <DropDown
+              toggler={
+                <DropDown.Toggler>
+                  <span>{getValue('experience')}</span>
+                </DropDown.Toggler>
+              }
+            >
+              {['Expert', 'Intermediate', 'Beginner'].map((e) => (
+                <DropDown.Option
+                  key={e}
+                  onClick={() => setValue('experience', e)}
+                  isCurrent={e === getValue('experience')}
+                >
+                  {e}
+                </DropDown.Option>
+              ))}
+            </DropDown>
+          </div>
 
-            <Skills getValue={getValue} setValue={setValue} />
-          </div>
+          <Skills getValue={getValue} setValue={setValue} />
         </div>
-        <div className='mt-5 flex items-center gap-3'>
-          <CheckBox checked={getValue('isUrgent')} onChange={(e) => setValue('isUrgent', e.target.checked)} />
-          <label className='text-sm font-medium text-text-tertiary'>Mark this offer as urgent</label>
-        </div>
-      </ModalFormLayout>
-    </Modal>
+      </div>
+      <div className='mt-5 flex items-center gap-3'>
+        <CheckBox checked={getValue('isUrgent')} onChange={(e) => setValue('isUrgent', e.target.checked)} />
+        <label className='text-sm font-medium text-text-tertiary'>Mark this offer as urgent</label>
+      </div>
+    </ModalFormLayout>
   );
 }
 
@@ -212,7 +222,7 @@ function Skills({ getValue, setValue }) {
     <div className='flex flex-col gap-1.5'>
       <label className='text-sm font-medium text-text-tertiary'>Skills</label>
       <div className='flex flex-wrap gap-3 rounded-lg border border-border bg-background-secondary p-2' ref={parent}>
-        {skills.map((skill) => (
+        {skills?.map((skill) => (
           <div
             key={skill}
             className='relative rounded-md border border-border bg-background-tertiary px-2 py-1 text-center text-xs font-medium text-text-secondary'
@@ -222,7 +232,7 @@ function Skills({ getValue, setValue }) {
               onClick={() =>
                 setValue(
                   'skills',
-                  skills.filter((s) => s !== skill)
+                  skills?.filter((s) => s !== skill)
                 )
               }
             >
@@ -238,7 +248,7 @@ function Skills({ getValue, setValue }) {
           value={currentSkill}
           onChange={(e) => setCurrentSkill(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' && !skills.includes(e.target.value)) {
+            if (e.key === 'Enter' && !skills?.includes(e.target.value)) {
               setValue('skills', [...skills, e.target.value]);
               setCurrentSkill('');
             }

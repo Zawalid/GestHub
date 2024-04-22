@@ -2,7 +2,7 @@ import { axiosFetch } from '.';
 
 export const getAllInterns = async () => await axiosFetch('interns');
 
-export const getIntern = async (id) => await axiosFetch(`interns/${id}`);
+export const getIntern = async (id) => !id ? null : await axiosFetch(`interns/${id}`);
 
 export const addIntern = async (data) => await axiosFetch('interns', 'POST', data);
 

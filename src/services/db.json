@@ -286,9 +286,9 @@
       "priority": "Low",
       "tasks": [
         {
-          "id": 4,
-          "title": "fdfdf",
-          "description": "fdfdf",
+          "id": 3,
+          "title": "fdsf",
+          "description": "dsfdf",
           "dueDate": "",
           "priority": "None",
           "assignee": {
@@ -308,9 +308,9 @@
           "status": "In Progress"
         },
         {
-          "id": 3,
-          "title": "fdsf",
-          "description": "dsfdf",
+          "id": 4,
+          "title": "fdfdf",
+          "description": "fdfdf",
           "dueDate": "",
           "priority": "None",
           "assignee": {
@@ -597,24 +597,25 @@
       "type": "Remote"
     },
     {
-      "id": "2",
       "title": "Data Analyst",
       "description": "We are seeking a Data Analyst with strong analytical skills and experience with financial reporting systems. The candidate should be proficient in Python and Excel.",
       "sector": "Finance",
       "experience": "Intermediate",
+      "publicationDate": "2022-01-01",
       "skills": [
         "Excel",
         "Python",
         "Data Analysis",
-        "SQL"
+        "SQL",
+        "React"
       ],
-      "publicationDate": "2022-01-02",
       "duration": 12,
       "direction": "DSI",
       "city": "Rabat",
-      "visibility": "Hidden",
       "isUrgent": false,
-      "type": "Hybrid"
+      "type": "Hybrid",
+      "id": "2",
+      "visibility": "Visible"
     },
     {
       "id": "3",
@@ -632,7 +633,7 @@
       "duration": 3,
       "direction": "DSI",
       "city": "Rabat",
-      "visibility": "Visible",
+      "visibility": "Hidden",
       "isUrgent": false,
       "type": "Onsite"
     },
@@ -678,63 +679,24 @@
       "type": "Hybrid"
     },
     {
-      "id": "fae9",
-      "title": "UI/Ux",
-      "description": "We need a designer",
+      "id": "2ec8",
+      "title": "Ui/Ux",
+      "description": "We really need a designer as soon as possible (ASAP) .\nThis designer should be able to create stunning user interfaces, have a creative sense and more importantly willing to fight the matrix\nYess !!!!! I am Andrew Tate",
       "duration": 3,
       "city": "Rabat",
       "direction": "DSI",
-      "sector": "Design",
-      "type": "Hybrid",
-      "experience": "Beginner",
-      "isUrgent": false,
-      "skills": [],
-      "visibility": "visible"
-    },
-    {
-      "id": "d94b",
-      "title": "czxczxc",
-      "description": "czxc",
-      "duration": 3,
-      "city": "Rabat",
-      "direction": "DSI",
-      "sector": "IT",
-      "type": "Hybrid",
-      "experience": "Beginner",
-      "isUrgent": false,
-      "skills": [],
-      "visibility": "visible"
-    },
-    {
-      "id": "0504",
-      "title": "fsdfdsf",
-      "description": "fdsf",
-      "duration": 3,
-      "city": "Rabat",
-      "direction": "DSI",
-      "sector": "IT",
-      "type": "Hybrid",
-      "experience": "Beginner",
-      "isUrgent": false,
-      "skills": [
-        "fsdfs",
-        "fsdfsd"
-      ],
-      "visibility": "visible"
-    },
-    {
-      "id": "4481",
-      "title": "fsdf",
-      "description": "fsdf",
-      "duration": 3,
-      "city": "Rabat",
-      "direction": "DSI",
-      "sector": "IT",
-      "type": "Hybrid",
-      "experience": "Beginner",
+      "sector": "Fight The Matrix",
+      "type": "Onsite",
+      "experience": "Expert",
       "isUrgent": true,
-      "skills": [],
-      "visibility": "visible"
+      "skills": [
+        "be good",
+        "be wonderfull",
+        "be a man",
+        "be what you want to be"
+      ],
+      "visibility": "visible",
+      "publicationDate": "2024-04-22"
     }
   ],
   "demands": [

@@ -1,10 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import { Heading } from '@/components/Heading';
 import { Operations } from '@/components/shared/operations/Operations';
 import { useOffers } from '@/features/offers/useOffers';
 import OffersList from '@/features/offers/OffersList';
 import { Button } from '@/components/ui';
 import { FaPlus } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
 import NewOffer from '@/features/offers/NewOffer';
 import OfferOverview from '@/features/offers/OfferOverview';
 

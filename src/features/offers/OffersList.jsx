@@ -3,13 +3,14 @@ import { Operations } from '@/components/shared/operations/Operations';
 import { useOperations } from '@/components/shared/operations/useOperations';
 import { Status } from '@/components/ui/Status';
 import Offer from './Offer';
+import OffersSkeleton from './OffersSkeleton';
 
 export default function OffersList() {
   const { data: offers, isLoading, error, layout, appliedFiltersNumber, query } = useOperations();
   const [parent] = useAutoAnimate({ duration: 500 });
 
   const render = () => {
-    if (isLoading) return <p>Loading</p>;
+    if (isLoading) return <OffersSkeleton layout={layout} />
     if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
     if (offers.length === 0 && (query || appliedFiltersNumber))
       return (
@@ -25,7 +26,7 @@ export default function OffersList() {
   };
 
   return (
-    <div className='flex h-full flex-col gap-5'>
+    <div className='flex flex-1 flex-col gap-5'>
       <div className='flex items-center justify-between gap-3'>
         <div className='flex items-center gap-3'>
           <Operations.DropDown>

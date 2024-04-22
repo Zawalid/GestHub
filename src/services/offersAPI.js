@@ -2,7 +2,7 @@ import { axiosFetch } from '.';
 
 export const getAllOffers = async () => await axiosFetch('offers');
 
-export const getOffer = async (id) => await axiosFetch(`offers/${id}`);
+export const getOffer = async (id) => (!id || id === 'new' ? null : await axiosFetch(`offers/${id}`));
 
 export const addOffer = async (data) => await axiosFetch('offers', 'POST', data);
 

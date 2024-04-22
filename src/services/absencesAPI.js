@@ -2,7 +2,7 @@ import { axiosFetch } from '.';
 
 export const getAllAbsence = async () => await axiosFetch('absence');
 
-export const getOffer = async (id) => await axiosFetch(`absence/${id}`);
+export const getOffer = async (id) => !id ? null : await axiosFetch(`absence/${id}`);
 
 export const addOffer = async (data) => await axiosFetch('absence', 'POST', data);
 

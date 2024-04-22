@@ -47,7 +47,7 @@ export default function ProjectsList() {
   };
 
   return (
-    <div className='flex h-full flex-col gap-5'>
+    <div className='flex flex-1 flex-col gap-5'>
       <div className='flex items-center justify-between gap-3'>
         <div className='flex items-center gap-3'>
           <Operations.DropDown>

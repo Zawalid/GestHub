@@ -5,6 +5,7 @@ export const axiosFetch = async (resource, method, data, isAuth) => {
     if (isAuth && method === 'POST') {
       const response = await axios.get(`${import.meta.env.VITE_AUTH_URL}/sanctum/csrf-cookie`, {
         withCredentials: true,
+        withXSRFToken : true,
       });
       console.log(response.data);
     }
