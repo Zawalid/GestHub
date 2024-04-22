@@ -1,19 +1,21 @@
 import axios from 'axios';
 
 export const axiosFetch = async (resource, method, data, isAuth) => {
-  if (isAuth && method === 'POST') {
-    const response = await axios.get(`${import.meta.env.VITE_AUTH_URL}/sanctum/csrf-cookie`, {
-      withCredentials: true,
-    });
-    console.log(response.data);
-  }
-
   try {
+    if (isAuth && method === 'POST') {
+      const response = await axios.get(`${import.meta.env.VITE_AUTH_URL}/sanctum/csrf-cookie`, {
+        withCredentials: true,
+      });
+      console.log(response.data);
+    }
+
     const response = await axios({
       method: method || 'GET',
       url: `${isAuth ? `${import.meta.env.VITE_AUTH_URL}/api` : import.meta.env.VITE_API_URL}/${resource}`,
       data: data,
       withCredentials: isAuth,
+      withXSRFToken : isAuth,
+      headers: { Accept: 'application/json' },
     });
     return response.data;
   } catch (e) {

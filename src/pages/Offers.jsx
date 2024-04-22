@@ -6,6 +6,7 @@ import { Button } from '@/components/ui';
 import { FaPlus } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import NewOffer from '@/features/offers/NewOffer';
+import OfferOverview from '@/features/offers/OfferOverview';
 
 export function Offers() {
   const { offers, isLoading, error } = useOffers();
@@ -54,6 +55,7 @@ export function Offers() {
       </div>
       <OffersList />
       <NewOffer />
+      <OfferOverview />
     </Operations>
   );
 }
