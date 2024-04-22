@@ -129,7 +129,7 @@ export default function NewOffer() {
             {formInputs['city']}
             {formInputs['direction']}
             {formInputs['duration']}
-            <div className='flex flex-col gap-1.5'>
+            <div className='flex flex-col gap-2'>
               <label className='text-sm font-medium text-text-tertiary'>Experience</label>
               <DropDown
                 toggler={
@@ -204,14 +204,10 @@ function Sector({ getValue, setValue }) {
 }
 
 function Skills({ getValue, setValue }) {
-  const [skills, setSkills] = useState(getValue('skills') || []);
   const [currentSkill, setCurrentSkill] = useState('');
   const [parent] = useAutoAnimate({ duration: 300 });
 
-  const onChange = (skills) => {
-    setSkills(skills);
-    setValue('skills', skills);
-  };
+  const skills = getValue('skills');
 
   return (
     <div className='flex flex-col gap-1.5'>
@@ -224,7 +220,12 @@ function Skills({ getValue, setValue }) {
           >
             <button
               className='absolute -right-1 -top-1.5 h-3 w-3 rounded-full bg-red-500 text-white'
-              onClick={() => onChange(skills.filter((s) => s !== skill))}
+              onClick={() =>
+                setValue(
+                  'skills',
+                  skills.filter((s) => s !== skill)
+                )
+              }
             >
               <HiMiniXMark />
             </button>
@@ -239,7 +240,7 @@ function Skills({ getValue, setValue }) {
           onChange={(e) => setCurrentSkill(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !skills.includes(e.target.value)) {
-              onChange([...skills, e.target.value]);
+              setValue('skills', [...skills, e.target.value]);
               setCurrentSkill('');
             }
           }}

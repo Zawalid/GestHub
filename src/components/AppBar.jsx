@@ -25,7 +25,7 @@ function UserInfo() {
         alt='profile image'
       />
       <div>
-        <h3 className='text-sm font-medium text-text-primary'>{user?.fullName}</h3>
+        <h3 className='text-sm font-medium text-text-primary'>{`${user?.firstName} ${user?.lastName}`}</h3>
         <h4 className='text-xs capitalize text-text-tertiary'>{user?.role}</h4>
       </div>
     </div>

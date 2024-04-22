@@ -22,13 +22,13 @@ export default function Offer({ offer }) {
 
   return (
     <div
-      className={`group relative flex h-max cursor-pointer flex-col gap-3 rounded-lg rounded-tr-none border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95 ${isUrgent ? 'rounded-tl-none' : ''}`}
+      className={`group relative flex h-max cursor-pointer flex-col gap-3 rounded-lg  border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95 ${isUrgent ? 'rounded-tl-none' : ''}`}
       onClick={() => navigate(String(id))}
     >
       {isUrgent && (
         <>
           <span className='absolute -left-[1.2px] -top-[1.5px] h-[2px] w-16 rounded-lg bg-red-500'></span>
-          <span className='absolute -left-[1px] -top-[1.2px] h-16 w-[2px] rounded-lg bg-red-500'></span>
+          <span className='absolute -left-[1.2px] -top-[1.2px] h-16 w-[2px] rounded-lg bg-red-500'></span>
         </>
       )}
 

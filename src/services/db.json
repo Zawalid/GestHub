@@ -305,7 +305,7 @@
             "role": "intern",
             "projects": []
           },
-          "status": "To Do"
+          "status": "In Progress"
         },
         {
           "id": 3,
@@ -330,6 +330,15 @@
           "status": "In Progress"
         },
         {
+          "id": "1",
+          "title": "Task 1",
+          "description": "Description for Task 1",
+          "dueDate": "2024-02-01",
+          "status": "In Progress",
+          "priority": "Medium",
+          "assignee": "None"
+        },
+        {
           "id": 2,
           "title": "dsdads",
           "description": "dsadasd",
@@ -350,15 +359,6 @@
             "projects": []
           },
           "status": "In Progress"
-        },
-        {
-          "id": "1",
-          "title": "Task 1",
-          "description": "Description for Task 1",
-          "dueDate": "2024-02-01",
-          "status": "Done",
-          "priority": "Medium",
-          "assignee": "None"
         }
       ],
       "teamMembers": [
@@ -688,6 +688,51 @@
       "type": "Hybrid",
       "experience": "Beginner",
       "isUrgent": false,
+      "skills": [],
+      "visibility": "visible"
+    },
+    {
+      "id": "d94b",
+      "title": "czxczxc",
+      "description": "czxc",
+      "duration": 3,
+      "city": "Rabat",
+      "direction": "DSI",
+      "sector": "IT",
+      "type": "Hybrid",
+      "experience": "Beginner",
+      "isUrgent": false,
+      "skills": [],
+      "visibility": "visible"
+    },
+    {
+      "id": "0504",
+      "title": "fsdfdsf",
+      "description": "fdsf",
+      "duration": 3,
+      "city": "Rabat",
+      "direction": "DSI",
+      "sector": "IT",
+      "type": "Hybrid",
+      "experience": "Beginner",
+      "isUrgent": false,
+      "skills": [
+        "fsdfs",
+        "fsdfsd"
+      ],
+      "visibility": "visible"
+    },
+    {
+      "id": "4481",
+      "title": "fsdf",
+      "description": "fsdf",
+      "duration": 3,
+      "city": "Rabat",
+      "direction": "DSI",
+      "sector": "IT",
+      "type": "Hybrid",
+      "experience": "Beginner",
+      "isUrgent": true,
       "skills": [],
       "visibility": "visible"
     }
