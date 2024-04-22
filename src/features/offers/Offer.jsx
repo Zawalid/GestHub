@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { formatDate } from '@/utils/helpers';
-import { IoCalendarNumberOutline,  IoEyeOffOutline, MdOutlineLocationOn } from '@/components/ui/Icons';
+import { IoCalendarNumberOutline, IoEyeOffOutline, MdOutlineLocationOn } from '@/components/ui/Icons';
 
 export default function Offer({ offer }) {
   const {
@@ -15,17 +15,17 @@ export default function Offer({ offer }) {
     direction,
     city,
     visibility,
-    status,
+    isUrgent,
     type,
   } = offer;
   const navigate = useNavigate();
 
   return (
     <div
-      className={`group relative flex h-max cursor-pointer flex-col gap-3 rounded-lg rounded-tr-none border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95 ${status === 'Urgent' ? 'rounded-tl-none' : ''}`}
-        onClick={() => navigate(String(id))}
+      className={`group relative flex h-max cursor-pointer flex-col gap-3 rounded-lg rounded-tr-none border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95 ${isUrgent ? 'rounded-tl-none' : ''}`}
+      onClick={() => navigate(String(id))}
     >
-      {status === 'Urgent' && (
+      {isUrgent && (
         <>
           <span className='absolute -left-[1.2px] -top-[1.5px] h-[2px] w-16 rounded-lg bg-red-500'></span>
           <span className='absolute -left-[1px] -top-[1.2px] h-16 w-[2px] rounded-lg bg-red-500'></span>

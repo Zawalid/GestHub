@@ -7,7 +7,7 @@ const getError = (value, rules, getValue) => {
   if (!rules) return null;
 
   // Required
-  if (rules.required && !value) {
+  if (rules.required && typeof value !== 'boolean' && !value) {
     const required = rules.required;
     return {
       type: 'required',
@@ -167,7 +167,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
     window.addEventListener('keydown', onEnter);
 
     return () => window.removeEventListener('keydown', onEnter);
-  }, [handleSubmit, submitOnEnter,isValid]);
+  }, [handleSubmit, submitOnEnter, isValid]);
 
   // Validate fields
   const validate = (name, value, rules) => {

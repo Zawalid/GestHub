@@ -14,7 +14,7 @@ export function NewRecord({ onAdd }) {
           isOpen: true,
           onSubmit: onAdd,
           defaultValues : formOptions.defaultValues,
-          heading: `Add New ${resourceName}`,
+          heading: `New ${resourceName}`,
           submitButtonText: `Add ${resourceName}`,
         })
       }

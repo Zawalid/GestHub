@@ -110,7 +110,7 @@ const Toggler = forwardRef(({ children, icon, className = "" }, ref) => {
 Toggler.displayName = "Toggler";
 
 function Title({ children,className='' }) {
-  return <h4 className={`text-sm pl-1 text-text-tertiary ${className}`}>{children}</h4>;
+  return <h4 className={`text-sm font-medium pl-1 text-text-primary ${className}`}>{children}</h4>;
 }
 
 function Divider() {

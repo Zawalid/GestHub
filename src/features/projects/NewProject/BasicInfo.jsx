@@ -12,13 +12,13 @@ export function BasicInfo({ updateStatus, updateState, state, onSubmit, classNam
       {
         name: 'subject',
         label: 'Subject',
-        placeholder: "Project's Name",
+        placeholder: "Enter subject...",
       },
       {
         name: 'description',
         label: 'Description',
         type: 'textarea',
-        placeholder: "Project's description",
+        placeholder: "Enter description...",
         rows: '5',
         rules: { required: false },
       },

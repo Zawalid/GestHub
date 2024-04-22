@@ -10,6 +10,8 @@ import {
   BsBuilding ,
   MdError,
   IoSchool,
+  FaCity, 
+  MdOutlineTimelapse 
 } from './Icons';
 import { cn } from '../../utils/helpers';
 import { tv } from 'tailwind-variants';
@@ -30,7 +32,9 @@ const icons = {
   text: <MdDriveFileRenameOutline />,
   date: <IoCalendarNumberOutline />,
   establishment: <BsBuilding  />,
-  academicLevel : <IoSchool  />
+  academicLevel : <IoSchool  />,
+  city : <FaCity   />,
+  duration : <MdOutlineTimelapse  />
 };
 
 function Label({ label, message }) {
@@ -81,7 +85,8 @@ export const InputField = forwardRef(
           {type === 'textarea' ? (
             <textarea ref={ref} {...props}></textarea>
           ) : (
-            <input type={type || 'text'} ref={ref} {...props} />
+            <input type={type || 'text'} ref={ref} {...props}
+            />
           )}
           {children}
         </div>

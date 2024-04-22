@@ -593,7 +593,7 @@
       "direction": "DSI",
       "city": "Rabat",
       "visibility": "Visible",
-      "status": "Urgent",
+      "isUrgent": true,
       "type": "Remote"
     },
     {
@@ -613,7 +613,7 @@
       "direction": "DSI",
       "city": "Rabat",
       "visibility": "Hidden",
-      "status": "",
+      "isUrgent": false,
       "type": "Hybrid"
     },
     {
@@ -633,7 +633,7 @@
       "direction": "DSI",
       "city": "Rabat",
       "visibility": "Visible",
-      "status": "",
+      "isUrgent": false,
       "type": "Onsite"
     },
     {
@@ -654,7 +654,7 @@
       "direction": "DSI",
       "city": "Rabat",
       "visibility": "Hidden",
-      "status": "",
+      "isUrgent": false,
       "type": "Remote"
     },
     {
@@ -674,8 +674,22 @@
       "direction": "DSI",
       "city": "Rabat",
       "visibility": "Visible",
-      "status": "Urgent",
+      "isUrgent": true,
       "type": "Hybrid"
+    },
+    {
+      "id": "fae9",
+      "title": "UI/Ux",
+      "description": "We need a designer",
+      "duration": 3,
+      "city": "Rabat",
+      "direction": "DSI",
+      "sector": "Design",
+      "type": "Hybrid",
+      "experience": "Beginner",
+      "isUrgent": false,
+      "skills": [],
+      "visibility": "visible"
     }
   ],
   "demands": [

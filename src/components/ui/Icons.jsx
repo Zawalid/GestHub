@@ -53,9 +53,10 @@ export {
   MdOutlineGroupRemove,
   MdOutlineGroupAdd, 
   MdManageAccounts ,
-  MdOutlineLocationOn
+  MdOutlineLocationOn,
+  MdOutlineTimelapse 
 } from 'react-icons/md';
-export { FaSpinner, FaSort , FaPlus, FaRegCircleCheck } from 'react-icons/fa6';
+export { FaSpinner, FaSort , FaPlus,FaCity , FaRegCircleCheck } from 'react-icons/fa6';
 
 export { HiMiniXMark } from 'react-icons/hi2';
 export { RxDashboard, RxViewVertical } from 'react-icons/rx';
