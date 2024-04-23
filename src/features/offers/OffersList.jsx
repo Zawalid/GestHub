@@ -39,7 +39,7 @@ export default function OffersList({ hideFilter }) {
 
       <div
         className={`flex-1 gap-5 overflow-auto p-1 pr-2 ${
-          layout === 'grid' ? 'grid content-start grid-cols-[repeat(auto-fill,minmax(350px,1fr))]' : 'flex flex-wrap'
+          layout === 'grid' && !isLoading ? 'grid content-start grid-cols-[repeat(auto-fill,minmax(350px,1fr))]' : 'flex flex-wrap'
         }`}
         ref={parent}
       >

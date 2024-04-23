@@ -11,7 +11,7 @@ import { useUser } from '@/hooks/useUser';
 
 export default function ProjectsList() {
   const { data: projects, isLoading, error, layout, appliedFiltersNumber, query } = useOperations();
-  const {user} = useUser();
+  const { user } = useUser();
   const navigate = useNavigate();
   const [parent] = useAutoAnimate({ duration: 500 });
 
@@ -61,7 +61,7 @@ export default function ProjectsList() {
 
       <div
         className={`h-full gap-5 ${
-          layout === 'grid'
+          layout === 'grid' && !isLoading
             ? 'grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(310px,1fr))]'
             : 'flex flex-col'
         }`}

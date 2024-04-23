@@ -163,7 +163,7 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
           <Button color='tertiary' onClick={() => navigate('/offers')}>
             Close
           </Button>
-          <Button>Apply</Button>
+          <Button disabled={isLoading || error}>Apply</Button>
         </div>
       )}
     </Modal>

@@ -1,7 +1,7 @@
 export default function OffersSkeleton({ layout }) {
   return (
     <div
-      className={`absolute pr-2 h-full w-full animate-pulse gap-5 ${
+      className={`pr-2 w-full animate-pulse gap-5 ${
         layout === 'grid' ? 'grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))]' : 'flex flex-col'
       }`}
     >

@@ -16,3 +16,5 @@
 - [x] Add project manager when creating a new project
 - [ ] Improve the settings design
 - [ ] sort projects by creation date or update date as well
+- [ ] change supervisor to supervisor_id
+- [ ] add api endpoints for tasks
