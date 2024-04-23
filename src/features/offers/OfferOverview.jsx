@@ -2,6 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Button, DropDown, Modal, Status, ToolTip } from '@/components/ui';
 import { useDeleteOffer, useOffer, useUpdateOffer } from './useOffers';
 import {
+  FaStar,
   IoEllipsisHorizontalSharp,
   IoEyeOffOutline,
   IoEyeOutline,
@@ -14,15 +15,18 @@ import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { OfferForm } from './NewOffer';
 import { useState } from 'react';
 import { OfferSkeleton } from './OffersSkeleton';
+import { FaRegStar } from 'react-icons/fa';
 
-export default function OfferOverview() {
+
+
+export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite }) {
   const [isEditing, setIsEditing] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
   const { offer, isLoading, error } = useOffer(id);
   const { mutate } = useUpdateOffer();
 
-  const { title, description, duration, city, publicationDate, direction, sector, type, experience, isUrgent, skills } =
+  const { title, description, duration, city, publicationDate, direction, sector, type, experience, status, skills } =
     offer || {};
 
   const render = () => {
@@ -38,21 +42,23 @@ export default function OfferOverview() {
     }
     return (
       <div>
-        <div
-          className={`absolute left-0 top-0 flex h-full w-full  flex-col p-5 transition-transform duration-500 ${isEditing ? '' : '-translate-y-full'}`}
-        >
-          <OfferForm
-            defaultValues={offer}
-            onSubmit={(data) => isEditing && mutate({ id, data })}
-            onClose={() => setIsEditing(false)}
-            type='edit'
-          />
-        </div>
+        {onHomePage || (
+          <div
+            className={`absolute left-0 top-0 flex h-full w-full  flex-col p-5 transition-transform duration-500 ${isEditing ? '' : '-translate-y-full'}`}
+          >
+            <OfferForm
+              defaultValues={offer}
+              onSubmit={(data) => isEditing && mutate({ id, data })}
+              onClose={() => setIsEditing(false)}
+              type='edit'
+            />
+          </div>
+        )}
         <div
           className={`absolute left-0  top-0 mb-5 h-full w-full overflow-auto p-5 pt-10 transition-transform duration-500 ${isEditing ? 'translate-y-full' : ''}`}
         >
           <div className='mb-3 flex items-center gap-2'>
-            {isUrgent && (
+            {status === 'Urgent' && (
               <ToolTip content={<span className='text-xs text-text-secondary'>This offer is urgent</span>}>
                 <span className='h-3 w-3 rounded-full bg-red-500'></span>
               </ToolTip>
@@ -132,24 +138,34 @@ export default function OfferOverview() {
 
   return (
     <Modal
-      isOpen={location.pathname.includes('/app/offers') && id && id !== 'new'}
+      isOpen={location.pathname.includes('/offers') && id && id !== 'new'}
       className='min-h-[500px] p-5 md:h-fit md:w-[650px] md:border'
       closeOnBlur={false}
     >
-      {isEditing || (
-        <div className='relative z-10 flex justify-end gap-2'>
-          <Actions offer={offer} disabled={isLoading || error} onEdit={() => setIsEditing(true)} />
-          <Button className='right-2 top-2 z-10' shape='icon' size='small' onClick={() => navigate('/app/offers')}>
-            <PiX />
+      <div className='z-10 flex justify-end gap-2'>
+        {!isEditing && !onHomePage ? (
+          <>
+            <Actions offer={offer} disabled={isLoading || error} onEdit={() => setIsEditing(true)} />
+            <Button className='right-2 top-2 z-10' shape='icon' size='small' onClick={() => navigate('/app/offers')}>
+              <PiX />
+            </Button>
+          </>
+        ) : (
+          <Button shape='icon' onClick={() => onToggleFavorite(id)} disabled={isLoading || error}>
+            {isFavorite?.(id) ? <FaStar className='text-yellow-500' /> : <FaRegStar className='  text-text-primary' />}
           </Button>
-        </div>
-      )}
+        )}
+      </div>
 
       {render()}
-      {/* <div className='mt-auto flex justify-end gap-3'>
-        <Button color='tertiary'>Close</Button>
-        <Button>Apply</Button>
-      </div> */}
+      {onHomePage && (
+        <div className='z-10 mt-auto flex justify-end gap-3'>
+          <Button color='tertiary' onClick={() => navigate('/offers')}>
+            Close
+          </Button>
+          <Button>Apply</Button>
+        </div>
+      )}
     </Modal>
   );
 }
@@ -212,4 +228,3 @@ function Actions({ offer, disabled, onEdit }) {
     </div>
   );
 }
-

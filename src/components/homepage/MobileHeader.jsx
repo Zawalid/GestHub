@@ -57,7 +57,7 @@ function Links() {
     <ul className=' border-t border-border'>
       {[
         { label: 'home', path: '/' },
-        { label: 'offers', path: '#offers' },
+        { label: 'offers', path: '/offers' },
         { label: 'about', path: '#about' },
       ].map((route) => (
         <Link key={route.label} route={route} />

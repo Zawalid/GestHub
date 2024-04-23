@@ -593,7 +593,7 @@
       "direction": "DSI",
       "city": "Rabat",
       "visibility": "Visible",
-      "isUrgent": true,
+      "status": "Urgent",
       "type": "Remote"
     },
     {
@@ -601,7 +601,7 @@
       "description": "We are seeking a Data Analyst with strong analytical skills and experience with financial reporting systems. The candidate should be proficient in Python and Excel.",
       "sector": "Finance",
       "experience": "Intermediate",
-      "publicationDate": "2022-01-01",
+      "publicationDate": "2024-04-23",
       "skills": [
         "Excel",
         "Python",
@@ -612,7 +612,7 @@
       "duration": 12,
       "direction": "DSI",
       "city": "Rabat",
-      "isUrgent": false,
+      "status": "Normal",
       "type": "Hybrid",
       "id": "2",
       "visibility": "Visible"
@@ -633,8 +633,8 @@
       "duration": 3,
       "direction": "DSI",
       "city": "Rabat",
-      "visibility": "Hidden",
-      "isUrgent": false,
+      "visibility": "Visible",
+      "status": "Normal",
       "type": "Onsite"
     },
     {
@@ -654,8 +654,8 @@
       "duration": 12,
       "direction": "DSI",
       "city": "Rabat",
-      "visibility": "Hidden",
-      "isUrgent": false,
+      "visibility": "Visible",
+      "status": "Normal",
       "type": "Remote"
     },
     {
@@ -675,8 +675,8 @@
       "direction": "DSI",
       "city": "Rabat",
       "visibility": "Visible",
-      "isUrgent": true,
-      "type": "Hybrid"
+      "status": "Urgent",
+      "type": "Onsite"
     },
     {
       "id": "2ec8",
@@ -688,14 +688,14 @@
       "sector": "Fight The Matrix",
       "type": "Onsite",
       "experience": "Expert",
-      "isUrgent": true,
+      "status": "Urgent",
       "skills": [
         "be good",
         "be wonderfull",
         "be a man",
         "be what you want to be"
       ],
-      "visibility": "visible",
+      "visibility": "Visible",
       "publicationDate": "2024-04-22"
     }
   ],

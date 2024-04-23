@@ -1,11 +1,11 @@
-import { createContext, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Search } from "./Search";
-import { OrderBy } from "./OrderBy";
-import { SortBy } from "./SortBy";
-import { ActionsDropDown } from "./ActionsDropDown";
-import { Filter } from "./Filter";
-import { Layout } from "./Layout";
+import { createContext, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Search } from './Search';
+import { OrderBy } from './OrderBy';
+import { SortBy } from './SortBy';
+import { ActionsDropDown } from './ActionsDropDown';
+import { Filter } from './Filter';
+import { Layout } from './Layout';
 
 // Array methods
 Array.prototype.customFilter = function (filters) {
@@ -21,38 +21,38 @@ Array.prototype.customFilter = function (filters) {
   if (!conditions.length) return this;
 
   return this.filter((el) =>
-    conditions.some((c) => c.value.includes(el[c.field]))
+    conditions.some((c) => {
+      let condition = false;
+      c.value.forEach((v) => {
+        if (v.condition) return (condition = c.value.map((v) => v.condition(el)).some((v) => v));
+        condition = c.value.includes(el[c.field]);
+      });
+      return condition;
+    })
   );
 };
 
 Array.prototype.customSort = function (sortBy, direction, sortOptions) {
-  const stringFields = sortOptions
-    .filter((c) => c.type === "string")
-    .map((c) => c.key);
-  const numberFields = sortOptions
-    .filter((c) => c.type === "number")
-    .map((c) => c.key);
-  const dateFields = sortOptions
-    .filter((c) => c.type === "date")
-    .map((c) => c.key);
+  const stringFields = sortOptions.filter((c) => c.type === 'string').map((c) => c.key);
+  const numberFields = sortOptions.filter((c) => c.type === 'number').map((c) => c.key);
+  const dateFields = sortOptions.filter((c) => c.type === 'date').map((c) => c.key);
+  const customFields = sortOptions.filter((c) => c.type === 'custom').map((c) => c.key);
 
   return this.toSorted((a, b) => {
     if (numberFields.includes(sortBy))
-      return direction === "asc"
-        ? a?.[sortBy] - b?.[sortBy]
-        : b?.[sortBy] - a?.[sortBy];
+      return direction === 'asc' ? a?.[sortBy] - b?.[sortBy] : b?.[sortBy] - a?.[sortBy];
 
     if (stringFields.includes(sortBy)) {
-      return direction === "asc"
-        ? a?.[sortBy].localeCompare(b?.[sortBy])
-        : b?.[sortBy].localeCompare(a?.[sortBy]);
+      return direction === 'asc' ? a?.[sortBy].localeCompare(b?.[sortBy]) : b?.[sortBy].localeCompare(a?.[sortBy]);
     }
 
     if (dateFields.includes(sortBy)) {
-      return direction === "asc"
+      return direction === 'asc'
         ? new Date(a?.[sortBy]) - new Date(b?.[sortBy])
         : new Date(b?.[sortBy]) - new Date(a?.[sortBy]);
     }
+
+    if (customFields.includes(sortBy)) return sortOptions.find((c) => c.key === sortBy)?.fn(a, b, direction);
   });
 };
 
@@ -60,11 +60,8 @@ Array.prototype.search = function (query, fieldsToSearch) {
   if (!query || !fieldsToSearch) return this;
 
   return this.filter((el) => {
-    const valueToSearch = fieldsToSearch.map((field) => el[field]).join(" ");
-    return valueToSearch
-      ?.trim()
-      .toLowerCase()
-      .includes(query?.trim().toLowerCase());
+    const valueToSearch = fieldsToSearch.map((field) => el[field]).join(' ');
+    return valueToSearch?.trim().toLowerCase().includes(query?.trim().toLowerCase());
   });
 };
 
@@ -101,12 +98,12 @@ export function Operations({
   fieldsToSearch,
 }) {
   const [filters, setFilters] = useState(initialFilters || {});
-  const [layout, setLayout] = useState(defaultLayout, "grid");
+  const [layout, setLayout] = useState(defaultLayout, 'grid');
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get("search") || "";
-  const sortBy = searchParams.get("sort") || defaultSortBy;
-  const direction = searchParams.get("dir") || defaultDirection;
+  const query = searchParams.get('search') || '';
+  const sortBy = searchParams.get('sort') || defaultSortBy;
+  const direction = searchParams.get('dir') || defaultDirection;
 
   const data = initialData
     ?.search(query, fieldsToSearch)
@@ -120,33 +117,25 @@ export function Operations({
   // Clean url
   useEffect(() => {
     if (sortBy === defaultSortBy && direction === defaultDirection) {
-      searchParams.delete("sort");
-      searchParams.delete("dir");
+      searchParams.delete('sort');
+      searchParams.delete('dir');
     }
-    if (!query) searchParams.delete("search");
+    if (!query) searchParams.delete('search');
     setSearchParams(searchParams);
-  }, [
-    direction,
-    searchParams,
-    sortBy,
-    query,
-    setSearchParams,
-    defaultDirection,
-    defaultSortBy,
-  ]);
+  }, [direction, searchParams, sortBy, query, setSearchParams, defaultDirection, defaultSortBy]);
 
   // Perform operations
 
   const onSearch = (query) => {
-    searchParams.set("search", query);
+    searchParams.set('search', query);
     setSearchParams(searchParams);
   };
   const onSort = (key) => {
-    searchParams.set("sort", key);
+    searchParams.set('sort', key);
     setSearchParams(searchParams);
   };
   const onOrder = (direction) => {
-    searchParams.set("dir", direction);
+    searchParams.set('dir', direction);
     setSearchParams(searchParams);
   };
   const onFilter = (filter, reset) => {
@@ -172,11 +161,7 @@ export function Operations({
     layout,
     onchangeLayout,
   };
-  return (
-    <OperationsContext.Provider value={context}>
-      {children}
-    </OperationsContext.Provider>
-  );
+  return <OperationsContext.Provider value={context}>{children}</OperationsContext.Provider>;
 }
 
 Operations.Search = Search;

@@ -28,11 +28,11 @@ export default function NewOffer() {
           sector: 'IT',
           type: 'Hybrid',
           experience: 'Beginner',
-          isUrgent: false,
+          status: 'Normal',
           skills: [],
         }}
         onSubmit={(data) =>
-          mutate({ ...data, visibility: 'visible', publicationDate: new Date().toISOString().split('T')[0] })
+          mutate({ ...data, visibility: 'Visible', publicationDate: new Date().toISOString().split('T')[0] })
         }
         onClose={() => navigate('/app/offers')}
         type='add'
@@ -97,7 +97,7 @@ export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
         hidden: true,
       },
       {
-        name: 'isUrgent',
+        name: 'status',
         hidden: true,
       },
     ],
@@ -164,7 +164,10 @@ export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
         </div>
       </div>
       <div className='mt-5 flex items-center gap-3'>
-        <CheckBox checked={getValue('isUrgent')} onChange={(e) => setValue('isUrgent', e.target.checked)} />
+        <CheckBox
+          checked={getValue('status') === 'Urgent'}
+          onChange={(e) => setValue('status', e.target.checked ? 'Urgent' : 'Normal')}
+        />
         <label className='text-sm font-medium text-text-tertiary'>Mark this offer as urgent</label>
       </div>
     </ModalFormLayout>

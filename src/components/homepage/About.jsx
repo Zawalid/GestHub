@@ -46,7 +46,7 @@ function About() {
           <DsiLocation />
         </div>
       </div>
-      <Shade className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-0" />
+      {/* <Shade className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-0" /> */}
     </div>
   );
 }
@@ -56,9 +56,9 @@ export default About;
 function DsiSummary() {
   return (
     <div className=" border border-border rounded-lg p-3 bg-background-secondary ">
-      <h1 className=" text-balance text-primary font-bold text-center text-2xl py-3">{`La Direction du système d'information`}</h1>
+      <h1 className=" text-balance text- font-bold text-center text-2xl py-3">{`La Direction du système d'information`}</h1>
       <div className=" ">
-        <p className=" text-secondary font-bold">{`La Direction du système d'information a pour missions de:`}</p>
+        <p className=" text-secondary ">{`La Direction du système d'information a pour missions de:`}</p>
         <ul className="p-2 px-3">
           <li className="text-text-primary">
             {`- Concevoir, mettre en place et suivre le système d'information statistique du Ministère`}
@@ -68,7 +68,7 @@ function DsiSummary() {
         </ul>
       </div>
       <div className=" ">
-        <p className=" text-secondary font-bold">{`La Direction du système d'information est composée de:`}</p>
+        <p className=" text-secondary ">{`La Direction du système d'information est composée de:`}</p>
         <ul className="p-2 px-3">
           <li className="text-text-secondary ">
             <span className=" font-semibold">

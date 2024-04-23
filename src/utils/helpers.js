@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import { DateTime } from 'luxon';
+import { DateTime, Interval } from 'luxon';
 import { twMerge } from 'tailwind-merge';
 
 export const cn = (...inputs) => twMerge(clsx(inputs));
@@ -48,4 +48,20 @@ export const canViewProject = (user, project) => {
     (user?.role === 'intern' && user?.projects?.includes(+project.id)) ||
     (user?.role === 'supervisor' && +project?.supervisor === +user?.id)
   );
+};
+
+export const checkDateInIntervals = (publicationDate, date) => {
+  const dates = [
+    { name: 'Today', interval: 'day' },
+    { name: 'This Week', interval: 'week' },
+    { name: 'This Month', interval: 'month' },
+    { name: 'This Year', interval: 'year' },
+  ];
+
+  const interval = dates.find((d) => d.name === date).interval;
+  const now = DateTime.local();
+  const start = now.startOf(interval);
+  const end = now.endOf(interval);
+
+  return Interval.fromDateTimes(start, end).contains(DateTime.fromISO(publicationDate));
 };

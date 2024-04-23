@@ -78,7 +78,7 @@ function NewProject({ layout, onAdd }) {
     <Button
       color='tertiary'
       className={`group flex items-center justify-center rounded-lg   border  border-border bg-background-disabled p-3 shadow-md ${
-        layout === 'grid' ? 'h-[240px] flex-col gap-2' : 'w- h-20 gap-4'
+        layout === 'grid' ? 'h-[240px] flex-col gap-2' : 'h-20 gap-4'
       }`}
       onClick={onAdd}
     >

@@ -15,20 +15,28 @@ export default function Offer({ offer }) {
     direction,
     city,
     visibility,
-    isUrgent,
+    status,
     type,
+    isFavorite,
   } = offer;
   const navigate = useNavigate();
 
   return (
     <div
-      className={`group relative flex h-max cursor-pointer flex-col gap-3 rounded-lg  border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95 ${isUrgent ? 'rounded-tl-none' : ''}`}
-      onClick={() => navigate(String(id))}
+      className={`group relative  flex w-full cursor-pointer flex-col gap-3 rounded-lg  border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95 ${status === 'Urgent' ? 'rounded-tl-none' : ''} ${isFavorite ? 'rounded-tr-none' : ''}`}
+
+      onClick={() => navigate(`/${window.location.pathname.includes('/app') ? 'app/' : ''}offers/${id}`)}
     >
-      {isUrgent && (
+      {status === 'Urgent' && (
         <>
-          <span className='absolute -left-[1.2px] -top-[1.5px] h-[2px] w-16 rounded-lg bg-red-500'></span>
-          <span className='absolute -left-[1.2px] -top-[1.2px] h-16 w-[2px] rounded-lg bg-red-500'></span>
+          <span className='absolute -left-[1.5px] -top-[1.5px] h-[2px] w-16 rounded-lg bg-red-500'></span>
+          <span className='absolute -left-[1.5px] -top-[1.5px] h-16 w-[2px] rounded-lg bg-red-500'></span>
+        </>
+      )}
+      {isFavorite && (
+        <>
+          <span className='absolute -right-[1.5px] -top-[1.5px] h-[2px] w-16 rounded-lg bg-yellow-500'></span>
+          <span className='absolute -right-[1.5px] -top-[1.5px] h-16 w-[2px] rounded-lg bg-yellow-500'></span>
         </>
       )}
 

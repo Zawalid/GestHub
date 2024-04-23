@@ -1,52 +1,48 @@
 import About from '@/components/homepage/About';
 import Hero from '@/components/homepage/Hero';
-import { Operations } from '@/components/shared/operations/Operations';
-import { useOfferContext } from '@/features/offers';
-import Offers from '@/features/offers/Offers';
+import { renderOffersList } from '@/features/offers/OffersList';
+import { useOffers } from '@/features/offers/useOffers';
+import { Button } from '@/components/ui';
+import { MdOutlineExplore } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { changeTitle } from '@/utils/helpers';
 
 export function HomePage() {
-    const {
-    error,
-    isLoading,
-    filtredoffers: offers,
-  } = useOfferContext();
+  useEffect(() => {
+    changeTitle('MenStage');
+  }, []);
+
   return (
     <>
       <Hero />
-        <Operations
-        data={offers}
-        isLoading={isLoading}
-        error={error}
-        sortOptions={[
-          { key: 'title', display: 'Name', type: 'string' },
-          { key: 'startDate', display: 'Start Date', type: 'date' },
-          { key: 'endDate', display: 'End Date', type: 'date' },
-          { key: 'tasksNumber', display: 'Tasks Number', type: 'number' },
-          { key: 'membersNumber', display: 'Members Number', type: 'number' },
-          { key: 'progress', display: 'Progress', type: 'number' },
-        ]}
-        defaultSortBy='startDate'
-        defaultDirection='asc'
-        filters={{
-          secteur: [
-            { value: 'devloppemnt', checked: false },
-            { value: 'devops', checked: false },
-            { value: 'Testing', checked: false },
-            { value: 'Ui/Ux', checked: false },
-          ],
-          experience: [
-            { value: 'Expert', checked: false },
-            { value: 'intermediate', checked: false },
-            { value: 'Debutant', checked: false },
-          ],
-        }}
-        defaultLayout='grid'
-        fieldsToSearch={['title']}
-        >
-          
-      <Offers  />
-    </Operations>
+      <LatestOffers />
       <About />
     </>
+  );
+}
+
+function LatestOffers() {
+  const { offers, isLoading, error } = useOffers(true, true);
+  const navigate = useNavigate();
+
+  return (
+    <div className='relative my-12 flex min-h-screen flex-col gap-8 p-3 md:p-5'>
+      <h1 className='text-3xl font-bold text-text-primary'>Recent Internship Offers</h1>
+
+      <div className='relative grid flex-1 grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-5'>
+        {renderOffersList({ offers, isLoading, error, layout: 'grid' })}
+        <Button
+          color='tertiary'
+          className='h- group flex items-center justify-center gap-4  rounded-lg border border-border bg-background-disabled p-3 shadow-md  md:flex-col md:gap-2'
+          onClick={() => navigate('/offers')}
+        >
+          <div className='flex h-10 w-10 items-center justify-center rounded-full bg-background-secondary p-1 text-text-tertiary hover:bg-background-tertiary group-hover:bg-background-tertiary'>
+            <MdOutlineExplore size={20} />
+          </div>
+          <h3 className='font-semibold text-text-primary'>Explore More Offers</h3>
+        </Button>
+      </div>
+    </div>
   );
 }

@@ -24,6 +24,7 @@ import {
   ProjectDetails,
   Login,
   Register,
+  HomePageOffers,
 } from './pages';
 
 import { ProtectedRoute } from './components/ProtectedRoute';
@@ -64,7 +65,9 @@ export default function App() {
             {/* HomePage */}
             <Route path='/' element={<HomePageLayout />}>
               <Route index element={<HomePage />} />
-              <Route path='offers/:id' element={<HomePage />} />
+              <Route path='offers/' element={<HomePageOffers />}>
+                <Route path=':id' element={<HomePageOffers />} />
+              </Route>
             </Route>
             {/* App */}
             <Route

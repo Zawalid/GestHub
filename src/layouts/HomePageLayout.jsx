@@ -2,17 +2,14 @@ import { Footer } from '@/components/homepage/Footer';
 import { Header } from '@/components/homepage/Header';
 import { Outlet } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { OffersProvider } from '@/features/offers/OffersContext';
 
 export function HomePageLayout() {
   const [parent] = useAutoAnimate({ duration: 300 });
 
   return (
-    <div ref={parent} className='flex w-full flex-col overflow-auto'>
+    <div ref={parent} className='flex h-full w-full flex-col overflow-auto'>
       <Header />
-      <OffersProvider>
-        <Outlet />
-      </OffersProvider>
+      <Outlet />
       <Footer />
     </div>
   );

@@ -1,53 +1,52 @@
-import {
-  GrYoutube,
-  GrInstagram,
-  GrTwitter,
-  GrLinkedin,
-  GrFacebookOption,
-} from "react-icons/gr";
-import { Button } from "./Button";
+import { GrYoutube, GrInstagram, GrTwitter, GrLinkedin, GrFacebookOption } from 'react-icons/gr';
+import { Button } from './Button';
+import { useState } from 'react';
 
 const socials = [
   {
-    href: "https://www.facebook.com",
+    href: 'https://www.facebook.com',
     icon: <GrFacebookOption />,
-    color: "#1877f2",
+    color: '#1877f2',
   },
   {
-    href: "https://www.twitter.com",
+    href: 'https://www.twitter.com',
     icon: <GrTwitter />,
-    color: "#0a66c2",
+    color: '#0a66c2',
   },
   {
-    href: "https://www.instagram.com",
+    href: 'https://www.instagram.com',
     icon: <GrInstagram />,
-    color: "#e1306c",
+    color: '#e1306c',
   },
   {
-    href: "https://www.linkedin.com",
+    href: 'https://www.linkedin.com',
     icon: <GrLinkedin />,
-    color: "#1da1f2",
+    color: '#1da1f2',
   },
   {
-    href: "https://www.youtube.com",
+    href: 'https://www.youtube.com',
     icon: <GrYoutube />,
-    color: "#ff0000",
+    color: '#ff0000',
   },
 ];
 export function SocialMedia() {
-  return (
-    <>
-      {socials.map((s) => (
-        <a href={s.href} key={s.href}>
-          <Button
-            shape="icon"
-            type="transparent"
-            className={`hover:bg-[${s.color}] text-text-primary group-hover:text-white`}
-          >
-            {s.icon}
-          </Button>
-        </a>
-      ))}
-    </>
-  );
+  const [hovered, setHovered] = useState(null);
+
+  return socials.map((s, index) => (
+    <a
+      href={s.href}
+      key={s.href}
+      className='group'
+      onMouseEnter={() => setHovered(index)}
+      onMouseLeave={() => setHovered(null)}
+    >
+      <Button
+        shape='icon'
+        className={`text-text-primary rounded-full group-hover:text-white`}
+        style={{ backgroundColor: hovered === index ? s.color : 'transparent' }}
+      >
+        {s.icon}
+      </Button>
+    </a>
+  ));
 }

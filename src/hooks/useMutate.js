@@ -16,7 +16,7 @@ export function useMutate({ queryKey, mutationFn, showToast = true, loadingMessa
         });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(queryKey);
+      queryClient.invalidateQueries({ queryKey });
       successMessage && showToast && toast.success(successMessage, { id: toastId.current });
     },
     onError: (error) => {
