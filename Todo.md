@@ -13,8 +13,10 @@
 - [x] Add illustrations across app (No projects yet / no team members...)
 - [x] Login or register when clicking enter
 - [ ] remove the retry functionality of react query when fetching the user
-- [x] Add project manager when creating a new project
+- [ ] Add project manager when creating a new project
 - [ ] Improve the settings design
 - [ ] sort projects by creation date or update date as well
-- [ ] change supervisor to supervisor_id
-- [ ] add api endpoints for tasks
+- [x] change supervisor to supervisor_id
+- [x] add api endpoints for tasks
+- [x] send team members as an array of ids
+- [ ] academic level + start/endDate in intern 

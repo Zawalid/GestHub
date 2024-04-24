@@ -48,7 +48,8 @@ export default function AddNewMember({ isOpen, onClose }) {
           color='secondary'
           disabled={members.length === 0}
           onClick={() => {
-            mutate({ id, data: { ...project, teamMembers: [...project.teamMembers , ...members] } });
+            const teamMembers = [...project.teamMembers, ...members].map((member) => member.id);
+            mutate({ id, data: { teamMembers } });
             close();
           }}
         >

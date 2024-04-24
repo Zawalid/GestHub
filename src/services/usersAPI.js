@@ -6,4 +6,4 @@ export const register = async (user) => await axiosFetch('register', 'POST', use
 
 export const logout = async () => await axiosFetch('logout', 'POST', null,true);
 
-export const getUser = async () => await axiosFetch('user',null,null,true);
+export const getUser = async () => await axiosFetch('user','GET',null,true);

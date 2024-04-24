@@ -64,8 +64,8 @@ export function useUser() {
 
   return {
     user: { ...data,
-      // role : 'supervisor',projects : [1,2],id : 1 
-    },
+       role: 'supervisor', projects: [1], id: 1 
+      },
     isAuthenticated: Boolean(data),
     isLoading: isPending,
     error,

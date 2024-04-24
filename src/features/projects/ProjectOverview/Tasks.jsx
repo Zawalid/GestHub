@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { toast } from 'sonner';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { FaPlus, PiListBold, RxViewVertical } from '@/components/ui/Icons';
 import { Button, Modal } from '@/components/ui';
 import Task from '../Task';
-import { useProject, useUpdateProject } from '../useProjects';
+import { useProject } from '../useProjects';
 import { NewTask } from '../NewProject/StarterTasks';
-import { getIncrementedID } from '@/utils/helpers';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { createPortal } from 'react-dom';
 import { useUser } from '@/hooks/useUser';
+import { useAddTask, useDeleteTask, useUpdateTask } from '../useTasks';
 
 const getStyle = (style, snapshot) => (snapshot.isDropAnimating ? { ...style, transitionDuration: `0.0001s` } : style);
 
@@ -28,42 +27,37 @@ export default function Tasks() {
   const [currentGroup, setCurrentGroup] = useState(null);
   const [currentTask, setCurrentTask] = useState(null);
   const [layout, setLayout] = useState('board');
-  const { mutate } = useUpdateProject({ showToast: false });
   const { openModal } = useConfirmationModal();
 
+  const { mutate: addTask } = useAddTask();
+  const { mutate: updateTask } = useUpdateTask();
+  const { mutate: deleteTask } = useDeleteTask();
+
   const canManipulateTasks =
-    user?.role === 'supervisor' || (user?.role === 'intern' && +user?.id === +project?.projectManager);
+    user?.role === 'supervisor' || (user?.role === 'intern' && user?.id === project?.projectManager);
+
+  // const getProjectStatus = (tasks) => {
+  //   const notStarted = tasks.every((task) => task.status === 'To Do');
+  //   const isCompleted = tasks.every((task) => task.status === 'Done');
+  //   const status = notStarted ? 'Not Started' : isCompleted ? 'Completed' : 'In Progress';
+  //   return status;
+  // };
+  // const tasks = Object.values(newGroups).flat();
+  // mutate({ id, data: { ...project, tasks, status: getProjectStatus(tasks) } });
 
   // Project Methods
-  const getProjectStatus = (tasks) => {
-    const notStarted = tasks.every((task) => task.status === 'To Do');
-    const isCompleted = tasks.every((task) => task.status === 'Done');
-    const status = notStarted ? 'Not Started' : isCompleted ? 'Completed' : 'In Progress';
-    return status;
-  };
-  const updateGroups = (groupTasks, group, action) => {
-    const newGroups = { ...groups, [group]: groupTasks };
-    const tasks = Object.values(newGroups).flat();
 
-    setGroups(newGroups);
-    mutate(
-      { id, data: { ...project, tasks, status: getProjectStatus(tasks) } },
-      {
-        onSuccess: () => toast.success(`Task ${action}d successfully`),
-        onError: () => toast.error(`Failed to ${action} task`),
-      }
-    );
-  };
+  const updateGroups = (groupTasks, group) => setGroups({ ...groups, [group]: groupTasks });
+
   const onAddTask = (task) => {
-    const tasks = [
-      ...project.tasks.filter((t) => t.status === task.status),
-      { id: getIncrementedID(project.tasks), ...task },
-    ];
-    updateGroups(tasks, task.status, 'add');
+    const newTask = addTask({ ...task, project_id: project.id });
+    const tasks = [...project.tasks.filter((t) => t.status === task.status), newTask];
+    updateGroups(tasks, task.status);
   };
   const onUpdateTask = (task) => {
     const tasks = project.tasks.filter((t) => t.status === task.status).map((t) => (t.id === task.id ? task : t));
-    updateGroups(tasks, task.status, 'update');
+    updateTask({ id: task.id, data: task });
+    updateGroups(tasks, task.status);
   };
   const onDeleteTask = (task) => {
     const tasks = [...project.tasks.filter((t) => t.status === task.status).filter((t) => t.id !== task.id)];
@@ -71,10 +65,12 @@ export default function Tasks() {
       message: 'Are you sure you want to delete this task ?',
       title: 'Delete Task',
       confirmText: 'Delete',
-      onConfirm: () => updateGroups(tasks, task.status, 'delete'),
+      onConfirm: () => {
+        deleteTask(task.id);
+        updateGroups(tasks, task.status);
+      },
     });
   };
-
   // Drag And Drop Methods
   const handleDragEnd = (result) => {
     const { source, destination } = result;
@@ -89,10 +85,9 @@ export default function Tasks() {
     // Remove the task from one group and place it in the other
     const [movedTask] = newGroups[sourceGroup].splice(sourceIndex, 1);
     newGroups[destinationGroup].splice(destinationIndex, 0, { ...movedTask, status: destinationGroup });
-    const tasks = Object.values(newGroups).flat();
     // Update the groups and database
     setGroups(newGroups);
-    mutate({ id, data: { ...project, tasks, status: getProjectStatus(tasks) } });
+    updateTask({ id: movedTask.id, data: { status: destinationGroup } });
   };
 
   return (
@@ -257,7 +252,7 @@ function TasksList({ group, onEdit, onDelete, isDragging, layout, canManipulateT
       draggableId={`draggable-${task.id}`}
       index={index}
       type='TASK'
-      isDragDisabled={!canManipulateTasks && +user?.id !== +task.assignee.id}
+      isDragDisabled={!canManipulateTasks && user?.id !== task.assignee.id}
     >
       {(provided, snapshot) => (
         <div

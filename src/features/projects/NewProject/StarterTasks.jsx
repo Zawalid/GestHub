@@ -6,6 +6,7 @@ import Task from '../Task';
 import { getIncrementedID } from '@/utils/helpers';
 import { Intern } from './TeamMembers';
 import { MdOutlineDoNotDisturb } from 'react-icons/md';
+import { useInternsByIds } from '@/features/interns/useInterns';
 
 export function StarterTasks({ updateStatus, updateState, state, teamMembers }) {
   const [currentTab, setCurrentTab] = useState('view');
@@ -198,6 +199,8 @@ export function NewTask({ className, status, onCancel, currentTask, onSubmit, te
 }
 
 function InternsDropDown({ teamMembers, getValue, setValue }) {
+  const { interns } = useInternsByIds(teamMembers);
+
   return (
     <div className='flex flex-col gap-1.5'>
       <label className='text-sm font-medium capitalize text-text-tertiary'>Assignee</label>
@@ -212,7 +215,7 @@ function InternsDropDown({ teamMembers, getValue, setValue }) {
           className: 'overflow-y-auto',
         }}
       >
-        {teamMembers?.map((intern) => {
+        {interns?.map((intern) => {
           const { id, firstName, lastName, email, avatar } = intern;
           return (
             <DropDown.Option

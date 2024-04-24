@@ -1,18 +1,21 @@
-import { useMutate } from "@/hooks/useMutate";
-import {
-  addIntern,
-  deleteIntern,
-  getAllInterns,
-  getIntern,
-  updateIntern,
-} from "@/services/internsAPI";
-import { useQuery } from "@tanstack/react-query";
+import { useMutate } from '@/hooks/useMutate';
+import { addIntern, deleteIntern, getAllInterns, getIntern, updateIntern } from '@/services/internsAPI';
+import { useQuery } from '@tanstack/react-query';
 
 // Queries
 export function useInterns() {
   const { data, error, isPending } = useQuery({
-    queryKey: ["interns"],
+    queryKey: ['interns'],
     queryFn: getAllInterns,
+  });
+
+  return { interns: data, error, isLoading: isPending };
+}
+
+export function useInternsByIds(ids) {
+  const { data, error, isPending } = useQuery({
+    queryKey: ['interns', ...ids],
+    queryFn: () => Promise.all(ids.map((id) => getIntern(id))),
   });
 
   return { interns: data, error, isLoading: isPending };
@@ -20,7 +23,7 @@ export function useInterns() {
 
 export function useIntern(id) {
   const { data, error, isPending } = useQuery({
-    queryKey: ["intern", id],
+    queryKey: ['intern', id],
     queryFn: () => getIntern(id),
   });
 
@@ -31,27 +34,27 @@ export function useIntern(id) {
 
 export const useAddIntern = () =>
   useMutate({
-    queryKey: ["interns", "add"],
+    queryKey: ['interns', 'add'],
     mutationFn: addIntern,
-    loadingMessage: "Adding intern...",
-    successMessage: "Intern added successfully",
-    errorMessage: "Failed to add intern",
+    loadingMessage: 'Adding intern...',
+    successMessage: 'Intern added successfully',
+    errorMessage: 'Failed to add intern',
   });
 
 export const useUpdateIntern = () =>
   useMutate({
-    queryKey: ["interns", "update"],
+    queryKey: ['interns', 'update'],
     mutationFn: ({ id, data }) => updateIntern(id, data),
-    loadingMessage: "Updating intern...",
-    successMessage: "Intern updated successfully",
-    errorMessage: "Failed to update intern",
+    loadingMessage: 'Updating intern...',
+    successMessage: 'Intern updated successfully',
+    errorMessage: 'Failed to update intern',
   });
 
 export const useDeleteIntern = () =>
   useMutate({
-    queryKey: ["interns", "delete"],
+    queryKey: ['interns', 'delete'],
     mutationFn: deleteIntern,
-    loadingMessage: "Deleting intern...",
-    successMessage: "Intern deleted successfully",
-    errorMessage: "Failed to delete intern",
+    loadingMessage: 'Deleting intern...',
+    successMessage: 'Intern deleted successfully',
+    errorMessage: 'Failed to delete intern',
   });

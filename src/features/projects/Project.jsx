@@ -4,7 +4,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { ToolTip } from '@/components/ui/ToolTip';
 import { canViewProject, cn, formatDate } from '@/utils/helpers';
 import { useUser } from '@/hooks/useUser';
-import { SiAdguard, SiPantheon } from 'react-icons/si';
+import { SiAdguard, } from 'react-icons/si';
 import { Button } from '@/components/ui';
 
 export default function Project({ project, layout }) {
@@ -25,7 +25,7 @@ export default function Project({ project, layout }) {
       <PriorityIndicator priority={priority} />
       <div className='flex items-center justify-between'>
         <Date startDate={startDate} endDate={endDate} />
-        {user?.role === 'supervisor' && user?.projects?.includes(+id) && (
+        {user?.role === 'supervisor' && user?.projects?.includes(id) && (
           <ToolTip content={<span className='text-xs text-text-secondary'>Under Your Supervision</span>}>
             <Button shape='icon' size='small' className='bg-primary text-white hover:bg-primary'>
               <SiAdguard />
@@ -64,12 +64,12 @@ function Date({ startDate, endDate }) {
 function PriorityIndicator({ priority }) {
   return (
     <>
-      <SiPantheon
+      <div
         className={`absolute -right-[1.2px] -top-[1.5px] h-[2px] w-16 rounded-lg ${PRIORITY_COLORS[priority]?.bg}`}
-      ></SiPantheon>
-      <SiPantheon
+      ></div>
+      <div
         className={`absolute -right-[1px] -top-[1.2px] h-16 w-[2px] rounded-lg ${PRIORITY_COLORS[priority]?.bg}`}
-      ></SiPantheon>
+      ></div>
     </>
   );
 }

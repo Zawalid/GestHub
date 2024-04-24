@@ -282,13 +282,13 @@
       "startDate": "2024-01-01",
       "endDate": "2024-12-31",
       "status": "In Progress",
-      "supervisor": "1",
+      "supervisor_id": "1",
       "priority": "Low",
       "tasks": [
         {
-          "id": 3,
-          "title": "fdsf",
-          "description": "dsfdf",
+          "id": 5,
+          "title": "taaaaaaskjj",
+          "description": "",
           "dueDate": "",
           "priority": "None",
           "assignee": {
@@ -296,16 +296,9 @@
             "firstName": "Charlie",
             "lastName": "Brown",
             "email": "charliebrown@example.com",
-            "avatar": null,
-            "phone": "+212612345672",
-            "academicLevel": "Bachelor",
-            "establishment": "University of Tangier",
-            "startDate": "2024-01-01",
-            "endDate": "2024-12-31",
-            "role": "intern",
-            "projects": []
+            "avatar": null
           },
-          "status": "In Progress"
+          "status": "To Do"
         },
         {
           "id": 4,
@@ -359,39 +352,35 @@
             "projects": []
           },
           "status": "In Progress"
+        },
+        {
+          "id": 3,
+          "title": "fdsf",
+          "description": "dsfdf",
+          "dueDate": "",
+          "priority": "None",
+          "assignee": {
+            "id": "5",
+            "firstName": "Charlie",
+            "lastName": "Brown",
+            "email": "charliebrown@example.com",
+            "avatar": null,
+            "phone": "+212612345672",
+            "academicLevel": "Bachelor",
+            "establishment": "University of Tangier",
+            "startDate": "2024-01-01",
+            "endDate": "2024-12-31",
+            "role": "intern",
+            "projects": []
+          },
+          "status": "Done"
         }
       ],
       "teamMembers": [
-        {
-          "id": "4",
-          "firstName": "Bob",
-          "lastName": "Johnson",
-          "email": "bobjohnson@example.com",
-          "avatar": null,
-          "phone": "+212612345671",
-          "academicLevel": "Master",
-          "establishment": "University of Fes",
-          "startDate": "2024-01-01",
-          "endDate": "2024-12-31",
-          "role": "intern",
-          "projects": []
-        },
-        {
-          "id": "5",
-          "firstName": "Charlie",
-          "lastName": "Brown",
-          "email": "charliebrown@example.com",
-          "avatar": null,
-          "phone": "+212612345672",
-          "academicLevel": "Bachelor",
-          "establishment": "University of Tangier",
-          "startDate": "2024-01-01",
-          "endDate": "2024-12-31",
-          "role": "intern",
-          "projects": []
-        }
+        4,
+        5
       ],
-      "projectManager": null
+      "projectManager": "4"
     },
     {
       "id": "2",
@@ -400,7 +389,7 @@
       "startDate": "2024-01-01",
       "endDate": "2024-12-31",
       "status": "In Progress",
-      "supervisor": "2",
+      "supervisor_id": "2",
       "priority": "Medium",
       "tasks": [
         {
@@ -437,7 +426,7 @@
       "startDate": "2024-01-01",
       "endDate": "2024-12-31",
       "status": "Not Started",
-      "supervisor": "1",
+      "supervisor_id": "1",
       "priority": "High",
       "tasks": [
         {
@@ -474,7 +463,7 @@
       "startDate": "2024-01-01",
       "endDate": "2024-12-31",
       "status": "Completed",
-      "supervisor": "5",
+      "supervisor_id": "5",
       "priority": "None",
       "tasks": [
         {
@@ -571,7 +560,42 @@
       "status": "Not Started",
       "teamMembers": [],
       "tasks": [],
-      "supervisor": 5
+      "supervisor_id": 5
+    }
+  ],
+  "tasks": [
+    {
+      "id": "5",
+      "title": "taaaaaaskjj",
+      "description": "",
+      "dueDate": "",
+      "priority": "None",
+      "assignee": {
+        "id": "5",
+        "firstName": "Charlie",
+        "lastName": "Brown",
+        "email": "charliebrown@example.com",
+        "avatar": null
+      },
+      "status": "To Do"
+    },
+    {
+      "id": 6,
+      "title": "ffffffff",
+      "description": "",
+      "dueDate": "",
+      "priority": "None",
+      "assignee": "None",
+      "status": "To Do"
+    },
+    {
+      "id": 6,
+      "title": "fsdf",
+      "description": "",
+      "dueDate": "",
+      "priority": "None",
+      "assignee": "None",
+      "status": "To Do"
     }
   ],
   "offers": [

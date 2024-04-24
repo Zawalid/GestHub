@@ -102,7 +102,7 @@ function EditProject({ isOpen, onClose, project }) {
     >
       <BasicInfo
         state={{ subject, description, startDate, endDate, priority }}
-        onSubmit={(data) => mutate({ id, data: { ...project, ...data } })}
+        onSubmit={(data) => mutate({ id, data })}
         actionButtons={({ handleSubmit, reset, isUpdated, isValid }) => {
           return (
             <div className='mt-auto grid grid-cols-2 gap-4'>

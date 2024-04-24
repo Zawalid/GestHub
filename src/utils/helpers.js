@@ -42,11 +42,11 @@ export const capitalize = (string) => string?.charAt(0).toUpperCase() + string?.
 export const getProgress = (ratio) => +(ratio ? (ratio % 1 === 0 ? Math.floor(ratio) : ratio.toFixed(1)) : 0);
 
 export const canViewProject = (user, project) => {
-  // return ['intern', 'supervisor'].includes(user?.role) && user?.projects?.includes(+project.id);
+  // return ['intern', 'supervisor'].includes(user?.role) && user?.projects?.includes(project.id);
 
   return (
-    (user?.role === 'intern' && user?.projects?.includes(+project.id)) ||
-    (user?.role === 'supervisor' && +project?.supervisor === +user?.id)
+    (user?.role === 'intern' && user?.projects?.includes(project.id)) ||
+    (user?.role === 'supervisor' && project?.supervisor === user?.id)
   );
 };
 
@@ -64,4 +64,10 @@ export const checkDateInIntervals = (publicationDate, date) => {
   const end = now.endOf(interval);
 
   return Interval.fromDateTimes(start, end).contains(DateTime.fromISO(publicationDate));
+};
+
+export const removePropsFromObject = (object, ...props) => {
+  const newObj = { ...object };
+  props.forEach((prop) => delete newObj[prop]);
+  return newObj;
 };
