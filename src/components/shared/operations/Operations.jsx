@@ -105,7 +105,8 @@ export function Operations({
   const sortBy = searchParams.get('sort') || defaultSortBy;
   const direction = searchParams.get('dir') || defaultDirection;
 
-  const data = initialData
+
+  const data =  initialData
     ?.search(query, fieldsToSearch)
     .customFilter(filters)
     .customSort(sortBy, direction, sortOptions);

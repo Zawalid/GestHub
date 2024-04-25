@@ -32,7 +32,11 @@ export default function NewOffer() {
           skills: [],
         }}
         onSubmit={(data) =>
-          mutate({ ...data, visibility: 'Visible', publicationDate: new Date().toISOString().split('T')[0] })
+          mutate({
+            ...data,
+            visibility: 'Visible',
+            publicationDate: new Date().toISOString().split('T')[0],
+          })
         }
         onClose={() => navigate('/app/offers')}
         type='add'
@@ -67,6 +71,7 @@ export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
         max: 24,
         rules: {
           max: { value: 24, message: 'Max duration is 2 years' },
+          min: { value: 1, message: 'Max duration is 2 years' },
         },
       },
       {
@@ -101,7 +106,7 @@ export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
         hidden: true,
       },
     ],
-    onSubmit,
+    onSubmit: (data) => onSubmit({ ...data, skills: data.skills.length ? data.skills.join(',') : null }),
   });
 
   return (

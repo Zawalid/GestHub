@@ -32,11 +32,7 @@ export function Actions({ onUpdate, onDelete, row }) {
         onClick={() =>
           showForm({
             defaultValues: row,
-            onSubmit: (data) => {
-              // eslint-disable-next-line no-unused-vars
-              const {password_confirmation,...rest} = data
-              onUpdate({ id: row.id, data : rest });
-            },
+            onSubmit: (data) => onUpdate({ id: row.profile_id, data }),
             isOpen: true,
             submitButtonText: 'Save Changes',
             heading: (
@@ -56,7 +52,7 @@ export function Actions({ onUpdate, onDelete, row }) {
           openModal({
             ...confirmOptions,
             onConfirm: () => {
-              onDelete(row.id);
+              onDelete(row.profile_id);
               rows?.length === 1 && onPrevPage();
             },
           })

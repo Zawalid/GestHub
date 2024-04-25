@@ -4,12 +4,13 @@ import { CheckBox, SearchInput, Status } from '@/components/ui';
 import { useInterns } from '../../interns/useInterns';
 import { useEffect, useState } from 'react';
 
-export const getSearchedInterns = (interns, query) =>
-  interns
+export const getSearchedInterns = (interns, query) => {
+  return interns
     ?.filter((intern) =>
       `${intern.firstName} ${intern.lastName}`.trim().toLowerCase().includes(query.trim().toLowerCase())
     )
     .sort((a, b) => a.firstName.localeCompare(b.firstName));
+};
 export const renderInternsStatus = (isLoading, error, searchedInterns, render) => {
   if (isLoading) return <Status status='loading' size='small' />;
   if (error) return <Status status='error' heading={error?.message} size='small' />;

@@ -15,6 +15,8 @@ export function Projects() {
       isLoading={isLoading}
       error={error}
       sortOptions={[
+        { key: 'created_at', display: 'Creation Date', type: 'date' },
+        { key: 'updated_at', display: 'Update Date', type: 'date' },
         { key: 'subject', display: 'Subject', type: 'string' },
         { key: 'startDate', display: 'Start Date', type: 'date' },
         { key: 'endDate', display: 'End Date', type: 'date' },
@@ -22,7 +24,7 @@ export function Projects() {
         { key: 'teamCount', display: 'Members Number', type: 'number' },
         { key: 'progress', display: 'Progress', type: 'number' },
       ]}
-      defaultSortBy='startDate'
+      defaultSortBy='updated_at'
       defaultDirection='asc'
       filters={{
         status: [

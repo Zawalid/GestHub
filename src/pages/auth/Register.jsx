@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { MdOutlineSchool } from 'react-icons/md';
 import { useRegister } from '@/hooks/useUser';
+import { LEVELS } from '@/utils/constants';
 
 export function Register() {
   const { t } = useTranslation();
@@ -89,7 +90,7 @@ export function Register() {
               </DropDown.Toggler>
             }
           >
-            {['Bac+1', 'Bac+2', 'Bac+3', 'Master', 'Doctorate'].map((e) => (
+            {LEVELS.map((e) => (
               <DropDown.Option
                 key={e}
                 className='capitalize'

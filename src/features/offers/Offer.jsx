@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { formatDate } from '@/utils/helpers';
 import { IoCalendarNumberOutline, IoEyeOffOutline, MdOutlineLocationOn } from '@/components/ui/Icons';
 
-export default function Offer({ offer }) {
+export default function Offer({ offer,layout }) {
   const {
     id,
     title,
@@ -23,7 +23,7 @@ export default function Offer({ offer }) {
 
   return (
     <div
-      className={`group relative  flex w-full cursor-pointer flex-col gap-3 rounded-lg  border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95 ${status === 'Urgent' ? 'rounded-tl-none' : ''} ${isFavorite ? 'rounded-tr-none' : ''}`}
+      className={`group relative flex w-full cursor-pointer flex-col gap-3 rounded-lg  border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95 ${status === 'Urgent' ? 'rounded-tl-none' : ''} ${isFavorite ? 'rounded-tr-none' : ''} ${layout === 'list' ? 'h-fit' : ''}`}
 
       onClick={() => navigate(`/${window.location.pathname.includes('/app') ? 'app/' : ''}offers/${id}`)}
     >

@@ -21,15 +21,26 @@ export default function ProjectsList() {
     if (isLoading) return <ProjectsSkeleton layout={layout} />;
     if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
     if (projects.length === 0 && !query && !appliedFiltersNumber) {
-      return (
-        <div className='absolute grid h-full w-full place-content-center place-items-center gap-5'>
-          <img src='/SVG/projects.svg' alt='' className='w-[200px]' />
-          <div className='space-y-2 text-center'>
-            <h2 className='font-medium text-text-primary'> It appears there are currently no projects available</h2>
-            <p className='text-sm text-text-secondary'>Start by creating a new one.</p>{' '}
+      if (user?.role === 'supervisor') {
+        return (
+          <div className='absolute grid h-full w-full place-content-center place-items-center gap-5'>
+            <img src='/SVG/projects.svg' alt='' className='w-[200px]' />
+            <div className='space-y-2 text-center'>
+              <h2 className='font-medium text-text-primary'> It appears there are currently no projects available</h2>
+              <p className='text-sm text-text-secondary'>Start by creating a new one.</p>{' '}
+            </div>
+            <Button onClick={onAdd}>New Project</Button>
           </div>
-          <Button onClick={onAdd}>New Project</Button>
-        </div>
+        );
+      }
+      return (
+       <div className='absolute grid h-full w-full place-content-center place-items-center gap-5'>
+  <img src='/SVG/projects.svg' alt='' className='w-[200px]' />
+  <div className='space-y-2 text-center'>
+    <h2 className='font-medium text-text-primary'> It appears you are not currently included in any projects</h2>
+    <p className='text-sm text-text-secondary'>Please wait for a project assignment or contact your supervisor.</p>{' '}
+  </div>
+</div>
       );
     }
     if (projects.length === 0 && (query || appliedFiltersNumber))

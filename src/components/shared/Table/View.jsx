@@ -11,7 +11,7 @@ export function View() {
           <BsTable />
         </Button>
       }
-      options={{ className: "w-44 max-h-[300px] overflow-auto", shouldCloseOnClick: false }}
+      options={{ className: "max-h-[300px] overflow-auto", shouldCloseOnClick: false }}
     >
       <DropDown.Option
         onClick={() => onChangeView(null, true)}

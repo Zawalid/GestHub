@@ -20,3 +20,4 @@
 - [x] add api endpoints for tasks
 - [x] send team members as an array of ids
 - [ ] academic level + start/endDate in intern 
+- [ ] change the /register to /profiles

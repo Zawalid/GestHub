@@ -14,7 +14,7 @@ export const renderOffersList = ({ offers, isLoading, error, layout, query, appl
   return (
     <>
       {offers?.map((offer) => (
-        <Offer key={offer.id} offer={offer} />
+        <Offer key={offer.id} offer={offer} layout={layout} />
       ))}
     </>
   );

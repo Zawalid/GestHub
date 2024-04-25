@@ -4,8 +4,8 @@ export const getAllSupervisors = async () => await axiosFetch('supervisors');
 
 export const getSupervisor = async (id) => !id ? null : await axiosFetch(`supervisors/${id}`);
 
-export const addSupervisor = async (data) => await axiosFetch('supervisors', 'POST', data);
+export const addSupervisor = async (data) => await axiosFetch('profiles', 'POST', {...data,role : 'supervisor'});
 
-export const updateSupervisor = async (id, data) => await axiosFetch(`supervisors/${id}`, 'PUT', data);
+export const updateSupervisor = async (id, data) => await axiosFetch(`profiles/${id}`, 'PUT', {...data,role : 'supervisor'});
 
-export const deleteSupervisor = async (id) => await axiosFetch(`supervisors/${id}`, 'DELETE');
+export const deleteSupervisor = async (id) => await axiosFetch(`profiles/${id}`, 'DELETE');

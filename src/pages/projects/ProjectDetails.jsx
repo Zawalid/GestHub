@@ -17,8 +17,14 @@ export function ProjectDetails() {
   }, [id, tab, navigate]);
 
   useEffect(() => {
-    changeTitle(project ? `${project?.subject} | ${capitalize(tab)}` : 'Project Not Found');
-  }, [project, tab]);
+    const title =
+      project && !canViewProject(user, project)
+        ? 'Access Denied'
+        : project
+          ? `${project?.subject} | ${capitalize(tab)}`
+          : 'Project Not Found';
+    changeTitle(title);
+  }, [project, tab, user]);
 
   if (isLoading) return <Status status='loading' />;
   if (error)

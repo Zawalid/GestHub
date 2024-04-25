@@ -25,7 +25,7 @@ export default function AddNewMember({ isOpen, onClose }) {
       <AllInterns
         teamMembers={members}
         setTeamMembers={setMembers}
-        filter={(interns) => interns?.filter((intern) => !project?.teamMembers.map((m) => m.id).includes(intern.id))}
+        filter={(interns) => interns?.filter((intern) => !project?.teamMembers.map((m) => m).includes(intern.id))}
       >
         <ToolTip content={<span>Uncheck All</span>}>
           <Button shape='icon' className='relative ml-3' disabled={members.length === 0} onClick={() => setMembers([])}>
@@ -48,7 +48,7 @@ export default function AddNewMember({ isOpen, onClose }) {
           color='secondary'
           disabled={members.length === 0}
           onClick={() => {
-            const teamMembers = [...project.teamMembers, ...members].map((member) => member.id);
+            const teamMembers = [...project.teamMembers, ...members.map(m => m.id)];
             mutate({ id, data: { teamMembers } });
             close();
           }}

@@ -12,7 +12,7 @@ export const axiosFetch = async (resource, method, data, isAuth) => {
 
     const response = await axios({
       method: method || 'GET',
-      url: `${import.meta.env.VITE_API_URL}/${!method ? 'data/' : ''}${resource}`,
+      url: `${import.meta.env.VITE_API_URL}/${resource}`,
       data: data,
       withCredentials: isAuth,
       withXSRFToken: isAuth,

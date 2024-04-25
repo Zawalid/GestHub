@@ -81,6 +81,7 @@ function TasksList({ tasks, setTasks, setCurrentTask, setCurrentTab, display }) 
               }}
               onDelete={(task) => setTasks((prev) => prev.filter((t) => t.id !== task.id))}
               onUpdate={(task) => setTasks((prev) => prev.map((t) => (t.id === task.id ? task : t)))}
+              isCreatingProject={true}
             />
           </div>
         ))}
@@ -107,7 +108,7 @@ export function NewTask({ className, status, onCancel, currentTask, onSubmit, te
   const defaultTask = {
     title: '',
     description: '',
-    dueDate: '',
+    dueDate: null,
     priority: 'None',
     assignee: 'None',
   };
@@ -128,7 +129,7 @@ export function NewTask({ className, status, onCancel, currentTask, onSubmit, te
         type: 'textarea',
         placeholder: "Task's description",
         rows: '5',
-        rules: { required: false },
+        rules : {required : false}
       },
       {
         name: 'priority',
@@ -146,7 +147,7 @@ export function NewTask({ className, status, onCancel, currentTask, onSubmit, te
       },
     ],
     gridLayout: true,
-    onSubmit: (data) => onSubmit({ ...data, status }),
+    onSubmit: (data) => onSubmit({ ...data, status, intern_id: data.assignee === 'None' ? null : data.assignee?.id }),
   });
 
   useEffect(() => {

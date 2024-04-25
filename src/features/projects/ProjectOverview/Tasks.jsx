@@ -50,14 +50,19 @@ export default function Tasks() {
   const updateGroups = (groupTasks, group) => setGroups({ ...groups, [group]: groupTasks });
 
   const onAddTask = (task) => {
-    const newTask = addTask({ ...task, project_id: project.id });
-    const tasks = [...project.tasks.filter((t) => t.status === task.status), newTask];
-    updateGroups(tasks, task.status);
+     addTask(
+      { ...task, project_id: project.id },
+      {
+        onSuccess: (task) => {
+          const tasks = [...project.tasks.filter((t) => t.status === task.status), task];
+          updateGroups(tasks, task.status);
+        },
+      }
+    );
   };
   const onUpdateTask = (task) => {
     const tasks = project.tasks.filter((t) => t.status === task.status).map((t) => (t.id === task.id ? task : t));
-    updateTask({ id: task.id, data: task });
-    updateGroups(tasks, task.status);
+    updateTask({ id: task.id, data: task }, { onSuccess: () => updateGroups(tasks, task.status) });
   };
   const onDeleteTask = (task) => {
     const tasks = [...project.tasks.filter((t) => t.status === task.status).filter((t) => t.id !== task.id)];
@@ -65,10 +70,7 @@ export default function Tasks() {
       message: 'Are you sure you want to delete this task ?',
       title: 'Delete Task',
       confirmText: 'Delete',
-      onConfirm: () => {
-        deleteTask(task.id);
-        updateGroups(tasks, task.status);
-      },
+      onConfirm: () => deleteTask(task.id, { onSuccess: () => updateGroups(tasks, task.status) }),
     });
   };
   // Drag And Drop Methods
@@ -248,11 +250,11 @@ function TasksList({ group, onEdit, onDelete, isDragging, layout, canManipulateT
   }
   return group.tasks.map((task, index) => (
     <Draggable
-      key={`draggable-${task.id}`}
-      draggableId={`draggable-${task.id}`}
+      key={`draggable-${task?.id}`}
+      draggableId={`draggable-${task?.id}`}
       index={index}
       type='TASK'
-      isDragDisabled={!canManipulateTasks && user?.id !== task.assignee.id}
+      isDragDisabled={!canManipulateTasks && user?.id !== task?.assignee.id}
     >
       {(provided, snapshot) => (
         <div

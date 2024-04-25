@@ -41,7 +41,7 @@ const Loading = ({ size = 'default' }) => {
 const Locked = ({ heading, message }) => {
   return (
     <>
-      <img src='/images/locked.png' alt='no results' className='w-14' />
+      <img src='/images/locked.png' alt='no results' className='w-20' />
       <div className='mt-3 space-y-2'>
         <h3
           className='text-lg font-semibold text-text-primary

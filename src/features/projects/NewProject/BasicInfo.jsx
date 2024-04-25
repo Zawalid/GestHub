@@ -1,6 +1,6 @@
 import { DropDown } from '@/components/ui/DropDown';
 import { useForm } from '@/hooks/useForm';
-import { DateTime } from 'luxon';
+import { validateEndDateRules } from '@/utils/helpers';
 import { useEffect } from 'react';
 
 export function BasicInfo({ updateStatus, updateState, state, onSubmit, className, actionButtons }) {
@@ -12,15 +12,14 @@ export function BasicInfo({ updateStatus, updateState, state, onSubmit, classNam
       {
         name: 'subject',
         label: 'Subject',
-        placeholder: "Enter subject...",
+        placeholder: 'Enter subject...',
       },
       {
         name: 'description',
         label: 'Description',
         type: 'textarea',
-        placeholder: "Enter description...",
+        placeholder: 'Enter description...',
         rows: '5',
-        rules: { required: false },
       },
       {
         name: 'priority',
@@ -35,13 +34,7 @@ export function BasicInfo({ updateStatus, updateState, state, onSubmit, classNam
         name: 'endDate',
         type: 'date',
         label: 'End Date',
-        rules: {
-          validate: (val, getValue) => {
-            return (
-              DateTime.fromISO(val) > DateTime.fromISO(getValue('startDate')) || 'End date must be after start date'
-            );
-          },
-        },
+        ...validateEndDateRules(),
       },
     ],
     onSubmit,

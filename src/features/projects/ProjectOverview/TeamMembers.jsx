@@ -21,7 +21,7 @@ export function TeamMembers({ project }) {
   const [isOpen, setIsOpen] = useState();
   const [parent] = useAutoAnimate({ duration: 400 });
   const { user } = useUser();
-  const { interns: teamMembers, isLoading, error } = useInternsByIds(project.teamMembers);
+  const { interns: teamMembers, isLoading, error } = useInternsByIds(project?.teamMembers);
 
   const render = () => {
     if (error)
@@ -108,14 +108,11 @@ function Member({ member, project }) {
                   title: 'Remove Member',
                   confirmText: 'Remove',
                   onConfirm: () => {
-                    // const updatedTasks = tasks.map((task) => {
-                    //   return assignedTasks.map((t) => t.id).includes(task.id) ? { ...task, assignee: 'None' } : task;
-                    // });
                     mutate({
                       id: projectId,
                       data: {
-                        teamMembers: teamMembers.filter((member) => member.id !== id),
-                        projectManager: projectManager === id ? null : projectManager,
+                        teamMembers: teamMembers.filter((member) => member !== id),
+                        intern_id: projectManager === id ? null : projectManager,
                       },
                     });
                   },
@@ -129,7 +126,7 @@ function Member({ member, project }) {
             <Button
               shape='icon'
               disabled={id === projectManager}
-              onClick={() => mutate({ id: projectId, data: { projectManager: id } })}
+              onClick={() => mutate({ id: projectId, data: { intern_id: id } })}
             >
               <MdManageAccounts />
             </Button>

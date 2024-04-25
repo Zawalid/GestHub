@@ -26,3 +26,5 @@ export const PRIORITY_COLORS = {
   Medium: { bg: 'bg-orange-500', text: 'text-orange-500' },
   High: { bg: 'bg-red-500', text: 'text-red-500' },
 };
+
+export const LEVELS = ['Bac+1', 'Bac+2', 'Bac+3', 'Master', 'Doctorate']

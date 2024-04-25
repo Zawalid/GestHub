@@ -17,8 +17,6 @@ import { useState } from 'react';
 import { OfferSkeleton } from './OffersSkeleton';
 import { FaRegStar } from 'react-icons/fa';
 
-
-
 export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite }) {
   const [isEditing, setIsEditing] = useState(false);
   const { id } = useParams();
@@ -26,8 +24,20 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
   const { offer, isLoading, error } = useOffer(id);
   const { mutate } = useUpdateOffer();
 
-  const { title, description, duration, city, publicationDate, direction, sector, type, experience, status, skills } =
-    offer || {};
+  const {
+    title,
+    description,
+    duration,
+    city,
+    publicationDate,
+    direction,
+    sector,
+    type,
+    experience,
+    status,
+    skills,
+  } = offer || {};
+
 
   const render = () => {
     if (isLoading) return <OfferSkeleton />;

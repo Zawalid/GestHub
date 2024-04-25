@@ -3,7 +3,7 @@ import { PRIORITY_COLORS } from '@/utils/constants';
 import { formatDate } from '@/utils/helpers';
 import { ToolTip } from '@/components/ui/ToolTip';
 
-export default function Task({ task, onDelete, onEdit, layout, canManipulateTasks }) {
+export default function Task({ task, onDelete, onEdit, layout, canManipulateTasks, isCreatingProject }) {
   const { title, description, dueDate, priority, assignee } = task;
 
   if (layout === 'list')
@@ -44,7 +44,7 @@ export default function Task({ task, onDelete, onEdit, layout, canManipulateTask
           {dueDate ? <span>{formatDate(dueDate)}</span> : <span>N/A</span>}
         </div>
       </div>
-      {canManipulateTasks && (
+      {(canManipulateTasks || isCreatingProject) && (
         <div className='absolute -top-3 left-1/2 flex -translate-x-1/2 divide-x divide-border overflow-hidden rounded-full border border-border bg-background-secondary shadow-md'>
           {[
             { icon: <MdDriveFileRenameOutline />, onClick: onEdit },

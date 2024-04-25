@@ -1,5 +1,7 @@
+import { LEVELS } from '@/utils/constants';
 import { useInterns, useAddIntern, useDeleteIntern, useUpdateIntern } from './useInterns';
 import { TableLayout } from '@/layouts/TableLayout';
+import { validateEndDateRules } from '@/utils/helpers';
 
 export default function InternsList() {
   const { interns, isLoading, error } = useInterns();
@@ -81,12 +83,17 @@ export default function InternsList() {
         {
           name: 'phone',
           label: 'Phone Number',
-          type : 'phone'
+          type: 'phone',
         },
         {
           name: 'academicLevel',
           label: 'Academic Level',
           type: 'academicLevel',
+          rules: {
+            validate: (value) =>
+              LEVELS.includes(value) ||
+              `The provided Academic Level is invalid. It must be one of the following: ${LEVELS.join(', ')}`,
+          },
         },
         {
           name: 'establishment',
@@ -102,6 +109,7 @@ export default function InternsList() {
           name: 'endDate',
           label: 'End Date',
           type: 'date',
+          ...validateEndDateRules(),
         },
         {
           name: 'password',
@@ -121,9 +129,9 @@ export default function InternsList() {
         email: '',
         phone: '',
         academicLevel: '',
-        establishment : '',
-        startDate : '',
-        endDate : '',
+        establishment: '',
+        startDate: '',
+        endDate: '',
       }}
       fieldsToSearch={['firstName', 'lastName', 'email', 'academicLevel', 'establishment']}
       downloadOptions={{

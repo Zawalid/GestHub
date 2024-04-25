@@ -29,8 +29,11 @@ export function useOffers(onHomePage, latest) {
     });
   };
 
+  const offers = getOffers()?.map((offer) => ({ ...offer, skills: offer.skills.split(',') }));
+
+
   return {
-    offers: getOffers(),
+    offers,
     favorites,
     onToggleFavorite,
     error,
@@ -42,8 +45,9 @@ export const useOffer = (id) => {
     queryKey: ['offer', id],
     queryFn: () => getOffer(id),
   });
+
   return {
-    offer: data,
+    offer: { ...data, skills: data?.skills.split(',') },
     error,
     isLoading: isPending,
   };
