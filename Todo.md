@@ -14,8 +14,8 @@
 - [x] Login or register when clicking enter
 - [ ] remove the retry functionality of react query when fetching the user
 - [ ] Add project manager when creating a new project
-- [ ] Improve the settings design
-- [ ] sort projects by creation date or update date as well
+- [x] Improve the settings design
+- [x] sort projects by creation date or update date as well
 - [x] change supervisor to supervisor_id
 - [x] add api endpoints for tasks
 - [x] send team members as an array of ids

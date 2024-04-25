@@ -1,16 +1,19 @@
 import { useForm } from '@/hooks/useForm';
+import { useUpdatePassword } from '@/hooks/useUser';
 import { ModalFormLayout } from '@/layouts';
 import { RULES } from '@/utils/constants';
 
 export default function Password() {
+  const { mutate } = useUpdatePassword();
+
   const {
     Form,
     options: { isUpdated, isValid, handleSubmit, reset },
   } = useForm({
     defaultValues: {
       currentPassword: '',
-      newPassword: '',
-      confirmNewPassword: '',
+      password: '',
+      password_confirmation: '',
     },
     fields: [
       {
@@ -27,10 +30,10 @@ export default function Password() {
         name: 'password_confirmation',
         type: 'password',
         label: 'Confirm New Password',
-        rules: { ...RULES.passwordConfirmation},
+        rules: { ...RULES.passwordConfirmation },
       },
     ],
-    onSubmit: (data) => console.log(data),
+    onSubmit: mutate,
     gridLayout: false,
   });
 

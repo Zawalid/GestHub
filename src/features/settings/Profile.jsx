@@ -1,12 +1,12 @@
 import { ProfileImage } from './ProfileImage';
 import { useForm } from '@/hooks/useForm';
 import { ModalFormLayout } from '@/layouts';
-import { useUpdateUser, useUser } from '@/hooks/useUser';
+import { useUpdateProfile, useUser } from '@/hooks/useUser';
 import { RULES } from '@/utils/constants';
 
 export default function Profile() {
   const { user } = useUser();
-  const { mutate } = useUpdateUser();
+  const { mutate } = useUpdateProfile();
   const defaultUser = {
     image: '',
     firstName: '',

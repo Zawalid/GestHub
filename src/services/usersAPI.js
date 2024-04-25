@@ -8,5 +8,6 @@ export const logout = async () => await axiosFetch('logout', 'POST', null, true)
 
 export const getUser = async () => await axiosFetch('user', 'GET', null, true);
 
-export const updateUser = async (id, user) => await axiosFetch(`profiles/${id}`, 'PUT', user);
+export const updateProfile = async (id, user) => await axiosFetch(`profiles/${id}`, 'PUT', user);
     
+export const updatePassword = async (id, passwords) => await axiosFetch(`profiles/${id}/password`, 'POST', passwords);

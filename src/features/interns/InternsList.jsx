@@ -1,4 +1,4 @@
-import {  RULES } from '@/utils/constants';
+import { RULES } from '@/utils/constants';
 import { useInterns, useAddIntern, useDeleteIntern, useUpdateIntern } from './useInterns';
 import { TableLayout } from '@/layouts/TableLayout';
 
@@ -115,7 +115,7 @@ export default function InternsList() {
           name: 'password_confirmation',
           type: 'password',
           label: 'Confirm Password',
-          rules: { ...RULES.passwordConfirmation},
+          rules: { ...RULES.passwordConfirmation },
         },
       ]}
       formDefaults={{
@@ -127,6 +127,8 @@ export default function InternsList() {
         establishment: '',
         startDate: '',
         endDate: '',
+        password: '',
+        password_confirmation: '',
       }}
       fieldsToSearch={['firstName', 'lastName', 'email', 'academicLevel', 'establishment']}
       downloadOptions={{

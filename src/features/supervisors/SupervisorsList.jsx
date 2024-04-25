@@ -78,6 +78,8 @@ export default function SupervisorsList() {
         lastName: '',
         email: '',
         phone: '',
+        password: '',
+        password_confirmation: '',
       }}
       fieldsToSearch={['firstName', 'lastName', 'email']}
       downloadOptions={{

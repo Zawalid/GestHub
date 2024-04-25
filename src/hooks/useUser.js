@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { login, register, logout, getUser, updateUser } from '@/services/usersAPI';
+import { login, register, logout, getUser, updateProfile, updatePassword } from '@/services/usersAPI';
 import { useMutate } from './useMutate';
 
 const useRedirect = (isLogout) => {
@@ -66,7 +66,9 @@ export function useUser() {
   return {
     user: {
       ...data,
-      role : 'admin',projects : [1,2],id : 1
+      role: 'admin',
+      projects: [1, 2],
+      id: 1,
     },
     isAuthenticated: Boolean(data),
     isLoading: isPending,
@@ -74,12 +76,23 @@ export function useUser() {
   };
 }
 
-export function useUpdateUser() {
+export function useUpdateProfile() {
   return useMutate({
     queryKey: ['user', 'update'],
-    mutationFn: ({ id, user }) => updateUser(id, user),
-    loadingMessage: 'Updating user...',
-    successMessage: 'User updated successfully',
-    errorMessage: 'Failed to update user',
+    mutationFn: ({ id, user }) => updateProfile(id, user),
+    loadingMessage: 'Updating profile...',
+    successMessage: 'Profile updated successfully',
+    errorMessage: 'Failed to update profile',
+  });
+}
+
+export function useUpdatePassword() {
+  const {user} = useUser()
+  return useMutate({
+    queryKey: ['user', 'updatePassword'],
+    mutationFn: (passwords) => updatePassword(user?.profile_id, passwords),
+    loadingMessage: 'Updating password...',
+    successMessage: 'Password updated successfully',
+    errorMessage: 'Failed to update password',
   });
 }
