@@ -1,5 +1,6 @@
 import { useForm } from '@/hooks/useForm';
 import { ModalFormLayout } from '@/layouts';
+import { RULES } from '@/utils/constants';
 
 export default function Password() {
   const {
@@ -18,15 +19,15 @@ export default function Password() {
         label: 'Current Password',
       },
       {
-        name: 'newPassword',
+        name: 'password',
         type: 'password',
         label: 'New Password',
       },
       {
-        name: 'confirmNewPassword',
+        name: 'password_confirmation',
         type: 'password',
         label: 'Confirm New Password',
-        rules: { validate: (pass, getValue) => pass === getValue('newPassword') || "Passwords don't match" },
+        rules: { ...RULES.passwordConfirmation},
       },
     ],
     onSubmit: (data) => console.log(data),

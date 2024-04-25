@@ -5,6 +5,8 @@ import { useLocalStorageState } from '@/hooks/useLocalStorageState';
 
 // Queries
 
+const getSkills = (offer) => (offer?.skills ? offer?.skills.split(',') : []);
+
 export function useOffers(onHomePage, latest) {
   const { data, error, isPending } = useQuery({ queryKey: ['offers'], queryFn: getAllOffers });
   const [favorites, setFavorites] = useLocalStorageState('favorites', []);
@@ -29,8 +31,7 @@ export function useOffers(onHomePage, latest) {
     });
   };
 
-  const offers = getOffers()?.map((offer) => ({ ...offer, skills: offer.skills.split(',') }));
-
+  const offers = getOffers()?.map((offer) => ({ ...offer, skills: getSkills(offer) }));
 
   return {
     offers,
@@ -47,7 +48,7 @@ export const useOffer = (id) => {
   });
 
   return {
-    offer: { ...data, skills: data?.skills.split(',') },
+    offer: { ...data, skills: getSkills(data) },
     error,
     isLoading: isPending,
   };

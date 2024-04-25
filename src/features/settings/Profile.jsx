@@ -1,10 +1,12 @@
 import { ProfileImage } from './ProfileImage';
 import { useForm } from '@/hooks/useForm';
 import { ModalFormLayout } from '@/layouts';
-import { useUser } from '@/hooks/useUser';
+import { useUpdateUser, useUser } from '@/hooks/useUser';
+import { RULES } from '@/utils/constants';
 
 export default function Profile() {
   const { user } = useUser();
+  const { mutate } = useUpdateUser();
   const defaultUser = {
     image: '',
     firstName: '',
@@ -45,30 +47,34 @@ export default function Profile() {
         type: 'phone',
       },
       // Conditionally : if the user is and intern/user
-      ...(['intern', 'user'].includes(user?.role) ? [
-        {
-          name: 'academicLevel',
-          type: 'academicLevel',
-          label: 'Academic Level',
-        },
-        {
-          name: 'establishment',
-          type: 'establishment',
-          label: 'Establishment',
-        },
-        {
-          name: 'startDate',
-          label: 'Start Date',
-          type: 'date',
-        },
-        {
-          name: 'endDate',
-          label: 'End Date',
-          type: 'date',
-        },
-      ] : []),
+      ...(['intern', 'user'].includes(user?.role)
+        ? [
+            {
+              name: 'academicLevel',
+              type: 'academicLevel',
+              label: 'Academic Level',
+              rules: { ...RULES.academicLevel },
+            },
+            {
+              name: 'establishment',
+              type: 'establishment',
+              label: 'Establishment',
+            },
+            {
+              name: 'startDate',
+              label: 'Start Date',
+              type: 'date',
+            },
+            {
+              name: 'endDate',
+              label: 'End Date',
+              type: 'date',
+              rules: { ...RULES.endDate },
+            },
+          ]
+        : []),
     ],
-    onSubmit: (data) => console.log(data),
+    onSubmit: (user) => mutate({ user, id: user.profile_id }),
     gridLayout: true,
   });
 

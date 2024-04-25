@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { MdOutlineSchool } from 'react-icons/md';
 import { useRegister } from '@/hooks/useUser';
-import { LEVELS } from '@/utils/constants';
+import { LEVELS, RULES } from '@/utils/constants';
 
 export function Register() {
   const { t } = useTranslation();
@@ -60,7 +60,8 @@ export function Register() {
         name: 'password_confirmation',
         type: 'password',
         label: t('auth.register.confirmPassword.label'),
-        rules: { validate: (pass, getValue) => pass === getValue('password') || "Passwords don't match" },
+        rules: { ...RULES.passwordConfirmation},
+
       },
     ],
     onSubmit: register,

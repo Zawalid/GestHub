@@ -1,5 +1,6 @@
 import { InputField } from '@/components/ui';
 import { PasswordInput } from '@/components/ui/PasswordInput';
+import { RULES } from '@/utils/constants';
 import { objectDeepEquals } from '@/utils/helpers';
 import { cloneElement, useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -73,32 +74,12 @@ const getError = (value, rules, getValue) => {
   return null;
 };
 
-const rules = {
-  email: {
-    pattern: {
-      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      message: 'Invalid email address',
-    },
-  },
-  phone: {
-    pattern: {
-      value: /^(\+212\s?0?|0)(5|6|7)\d{8}$/,
-      message: 'Invalid phone number format. \n Ex: +212 0637814207 or 0637814207',
-    },
-  },
-  password: {
-    pattern: {
-      value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-      message:
-        'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one symbol',
-    },
-  },
-};
+
 
 const getRules = (name, type, fieldRules) => {
   return {
     required: `Please enter your ${name}`,
-    ...(rules[type] && rules[type]),
+    ...(RULES[type] && RULES[type]),
     ...(fieldRules && fieldRules),
   };
 };

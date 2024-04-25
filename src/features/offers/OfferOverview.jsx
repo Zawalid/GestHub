@@ -205,7 +205,7 @@ function Actions({ offer, disabled, onEdit }) {
           onClick={() =>
             updateOffer({
               id: offer?.id,
-              data: { ...offer, visibility: offer?.visibility === 'Hidden' ? 'Visible' : 'Hidden' },
+              data: {  visibility: offer?.visibility === 'Hidden' ? 'Visible' : 'Hidden' },
             })
           }
         >

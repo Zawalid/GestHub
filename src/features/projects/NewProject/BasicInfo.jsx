@@ -1,6 +1,6 @@
 import { DropDown } from '@/components/ui/DropDown';
 import { useForm } from '@/hooks/useForm';
-import { validateEndDateRules } from '@/utils/helpers';
+import { RULES } from '@/utils/constants';
 import { useEffect } from 'react';
 
 export function BasicInfo({ updateStatus, updateState, state, onSubmit, className, actionButtons }) {
@@ -34,7 +34,7 @@ export function BasicInfo({ updateStatus, updateState, state, onSubmit, classNam
         name: 'endDate',
         type: 'date',
         label: 'End Date',
-        ...validateEndDateRules(),
+        rules: { ...RULES.endDate },
       },
     ],
     onSubmit,

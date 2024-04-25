@@ -66,10 +66,3 @@ export const checkDateInIntervals = (publicationDate, date) => {
   return Interval.fromDateTimes(start, end).contains(DateTime.fromISO(publicationDate));
 };
 
-export const validateEndDateRules = () => ({
-  rules: {
-    validate: (val, getValue) => {
-      return DateTime.fromISO(val) > DateTime.fromISO(getValue('startDate')) || 'End date must be after start date';
-    },
-  },
-});

@@ -91,7 +91,7 @@ function DateLocation({ publicationDate, duration, city, direction }) {
   );
 }
 function Skills({ skills }) {
-  if (!skills.length)
+  if (!skills || !skills.length)
     return (
       <span className='w-fit rounded-md border border-border px-2 py-1 text-center text-xs font-medium text-text-secondary'>
         No skills required

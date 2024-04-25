@@ -1,7 +1,6 @@
-import { LEVELS } from '@/utils/constants';
+import {  RULES } from '@/utils/constants';
 import { useInterns, useAddIntern, useDeleteIntern, useUpdateIntern } from './useInterns';
 import { TableLayout } from '@/layouts/TableLayout';
-import { validateEndDateRules } from '@/utils/helpers';
 
 export default function InternsList() {
   const { interns, isLoading, error } = useInterns();
@@ -89,11 +88,7 @@ export default function InternsList() {
           name: 'academicLevel',
           label: 'Academic Level',
           type: 'academicLevel',
-          rules: {
-            validate: (value) =>
-              LEVELS.includes(value) ||
-              `The provided Academic Level is invalid. It must be one of the following: ${LEVELS.join(', ')}`,
-          },
+          rules: { ...RULES.academicLevel },
         },
         {
           name: 'establishment',
@@ -109,18 +104,18 @@ export default function InternsList() {
           name: 'endDate',
           label: 'End Date',
           type: 'date',
-          ...validateEndDateRules(),
+          rules: { ...RULES.endDate },
         },
         {
           name: 'password',
           type: 'password',
-          label: ' Password',
+          label: 'Password',
         },
         {
           name: 'password_confirmation',
           type: 'password',
-          label: 'Confirm  Password',
-          rules: { validate: (pass, getValue) => pass === getValue('password') || "Passwords don't match" },
+          label: 'Confirm Password',
+          rules: { ...RULES.passwordConfirmation},
         },
       ]}
       formDefaults={{

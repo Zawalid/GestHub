@@ -1,3 +1,4 @@
+import { RULES } from '@/utils/constants';
 import { useSupervisors, useAddSupervisor, useDeleteSupervisor, useUpdateSupervisor } from './useSupervisors';
 import { TableLayout } from '@/layouts/TableLayout';
 
@@ -62,13 +63,14 @@ export default function SupervisorsList() {
         {
           name: 'password',
           type: 'password',
-          label: ' Password',
+          label: 'Password',
         },
         {
           name: 'password_confirmation',
           type: 'password',
-          label: 'Confirm  Password',
-          rules: { validate: (pass, getValue) => pass === getValue('password') || "Passwords don't match" },
+          label: 'Confirm Password',
+          rules: { ...RULES.passwordConfirmation},
+
         },
       ]}
       formDefaults={{
