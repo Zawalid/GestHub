@@ -7,11 +7,11 @@ import {
   IoCalendarNumberOutline,
   FiPhone,
   MdDriveFileRenameOutline,
-  BsBuilding ,
+  BsBuilding,
   MdError,
   IoSchool,
-  FaCity, 
-  MdOutlineTimelapse 
+  FaCity,
+  MdOutlineTimelapse,
 } from './Icons';
 import { cn } from '../../utils/helpers';
 import { tv } from 'tailwind-variants';
@@ -21,6 +21,7 @@ const input = tv({
   variants: {
     icon: { true: 'pl-9' },
     disabled: { true: 'bg-background-disabled' },
+    readOnly: { true: 'bg-background-disabled' },
   },
 });
 
@@ -31,10 +32,10 @@ const icons = {
   phone: <FiPhone />,
   text: <MdDriveFileRenameOutline />,
   date: <IoCalendarNumberOutline />,
-  establishment: <BsBuilding  />,
-  academicLevel : <IoSchool  />,
-  city : <FaCity   />,
-  duration : <MdOutlineTimelapse  />
+  establishment: <BsBuilding />,
+  academicLevel: <IoSchool />,
+  city: <FaCity />,
+  duration: <MdOutlineTimelapse />,
 };
 
 function Label({ label, message }) {
@@ -80,13 +81,14 @@ export const InputField = forwardRef(
     return (
       <div className='space-y-1.5'>
         <Label label={label} message={errorMessage} />
-        <div className={cn(input({ icon: Boolean(icon), disabled: props.disabled }), className)}>
+        <div
+          className={cn(input({ icon: Boolean(icon), disabled: props.disabled, readOnly: props.readOnly }), className)}
+        >
           {showIcon && <Icon icon={icon} className={iconClassName} />}
           {type === 'textarea' ? (
             <textarea ref={ref} {...props}></textarea>
           ) : (
-            <input type={type || 'text'} ref={ref} {...props}
-            />
+            <input type={type || 'text'} ref={ref} {...props} />
           )}
           {children}
         </div>

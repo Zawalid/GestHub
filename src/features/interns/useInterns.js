@@ -1,15 +1,26 @@
 import { useMutate } from '@/hooks/useMutate';
 import { addIntern, deleteIntern, getAllInterns, getIntern, updateIntern } from '@/services/internsAPI';
+import { getAvatar } from '@/utils/helpers';
 import { useQuery } from '@tanstack/react-query';
 
 // Queries
+
+export const getAdditionalData = (data) => {
+  return {
+    fullName: `${data?.firstName} ${data?.lastName}`,
+    avatar: getAvatar(data),
+  };
+};
+
 export function useInterns() {
   const { data, error, isPending } = useQuery({
     queryKey: ['interns'],
     queryFn: getAllInterns,
   });
 
-  return { interns: data, error, isLoading: isPending };
+  const interns = data?.map((intern) => ({ ...intern, ...getAdditionalData(intern) }));
+
+  return { interns, error, isLoading: isPending };
 }
 
 export function useInternsByIds(ids) {
@@ -18,7 +29,9 @@ export function useInternsByIds(ids) {
     queryFn: () => Promise.all(ids.map((id) => getIntern(id))),
   });
 
-  return { interns: data, error, isLoading: isPending };
+  const interns = data?.map((intern) => ({ ...intern, ...getAdditionalData(intern) }));
+
+  return { interns, error, isLoading: isPending };
 }
 
 export function useIntern(id) {
@@ -27,7 +40,9 @@ export function useIntern(id) {
     queryFn: () => getIntern(id),
   });
 
-  return { intern: data, error, isLoading: isPending };
+  const intern = { ...data, ...getAdditionalData(data) };
+
+  return { intern, error, isLoading: isPending };
 }
 
 // Mutations

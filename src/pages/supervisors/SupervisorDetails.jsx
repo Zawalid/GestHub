@@ -8,11 +8,11 @@ import { changeTitle } from '@/utils/helpers';
 export function SupervisorDetails() {
   const { id } = useParams();
   const { supervisor, isLoading, error } = useSupervisor(id);
-  const { firstName, lastName, email, phone, department } = supervisor || {};
+  const { fullName, email, phone, department } = supervisor || {};
 
   useEffect(() => {
-    changeTitle(`${firstName} ${lastName}`);
-  }, [firstName, lastName]);
+    changeTitle(fullName);
+  }, [fullName]);
 
   const render = () => {
     if (isLoading) return <Heading>Loading...</Heading>;
@@ -21,8 +21,7 @@ export function SupervisorDetails() {
 
     return (
       <div className=''>
-        <p>{firstName}</p>
-        <p>{lastName}</p>
+        <p>{fullName}</p>
         <p>{email}</p>
         <p>{phone}</p>
         <p>{department}</p>

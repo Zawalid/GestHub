@@ -4,8 +4,9 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { ToolTip } from '@/components/ui/ToolTip';
 import { canViewProject, cn, formatDate } from '@/utils/helpers';
 import { useUser } from '@/hooks/useUser';
-import { SiAdguard, } from 'react-icons/si';
+import { SiAdguard } from 'react-icons/si';
 import { Button } from '@/components/ui';
+import { useInternsByIds } from '../interns/useInterns';
 
 export default function Project({ project, layout }) {
   const { id, subject, description, startDate, endDate, status, priority, teamMembers } = project;
@@ -25,7 +26,7 @@ export default function Project({ project, layout }) {
       <PriorityIndicator priority={priority} />
       <div className='flex items-center justify-between'>
         <Date startDate={startDate} endDate={endDate} />
-        {user?.role === 'supervisor' && user?.projects?.includes(id) && (
+        {user?.role === 'supervisor' && project.supervisor === user?.id && (
           <ToolTip content={<span className='text-xs text-text-secondary'>Under Your Supervision</span>}>
             <Button shape='icon' size='small' className='bg-primary text-white hover:bg-primary'>
               <SiAdguard />
@@ -94,6 +95,7 @@ function ProgressBar({ project }) {
 }
 
 function Members({ members, size = 'small' }) {
+  const { interns: teamMembers } = useInternsByIds(members);
   const [parent] = useAutoAnimate({ duration: 400 });
 
   if (!members.length)
@@ -108,11 +110,11 @@ function Members({ members, size = 'small' }) {
 
   return (
     <div className='relative h-7' style={{ width: `${wrapperWidth}px` }} ref={parent}>
-      {members.slice(0, 3).map((member, i) => (
-        <ToolTip key={member.id || member} content={<span>{`${member.firstName} ${member.lastName}`}</span>}>
+      {teamMembers?.slice(0, 3).map((member, i) => (
+        <ToolTip key={member.id || member} content={<span>{member.fullName}</span>}>
           <img
             src={member.avatar || '/images/default-profile.jpg'}
-            alt={`${member.firstName} ${member.lastName}`}
+            alt={member.fullName}
             className={`absolute top-0 z-[1] ${sizes[size]} rounded-full border-2 border-border`}
             style={{ left: `${i * (size === 'small' ? 15 : 20)}px` }}
           />

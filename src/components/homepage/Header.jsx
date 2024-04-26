@@ -9,7 +9,6 @@ import { ThemeSwitcher } from '../ThemeSwitcher';
 import { LanguageSwitcher } from '../LanguageSwitcher';
 import { Button } from '../ui';
 import { Logo } from '../ui/logo';
-import Shade from '../ui/shade';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -20,7 +19,7 @@ export function Header() {
   }, [currentPath]);
 
   return (
-    <header className=' bg-background- flex items-center justify-between border-b border-border  p-5 pt-2 shadow-md shadow-md '>
+    <header className=' bg-background- flex items-center justify-between border-b border-border p-5 pt-2 shadow-md'>
       <Logo className='w-20' />
       <Links />
 

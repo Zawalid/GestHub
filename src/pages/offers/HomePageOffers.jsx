@@ -10,12 +10,15 @@ export function HomePageOffers() {
   const { offers, isLoading, error, favorites, onToggleFavorite } = useOffers(true);
 
   useEffect(() => {
-    changeTitle('MenStage | Offers');
+    changeTitle('Offers');
   }, []);
 
   const getProps = () => {
-    // eslint-disable-next-line no-unused-vars
-    const {  filters: { visibility, ...restFilters },...restProps} = getOffersProps(offers, isLoading, error);
+    const {
+      // eslint-disable-next-line no-unused-vars
+      filters: { visibility, ...restFilters },
+      ...restProps
+    } = getOffersProps(offers, isLoading, error);
     const newStatus = [
       ...restFilters.status,
       { value: { value: 'Favorite', condition: (offer) => offer.isFavorite }, checked: false },

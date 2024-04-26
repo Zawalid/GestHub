@@ -35,6 +35,7 @@ export default function Password() {
     ],
     onSubmit: mutate,
     gridLayout: false,
+    submitOnEnter : true
   });
 
   return (
@@ -49,7 +50,7 @@ export default function Password() {
         disabled: !isUpdated,
       }}
     >
-      {Form}{' '}
+      {Form}
     </ModalFormLayout>
   );
 }

@@ -68,10 +68,10 @@ function Assignee({ assignee }) {
   return typeof assignee !== 'object' ? (
     <span className='text-xs font-medium text-text-secondary'>N/A</span>
   ) : (
-    <ToolTip content={<span>{`${assignee.firstName} ${assignee.lastName}`}</span>}>
+    <ToolTip content={<span>{assignee.fullName}</span>}>
       <img
         src={assignee.avatar || '/images/default-profile.jpg'}
-        alt={`${assignee.firstName} ${assignee.lastName}`}
+        alt={assignee.fullName}
         className='h-7 w-7 rounded-full border-2 border-border'
       />
     </ToolTip>

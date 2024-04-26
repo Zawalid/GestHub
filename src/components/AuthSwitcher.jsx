@@ -1,11 +1,23 @@
 import { Button, DropDown } from './ui';
 import { FaUserAlt } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import {  NavLink, useLocation } from 'react-router-dom';
+import { useUser } from '../hooks';
 
 export function AuthSwitcher({ size }) {
   const { pathname } = useLocation();
   const { t } = useTranslation();
+  const { user } = useUser();
+
+  if (user)
+    return (
+      <img
+        className='h-8 w-8 rounded-full border-2 border-border object-cover text-center text-xs text-text-tertiary '
+        src={user?.avatar?.src || '/images/default-profile.jpg'}
+        alt='profile image'
+      />
+    );
+
   return (
     <DropDown
       toggler={

@@ -74,8 +74,6 @@ const getError = (value, rules, getValue) => {
   return null;
 };
 
-
-
 const getRules = (name, type, fieldRules) => {
   return {
     required: `Please enter your ${name}`,
@@ -101,6 +99,19 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fields, values]);
+  // Dirty fields
+  const dirtyFields = useMemo(() => {
+    const dirty = {};
+    Object.keys(defaultValues).forEach((key) => {
+      if (
+        (typeof [defaultValues[key]] === 'object' && !objectDeepEquals(values[key], defaultValues[key])) ||
+        (typeof [defaultValues[key]] !== 'object' && values[key] !== defaultValues[key])
+      ) {
+        dirty[key] = true;
+      }
+    });
+    return dirty;
+  }, [values, defaultValues]);
   // Form Inputs
   const formInputs = useMemo(() => {
     const inputs = {};
@@ -180,7 +191,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
   const reset = (callback) => {
     setValues(defaultValues);
     setErrors(null);
-    callback?.();
+    typeof callback === 'function' && callback?.();
   };
 
   return {
@@ -203,6 +214,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
       errors,
       values,
       defaultValues,
+      dirtyFields,
       formInputs,
       handleSubmit,
       reset,

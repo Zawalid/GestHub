@@ -1,8 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { login, register, logout, getUser, updateProfile, updatePassword } from '@/services/usersAPI';
+import { login, register, logout, getUser, updateProfile, updatePassword, updateAvatar } from '@/services/usersAPI';
 import { useMutate } from './useMutate';
+import { getAvatar } from '@/utils/helpers';
 
 const useRedirect = (isLogout) => {
   const navigate = useNavigate();
@@ -41,16 +42,10 @@ export function useRegister() {
 }
 
 export function useLogout() {
-  const queryClient = useQueryClient();
-  const redirect = useRedirect(true);
-
   const { mutate, isPending, error } = useMutation({
     mutationKey: ['logout'],
     mutationFn: logout,
-    onSuccess: (data) => {
-      redirect(null, data);
-      queryClient.removeQueries('user');
-    },
+    onSuccess: () => location.assign('/'),
     onError: (error) => toast.error(error.message),
   });
 
@@ -61,15 +56,11 @@ export function useUser() {
   const { data, error, isPending } = useQuery({
     queryKey: ['user'],
     queryFn: getUser,
+    retry: 1,
   });
 
   return {
-    user: {
-      ...data,
-      role: 'admin',
-      projects: [1, 2],
-      id: 1,
-    },
+    user: data ? { ...data, avatar: { src: getAvatar(data), file: null } } : null,
     isAuthenticated: Boolean(data),
     isLoading: isPending,
     error,
@@ -85,14 +76,22 @@ export function useUpdateProfile() {
     errorMessage: 'Failed to update profile',
   });
 }
+export function useUpdateAvatar() {
+  return useMutate({
+    queryKey: ['user', 'updateAvatar'],
+    mutationFn: ({ id, file }) => updateAvatar(id, file),
+    loadingMessage: 'Updating profile...',
+    successMessage: 'Profile updated successfully',
+    errorMessage: 'Failed to update profile',
+  });
+}
 
 export function useUpdatePassword() {
-  const {user} = useUser()
+  const { user } = useUser();
   return useMutate({
     queryKey: ['user', 'updatePassword'],
     mutationFn: (passwords) => updatePassword(user?.profile_id, passwords),
     loadingMessage: 'Updating password...',
     successMessage: 'Password updated successfully',
-    errorMessage: 'Failed to update password',
   });
 }

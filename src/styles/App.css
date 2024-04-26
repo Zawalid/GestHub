@@ -74,7 +74,7 @@
 .input-field {
   & input,
   textarea {
-    @apply w-full resize-none bg-transparent text-sm text-text-primary  outline-none transition-colors duration-300 placeholder:text-sm disabled:cursor-not-allowed disabled:bg-background-disabled disabled:text-text-disabled disabled:placeholder:text-text-disabled;
+    @apply w-full resize-none bg-transparent text-sm text-text-primary  outline-none transition-colors duration-300 placeholder:text-sm disabled:cursor-not-allowed disabled:bg-background-disabled disabled:text-text-disabled disabled:placeholder:text-text-disabled read-only:cursor-auto read-only:bg-background-disabled
   }
 }
 

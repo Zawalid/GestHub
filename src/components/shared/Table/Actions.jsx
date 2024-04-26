@@ -6,13 +6,39 @@ import {
   MdDriveFileRenameOutline,
 } from '@/components/ui/Icons';
 import { useTable } from '.';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 
-export function Actions({ onUpdate, onDelete, row }) {
+export function Actions({ onUpdate, onDelete, row, actions }) {
   const { showForm, confirmOptions, resourceName, rows, onPrevPage } = useTable();
   const location = useLocation();
+  const navigate = useNavigate();
   const { openModal } = useConfirmationModal();
+
+  const defaultActions = [
+    {
+      text: 'View',
+      icon: <IoEyeOutline />,
+      onClick: () => navigate(`${location.pathname}/${row.id}`),
+    },
+    {
+      text: 'Edit',
+      icon: <MdDriveFileRenameOutline />,
+      onClick: () =>
+        showForm({
+          defaultValues: row,
+          onSubmit: (data) => onUpdate({ id: row.profile_id, data }),
+          isOpen: true,
+          submitButtonText: 'Save Changes',
+          heading: (
+            <>
+              Update {resourceName} <span className='text-primary'>#</span>
+              {row.id}
+            </>
+          ),
+        }),
+    },
+  ];
 
   return (
     <DropDown
@@ -22,31 +48,13 @@ export function Actions({ onUpdate, onDelete, row }) {
         </Button>
       }
     >
-      <Link to={`${location.pathname}/${row.id}`}>
-        <DropDown.Option>
-          <IoEyeOutline />
-          View
+      {(actions || defaultActions).map((action) => (
+        <DropDown.Option key={action.text} onClick={action.onClick}>
+          {action.icon}
+          {action.text}
         </DropDown.Option>
-      </Link>
-      <DropDown.Option
-        onClick={() =>
-          showForm({
-            defaultValues: row,
-            onSubmit: (data) => onUpdate({ id: row.profile_id, data }),
-            isOpen: true,
-            submitButtonText: 'Save Changes',
-            heading: (
-              <>
-                Update {resourceName} <span className='text-primary'>#</span>
-                {row.id}
-              </>
-            ),
-          })
-        }
-      >
-        <MdDriveFileRenameOutline />
-        Edit
-      </DropDown.Option>
+      ))}
+
       <DropDown.Option
         onClick={() =>
           openModal({
@@ -64,3 +72,6 @@ export function Actions({ onUpdate, onDelete, row }) {
     </DropDown>
   );
 }
+
+
+

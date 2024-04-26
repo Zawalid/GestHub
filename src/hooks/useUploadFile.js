@@ -8,15 +8,17 @@ import {
 import { toast } from 'sonner';
 
 const defaultOptions = {
-  accept: ['.png', '.jpg'],
+  accept: ['.png', '.jpg', '.jpeg'],
   readAs: 'DataURL',
   maxImages: 1,
-  maxFileSize: 10,
-  minHeight: 100,
-  minWidth: 100,
+  maxFileSize: 5,
+  minHeight: 80,
+  minWidth: 80,
 };
 
-export function useUploadImage({ options = defaultOptions, onChange, onError }) {
+
+
+export function useUploadFile({ options = defaultOptions, onChange, onError }) {
   const { openFilePicker } = useFilePicker({
     accept: options.accept || defaultOptions.accept,
     readAs: options.readAs || defaultOptions.readAs,
@@ -24,7 +26,7 @@ export function useUploadImage({ options = defaultOptions, onChange, onError }) 
       new FileAmountLimitValidator({
         max: options.maxImages || defaultOptions.maxImages,
       }),
-      new FileTypeValidator(['jpg', 'png']),
+      new FileTypeValidator((options.accept || defaultOptions.accept).map((type) => type.replace('.', ''))),
       new FileSizeValidator({
         maxFileSize: (options.maxFileSize || defaultOptions.maxFileSize) * 1024 * 1024 /* To MB */,
       }),
@@ -36,29 +38,37 @@ export function useUploadImage({ options = defaultOptions, onChange, onError }) 
     onFilesRejected: ({ errors }) => {
       console.log(errors);
       errors.forEach((error) => {
-        toast.error(getErrorMessage(error.name));
+        toast.error(
+          getErrorMessage(
+            error.name,
+            'Image',
+            options.accept || defaultOptions.accept,
+            options.maxFileSize || defaultOptions.maxFileSize,
+            options.maxFiles || defaultOptions.maxFiles
+          )
+        );
       });
       onError?.(errors);
     },
     onFilesSuccessfullySelected: ({ plainFiles, filesContent }) => {
-      // onChange({ src: filesContent[0].content, file: plainFiles[0] });
-      onChange(filesContent[0].content);
+      onChange({ src: filesContent[0].content, file: plainFiles[0] });
+      // onChange(filesContent[0].content);
     },
   });
 
   return { openFilePicker };
 }
 
-function getErrorMessage(name) {
-  switch (name) {
+function getErrorMessage(error, type, accept, maxFileSize, maxFiles, maxWidth, maxHeight) {
+  switch (error) {
     case 'FileTypeError':
-      return 'Only JPG and PNG are allowed';
+      return `Only ${accept.map((type) => type.replace('.', '')).join(', ')} are allowed`;
     case 'ImageDimensionError':
-      return 'Image must be at least 100x100 px';
+      return `Image must be at least ${maxWidth}x${maxHeight} px`;
     case 'FileSizeError':
-      return 'Image must be at most 10 MB';
+      return `${type} must be at most ${maxFileSize} MB`;
     case 'FileAmountLimitError':
-      return 'Only one image is allowed';
+      return `Only ${maxFiles === 1 ? 'one' : maxFiles} ${type.toLowerCase()} is allowed`;
     default:
       return 'Something went wrong';
   }

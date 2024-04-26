@@ -8,11 +8,11 @@ import { changeTitle } from '@/utils/helpers';
 export function InternDetails() {
   const { id } = useParams();
   const { intern, isLoading, error } = useIntern(id);
-  const { firstName, lastName, email, phone, academicLevel, establishment, startDate, endDate } = intern || {};
+  const {fullName, email, phone, academicLevel, establishment, startDate, endDate } = intern || {};
 
   useEffect(() => {
-    changeTitle(`${firstName} ${lastName}`);
-  }, [firstName, lastName]);
+    changeTitle(fullName);
+  }, [fullName]);
 
   const render = () => {
     if (isLoading) return <Heading>Loading...</Heading>;
@@ -21,8 +21,7 @@ export function InternDetails() {
 
     return (
       <div className=''>
-        <p>{firstName}</p>
-        <p>{lastName}</p>
+        <p>{fullName}</p>
         <p>{email}</p>
         <p>{phone}</p>
         <p>{academicLevel}</p>

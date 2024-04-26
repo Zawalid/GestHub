@@ -90,7 +90,7 @@ function Member({ member, project }) {
   const { user } = useUser();
 
   const { id: projectId, tasks, teamMembers, projectManager } = project || {};
-  const { id, avatar, firstName, lastName } = member;
+  const { id, avatar, fullName } = member;
 
   const assignedTasks = tasks.filter((task) => task.assignee?.id === id);
   const doneTasks = assignedTasks.filter((task) => task.status === 'Done');
@@ -133,7 +133,7 @@ function Member({ member, project }) {
           </ToolTip>
         </div>
       )}
-      <div className='relative mb-8 mt-5 space-y-3 text-center'>
+      <div className='relative mb-8 mt-5 text-center'>
         <PiCrown
           className={`absolute -top-5 left-1/2 -translate-x-1/2 text-2xl text-primary transition-transform duration-300 
         ${id === projectManager ? 'scale-100' : 'scale-0'}
@@ -142,11 +142,10 @@ function Member({ member, project }) {
         <img
           src={avatar || '/images/default-profile.jpg'}
           alt='avatar'
-          className='mx-auto h-16 w-16 rounded-full border border-border object-cover shadow-md'
+          className='mx-auto h-16 mb-4 w-16 rounded-full border border-border object-cover shadow-md'
         />
-        <h3 className='font-semibold text-text-primary'>{`${firstName} ${lastName}`}</h3>
+        <h3 className='font-semibold mb-1 text-lg text-text-primary'>{fullName}</h3>
         <p className='text-sm font-medium text-text-secondary'>
-          {' '}
           {id === projectManager ? 'Project Manager' : 'Team Member'}
         </p>
       </div>

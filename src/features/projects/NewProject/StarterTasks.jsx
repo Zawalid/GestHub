@@ -222,7 +222,6 @@ function InternsDropDown({ teamMembers, getValue, setValue }) {
             <DropDown.Option
               size='small'
               key={id}
-              className='capitalize'
               onClick={() => setValue('assignee', { id, firstName, lastName, email, avatar })}
               isCurrent={intern === getValue('assignee')}
             >

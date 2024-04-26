@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Button, CheckBox, DropDown, InputField, Modal } from '@/components/ui';
@@ -47,7 +47,7 @@ export default function NewOffer() {
 
 export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
   const {
-    options: { isUpdated, isValid, formInputs, getValue, setValue, handleSubmit, reset },
+    options: { isUpdated, isValid, formInputs, getValue, setValue, handleSubmit, reset, updateValues },
   } = useForm({
     defaultValues,
     fields: [
@@ -109,6 +109,11 @@ export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
     onSubmit: (data) => onSubmit({ ...data, skills: data.skills.length ? data.skills.join(',') : null }),
   });
 
+  useEffect(() => {
+    updateValues(defaultValues);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValues]);
+
   return (
     <ModalFormLayout
       submitButton={{
@@ -165,7 +170,7 @@ export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
             </DropDown>
           </div>
 
-          <Skills getValue={getValue} setValue={setValue} />
+          <Skills getValue={getValue} setValue={setValue} key={defaultValues.skills} />
         </div>
       </div>
       <div className='mt-5 flex items-center gap-3'>

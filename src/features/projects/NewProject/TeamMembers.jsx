@@ -6,9 +6,7 @@ import { useEffect, useState } from 'react';
 
 export const getSearchedInterns = (interns, query) => {
   return interns
-    ?.filter((intern) =>
-      `${intern.firstName} ${intern.lastName}`.trim().toLowerCase().includes(query.trim().toLowerCase())
-    )
+    ?.filter((intern) => intern.fullName.trim().toLowerCase().includes(query.trim().toLowerCase()))
     .sort((a, b) => a.firstName.localeCompare(b.firstName));
 };
 export const renderInternsStatus = (isLoading, error, searchedInterns, render) => {
@@ -113,11 +111,11 @@ export function Intern({ intern }) {
     <div className='flex items-center gap-2'>
       <img
         src={intern?.avatar || '/images/default-profile.jpg'}
-        alt={intern?.firstName}
+        alt={intern?.fullName}
         className='h-8 w-8 rounded-full border border-border'
       />
       <div>
-        <p className='mb-1 text-sm font-semibold text-text-primary'>{`${intern?.firstName} ${intern?.lastName}`}</p>
+        <p className='mb-1 text-sm font-semibold text-text-primary'>{intern.fullName}</p>
         <p className='text-xs font-medium text-text-secondary'>{intern?.email}</p>
       </div>
     </div>

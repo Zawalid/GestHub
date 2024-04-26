@@ -10,10 +10,10 @@ import {
   MdDriveFileRenameOutline,
   PiX,
 } from '@/components/ui/Icons';
-import { formatDate } from '@/utils/helpers';
+import { changeTitle, formatDate } from '@/utils/helpers';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { OfferForm } from './NewOffer';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { OfferSkeleton } from './OffersSkeleton';
 import { FaRegStar } from 'react-icons/fa';
 
@@ -24,20 +24,12 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
   const { offer, isLoading, error } = useOffer(id);
   const { mutate } = useUpdateOffer();
 
-  const {
-    title,
-    description,
-    duration,
-    city,
-    publicationDate,
-    direction,
-    sector,
-    type,
-    experience,
-    status,
-    skills,
-  } = offer || {};
+  const { title, description, duration, city, publicationDate, direction, sector, type, experience, status, skills } =
+    offer || {};
 
+  useEffect(() => {
+    changeTitle(title ? `Offers | ${title}` : 'Offers');
+  }, [title]);
 
   const render = () => {
     if (isLoading) return <OfferSkeleton />;
@@ -153,14 +145,15 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
       closeOnBlur={false}
     >
       <div className='z-10 flex justify-end gap-2'>
-        {!isEditing && !onHomePage ? (
+        {!isEditing && !onHomePage && (
           <>
             <Actions offer={offer} disabled={isLoading || error} onEdit={() => setIsEditing(true)} />
             <Button className='right-2 top-2 z-10' shape='icon' size='small' onClick={() => navigate('/app/offers')}>
               <PiX />
             </Button>
           </>
-        ) : (
+        )}
+        {onHomePage && (
           <Button shape='icon' onClick={() => onToggleFavorite(id)} disabled={isLoading || error}>
             {isFavorite?.(id) ? <FaStar className='text-yellow-500' /> : <FaRegStar className='  text-text-primary' />}
           </Button>
@@ -205,7 +198,7 @@ function Actions({ offer, disabled, onEdit }) {
           onClick={() =>
             updateOffer({
               id: offer?.id,
-              data: {  visibility: offer?.visibility === 'Hidden' ? 'Visible' : 'Hidden' },
+              data: { visibility: offer?.visibility === 'Hidden' ? 'Visible' : 'Hidden' },
             })
           }
         >

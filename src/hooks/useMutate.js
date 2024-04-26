@@ -21,7 +21,7 @@ export function useMutate({ queryKey, mutationFn, showToast = true, loadingMessa
     },
     onError: (error) => {
       console.log(error);
-      errorMessage && showToast && toast.error(errorMessage, { id: toastId.current });
+       showToast && toast.error(errorMessage || error.message, { id: toastId.current });
     },
   });
 

@@ -71,7 +71,7 @@ export default function App() {
             </Route>
             {/* App */}
             <Route
-              path='app'
+              path='/app/*'
               element={
                 <ProtectedRoute>
                   <AppLayout />
@@ -82,7 +82,7 @@ export default function App() {
               {/* Routes of every role */}
               <Route path='overview' element={<Overview />} />
               {/*  Routes of specific role */}
-              {ROUTES[user?.role || 'admin']?.map((route) => (
+              {ROUTES[user?.role]?.map((route) => (
                 <Route key={route} path={route} element={routesElements[route]} />
               ))}
             </Route>

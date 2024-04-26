@@ -17,7 +17,7 @@ export {
   IoTrashOutline,
   IoSettingsOutline,
   IoFlag,
-  IoSchool , 
+  IoSchool,
 } from 'react-icons/io5';
 export {
   PiCheckBold,
@@ -29,7 +29,7 @@ export {
   PiArrowRight,
   PiX,
   PiSortAscending,
-  PiCrown 
+  PiCrown,
 } from 'react-icons/pi';
 export {
   BsPeople,
@@ -37,8 +37,8 @@ export {
   BsListCheck,
   BsLayoutSidebarInsetReverse,
   BsCalendar4Event,
-  BsBuilding ,
-  BsFillInfoCircleFill 
+  BsBuilding,
+  BsFillInfoCircleFill,
 } from 'react-icons/bs';
 export { RiTeamLine } from 'react-icons/ri';
 export { LiaUserTieSolid } from 'react-icons/lia';
@@ -51,13 +51,22 @@ export {
   MdOutlineSortByAlpha,
   MdOutlineNotStarted,
   MdOutlineGroupRemove,
-  MdOutlineGroupAdd, 
-  MdManageAccounts ,
+  MdOutlineGroupAdd,
+  MdManageAccounts,
   MdOutlineLocationOn,
-  MdOutlineTimelapse 
+  MdOutlineTimelapse,
 } from 'react-icons/md';
-export { FaSpinner, FaSort , FaPlus,FaCity , FaRegCircleCheck,FaRegStar,FaStar } from 'react-icons/fa6';
+export {
+  FaSpinner,
+  FaSort,
+  FaPlus,
+  FaCity,
+  FaRegCircleCheck,
+  FaRegStar,
+  FaStar,
+  FaRegCircleXmark,
+} from 'react-icons/fa6';
 
 export { HiMiniXMark } from 'react-icons/hi2';
 export { RxDashboard, RxViewVertical } from 'react-icons/rx';
-export { TbProgressCheck } from 'react-icons/tb';
+export { TbProgressCheck,TbFileSearch  } from 'react-icons/tb';

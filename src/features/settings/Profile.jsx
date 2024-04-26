@@ -1,14 +1,16 @@
-import { ProfileImage } from './ProfileImage';
+import { ProfileAvatar } from './ProfileAvatar';
 import { useForm } from '@/hooks/useForm';
-import { ModalFormLayout } from '@/layouts';
-import { useUpdateProfile, useUser } from '@/hooks/useUser';
+import { ModalFormLayout } from '@/layouts/ModalFormLayout';
+import { useUpdateAvatar, useUpdateProfile, useUser } from '@/hooks/useUser';
 import { RULES } from '@/utils/constants';
 
 export default function Profile() {
   const { user } = useUser();
   const { mutate } = useUpdateProfile();
+  const { mutate: updateAvatar } = useUpdateAvatar();
+
   const defaultUser = {
-    image: '',
+    avatar: { src: null, file: null },
     firstName: '',
     lastName: '',
     email: '',
@@ -17,14 +19,12 @@ export default function Profile() {
     ...(['intern', 'user'].includes(user?.role) && {
       academicLevel: '',
       establishment: '',
-      startDate: '',
-      endDate: '',
     }),
   };
 
   const {
     Form,
-    options: { isUpdated, isValid, handleSubmit, reset, setValue, getValue },
+    options: { isUpdated, isValid, dirtyFields, handleSubmit, reset, setValue, getValue },
   } = useForm({
     defaultValues: { ...defaultUser, ...user },
     fields: [
@@ -60,21 +60,14 @@ export default function Profile() {
               type: 'establishment',
               label: 'Establishment',
             },
-            {
-              name: 'startDate',
-              label: 'Start Date',
-              type: 'date',
-            },
-            {
-              name: 'endDate',
-              label: 'End Date',
-              type: 'date',
-              rules: { ...RULES.endDate },
-            },
           ]
         : []),
     ],
-    onSubmit: (user) => mutate({ user, id: user.profile_id }),
+    onSubmit: (user) => {
+      if (dirtyFields['avatar']) updateAvatar({ id: user.profile_id, file: user.avatar.file });
+      if (Object.keys(dirtyFields).length === 1 && Object.keys(dirtyFields)[0] === 'avatar') return;
+      mutate({ user, id: user.profile_id });
+    },
     gridLayout: true,
   });
 
@@ -92,7 +85,7 @@ export default function Profile() {
       <div className='space-y-5'>
         <div>
           <h3 className='mb-3 font-bold text-text-secondary'>Image</h3>
-          <ProfileImage image={getValue('image')} onChange={(image) => setValue('image', image)} />
+          <ProfileAvatar avatar={getValue('avatar')} onChange={(avatar) => setValue('avatar', avatar)} />
         </div>
 
         {Form}

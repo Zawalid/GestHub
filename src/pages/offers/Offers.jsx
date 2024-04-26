@@ -8,6 +8,7 @@ import { FaPlus } from 'react-icons/fa';
 import NewOffer from '@/features/offers/NewOffer';
 import OfferOverview from '@/features/offers/OfferOverview';
 import { checkDateInIntervals } from '@/utils/helpers';
+import NewDemand from '@/features/demands/NewDemand';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const getOffersProps = (offers, isLoading, error) => ({
@@ -84,6 +85,7 @@ export function Offers() {
       <OffersList />
       <NewOffer />
       <OfferOverview />
+      {/* <NewDemand /> */}
     </Operations>
   );
 }

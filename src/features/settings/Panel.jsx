@@ -40,13 +40,13 @@ function Tab({ tabName, icon, currentTab, setCurrentTab }) {
       className={
         "flex items-center px-3 py-2 hover:bg-background-secondary transition-colors duration-300 rounded-lg w-full gap-2 " +
         (currentTab === tabName
-          ? "active text-text-secondary"
+          ? "bg-background-secondary font-medium  text-text-secondary"
           : "text-text-tertiary")
       }
       onClick={() => setCurrentTab(tabName)}
     >
       {cloneElement(icon, { size: "22" })}
-      <span className="font-medium text-sm capitalize">{tabName}</span>
+      <span className="text-sm capitalize">{tabName}</span>
     </button>
   );
 }

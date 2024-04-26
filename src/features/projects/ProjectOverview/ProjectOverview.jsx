@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import Tasks from './Tasks';
 import Overview from './Overview';
@@ -24,13 +24,16 @@ export default function ProjectOverview() {
             className={`absolute -bottom-0.5 h-0.5 rounded-lg bg-primary transition-all duration-300 ${currentTab?.class}`}
           ></div>
           {Object.keys(tabs).map((tab) => (
-            <Link
+            <NavLink
               key={tab}
               to={`/app/projects/${params?.id}/${tab}`}
-              className='py-1.5 text-sm font-medium capitalize text-text-secondary transition-colors duration-300 hover:text-text-primary'
+              className='py-1.5 text-sm text-text-secondary font-medium capitalize  transition-colors duration-300 group hover:text-text-primary'
             >
+              <span className=" group-[.active]:text-text-primary">
+                
               {tab}
-            </Link>
+              </span>
+            </NavLink>
           ))}
         </div>
       </div>
