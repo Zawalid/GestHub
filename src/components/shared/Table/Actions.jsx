@@ -60,7 +60,7 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
           openModal({
             ...confirmOptions,
             onConfirm: () => {
-              onDelete(row.profile_id);
+              onDelete(row.profile_id || row.id);
               rows?.length === 1 && onPrevPage();
             },
           })

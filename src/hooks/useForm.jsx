@@ -74,9 +74,9 @@ const getError = (value, rules, getValue) => {
   return null;
 };
 
-const getRules = (name, type, fieldRules) => {
+const getRules = (name, label, type, fieldRules) => {
   return {
-    required: `Please enter your ${name}`,
+    required: `Please enter your ${typeof label === 'string' ? label?.toLowerCase() : name}`,
     ...(RULES[type] && RULES[type]),
     ...(fieldRules && fieldRules),
   };
@@ -92,8 +92,9 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
     return (
       fields
         .map((field) => {
-          const rules = getRules(field.name, field.type, field.rules);
-          return getError(values?.[field.name], rules, getValue);
+          const { name, type, label } = field;
+          const rules = getRules(name, label, type, field.rules);
+          return getError(values?.[name], rules, getValue);
         })
         .filter((err) => err).length === 0
     );
@@ -125,7 +126,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
             placeholder={placeholder || label}
             value={values?.[name] || ''}
             onChange={(e) => {
-              validate(name, e.target.value, getRules(name, type, rules));
+              validate(name, e.target.value, getRules(name, label, type, rules));
               setValue(name, e.target.value);
             }}
             errorMessage={errors?.[name]?.message}
@@ -138,29 +139,6 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fields, errors, values]);
 
-  useEffect(() => {
-    setIsUpdated(!objectDeepEquals(values, defaultValues));
-  }, [values, defaultValues]);
-
-  // Submit handler
-  const handleSubmit = useCallback(
-    (callback, resetToDefaults) => {
-      onSubmit?.(values);
-      typeof callback === 'function' && callback?.(values);
-      resetToDefaults ? setValues(defaultValues) : setDefaultValues(values);
-    },
-    [defaultValues, onSubmit, values]
-  );
-
-  useEffect(() => {
-    if (!submitOnEnter || !isValid) return;
-
-    const onEnter = (e) => e.key === 'Enter' && handleSubmit();
-    window.addEventListener('keydown', onEnter);
-
-    return () => window.removeEventListener('keydown', onEnter);
-  }, [handleSubmit, submitOnEnter, isValid]);
-
   // Validate fields
   const validate = (name, value, rules) => {
     const err = getError(value, rules, getValue);
@@ -172,6 +150,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
       return errors;
     });
   };
+
   // Get a field value (Must be 'function' for hoisting)
   function getValue(name) {
     return values?.[name];
@@ -182,10 +161,21 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
     setValues((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Update values and default values
   const updateValues = (values) => {
     setValues(values);
     setDefaultValues(values);
   };
+
+  // Submit handler
+  const handleSubmit = useCallback(
+    (callback, resetToDefaults) => {
+      onSubmit?.(values);
+      typeof callback === 'function' && callback?.(values);
+      resetToDefaults ? setValues(defaultValues) : setDefaultValues(values);
+    },
+    [defaultValues, onSubmit, values]
+  );
 
   // Reset handler
   const reset = (callback) => {
@@ -193,6 +183,21 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
     setErrors(null);
     typeof callback === 'function' && callback?.();
   };
+
+  // Track if the form is updated
+  useEffect(() => {
+    setIsUpdated(!objectDeepEquals(values, defaultValues));
+  }, [values, defaultValues]);
+
+  // Submit form when hitting enter
+  useEffect(() => {
+    if (!submitOnEnter || !isValid) return;
+
+    const onEnter = (e) => e.key === 'Enter' && handleSubmit();
+    window.addEventListener('keydown', onEnter);
+
+    return () => window.removeEventListener('keydown', onEnter);
+  }, [handleSubmit, submitOnEnter, isValid]);
 
   return {
     Form: (

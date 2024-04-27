@@ -57,7 +57,7 @@ export function TeamMembers({ project }) {
       <div className='flex items-center justify-between'>
         <h2 className='flex items-center gap-2 font-semibold text-text-primary mobile:text-lg'>
           Team Members
-          {(!project?.projectManager || !project?.teamMembers.map((p) => p.id).includes(project?.projectManager)) && (
+          {(!project?.projectManager || !project?.teamMembers.includes(project?.projectManager)) && (
             <ToolTip
               content={
                 <span className='text-xs text-text-secondary'>No project manager assigned. Please assign one.</span>

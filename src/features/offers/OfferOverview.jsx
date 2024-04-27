@@ -16,10 +16,12 @@ import { OfferForm } from './NewOffer';
 import { useEffect, useState } from 'react';
 import { OfferSkeleton } from './OffersSkeleton';
 import { FaRegStar } from 'react-icons/fa';
+import { useUser } from '@/hooks/useUser';
 
 export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite, onApply }) {
   const [isEditing, setIsEditing] = useState(false);
   const { id } = useParams();
+  const { user } = useUser();
   const navigate = useNavigate();
   const { offer, isLoading, error } = useOffer(id);
   const { mutate } = useUpdateOffer();
@@ -73,63 +75,65 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
           <p className='text-xs text-text-secondary sm:text-sm'>{description || 'No description'}</p>
           <div className='mt-5 space-y-2   border-t border-border pt-2'>
             <h3 className='text-lg font-medium text-text-primary'>Offer Details</h3>
-            <div className='flex items-center gap-3'>
-              <label className='text-sm font-medium text-text-tertiary'>Direction :</label>
-              <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
-                {direction}
-              </span>
-            </div>
-            <div className='flex items-center gap-3'>
-              <label className='text-sm font-medium text-text-tertiary'>City :</label>
-              <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
-                {city}
-              </span>
-            </div>
-            <div className='flex items-center gap-3'>
-              <label className='text-sm font-medium text-text-tertiary'>Publication Date :</label>
-              <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
-                {formatDate(publicationDate)}
-              </span>
-            </div>
-            <div className='flex items-center gap-3'>
-              <label className='text-sm font-medium text-text-tertiary'>Duration :</label>
-              <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
-                {duration < 12
-                  ? `${duration} months`
-                  : duration === 12
-                    ? '1 year'
-                    : `1 year and ${duration - 12} months`}{' '}
-              </span>
-            </div>
-            <div className='flex items-center gap-3'>
-              <label className='text-sm font-medium text-text-tertiary'>Experience :</label>
-              <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
-                {experience}
-              </span>
-            </div>
-            <div className='flex items-center gap-3'>
-              <label className='text-sm font-medium text-text-tertiary'>Type :</label>
-              <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
-                {type}
-              </span>
-            </div>
-            <div className='items- flex gap-3'>
-              <label className='text-nowrap text-sm font-medium text-text-tertiary'>Skills :</label>
-              <div className='flex flex-wrap items-center gap-3'>
-                {skills?.length > 0 ? (
-                  skills?.map((skill) => (
-                    <span
-                      key={skill}
-                      className='rounded-md border border-border px-2 py-1 text-center text-xs font-medium text-text-secondary'
-                    >
-                      {skill}
+            <div className='grid gap-3 sm:grid-cols-2'>
+              <div className='flex items-center gap-3'>
+                <label className='text-sm font-medium text-text-tertiary'>Direction :</label>
+                <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
+                  {direction}
+                </span>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-sm font-medium text-text-tertiary'>City :</label>
+                <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
+                  {city}
+                </span>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-sm font-medium text-text-tertiary'>Publication Date :</label>
+                <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
+                  {formatDate(publicationDate)}
+                </span>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-sm font-medium text-text-tertiary'>Duration :</label>
+                <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
+                  {duration < 12
+                    ? `${duration} months`
+                    : duration === 12
+                      ? '1 year'
+                      : `1 year and ${duration - 12} months`}{' '}
+                </span>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-sm font-medium text-text-tertiary'>Experience :</label>
+                <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
+                  {experience}
+                </span>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-sm font-medium text-text-tertiary'>Type :</label>
+                <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
+                  {type}
+                </span>
+              </div>
+              <div className='items- flex gap-3'>
+                <label className='text-nowrap text-sm font-medium text-text-tertiary'>Skills :</label>
+                <div className='flex flex-wrap items-center gap-3'>
+                  {skills?.length > 0 ? (
+                    skills?.map((skill) => (
+                      <span
+                        key={skill}
+                        className='rounded-md border border-border px-2 py-1 text-center text-xs font-medium text-text-secondary'
+                      >
+                        {skill}
+                      </span>
+                    ))
+                  ) : (
+                    <span className='w-fit rounded-md border border-border px-2 py-1 text-center text-xs font-medium text-text-secondary'>
+                      No skills required
                     </span>
-                  ))
-                ) : (
-                  <span className='w-fit rounded-md border border-border px-2 py-1 text-center text-xs font-medium text-text-secondary'>
-                    No skills required
-                  </span>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -141,7 +145,7 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
   return (
     <Modal
       isOpen={location.pathname.includes('/offers') && id && id !== 'new'}
-      className='min-h-[500px] p-5 md:h-fit md:w-[650px] md:border'
+      className='p-5 sm:h-fit sm:min-h-[400px] sm:w-[650px] sm:border'
       closeOnBlur={false}
     >
       <div className='z-10 flex justify-end gap-2'>
@@ -153,7 +157,7 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
             </Button>
           </>
         )}
-        {onHomePage && (
+        {onHomePage && user?.role === 'user' && (
           <Button shape='icon' onClick={() => onToggleFavorite(id)} disabled={isLoading || error}>
             {isFavorite?.(id) ? <FaStar className='text-yellow-500' /> : <FaRegStar className='  text-text-primary' />}
           </Button>
@@ -161,14 +165,16 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
       </div>
 
       {render()}
-      {!onHomePage && (
+      {onHomePage && (
         <div className='z-10 mt-auto flex justify-end gap-3'>
           <Button color='tertiary' onClick={() => navigate('/offers')}>
             Close
           </Button>
-          <Button disabled={isLoading || error} onClick={onApply}>
-            Apply
-          </Button>
+          {user?.role === 'user' && (
+            <Button disabled={isLoading || error || user?.demands.find((d) => d.offer_id === id)} onClick={onApply}>
+              {user?.demands.find((d) => d.offer_id === id) ? 'Already Applied' : 'Apply'}
+            </Button>
+          )}
         </div>
       )}
     </Modal>

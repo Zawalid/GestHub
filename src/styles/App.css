@@ -99,3 +99,17 @@
   -ms-transition: stroke-dashoffset 3s;
   -o-transition: stroke-dashoffset 3s;
 }
+
+.sending {
+  width: 20px;
+  aspect-ratio: 4;
+  background: radial-gradient(circle closest-side, var(--text-primary) 90%, var(--background-primary) ) 0 /    calc(100% / 3) 100% space;
+  clip-path: inset(0 100% 0 0);
+  animation: l1 1s steps(4) infinite;
+  -webkit-animation: l1 1s steps(4) infinite;
+}
+@keyframes l1 {
+  to {
+    clip-path: inset(0 -34% 0 0);
+  }
+}

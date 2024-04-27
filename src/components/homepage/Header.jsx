@@ -20,7 +20,7 @@ export function Header() {
 
   return (
     <header className=' bg-background- flex items-center justify-between border-b border-border p-5 pt-2 shadow-md'>
-      <Logo className='w-20' />
+      <Logo className='w-28' />
       <Links />
 
       <div className='flex items-center gap-4'>

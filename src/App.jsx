@@ -71,7 +71,7 @@ export default function App() {
             </Route>
             {/* App */}
             <Route
-              path='/app/*'
+              path='app'
               element={
                 <ProtectedRoute>
                   <AppLayout />
@@ -79,8 +79,6 @@ export default function App() {
               }
             >
               <Route index element={<Navigate to='/app/overview' replace={true} />} />
-              {/* Routes of every role */}
-              <Route path='overview' element={<Overview />} />
               {/*  Routes of specific role */}
               {ROUTES[user?.role]?.map((route) => (
                 <Route key={route} path={route} element={routesElements[route]} />

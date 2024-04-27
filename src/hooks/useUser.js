@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import { login, register, logout, getUser, updateProfile, updatePassword, updateAvatar } from '@/services/usersAPI';
 import { useMutate } from './useMutate';
 import { getAvatar } from '@/utils/helpers';
+import { useConfirmationModal } from './useConfirmationModal';
 
 const useRedirect = (isLogout) => {
   const navigate = useNavigate();
@@ -48,8 +49,17 @@ export function useLogout() {
     onSuccess: () => location.assign('/'),
     onError: (error) => toast.error(error.message),
   });
+  const { openModal } = useConfirmationModal();
 
-  return { logout: mutate, isLoggingOut: isPending, error };
+  const logoutFn = () =>
+    openModal({
+      message: 'You are about to log out. Do you wish to proceed?',
+      title: 'Logout',
+      confirmText: 'Logout',
+      onConfirm: mutate,
+    });
+
+  return { logout: logoutFn, isLoggingOut: isPending, error };
 }
 
 export function useUser() {

@@ -14,7 +14,7 @@ function Hero() {
         <div className="p-4 mb-10">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-6 leading-[65px]">
             {t("hero.title1")}{" "}
-            <span className=" font-extrabold text-secondary hover:text-secondary-hover">
+            <span className=" font-extrabold text-secondary">
               {" "}
               {t("hero.title2")}{" "}
             </span>{" "}

@@ -1,6 +1,12 @@
 import { Link } from 'react-router-dom';
+import { useUser } from '../hooks';
+import { LoadingScreen } from '@/components/ui/LoadingScreen';
 
 export function NotFound() {
+const {isLoading} = useUser()
+
+if(isLoading) return <LoadingScreen />
+
   return (
     <div className='mx-auto flex h-screen w-full max-w-screen-xl items-center justify-start bg-background-primary px-4 md:px-8'>
       <div className='mx-auto max-w-lg space-y-5 text-center'>

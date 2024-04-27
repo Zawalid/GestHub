@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getAllDemands, getDemand, addDemand,  deleteDemand } from '@/services/demandsAPI';
+import { getAllDemands, getDemand, addDemand, deleteDemand } from '@/services/demandsAPI';
 import { useMutate } from '@/hooks/useMutate';
 
 // Queries
@@ -40,10 +40,11 @@ export const useDemand = (id) => {
 
 // Mutations
 
-export const useAddDemand = () =>
+export const useAddDemand = ({ showToast } = {}) =>
   useMutate({
     queryKey: ['demands', 'add'],
     mutationFn: addDemand,
+    showToast,
     loadingMessage: 'Adding demand...',
     successMessage: 'Demand added successfully',
     errorMessage: 'Failed to add demand',

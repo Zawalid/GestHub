@@ -44,22 +44,26 @@ function Label({ label, message }) {
   return (
     <div className='flex items-center gap-2'>
       <label className='text-sm font-medium text-text-tertiary'>{label}</label>
-      {message && (
-        <Tippy
-          content={message.split('\n').map((msg, index) => (
-            <p key={index} className='text-white'>
-              {msg}
-            </p>
-          ))}
-          placement='top'
-          className=' rounded-lg bg-red-500 p-2 text-xs font-semibold text-white'
-        >
-          <span className='cursor-pointer text-red-500'>
-            <MdError />
-          </span>
-        </Tippy>
-      )}
+      {message && <ErrorTooltip message={message} />}
     </div>
+  );
+}
+
+export function ErrorTooltip({ message }) {
+  return (
+    <Tippy
+      content={message.split('\n').map((msg, index) => (
+        <p key={index} className='text-white'>
+          {msg}
+        </p>
+      ))}
+      placement='top'
+      className=' rounded-lg bg-red-500 p-2 text-xs font-semibold text-white'
+    >
+      <span className='cursor-pointer text-red-500'>
+        <MdError />
+      </span>
+    </Tippy>
   );
 }
 

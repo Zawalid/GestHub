@@ -111,7 +111,7 @@ function Members({ members, size = 'small' }) {
   return (
     <div className='relative h-7' style={{ width: `${wrapperWidth}px` }} ref={parent}>
       {teamMembers?.slice(0, 3).map((member, i) => (
-        <ToolTip key={member.id || member} content={<span>{member.fullName}</span>}>
+        <ToolTip key={member.id || member} content={<span className='text-xs text-text-secondary'>{member.fullName}</span>}>
           <img
             src={member.avatar || '/images/default-profile.jpg'}
             alt={member.fullName}

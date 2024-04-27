@@ -14,6 +14,7 @@ export const ROUTES = {
   ],
   supervisor: ['overview', 'projects', 'projects/new', 'projects/:id', 'projects/:id/:tab', 'interns', 'interns/:id'],
   intern: ['overview', 'projects', 'projects/:id', 'projects/:id/:tab', 'interns/:id'],
+  user: ['overview'],
 };
 
 export const PAGE_LIMIT = 5;

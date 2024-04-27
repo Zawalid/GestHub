@@ -21,7 +21,7 @@ import { ROUTES } from '../utils/constants';
 import { Button } from './ui';
 import { capitalize, changeTitle } from '@/utils/helpers';
 import { useLogout, useUser } from '@/hooks/useUser';
-import { useConfirmationModal } from '@/hooks/useConfirmationModal';
+import { Logo } from './ui/logo';
 
 const routesIcons = {
   overview: <IoHomeOutline />,
@@ -38,7 +38,6 @@ export default function Sidebar({ openSettings }) {
   const [isExpanded, setIsExpanded] = useState(window.matchMedia('(min-width: 1024px)').matches);
   const { user } = useUser();
   const { logout, isLoggingOut } = useLogout();
-  const { openModal } = useConfirmationModal();
   const { t } = useTranslation();
   const location = useLocation().pathname.split('/');
 
@@ -65,9 +64,7 @@ export default function Sidebar({ openSettings }) {
       }`}
     >
       <div className='flex items-center justify-between '>
-        <img
-          src='/images/logo-MEN-Stage.png'
-          alt='logo'
+        <Logo
           className={`object-contain transition-all duration-500 ${isExpanded ? 'w-28 scale-100' : 'w-0 scale-0'}`}
         />
         <Button
@@ -96,17 +93,7 @@ export default function Sidebar({ openSettings }) {
           <IoSettingsOutline />
           <span className={spanClass}>{t('app.sidebar.settings')}</span>
         </button>
-        <button
-          className='sidebar-element group w-full'
-          onClick={() =>
-            openModal({
-              message: 'You are about to log out. Do you wish to proceed?',
-              title: 'Logout',
-              confirmText: 'Logout',
-              onConfirm: logout,
-            })
-          }
-        >
+        <button className='sidebar-element group w-full' onClick={logout}>
           <FiLogOut />
           <span className={spanClass}>{isLoggingOut ? 'Logging Out...' : t('app.sidebar.logout')}</span>
         </button>

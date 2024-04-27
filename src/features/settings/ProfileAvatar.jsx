@@ -16,7 +16,7 @@ export function ProfileAvatar({ avatar, onChange, disabled }) {
         <div className="flex w-fit flex-wrap gap-x-5 gap-y-2">
           <Button
             type="outline"
-            className="flex-1 min-w-[132px] md:min-w-max"
+            className="flex-1 min-w-[132px] md:min-w-max disabled:hover:bg-background-disabled disabled:text-text-disabled"
             disabled={disabled}
             onClick={openFilePicker}
           >

@@ -6,7 +6,7 @@ export function useMutate({ queryKey, mutationFn, showToast = true, loadingMessa
   const queryClient = useQueryClient();
   const toastId = useRef(null);
 
-  const { mutate, isPending, error, isSuccess } = useMutation({
+  const { mutate, isPending, error, isSuccess, reset, } = useMutation({
     mutationKey: queryKey,
     mutationFn,
     onMutate: () => {
@@ -21,9 +21,9 @@ export function useMutate({ queryKey, mutationFn, showToast = true, loadingMessa
     },
     onError: (error) => {
       console.log(error);
-       showToast && toast.error(errorMessage || error.message, { id: toastId.current });
+      showToast && toast.error(errorMessage || error.message, { id: toastId.current });
     },
   });
 
-  return { mutate, isPending, error, isSuccess };
+  return { mutate, isPending, error, isSuccess, reset };
 }

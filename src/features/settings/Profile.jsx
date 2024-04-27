@@ -7,7 +7,7 @@ import { RULES } from '@/utils/constants';
 export default function Profile() {
   const { user } = useUser();
   const { mutate } = useUpdateProfile();
-  const { mutate: updateAvatar } = useUpdateAvatar();
+  const { mutate: updateAvatar,isPending } = useUpdateAvatar();
 
   const defaultUser = {
     avatar: { src: null, file: null },
@@ -85,7 +85,9 @@ export default function Profile() {
       <div className='space-y-5'>
         <div>
           <h3 className='mb-3 font-bold text-text-secondary'>Image</h3>
-          <ProfileAvatar avatar={getValue('avatar')} onChange={(avatar) => setValue('avatar', avatar)} />
+          <ProfileAvatar avatar={getValue('avatar')} onChange={(avatar) => setValue('avatar', avatar)}
+          disabled={isPending}
+          />
         </div>
 
         {Form}

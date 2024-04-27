@@ -64,7 +64,6 @@ export function ConfirmationModalProvider({ children }) {
           </Button>
         </div>
       </Modal>
-      ,
     </ModalContext.Provider>
   );
 }

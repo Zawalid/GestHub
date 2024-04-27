@@ -3,11 +3,15 @@ import { getOffersProps } from './Offers';
 import { useOffers } from '@/features/offers/useOffers';
 import OffersList from '@/features/offers/OffersList';
 import OfferOverview from '@/features/offers/OfferOverview';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { changeTitle } from '@/utils/helpers';
+import NewDemand from '@/features/demands/NewDemand';
+import { useUser } from '@/hooks/useUser';
 
 export function HomePageOffers() {
+  const [isApplying, setIsApplying] = useState();
   const { offers, isLoading, error, favorites, onToggleFavorite } = useOffers(true);
+  const { user } = useUser();
 
   useEffect(() => {
     changeTitle('Offers');
@@ -42,7 +46,9 @@ export function HomePageOffers() {
         onHomePage={true}
         isFavorite={(id) => favorites.includes(id)}
         onToggleFavorite={onToggleFavorite}
+        onApply={() => setIsApplying(true)}
       />
+      {user?.role === 'user' && <NewDemand isOpen={isApplying} onClose={() => setIsApplying(false)} />}
     </div>
   );
 }
