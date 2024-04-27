@@ -66,7 +66,7 @@ export function Status({ status, heading, message, size }) {
   };
 
   return (
-    <div className='absolute top-0 z-[2] flex h-full w-full flex-col items-center justify-center text-center'>
+    <div className='absolute top-0 z-[2] left-0 flex h-full w-full flex-col items-center justify-center text-center'>
       {statuses[status]}
     </div>
   );

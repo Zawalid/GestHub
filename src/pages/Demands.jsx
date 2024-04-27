@@ -1,4 +1,5 @@
 import { Heading } from '@/components/Heading';
+import DemandReview from '@/features/demands/DemandReview';
 import DemandsList from '@/features/demands/DemandsList';
 
 export function Demands() {
@@ -6,6 +7,7 @@ export function Demands() {
     <>
       <Heading>Demands</Heading>
       <DemandsList />
+      <DemandReview />
     </>
   );
 }

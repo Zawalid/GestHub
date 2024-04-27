@@ -8,7 +8,7 @@ import { AuthSwitcher } from '../AuthSwitcher';
 import { ThemeSwitcher } from '../ThemeSwitcher';
 import { LanguageSwitcher } from '../LanguageSwitcher';
 import { Button } from '../ui';
-import { Logo } from '../ui/logo';
+import { Logo } from '../ui/Logo';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

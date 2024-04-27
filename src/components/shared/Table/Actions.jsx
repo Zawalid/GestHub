@@ -49,7 +49,7 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
       }
     >
       {(actions || defaultActions).map((action) => (
-        <DropDown.Option key={action.text} onClick={action.onClick}>
+        <DropDown.Option key={action.text} onClick={() => action.onClick(row.profile_id || row.id)}>
           {action.icon}
           {action.text}
         </DropDown.Option>
@@ -72,6 +72,3 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
     </DropDown>
   );
 }
-
-
-

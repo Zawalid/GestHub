@@ -5,7 +5,7 @@ import { SocialMedia } from '../ui/SocialMedia';
 import { useTranslation } from 'react-i18next';
 import { PiX } from 'react-icons/pi';
 import { Button } from '../ui';
-import { Logo } from '../ui/logo';
+import { Logo } from '../ui/Logo';
 export function MobileHeader({ isOpen, onClose }) {
   const ref = useRef();
   useEffect(() => {

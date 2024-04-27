@@ -1,11 +1,15 @@
-import { RULES } from '@/utils/constants';
-import { useDemands, useDeleteDemand } from './useDemands';
+import { useNavigate } from 'react-router-dom';
+import { useDemands, useDeleteDemand, useApproveDemand, useRejectDemand } from './useDemands';
 import { TableLayout } from '@/layouts/TableLayout';
 import { FaRegCircleCheck, FaRegCircleXmark, TbFileSearch } from '@/components/ui/Icons';
 
 export default function DemandsList() {
   const { demands, isLoading, error } = useDemands();
   const { mutate: deleteDemand } = useDeleteDemand();
+  const { approve } = useApproveDemand();
+  const { reject } = useRejectDemand();
+
+  const navigate = useNavigate();
 
   return (
     <TableLayout
@@ -51,46 +55,13 @@ export default function DemandsList() {
           visible: true,
           type: 'string',
         },
-      ]}
-      formFields={[
         {
-          name: 'firstName',
-          label: 'First Name',
-        },
-        {
-          name: 'lastName',
-          label: 'Last Name',
-        },
-        {
-          name: 'email',
-          type: 'email',
-          label: 'Email Address',
-        },
-        {
-          name: 'startDate',
-          label: 'Start Date',
-          type: 'date',
-        },
-        {
-          name: 'endDate',
-          label: 'End Date',
-          type: 'date',
-          rules: { ...RULES.endDate },
-        },
-        {
-          name: 'email',
-          type: 'email',
-          label: 'Email Address',
+          key: 'sector',
+          displayLabel: 'Sector',
+          visible: true,
+          type: 'string',
         },
       ]}
-      formDefaults={{
-        firstName: '',
-        lastName: '',
-        email: '',
-        startDate: '',
-        endDate: '',
-        offer: '',
-      }}
       fieldsToSearch={['firstName', 'lastName', 'email', 'offer']}
       downloadOptions={{
         csvFileName: 'Demands',
@@ -104,17 +75,17 @@ export default function DemandsList() {
           {
             text: 'Review',
             icon: <TbFileSearch />,
-            onClick: () => {},
+            onClick: (id) => navigate(`/app/demands/${id}`),
           },
           {
             text: 'Approve',
             icon: <FaRegCircleCheck />,
-            onClick: () => {},
+            onClick: (id) => approve(id),
           },
           {
             text: 'Reject',
             icon: <FaRegCircleXmark />,
-            onClick: () => {},
+            onClick: (id) => reject(id),
           },
         ],
       }}

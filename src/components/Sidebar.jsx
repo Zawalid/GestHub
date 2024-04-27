@@ -21,7 +21,7 @@ import { ROUTES } from '../utils/constants';
 import { Button } from './ui';
 import { capitalize, changeTitle } from '@/utils/helpers';
 import { useLogout, useUser } from '@/hooks/useUser';
-import { Logo } from './ui/logo';
+import { Logo } from './ui/Logo';
 
 const routesIcons = {
   overview: <IoHomeOutline />,

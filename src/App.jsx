@@ -41,6 +41,7 @@ const routesElements = {
   offers: <Offers />,
   'offers/:id': <Offers />,
   demands: <Demands />,
+  'demands/:id': <Demands />,
   projects: <Projects />,
   'projects/new': <Projects />,
   'projects/:id': <ProjectDetails />,

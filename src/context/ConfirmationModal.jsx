@@ -49,7 +49,7 @@ export function ConfirmationModalProvider({ children }) {
       >
         <div className='flex items-center gap-3  pb-3'>
           <div className='grid h-6 w-6 place-content-center rounded-full bg-[#F57800] text-white sm:h-8 sm:w-8 sm:text-lg'>
-            <PiWarningFill />
+            {options.icon || <PiWarningFill />}
           </div>
           <h1 className='text-xl font-semibold text-text-primary   sm:text-2xl'>{options.title}</h1>
         </div>
