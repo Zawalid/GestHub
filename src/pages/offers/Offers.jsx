@@ -9,6 +9,7 @@ import NewOffer from '@/features/offers/NewOffer';
 import OfferOverview from '@/features/offers/OfferOverview';
 import { checkDateInIntervals } from '@/utils/helpers';
 import NewDemand from '@/features/demands/NewDemand';
+import { useState } from 'react';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const getOffersProps = (offers, isLoading, error) => ({
@@ -69,6 +70,7 @@ export const getOffersProps = (offers, isLoading, error) => ({
 
 export function Offers() {
   const { offers, isLoading, error } = useOffers();
+  const [isApplying, setIsApplying] = useState();
   const navigate = useNavigate();
 
   return (
@@ -84,8 +86,8 @@ export function Offers() {
       </div>
       <OffersList />
       <NewOffer />
-      <OfferOverview />
-      {/* <NewDemand /> */}
+      <OfferOverview onApply={() => setIsApplying(true)} />
+      <NewDemand isOpen={isApplying} onClose={() => setIsApplying(false)} />
     </Operations>
   );
 }

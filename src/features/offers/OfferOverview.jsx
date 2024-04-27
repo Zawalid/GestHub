@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
 import { OfferSkeleton } from './OffersSkeleton';
 import { FaRegStar } from 'react-icons/fa';
 
-export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite }) {
+export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite, onApply }) {
   const [isEditing, setIsEditing] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -161,12 +161,14 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
       </div>
 
       {render()}
-      {onHomePage && (
+      {!onHomePage && (
         <div className='z-10 mt-auto flex justify-end gap-3'>
           <Button color='tertiary' onClick={() => navigate('/offers')}>
             Close
           </Button>
-          <Button disabled={isLoading || error}>Apply</Button>
+          <Button disabled={isLoading || error} onClick={onApply}>
+            Apply
+          </Button>
         </div>
       )}
     </Modal>

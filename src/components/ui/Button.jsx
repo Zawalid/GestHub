@@ -22,16 +22,16 @@ const button = tv({
       transparent: 'bg-transparent text-text-tertiary hover:text-text-secondary',
     },
     shape: {
-      icon: 'h-8 w-8 items-center justify-center rounded-[4px] p-1 bg-background-secondary text-text-tertiary hover:bg-background-tertiary',
-    },
-    display: {
-      'with-icon': 'gap-3 items-center',
-      centered: 'justify-center',
+      icon: 'h-8 w-8 items-center justify-center rounded-[4px] p-1 ',
     },
     state: {
       disabled:
         'bg-background-disabled cursor-not-allowed border-transparent hover:bg-background-disabled text-text-disabled',
       active: 'bg-primary text-white hover:bg-primary',
+    },
+    display: {
+      'with-icon': 'gap-3 items-center',
+      centered: 'justify-center',
     },
   },
   defaultVariants: {
@@ -63,7 +63,7 @@ export const Button = forwardRef(
       <button
         className={cn(
           button({
-            color,
+            color: shape === 'icon' && !color ? 'tertiary' : color,
             state: disabled ? 'disabled' : state,
             type,
             size,

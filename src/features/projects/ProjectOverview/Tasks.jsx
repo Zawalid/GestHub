@@ -50,7 +50,7 @@ export default function Tasks() {
   const updateGroups = (groupTasks, group) => setGroups({ ...groups, [group]: groupTasks });
 
   const onAddTask = (task) => {
-     addTask(
+    addTask(
       { ...task, project_id: project.id },
       {
         onSuccess: (task) => {
@@ -156,7 +156,7 @@ export default function Tasks() {
             List
           </Button>
         </div>,
-        document.getElementById('tabs') || document.body
+        document.getElementById('tabs') || document.getElementById('root')
       )}
     </div>
   );

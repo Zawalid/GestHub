@@ -8,15 +8,14 @@ import {
 import { toast } from 'sonner';
 
 const defaultOptions = {
+  type: 'Image',
   accept: ['.png', '.jpg', '.jpeg'],
   readAs: 'DataURL',
-  maxImages: 1,
+  maxFiles: 1,
   maxFileSize: 5,
   minHeight: 80,
   minWidth: 80,
 };
-
-
 
 export function useUploadFile({ options = defaultOptions, onChange, onError }) {
   const { openFilePicker } = useFilePicker({
@@ -24,7 +23,7 @@ export function useUploadFile({ options = defaultOptions, onChange, onError }) {
     readAs: options.readAs || defaultOptions.readAs,
     validators: [
       new FileAmountLimitValidator({
-        max: options.maxImages || defaultOptions.maxImages,
+        max: options.maxFiles || defaultOptions.maxFiles,
       }),
       new FileTypeValidator((options.accept || defaultOptions.accept).map((type) => type.replace('.', ''))),
       new FileSizeValidator({
@@ -41,7 +40,7 @@ export function useUploadFile({ options = defaultOptions, onChange, onError }) {
         toast.error(
           getErrorMessage(
             error.name,
-            'Image',
+            options.type || defaultOptions.type,
             options.accept || defaultOptions.accept,
             options.maxFileSize || defaultOptions.maxFileSize,
             options.maxFiles || defaultOptions.maxFiles
