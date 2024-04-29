@@ -55,6 +55,7 @@ export default function NewProject() {
 
   const [projectData, setProjectData] = useState(defaultProject);
   const [currentStep, setCurrentStep] = useState(steps[0]);
+  const [projectManager, setProjectManager] = useState(null);
   const { mutate: addProject } = useAddProject();
   const [parent] = useAutoAnimate({ duration: 400 });
   const { user } = useUser();
@@ -78,6 +79,7 @@ export default function NewProject() {
         setCurrentStep((prev) => ({ ...prev, stepStatus }));
       },
       ...(currentStep.title === 'Starter Tasks' && { teamMembers: projectData['Team Members'].map((m) => m.id) }),
+      ...(currentStep.title === 'Team Members' && { projectManager, setProjectManager }),
     };
   };
 
@@ -88,7 +90,7 @@ export default function NewProject() {
       tasks: projectData['Starter Tasks'],
       teamMembers: projectData['Team Members'].map((t) => t.id),
       supervisor_id: user?.id,
-      intern_id: null,
+      intern_id: projectManager,
     };
     addProject(project, {
       onSuccess: () => {

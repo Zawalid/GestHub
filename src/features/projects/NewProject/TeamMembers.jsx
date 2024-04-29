@@ -3,6 +3,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { CheckBox, SearchInput, Status } from '@/components/ui';
 import { useInterns } from '../../interns/useInterns';
 import { useEffect, useState } from 'react';
+import { Radio } from '@/components/ui/Radio';
 
 export const getSearchedInterns = (interns, query) => {
   return interns
@@ -19,7 +20,7 @@ export const renderInternsStatus = (isLoading, error, searchedInterns, render) =
 
 // --
 
-export function TeamMembers({ updateStatus, updateState, state }) {
+export function TeamMembers({ updateStatus, updateState, state, projectManager, setProjectManager }) {
   const [teamMembers, setTeamMembers] = useState(state);
   const [parent] = useAutoAnimate({ duration: 400 });
 
@@ -28,6 +29,11 @@ export function TeamMembers({ updateStatus, updateState, state }) {
     updateStatus(teamMembers.length ? 'completed' : 'skippable');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [teamMembers]);
+
+  useEffect(() => {
+    if (teamMembers.length === 0) setProjectManager(null);
+    if (teamMembers.length === 1) setProjectManager(teamMembers[0].id);
+  }, [teamMembers, setProjectManager]);
 
   const render = () => {
     if (teamMembers.length === 0)
@@ -39,7 +45,16 @@ export function TeamMembers({ updateStatus, updateState, state }) {
           </p>
         </div>
       );
-    return teamMembers?.map((intern) => <Intern key={intern.id} intern={intern} />);
+    return teamMembers?.map((intern) => (
+      <div key={intern.id} className='flex items-center gap-2'>
+        <Radio
+          name='projectManager'
+          checked={projectManager === intern.id}
+          onChange={(e) => setProjectManager(e.target.checked ? intern.id : null)}
+        />
+        <Intern intern={intern} isProjectManager={projectManager === intern.id} />
+      </div>
+    ));
   };
 
   return (
@@ -83,7 +98,7 @@ export function AllInterns({ children, teamMembers, setTeamMembers, filter }) {
               setTeamMembers((prev) => {
                 return prev.map((i) => i.id).includes(id)
                   ? prev.filter((i) => i.id !== id)
-                  : [...prev, { id, firstName, lastName, email, avatar }];
+                  : [...prev, { id, fullName: `${firstName} ${lastName}`, email, avatar }];
               });
             }}
           />
@@ -106,7 +121,7 @@ export function AllInterns({ children, teamMembers, setTeamMembers, filter }) {
   );
 }
 
-export function Intern({ intern }) {
+export function Intern({ intern, isProjectManager }) {
   return (
     <div className='flex items-center gap-2'>
       <img
@@ -115,7 +130,12 @@ export function Intern({ intern }) {
         className='h-8 w-8 rounded-full border border-border'
       />
       <div>
-        <p className='mb-1 text-sm font-semibold text-text-primary'>{intern.fullName}</p>
+        <p className='mb-1 text-sm font-semibold text-text-primary'>
+          {intern.fullName}
+          {isProjectManager && (
+            <span className='ml-1 text-xs font-normal text-text-secondary'>( Project Manager )</span>
+          )}
+        </p>
         <p className='text-xs font-medium text-text-secondary'>{intern?.email}</p>
       </div>
     </div>

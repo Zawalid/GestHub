@@ -1,6 +1,7 @@
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/components/ThemeSwitcher';
 import { Button } from '@/components/ui';
+import { Logo } from '@/components/ui/Logo';
 import { useUser } from '@/hooks/useUser';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { useEffect } from 'react';
@@ -17,9 +18,9 @@ export function AuthLayout() {
   }, [isAuthenticated, isLoading, navigate]);
 
   return (
-    <div className=' grid h-full w-full  grid-cols-1 md:grid-cols-[1fr,1fr]'>
-      <div className=' -background-primary relative hidden  h-screen items-center justify-center bg-gradient-to-l from-background-tertiary md:flex  '>
-        <img src='/images/logo-MEN.png' className='w-2/3 ' alt='' />
+    <div className='grid h-full w-full grid-cols-1 md:grid-cols-2'>
+      <div className='relative hidden items-center justify-center bg-gradient-to-b from-background-tertiary to-background-secondary md:flex'>
+        <Logo to={null} className='w-2/3' />
       </div>
       <div ref={parent} className=' flex h-full w-full flex-col p-2 md:h-screen md:overflow-auto md:p-0 '>
         <div>
@@ -27,13 +28,10 @@ export function AuthLayout() {
             <Button onClick={() => navigate('/')} shape='icon'>
               <BiHome />
             </Button>
-            <div className='  right-0 flex gap-4 '>
+            <div className='right-0 flex gap-4 '>
               <LanguageSwitcher />
               <ThemeSwitcher />
             </div>
-          </div>
-          <div className='flex items-center justify-center md:hidden'>
-            <img src='/images/logo-MEN.png' className='w-1/2' alt='' />
           </div>
         </div>
         <Outlet />
