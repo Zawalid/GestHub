@@ -15,7 +15,7 @@ export function HomePage() {
 
   return (
     <>
-      <Hero />
+      {/* <Hero /> */}
       <LatestOffers />
       <About />
     </>
