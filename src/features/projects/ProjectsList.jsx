@@ -49,7 +49,7 @@ export default function ProjectsList() {
       );
     return (
       <>
-        {!appliedFiltersNumber && !query && user?.role === 'supervisor' && <NewProject layout={layout} onAdd={onAdd} />}
+        {!appliedFiltersNumber && !query && user?.role === 'supervisor' && <New type='Project' layout={layout} onAdd={onAdd} />}
         {projects?.map((project) => (
           <Project key={project.id} project={project} layout={layout} />
         ))}
@@ -84,7 +84,7 @@ export default function ProjectsList() {
   );
 }
 
-function NewProject({ layout, onAdd }) {
+export function New({type, layout, onAdd }) {
   return (
     <Button
       color='tertiary'
@@ -96,7 +96,7 @@ function NewProject({ layout, onAdd }) {
       <div className='flex h-10 w-10 items-center justify-center rounded-full bg-background-secondary p-1 text-text-tertiary hover:bg-background-tertiary group-hover:bg-background-tertiary'>
         <FaPlus />
       </div>
-      <h3 className='font-semibold text-text-primary'>Add New Project</h3>
+      <h3 className='font-semibold text-text-primary'>Add New {type}</h3>
     </Button>
   );
 }

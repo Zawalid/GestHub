@@ -1,7 +1,7 @@
 @import url(./libraries.css);
 
 .sidebar-element {
-  @apply grid cursor-pointer grid-cols-[30px_auto] items-center rounded-r-lg  p-3 transition-colors duration-200 hover:bg-background-tertiary;
+  @apply grid cursor-pointer grid-cols-[30px_auto] items-center rounded-lg  p-3 transition-colors duration-200 hover:bg-background-tertiary;
   &.active {
     @apply bg-background-tertiary;
   }

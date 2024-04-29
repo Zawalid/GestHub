@@ -67,3 +67,5 @@ export const checkDateInIntervals = (publicationDate, date) => {
 };
 
 export const getFile = (data, type) => data?.files.find((file) => file.type === type)?.url || null;
+
+export const isAlreadyApplied = (user, offer_id) => user?.demands?.find((d) => d.offer_id === +offer_id);

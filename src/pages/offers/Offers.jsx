@@ -1,10 +1,7 @@
-import { useNavigate } from 'react-router-dom';
 import { Heading } from '@/components/Heading';
 import { Operations } from '@/components/shared/operations/Operations';
 import { useOffers } from '@/features/offers/useOffers';
 import OffersList from '@/features/offers/OffersList';
-import { Button } from '@/components/ui';
-import { FaPlus } from 'react-icons/fa';
 import NewOffer from '@/features/offers/NewOffer';
 import OfferOverview from '@/features/offers/OfferOverview';
 import { checkDateInIntervals } from '@/utils/helpers';
@@ -68,22 +65,16 @@ export const getOffersProps = (offers, isLoading, error) => ({
 
 export function Offers() {
   const { offers, isLoading, error } = useOffers();
-  const navigate = useNavigate();
 
   return (
     <Operations {...getOffersProps(offers, isLoading, error)}>
       <div className='flex flex-col justify-between gap-3 mobile:flex-row mobile:items-center'>
         <Heading>Offers</Heading>
-        <div className='flex items-center gap-3'>
-          <Operations.Search />
-          <Button shape='icon' onClick={() => navigate('/app/offers/new')}>
-            <FaPlus />
-          </Button>
-        </div>
+        <Operations.Search />
       </div>
       <OffersList />
       <NewOffer />
-      <OfferOverview  />
+      <OfferOverview />
     </Operations>
   );
 }

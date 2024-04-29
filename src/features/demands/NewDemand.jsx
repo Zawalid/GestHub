@@ -4,7 +4,7 @@ import { useUploadFile } from '@/hooks/useUploadFile';
 import { RULES } from '@/utils/constants';
 import { LuUpload, IoTrashOutline, HiMiniXMark, FiCheck, BsSendFill } from '@/components/ui/Icons';
 import { useUser } from '@/hooks/useUser';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useOffer } from '../offers/useOffers';
 import { useEffect } from 'react';
 import { useAddDemand } from './useDemands';
@@ -12,6 +12,7 @@ import { ErrorTooltip } from '@/components/ui/InputField';
 
 export default function NewDemand({ isOpen, onClose }) {
   const { mutate, isPending, error, isSuccess, reset } = useAddDemand({ showToast: false });
+  const navigate = useNavigate();
 
   const render = () => {
     if (isPending) return <SendingApplication />;
@@ -21,10 +22,11 @@ export default function NewDemand({ isOpen, onClose }) {
       <ApplicationForm
         onApply={mutate}
         onClose={onClose}
-        onSuccess={(resetForm) => {
+      onSuccess={(resetForm) => {
           onClose();
           resetForm();
           setTimeout(reset, 1000);
+          navigate('/offers');
         }}
       />
     );

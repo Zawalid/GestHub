@@ -7,26 +7,24 @@ import { RULES } from '@/utils/constants';
 export default function Profile() {
   const { user } = useUser();
   const { mutate } = useUpdateProfile();
-  const { mutate: updateAvatar,isPending } = useUpdateAvatar();
-
-  const defaultUser = {
-    avatar: { src: null, file: null },
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    // Conditionally : if the user is and intern/user
-    ...(['intern', 'user'].includes(user?.role) && {
-      academicLevel: '',
-      establishment: '',
-    }),
-  };
+  const { mutate: updateAvatar, isPending } = useUpdateAvatar();
 
   const {
     Form,
     options: { isUpdated, isValid, dirtyFields, handleSubmit, reset, setValue, getValue },
   } = useForm({
-    defaultValues: { ...defaultUser, ...user },
+    defaultValues: {
+      avatar: user?.avatar || { src: null, file: null },
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
+      email: user?.email || '',
+      phone: user?.phone || '',
+      // Conditionally : if the user is and intern/user
+      ...(['intern', 'user'].includes(user?.role) && {
+        academicLevel: user?.academicLevel || '',
+        establishment: user?.establishment || '',
+      }),
+    },
     fields: [
       {
         name: 'firstName',
@@ -85,8 +83,10 @@ export default function Profile() {
       <div className='space-y-5'>
         <div>
           <h3 className='mb-3 font-bold text-text-secondary'>Image</h3>
-          <ProfileAvatar avatar={getValue('avatar')} onChange={(avatar) => setValue('avatar', avatar)}
-          disabled={isPending}
+          <ProfileAvatar
+            avatar={getValue('avatar')}
+            onChange={(avatar) => setValue('avatar', avatar)}
+            disabled={isPending}
           />
         </div>
 

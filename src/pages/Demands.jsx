@@ -1,12 +1,29 @@
 import { Heading } from '@/components/Heading';
+import { Operations } from '@/components/shared/operations/Operations';
 import DemandReview from '@/features/demands/DemandReview';
 import DemandsList from '@/features/demands/DemandsList';
+import { useDemands } from '@/features/demands/useDemands';
 
 export function Demands() {
+  const { demands, isLoading, error } = useDemands();
+
   return (
     <>
       <Heading>Demands</Heading>
-      <DemandsList />
+      <Operations
+        data={demands}
+        isLoading={isLoading}
+        error={error}
+        filters={{
+          status: [
+            { value: 'Pending', checked: false },
+            { value: 'Approved', checked: false },
+            { value: 'Rejected', checked: false },
+          ],
+        }}
+      >
+        <DemandsList />
+      </Operations>
       <DemandReview />
     </>
   );

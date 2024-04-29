@@ -13,7 +13,6 @@ export function HomePageOffers() {
   const { offers, isLoading, error, favorites, onToggleFavorite } = useVisibleOffers(true);
   const { user } = useUser();
 
-  console.log(offers,favorites)
 
   useEffect(() => {
     changeTitle('Offers');
@@ -41,7 +40,7 @@ export function HomePageOffers() {
           <Operations.Search />
         </div>
         <div className='flex h-screen flex-col'>
-          <OffersList hideFilter={false} />
+          <OffersList hideFilter={false} onHomePage={true} />
         </div>
       </Operations>
       <OfferOverview

@@ -63,7 +63,9 @@ export function Summary({ projectData }) {
           <div className='flex flex-col gap-1.5'>
             <label className='text-sm font-medium text-text-tertiary'>Team Members</label>
             <button className='dropdown-toggler cursor-auto hover:bg-background-secondary'>
-              {teamMembers.length > 0 ? `${teamMembers.map((t) => t.fullName).join(' | ')}` : 'No team assembled'}
+              {teamMembers.length > 0
+                ? `${teamMembers.map((t) => `${t?.firstName} ${t?.lastName}`).join(' | ')}`
+                : 'No team assembled'}
             </button>
           </div>
           <div className='flex flex-col gap-1.5'>
