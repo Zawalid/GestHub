@@ -1,10 +1,11 @@
 import { Button, DropDown } from './ui';
 import { FaUserAlt } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from '../hooks';
 import { useLogout } from '@/hooks/useUser';
 import { FiLogOut } from 'react-icons/fi';
+import { RxDashboard } from 'react-icons/rx';
 
 export function AuthSwitcher({ size }) {
   const { pathname } = useLocation();
@@ -34,6 +35,7 @@ export function AuthSwitcher({ size }) {
 
 function User({ user }) {
   const { logout } = useLogout();
+  const navigate = useNavigate();
 
   return (
     <DropDown
@@ -62,6 +64,12 @@ function User({ user }) {
         </div>
       </DropDown.Title>
       <DropDown.Divider />
+      {user?.role !== 'user' && (
+        <DropDown.Option onClick={() => navigate('/app')}>
+          <RxDashboard />
+          Dashboard
+        </DropDown.Option>
+      )}
       <DropDown.Option onClick={logout}>
         <FiLogOut />
         Logout

@@ -4,6 +4,8 @@ import { useOperations } from '@/components/shared/operations/useOperations';
 import { Status } from '@/components/ui/Status';
 import Offer from './Offer';
 import OffersSkeleton from './OffersSkeleton';
+import { New } from '../projects/ProjectsList';
+import { useNavigate } from 'react-router-dom';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const renderOffersList = ({ offers, isLoading, error, layout, query, appliedFiltersNumber }) => {
@@ -20,12 +22,13 @@ export const renderOffersList = ({ offers, isLoading, error, layout, query, appl
   );
 };
 
-export default function OffersList({ hideFilter }) {
+export default function OffersList({ hideFilter, onHomePage }) {
   const { data: offers, isLoading, error, layout, appliedFiltersNumber, query } = useOperations();
   const [parent] = useAutoAnimate({ duration: 500 });
+  const navigate = useNavigate();
 
   return (
-    <div className='flex flex-1 overflow-hidden flex-col gap-5'>
+    <div className='flex flex-1 flex-col gap-5 overflow-hidden'>
       <div className='flex items-center justify-between gap-3'>
         <div className='flex items-center gap-3 pt-2'>
           <Operations.DropDown>
@@ -39,10 +42,15 @@ export default function OffersList({ hideFilter }) {
 
       <div
         className={`flex-1 gap-5 overflow-auto p-1 pr-2 ${
-          layout === 'grid' && !isLoading ? 'grid content-start grid-cols-[repeat(auto-fill,minmax(350px,1fr))]' : 'flex flex-wrap'
+          layout === 'grid' && !isLoading
+            ? 'grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] content-start'
+            : 'flex flex-col'
         }`}
         ref={parent}
       >
+        {!appliedFiltersNumber && !query && !onHomePage && !error && !isLoading && (
+          <New type='Project' layout={layout} onAdd={() => navigate('/app/offers/new')} />
+        )}
         {renderOffersList({ offers, isLoading, error, layout, appliedFiltersNumber, query })}
       </div>
     </div>

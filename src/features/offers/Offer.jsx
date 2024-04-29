@@ -1,8 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-import { formatDate } from '@/utils/helpers';
-import { IoCalendarNumberOutline, IoEyeOffOutline, MdOutlineLocationOn } from '@/components/ui/Icons';
+import { formatDate, isAlreadyApplied } from '@/utils/helpers';
+import {
+  BsClipboard2Check,
+  IoCalendarNumberOutline,
+  IoEyeOffOutline,
+  MdOutlineLocationOn,
+} from '@/components/ui/Icons';
+import { useUser } from '@/hooks/useUser';
 
-export default function Offer({ offer,layout }) {
+export default function Offer({ offer, layout }) {
+  const { user } = useUser();
   const {
     id,
     title,
@@ -24,28 +31,13 @@ export default function Offer({ offer,layout }) {
   return (
     <div
       className={`group relative flex w-full cursor-pointer flex-col gap-3 rounded-lg  border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95 ${status === 'Urgent' ? 'rounded-tl-none' : ''} ${isFavorite ? 'rounded-tr-none' : ''} ${layout === 'list' ? 'h-fit' : ''}`}
-
       onClick={() => navigate(`/${window.location.pathname.includes('/app') ? 'app/' : ''}offers/${id}`)}
     >
-      {status === 'Urgent' && (
-        <>
-          <span className='absolute -left-[1.5px] -top-[1.5px] h-[2px] w-16 rounded-lg bg-red-500'></span>
-          <span className='absolute -left-[1.5px] -top-[1.5px] h-16 w-[2px] rounded-lg bg-red-500'></span>
-        </>
-      )}
-      {isFavorite && (
-        <>
-          <span className='absolute -right-[1.5px] -top-[1.5px] h-[2px] w-16 rounded-lg bg-yellow-500'></span>
-          <span className='absolute -right-[1.5px] -top-[1.5px] h-16 w-[2px] rounded-lg bg-yellow-500'></span>
-        </>
-      )}
+      <Indicator condition={status === 'Urgent'} className='-left-[1.5px] bg-red-500' />
+      <Indicator condition={isFavorite && (user?.role === 'user' || !user)} className='-right-[1.5px] bg-yellow-500' />
 
-      {visibility === 'Hidden' && (
-        <div className='absolute left-0 top-0 grid h-full w-full place-content-center overflow-hidden rounded-lg transition-opacity duration-300 group-hover:opacity-0'>
-          <div className='absolute h-full w-full bg-background-primary opacity-60'></div>
-          <IoEyeOffOutline className='z-10 text-3xl text-text-secondary' />
-        </div>
-      )}
+      <Layer condition={visibility === 'Hidden'} icon={<IoEyeOffOutline />} />
+      <Layer condition={isAlreadyApplied(user, id)} icon={<BsClipboard2Check />} />
 
       <DateLocation {...{ publicationDate, duration, direction, city }} />
 
@@ -65,6 +57,28 @@ export default function Offer({ offer,layout }) {
       </div>
       <Skills skills={skills} />
     </div>
+  );
+}
+
+function Layer({ condition, icon }) {
+  return (
+    condition && (
+      <div className='absolute left-0 top-0 grid h-full w-full place-content-center overflow-hidden rounded-lg transition-opacity duration-300 group-hover:opacity-0'>
+        <div className='absolute h-full w-full bg-background-primary opacity-60'></div>
+        <span className='z-10 text-3xl text-text-secondary'>{icon}</span>
+      </div>
+    )
+  );
+}
+
+function Indicator({ condition, className }) {
+  return (
+    condition && (
+      <>
+        <span className={`absolute -top-[1.5px] h-[2px] w-16 rounded-lg ${className}`}></span>
+        <span className={`absolute -top-[1.5px] h-16 w-[2px] rounded-lg ${className}`}></span>
+      </>
+    )
   );
 }
 
@@ -90,6 +104,7 @@ function DateLocation({ publicationDate, duration, city, direction }) {
     </div>
   );
 }
+
 function Skills({ skills }) {
   if (!skills || !skills.length)
     return (

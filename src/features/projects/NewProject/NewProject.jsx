@@ -88,7 +88,7 @@ export default function NewProject() {
       tasks: projectData['Starter Tasks'],
       teamMembers: projectData['Team Members'].map((t) => t.id),
       supervisor_id: user?.id,
-      projectManager: null,
+      intern_id: null,
     };
     addProject(project, {
       onSuccess: () => {

@@ -5,22 +5,23 @@ const defaultOptions = {
   displayNewRecord: true,
   displayTableRecord: true,
   actions: null,
+  filter: null,
 };
 
-export function TableLayout({  onAdd, onUpdate, onDelete,layoutOptions = defaultOptions, ...tableProps }) {
+export function TableLayout({ onAdd, onUpdate, onDelete, layoutOptions = defaultOptions, ...tableProps }) {
   const [parent] = useAutoAnimate({ duration: 300 });
-
-  const { displayTableRecord, displayNewRecord, actions } = layoutOptions;
+  const { displayTableRecord, displayNewRecord, actions, filter } = layoutOptions;
 
   return (
     <div className='flex h-full flex-col gap-5 overflow-auto'>
       <Table {...tableProps}>
         <div className='flex flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center'>
-          <div className='flex items-center justify-between gap-3 sm:justify-normal'>
+          <div className={`flex items-center justify-between gap-3 sm:justify-normal ${filter ? 'pt-5' : ''}`}>
             <Table.Search />
             <Table.View />
           </div>
           <div className='flex items-center justify-between gap-3'>
+            {filter}
             <Table.Download />
             {displayNewRecord && <Table.NewRecord onAdd={onAdd} />}
           </div>

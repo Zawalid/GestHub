@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router-dom';
-import { useDemands, useDeleteDemand, useApproveDemand, useRejectDemand } from './useDemands';
+import { useDeleteDemand, useApproveDemand, useRejectDemand } from './useDemands';
 import { TableLayout } from '@/layouts/TableLayout';
 import { FaRegCircleCheck, FaRegCircleXmark, TbFileSearch } from '@/components/ui/Icons';
+import { Operations } from '@/components/shared/operations/Operations';
+import { useOperations } from '@/components/shared/operations/useOperations';
 
 export default function DemandsList() {
-  const { demands, isLoading, error } = useDemands();
+  const { data: demands, isLoading, error } = useOperations();
   const { mutate: deleteDemand } = useDeleteDemand();
   const { approve } = useApproveDemand();
   const { reject } = useRejectDemand();
@@ -61,6 +63,12 @@ export default function DemandsList() {
           visible: true,
           type: 'string',
         },
+        {
+          key: 'status',
+          displayLabel: 'Status',
+          visible: true,
+          type: 'string',
+        },
       ]}
       fieldsToSearch={['firstName', 'lastName', 'email', 'offer']}
       downloadOptions={{
@@ -81,13 +89,16 @@ export default function DemandsList() {
             text: 'Approve',
             icon: <FaRegCircleCheck />,
             onClick: (id) => approve(id),
+            hidden: (demand) => demand?.status !== 'Pending',
           },
           {
             text: 'Reject',
             icon: <FaRegCircleXmark />,
             onClick: (id) => reject(id),
+            hidden: (demand) => demand?.status !== 'Pending',
           },
         ],
+        filter: <Operations.Filter />,
       }}
     />
   );

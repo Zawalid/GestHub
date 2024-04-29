@@ -33,6 +33,9 @@ Array.prototype.customFilter = function (filters) {
 };
 
 Array.prototype.customSort = function (sortBy, direction, sortOptions) {
+  if (!sortOptions) return this;
+
+
   const stringFields = sortOptions.filter((c) => c.type === 'string').map((c) => c.key);
   const numberFields = sortOptions.filter((c) => c.type === 'number').map((c) => c.key);
   const dateFields = sortOptions.filter((c) => c.type === 'date').map((c) => c.key);

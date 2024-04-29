@@ -10,7 +10,7 @@ import {
   MdDriveFileRenameOutline,
   PiX,
 } from '@/components/ui/Icons';
-import { changeTitle, formatDate } from '@/utils/helpers';
+import { changeTitle, formatDate, isAlreadyApplied } from '@/utils/helpers';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { OfferForm } from './NewOffer';
 import { useEffect, useState } from 'react';
@@ -157,8 +157,8 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
             </Button>
           </>
         )}
-        {onHomePage && user?.role === 'user' && (
-          <Button shape='icon' onClick={() => onToggleFavorite(id)} disabled={isLoading || error}>
+        {onHomePage && (user?.role === 'user' || !user) && !isLoading && !error && (
+          <Button shape='icon' onClick={() => onToggleFavorite(id)}>
             {isFavorite?.(id) ? <FaStar className='text-yellow-500' /> : <FaRegStar className='  text-text-primary' />}
           </Button>
         )}
@@ -170,9 +170,12 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
           <Button color='tertiary' onClick={() => navigate('/offers')}>
             Close
           </Button>
-          {user?.role === 'user' && (
-            <Button disabled={isLoading || error || user?.demands.find((d) => d.offer_id === id)} onClick={onApply}>
-              {user?.demands.find((d) => d.offer_id === id) ? 'Already Applied' : 'Apply'}
+          {(user?.role === 'user' || !user) && (
+            <Button
+              disabled={isLoading || error || isAlreadyApplied(user, id)}
+              onClick={() => (user ? onApply() : navigate('/login'))}
+            >
+              {isAlreadyApplied(user, id) ? 'Already Applied' : 'Apply'}
             </Button>
           )}
         </div>

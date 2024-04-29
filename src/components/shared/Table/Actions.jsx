@@ -47,12 +47,14 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
         </Button>
       }
     >
-      {(actions || defaultActions).map((action) => (
-        <DropDown.Option key={action.text} onClick={() => action.onClick(row.profile_id || row.id)}>
-          {action.icon}
-          {action.text}
-        </DropDown.Option>
-      ))}
+      {(actions || defaultActions)
+        .filter((action) => !action.hidden?.(row))
+        .map((action) => (
+          <DropDown.Option key={action.text} onClick={() => action.onClick(row.profile_id || row.id)}>
+            {action.icon}
+            {action.text}
+          </DropDown.Option>
+        ))}
 
       <DropDown.Option
         onClick={() =>

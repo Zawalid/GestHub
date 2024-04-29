@@ -16,6 +16,7 @@ import AddNewMember from './AddNewMember';
 import { useConfirmationModal } from '@/hooks';
 import { useUser } from '@/hooks/useUser';
 import { useInternsByIds } from '@/features/interns/useInterns';
+import { getProgress } from '@/utils/helpers';
 
 export function TeamMembers({ project }) {
   const [isOpen, setIsOpen] = useState();
@@ -142,9 +143,9 @@ function Member({ member, project }) {
         <img
           src={avatar || '/images/default-profile.jpg'}
           alt='avatar'
-          className='mx-auto h-16 mb-4 w-16 rounded-full border border-border object-cover shadow-md'
+          className='mx-auto mb-4 h-16 w-16 rounded-full border border-border object-cover shadow-md'
         />
-        <h3 className='font-semibold mb-1 text-lg text-text-primary'>{fullName}</h3>
+        <h3 className='mb-1 text-lg font-semibold text-text-primary'>{fullName}</h3>
         <p className='text-sm font-medium text-text-secondary'>
           {id === projectManager ? 'Project Manager' : 'Team Member'}
         </p>
@@ -156,7 +157,7 @@ function Member({ member, project }) {
         </div>
         <div className='flex items-center gap-1 text-text-secondary'>
           <TbProgressCheck />
-          <span className='text-xs font-medium '>{(doneTasks.length / assignedTasks.length) * 100 || 0}%</span>
+          <span className='text-xs font-medium '>{getProgress(doneTasks.length / assignedTasks.length)}%</span>
         </div>
       </div>
       <Link to={`/app/interns/${id}`}>
