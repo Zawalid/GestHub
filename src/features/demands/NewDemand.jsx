@@ -112,6 +112,7 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
       {
         name: 'CV',
         hidden: true,
+        rules: { required: false },
       },
       {
         name: 'Internship Application',
@@ -135,7 +136,7 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
         formData.append(key, demand[key]);
       }
 
-      onApply(demand, { onSuccess: () => setTimeout(() => onSuccess(reset), 1000) });
+      onApply(formData, { onSuccess: () => setTimeout(() => onSuccess(reset), 1000) });
     },
     gridLayout: true,
   });
@@ -170,6 +171,7 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
               file={getValue(type)?.file || {}}
               onChange={(file) => setValue(type, file)}
               onDelete={() => setValue(type, null)}
+              disabled={type === 'CV' && user?.cv}
             />
           ))}
         </div>
@@ -178,7 +180,11 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
         <Button color='tertiary' onClick={() => reset(onClose)}>
           Cancel
         </Button>
-        <Button color='secondary' disabled={!isUpdated || !isValid} onClick={() => handleSubmit()}>
+        <Button
+          color='secondary'
+          disabled={!isUpdated || !isValid || (!user?.cv && !getValue('CV')?.file)}
+          onClick={() => handleSubmit()}
+        >
           Apply
         </Button>
       </div>
@@ -186,7 +192,7 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
   );
 }
 
-function File({ type, file: { name, size }, onChange, onDelete }) {
+function File({ type, file: { name, size }, onChange, onDelete, disabled }) {
   const { openFilePicker } = useUploadFile({
     onChange,
     options: {
@@ -196,7 +202,9 @@ function File({ type, file: { name, size }, onChange, onDelete }) {
   });
 
   return (
-    <div className='flex items-center gap-3 rounded-lg bg-background-secondary px-3 py-1'>
+    <div
+      className={`flex items-center gap-3 rounded-lg  px-3 py-1 ${disabled ? 'bg-background-disabled' : 'bg-background-secondary'}`}
+    >
       <div className='relative h-12 w-12'>
         {['pdf', 'docx', 'doc'].map((fileType) => (
           <img
@@ -215,14 +223,16 @@ function File({ type, file: { name, size }, onChange, onDelete }) {
       <div className='flex-1 space-y-0.5'>
         <h4 className='flex items-center gap-2 text-sm font-medium text-text-primary'>
           {name || type}
-          {!name && <ErrorTooltip message={`${type} is required`} />}
+          {!name && !disabled && <ErrorTooltip message={`${type} is required`} />}
         </h4>
         <span className='text-xs text-text-secondary'>
-          {size
-            ? size / 1024 / 1024 < 1
-              ? `${(size / 1024).toFixed(2)} KB`
-              : `${(size / 1024 / 1024).toFixed(2)} MB`
-            : 'No file uploaded'}{' '}
+          {disabled
+            ? 'Already Provided'
+            : size
+              ? size / 1024 / 1024 < 1
+                ? `${(size / 1024).toFixed(2)} KB`
+                : `${(size / 1024 / 1024).toFixed(2)} MB`
+              : 'No file uploaded'}{' '}
         </span>
       </div>
       <div className='flex gap-1.5'>

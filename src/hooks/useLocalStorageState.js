@@ -16,18 +16,3 @@ export function useLocalStorageState(key, initialState) {
   return [value, setValue];
 }
 
-export function toLocalStorage(key,item,droped,remove) {
-  let items =   localStorage.getItem(key) ? [...JSON.parse(localStorage.getItem(key))] : []
-    function additem() {
-      items = [...items, item];
-      localStorage.setItem(key, JSON.stringify(items));
-  }
-  function dropItem() {
-    items = items.filter(e => e !== item)
-      localStorage.setItem(key, JSON.stringify(items));
-  }
-  if (item && !items.includes(item)) additem();
-  if (droped) dropItem()
-  if (remove) localStorage.removeItem(remove)
-  return items ;
-}

@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getAllOffers, getOffer, addOffer, updateOffer, deleteOffer } from '@/services/offersAPI';
+import { getAllOffers, getOffer, addOffer, updateOffer, deleteOffer, getAllVisibleOffers } from '@/services/offersAPI';
 import { useMutate } from '@/hooks/useMutate';
 import { useLocalStorageState } from '@/hooks/useLocalStorageState';
 
@@ -7,17 +7,27 @@ import { useLocalStorageState } from '@/hooks/useLocalStorageState';
 
 const getSkills = (offer) => (offer?.skills ? offer?.skills.split(',') : []);
 
-export function useOffers(onHomePage, latest) {
+export function useOffers() {
   const { data, error, isPending } = useQuery({ queryKey: ['offers'], queryFn: getAllOffers });
+
+  const offers = data?.map((offer) => ({ ...offer, skills: getSkills(offer) }));
+
+  return {
+    offers,
+    error,
+    isLoading: isPending,
+  };
+}
+
+export function useVisibleOffers(latest) {
+  const { data, error, isPending } = useQuery({ queryKey: ['offers/visible'], queryFn: getAllVisibleOffers });
   const [favorites, setFavorites] = useLocalStorageState('favorites', []);
   const queryClient = useQueryClient();
 
   const getOffers = () => {
-    const offers = onHomePage
-      ? data
-          ?.filter((offer) => offer.visibility === 'Visible')
-          .map((offer) => (favorites.includes(offer.id) ? { ...offer, isFavorite: true } : offer))
-      : data;
+    const offers = data?.map((offer) =>
+      favorites.includes(String(offer.id)) ? { ...offer, isFavorite: true } : offer
+    );
 
     return latest
       ? offers?.sort((a, b) => (a.status === b.status ? 0 : a.status === 'Urgent' ? -1 : 1)).slice(0, 5)
@@ -41,6 +51,7 @@ export function useOffers(onHomePage, latest) {
     isLoading: isPending,
   };
 }
+
 export const useOffer = (id) => {
   const { data, error, isPending } = useQuery({
     queryKey: ['offer', id],

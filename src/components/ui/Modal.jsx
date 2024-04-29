@@ -7,8 +7,13 @@ export function Modal({ children, isOpen, onClose, className, overlayClassName, 
   return createPortal(
     <Overlay isOpen={isOpen} closeOnBlur={closeOnBlur} onClose={onClose} className={overlayClassName}>
       <Content isOpen={isOpen} className={className}>
-        {closeButton && (
-          <Button className='absolute right-2 top-2 z-10' onClick={onClose} shape='icon' size='small'>
+        {(closeButton || closeButton === false) && (
+          <Button
+            className={`absolute right-2 top-2 z-10 ${closeButton === false ? 'flex md:hidden' : ''}`}
+            onClick={onClose}
+            shape='icon'
+            size='small'
+          >
             <PiX />
           </Button>
         )}

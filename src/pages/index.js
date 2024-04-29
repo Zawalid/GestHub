@@ -1,10 +1,6 @@
 export { Overview } from './Overview';
-export { Supervisors } from './supervisors/Supervisors';
-export { SupervisorDetails } from './supervisors/SupervisorDetails';
-export { Interns } from './interns/Interns';
-export { InternDetails } from './interns/InternDetails';
-export { Teams } from './Teams';
-export { Absences } from './Absences';
+export { Supervisors } from './Supervisors';
+export { Interns } from './Interns';
 export { Projects } from './projects/Projects';
 export { ProjectDetails } from './projects/ProjectDetails';
 export { Offers } from './offers/Offers';

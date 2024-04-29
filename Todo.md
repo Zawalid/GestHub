@@ -21,3 +21,4 @@
 - [x] send team members as an array of ids
 - [x] academic level + start/endDate in intern 
 - [x] disable image manipulation when updating profile
+- [ ] Fix the routing

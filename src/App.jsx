@@ -10,17 +10,13 @@ import './styles/App.css';
 import { AppLayout, AuthLayout, HomePageLayout } from './layouts';
 import {
   Overview,
-  Absences,
   Interns,
   Supervisors,
-  Teams,
   NotFound,
   HomePage,
   Offers,
   Demands,
   Projects,
-  SupervisorDetails,
-  InternDetails,
   ProjectDetails,
   Login,
   Register,
@@ -33,11 +29,9 @@ import { useUser } from './hooks/useUser';
 const routesElements = {
   overview: <Overview />,
   supervisors: <Supervisors />,
-  'supervisors/:id': <SupervisorDetails />,
+  'supervisors/:id': <Supervisors />,
   interns: <Interns />,
-  'interns/:id': <InternDetails />,
-  teams: <Teams />,
-  absences: <Absences />,
+  'interns/:id': <Interns />,
   offers: <Offers />,
   'offers/:id': <Offers />,
   demands: <Demands />,
@@ -82,8 +76,9 @@ export default function App() {
               <Route index element={<Navigate to='/app/overview' replace={true} />} />
               {/*  Routes of specific role */}
               {ROUTES[user?.role]?.map((route) => (
-                <Route key={route} path={route} element={routesElements[route]} />
+                <Route key={route} path={route} element={<ProtectedRoute>{routesElements[route]}</ProtectedRoute>} />
               ))}
+              <Route path='*' element={<NotFound />} />
             </Route>
             <Route path='*' element={<NotFound />} />
           </Routes>

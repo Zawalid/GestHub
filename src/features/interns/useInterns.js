@@ -1,6 +1,6 @@
 import { useMutate } from '@/hooks/useMutate';
 import { addIntern, deleteIntern, getAllInterns, getIntern, updateIntern } from '@/services/internsAPI';
-import { getAvatar } from '@/utils/helpers';
+import { getFile } from '@/utils/helpers';
 import { useQuery } from '@tanstack/react-query';
 
 // Queries
@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 export const getAdditionalData = (data) => {
   return {
     fullName: `${data?.firstName} ${data?.lastName}`,
-    avatar: getAvatar(data),
+    avatar: getFile(data,'avatar'),
   };
 };
 

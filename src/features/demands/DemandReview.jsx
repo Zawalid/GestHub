@@ -118,9 +118,9 @@ export default function DemandReview() {
   return (
     <Modal
       isOpen={location.pathname.includes('/demands') && id}
-      className='relative min-h-[470px] overflow-auto p-5 md:h-fit md:max-h-[600px] md:w-[650px] md:border'
-      closeOnBlur={false}
-      closeButton={true}
+      className='relative min-h-[470px] overflow-auto p-5 sm:h-fit md:max-h-[600px] md:w-[650px] md:border'
+      closeOnBlur={true}
+      closeButton={false}
       onClose={() => navigate('/app/demands')}
     >
       {render()}
@@ -133,7 +133,7 @@ function File({ type }) {
     <div className='space-y-1'>
       <label className='text-xs font-medium text-text-tertiary'>{type}</label>
       <div className='relative h-[140px] overflow-hidden rounded-lg border border-border bg-white shadow-md'>
-        <div className='absolute flex h-full w-full bg-[url("/images/default-profile.jpg")] bg-cover blur-md'></div>
+        <div className='absolute flex h-full w-full bg-[url("/images/default-profile.jpg")] bg-cover blur-lg'></div>
         <div className='absolute flex h-full w-full items-center justify-center gap-1'>
           <Button shape='icon' size='small'>
             <IoEyeOutline />

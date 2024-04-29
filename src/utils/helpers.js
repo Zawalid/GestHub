@@ -66,4 +66,4 @@ export const checkDateInIntervals = (publicationDate, date) => {
   return Interval.fromDateTimes(start, end).contains(DateTime.fromISO(publicationDate));
 };
 
-export const getAvatar = (data) => data?.files.find((file) => file.type === 'avatar')?.url || null;
+export const getFile = (data, type) => data?.files.find((file) => file.type === type)?.url || null;

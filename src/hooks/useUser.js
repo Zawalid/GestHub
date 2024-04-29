@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { login, register, logout, getUser, updateProfile, updatePassword, updateAvatar } from '@/services/usersAPI';
 import { useMutate } from './useMutate';
-import { getAvatar } from '@/utils/helpers';
+import { getFile } from '@/utils/helpers';
 import { useConfirmationModal } from './useConfirmationModal';
 
 const useRedirect = (isLogout) => {
@@ -70,7 +70,7 @@ export function useUser() {
   });
 
   return {
-    user: data ? { ...data, avatar: { src: getAvatar(data), file: null } } : null,
+    user: data ? { ...data, avatar: { src: getFile(data, 'avatar'), file: null }, cv: getFile(data, 'cv') } : null,
     isAuthenticated: Boolean(data),
     isLoading: isPending,
     error,

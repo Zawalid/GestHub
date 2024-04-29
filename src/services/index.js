@@ -2,28 +2,23 @@ import axios from 'axios';
 
 export const axiosFetch = async (resource, method, data) => {
   try {
-    // if (isAuth && method === 'POST') {
-    //   const response = await axios.get(`${import.meta.env.VITE_AUTH_URL}/sanctum/csrf-cookie`, {
-    //     withCredentials: true,
-    //     withXSRFToken : true,
-    //   });
-    //   console.log(response.data);
-    // }
-
     const response = await axios({
       method: method || 'GET',
       url: `${import.meta.env.VITE_API_URL}/${resource}`,
       data: data,
       withCredentials: true,
       withXSRFToken: true,
-      headers: { Accept: 'application/json' },
+      headers: { Accept: 'application/json', 'Accept-Path': true },
     });
     return response.data;
   } catch (e) {
     console.log(e);
-    if (e.request.responseURL.includes('login') || e.request.responseURL.includes('register')
-      || e.request.responseURL.includes('logout') || e.request.responseURL.includes('password') 
-  ) {
+    if (
+      e.request.responseURL.includes('login') ||
+      e.request.responseURL.includes('register') ||
+      e.request.responseURL.includes('logout') ||
+      e.request.responseURL.includes('password')
+    ) {
       throw Error(e.response.data.message);
     }
     throw Error(e.response?.status === 404 ? 'Not found' : getAxiosErrorMessage(e.code));

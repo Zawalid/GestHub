@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getAllDemands, getDemand, addDemand, deleteDemand } from '@/services/demandsAPI';
 import { useMutate } from '@/hooks/useMutate';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
+import { getFile } from '@/utils/helpers';
 
 // Queries
 
@@ -22,6 +23,8 @@ const getAdditionalData = (demand) => {
     endDate,
     offer: title,
     sector: sector,
+    cv: getFile(demand?.user, 'cv'),
+    demandeStage: getFile(demand?.user, 'demandeStage'),
   };
 };
 

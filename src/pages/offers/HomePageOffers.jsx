@@ -1,6 +1,6 @@
 import { Operations } from '@/components/shared/operations/Operations';
 import { getOffersProps } from './Offers';
-import { useOffers } from '@/features/offers/useOffers';
+import { useVisibleOffers } from '@/features/offers/useOffers';
 import OffersList from '@/features/offers/OffersList';
 import OfferOverview from '@/features/offers/OfferOverview';
 import { useEffect, useState } from 'react';
@@ -10,8 +10,10 @@ import { useUser } from '@/hooks/useUser';
 
 export function HomePageOffers() {
   const [isApplying, setIsApplying] = useState();
-  const { offers, isLoading, error, favorites, onToggleFavorite } = useOffers(true);
+  const { offers, isLoading, error, favorites, onToggleFavorite } = useVisibleOffers(true);
   const { user } = useUser();
+
+  console.log(offers,favorites)
 
   useEffect(() => {
     changeTitle('Offers');
@@ -44,7 +46,7 @@ export function HomePageOffers() {
       </Operations>
       <OfferOverview
         onHomePage={true}
-        isFavorite={(id) => favorites.includes(id)}
+        isFavorite={(id) => favorites?.includes(id)}
         onToggleFavorite={onToggleFavorite}
         onApply={() => setIsApplying(true)}
       />
