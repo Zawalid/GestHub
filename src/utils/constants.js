@@ -13,7 +13,7 @@ export const ROUTES = {
     'interns/:id',
   ],
   supervisor: ['overview', 'projects', 'projects/new', 'projects/:id', 'projects/:id/:tab', 'interns', 'interns/:id'],
-  intern: ['overview', 'projects', 'projects/:id', 'projects/:id/:tab', 'interns/:id'],
+  intern: ['overview', 'projects', 'projects/:id', 'projects/:id/:tab'],
   user: ['overview'],
 };
 

@@ -45,11 +45,19 @@ function Column({ column, hide }) {
 }
 function Row({ row, visibleColumns, actions }) {
   const [parent] = useAutoAnimate({ duration: 300 });
+
+  const render = (row) => {
+    if (row === 'Pending') return <span className='rounded-lg bg-orange-500 px-2.5 py-1'>{row}</span>;
+    if (row === 'Approved') return <span className='rounded-lg bg-green-600 px-2.5 py-1'>{row}</span>;
+    if (row === 'Rejected') return <span className='rounded-lg bg-red-500 px-2.5 py-1'>{row}</span>;
+    return row;
+  };
+
   return (
     <tr ref={parent}>
       {visibleColumns.map((col) => (
         <td key={col.displayLabel} className='px-6 py-3.5'>
-          {row[col.key]}
+          {render(row[col.key])}
         </td>
       ))}
       {actions && <td className='px-6 py-3.5'>{cloneElement(actions, { row })}</td>}

@@ -136,7 +136,7 @@ function TimeLine({ startDate, endDate }) {
           className={`absolute top-0 w-full max-w-full rounded-lg transition-all duration-[3s] ${isOverdue ? 'bg-primary' : 'bg-secondary'}`}
           style={{ height: daysToStart > 0 ? '12px' : `${isOverdue ? 100 : progress}%` }}
         >
-          <span className='absolute -right-0.5 bottom-0 h-3 w-3 rounded-full bg-text-primary'></span>
+          <span className='absolute -right-0.5 bottom-0 h-3 w-3 rounded-full bg-text-secondary'></span>
         </div>
       </div>
       <span className='text-xs font-medium text-text-secondary'>{formatDate(endDate)}</span>
