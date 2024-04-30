@@ -8,21 +8,23 @@ export default function Profile() {
   const { user } = useUser();
   const { mutate } = useUpdateProfile();
   const { mutate: updateAvatar, isPending } = useUpdateAvatar();
+  
+  const { profile_id, role, avatar, firstName, lastName, email, phone, academicLevel, establishment } = user || {};
 
   const {
     Form,
     options: { isUpdated, isValid, dirtyFields, handleSubmit, reset, setValue, getValue },
   } = useForm({
     defaultValues: {
-      avatar: user?.avatar || { src: null, file: null },
-      firstName: user?.firstName || '',
-      lastName: user?.lastName || '',
-      email: user?.email || '',
-      phone: user?.phone || '',
+      avatar: avatar || { src: null, file: null },
+      firstName: firstName || '',
+      lastName: lastName || '',
+      email: email || '',
+      phone: phone || '',
       // Conditionally : if the user is and intern/user
-      ...(['intern', 'user'].includes(user?.role) && {
-        academicLevel: user?.academicLevel || '',
-        establishment: user?.establishment || '',
+      ...(['intern', 'user'].includes(role) && {
+        academicLevel: academicLevel || '',
+        establishment: establishment || '',
       }),
     },
     fields: [
@@ -45,7 +47,7 @@ export default function Profile() {
         type: 'phone',
       },
       // Conditionally : if the user is and intern/user
-      ...(['intern', 'user'].includes(user?.role)
+      ...(['intern', 'user'].includes(role)
         ? [
             {
               name: 'academicLevel',
@@ -62,9 +64,9 @@ export default function Profile() {
         : []),
     ],
     onSubmit: (user) => {
-      if (dirtyFields['avatar']) updateAvatar({ id: user.profile_id, file: user.avatar.file });
+      if (dirtyFields['avatar']) updateAvatar({ id: profile_id, file: user.avatar.file });
       if (Object.keys(dirtyFields).length === 1 && Object.keys(dirtyFields)[0] === 'avatar') return;
-      mutate({ user, id: user.profile_id });
+      mutate({ user, id: profile_id });
     },
     gridLayout: true,
   });

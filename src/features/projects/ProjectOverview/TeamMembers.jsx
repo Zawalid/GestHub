@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { useUpdateProject } from '../useProjects';
 import { Button, Status, ToolTip } from '@/components/ui';
@@ -91,7 +90,7 @@ function Member({ member, project }) {
   const { user } = useUser();
 
   const { id: projectId, tasks, teamMembers, projectManager } = project || {};
-  const { id, avatar, fullName } = member;
+  const { id, avatar, fullName,email } = member;
 
   const assignedTasks = tasks.filter((task) => task.assignee?.id === id);
   const doneTasks = assignedTasks.filter((task) => task.status === 'Done');
@@ -143,14 +142,17 @@ function Member({ member, project }) {
         <img
           src={avatar || '/images/default-profile.jpg'}
           alt='avatar'
-          className='mx-auto mb-4 h-16 w-16 rounded-full border border-border object-cover shadow-md'
+          className='mx-auto h-16 w-16 rounded-full border border-border object-cover shadow-md'
         />
-        <h3 className='mb-1 text-lg font-semibold text-text-primary'>{fullName}</h3>
+        <div className="my-3">
+        <h3 className='text-lg font-semibold text-text-primary'>{fullName}</h3>
+        <p className='text-xs font-medium text-text-primary'>{email}</p>
+        </div>
         <p className='text-sm font-medium text-text-secondary'>
           {id === projectManager ? 'Project Manager' : 'Team Member'}
         </p>
       </div>
-      <div className='mb-5 flex items-center justify-between'>
+      <div className='flex items-center justify-between'>
         <div className='flex items-center gap-1 text-text-secondary'>
           <BsListCheck />
           <span className='text-xs font-medium '>{assignedTasks.length} Tasks</span>
@@ -160,11 +162,7 @@ function Member({ member, project }) {
           <span className='text-xs font-medium '>{getProgress(doneTasks.length / assignedTasks.length)}%</span>
         </div>
       </div>
-      <Link to={`/app/interns/${id}`}>
-        <Button color='secondary' type='outline' className='w-full'>
-          View Profile
-        </Button>
-      </Link>
+      
     </div>
   );
 }

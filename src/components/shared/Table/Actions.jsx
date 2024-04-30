@@ -19,6 +19,7 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
       text: 'View',
       icon: <IoEyeOutline />,
       onClick: () => navigate(String(row.id)),
+      hidden: () => resourceName === 'Supervisor',
     },
     {
       text: 'Edit',

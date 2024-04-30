@@ -68,6 +68,8 @@ export {
   FaStar,
   FaRegCircleXmark,
 } from 'react-icons/fa6';
+export { FaProjectDiagram } from 'react-icons/fa';
+
 
 export { HiMiniXMark } from 'react-icons/hi2';
 export { RxDashboard, RxViewVertical } from 'react-icons/rx';

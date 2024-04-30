@@ -1,8 +1,7 @@
-import { DateTime } from 'luxon';
 import { ToolTip } from '@/components/ui';
 import { STATUS_COLORS } from '@/utils/constants';
-import { useAnimatedProgress } from '@/hooks';
-import { formatDate } from '@/utils/helpers';
+import { useAnimatedProgress } from '@/hooks/useAnimatedProgress';
+import { formatDate, getTimelineDates } from '@/utils/helpers';
 
 export function Details({ project }) {
   const { description, startDate, endDate, status } = project || {};
@@ -75,20 +74,11 @@ export function Progress({ progress: pr, status }) {
 }
 
 function TimeLine({ startDate, endDate, status }) {
-  const today = DateTime.fromISO(DateTime.now().toISO());
-  const start = DateTime.fromISO(startDate);
-  const end = DateTime.fromISO(endDate);
-
-  const currentDay = Math.ceil(today.diff(start, 'days').toObject().days);
-  const duration = Math.ceil(end.diff(start, 'days').toObject().days);
-  const daysLeft = Math.floor(end.diff(today, 'days').toObject().days);
-  const daysToStart = Math.ceil(start.diff(today, 'days').toObject().days);
-  const isOverdue = daysLeft <= 0;
-
+  const { currentDay, duration, daysLeft, daysToStart, isOverdue } = getTimelineDates(startDate,endDate);
   const progress = useAnimatedProgress((currentDay / duration) * 100);
 
   return (
-    <div className='space-y-3 '>
+    <div className='space-y-3'>
       <label className='text-sm font-medium text-text-tertiary'>Timeline</label>
       <div className='flex justify-between'>
         <div className='flex items-center gap-1.5'>
@@ -110,13 +100,15 @@ function TimeLine({ startDate, endDate, status }) {
           style={{ width: daysToStart > 0 ? '12px' : `${isOverdue ? 100 : progress}%` }}
         >
           <ToolTip
-            content={<span className='text-xs text-text-secondary'>
-              {isOverdue
-                ? 'The project is overdue'
-                : daysToStart > 0
-                  ? `The project will start in ${daysToStart} days`
-                  : `${daysLeft} days left until the project ends`}{' '}
-            </span>}
+            content={
+              <span className='text-xs text-text-secondary'>
+                {isOverdue
+                  ? 'The project is overdue'
+                  : daysToStart > 0
+                    ? `The project will start in ${daysToStart} days`
+                    : `${daysLeft} days left until the project ends`}{' '}
+              </span>
+            }
           >
             <span className='absolute -top-0.5 right-0 h-3 w-3 rounded-full bg-text-primary'></span>
           </ToolTip>

@@ -66,6 +66,20 @@ export const checkDateInIntervals = (publicationDate, date) => {
   return Interval.fromDateTimes(start, end).contains(DateTime.fromISO(publicationDate));
 };
 
+export const getTimelineDates = (startDate, endDate) => {
+  const today = DateTime.fromISO(DateTime.now().toISO());
+  const start = DateTime.fromISO(startDate);
+  const end = DateTime.fromISO(endDate);
+
+  const currentDay = Math.ceil(today.diff(start, 'days').toObject().days);
+  const duration = Math.ceil(end.diff(start, 'days').toObject().days);
+  const daysLeft = Math.floor(end.diff(today, 'days').toObject().days);
+  const daysToStart = Math.ceil(start.diff(today, 'days').toObject().days);
+  const isOverdue = daysLeft <= 0;
+
+  return { currentDay, duration, daysLeft, daysToStart, isOverdue };
+};
+
 export const getFile = (data, type) => data?.files.find((file) => file.type === type)?.url || null;
 
 export const isAlreadyApplied = (user, offer_id) => user?.demands?.find((d) => d.offer_id === +offer_id);
