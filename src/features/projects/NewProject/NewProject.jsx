@@ -56,7 +56,7 @@ export default function NewProject() {
   const [projectData, setProjectData] = useState(defaultProject);
   const [currentStep, setCurrentStep] = useState(steps[0]);
   const [projectManager, setProjectManager] = useState(null);
-  const { mutate: addProject } = useAddProject();
+  const { mutate: addProject,isPending } = useAddProject();
   const [parent] = useAutoAnimate({ duration: 400 });
   const { user } = useUser();
 
@@ -118,7 +118,7 @@ export default function NewProject() {
         onNext={() => {
           currentStep.title === 'Summary' ? createProject() : setCurrentStep(nextStep);
         }}
-        canGoNext={['completed', 'skippable', 'last'].includes(currentStep.stepStatus)}
+        canGoNext={!isPending && ['completed', 'skippable', 'last'].includes(currentStep.stepStatus)}
         nextButtonText={
           currentStep.stepStatus === 'skippable'
             ? 'Skip'
@@ -127,7 +127,7 @@ export default function NewProject() {
               : 'Next'
         }
         onBack={() => setCurrentStep(backStep)}
-        canGoBack={backStep}
+        canGoBack={!isPending && backStep}
       />
     </Modal>
   );

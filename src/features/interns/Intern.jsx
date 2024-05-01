@@ -1,7 +1,7 @@
 import { Modal, Status } from '@/components/ui';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useIntern } from './useInterns';
-import { IoMailOutline, FiPhone, BsBuilding, IoSchool, BsListCheck, FaProjectDiagram } from '@/components/ui/Icons';
+import { IoMailOutline, FiPhone, BsBuilding, IoSchool, BsListCheck, FaDiagramProject  } from '@/components/ui/Icons';
 import { formatDate, getTimelineDates } from '@/utils/helpers';
 import { useAnimatedProgress } from '@/hooks/useAnimatedProgress';
 
@@ -99,7 +99,7 @@ export default function Intern() {
           </div>
           <div className='flex items-center gap-3 rounded-lg bg-green-600 p-2'>
             <div className='grid h-8 w-8 place-content-center rounded-full bg-white  text-black'>
-              <FaProjectDiagram />
+              <FaDiagramProject  />
             </div>
             <div className='flex-1 text-end'>
               <h4 className='text-xs font-medium text-white/80'>Projects</h4>

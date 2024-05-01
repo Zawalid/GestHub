@@ -24,3 +24,11 @@
 - [x] Fix the routing
 - [ ] to many requests (user)
 - [ ] intern profile (show profile)
+- [ ] add specialty to the intern form
+- [ ] admin and super-admin are the same as the user role
+
+
+
+
+--- Overviews
+

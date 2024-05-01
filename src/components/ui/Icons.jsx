@@ -18,6 +18,7 @@ export {
   IoSettingsOutline,
   IoFlag,
   IoSchool,
+  IoPeople 
 } from 'react-icons/io5';
 export {
   PiCheckBold,
@@ -67,8 +68,9 @@ export {
   FaRegStar,
   FaStar,
   FaRegCircleXmark,
+  FaDiagramProject, 
+  FaCalendarXmark 
 } from 'react-icons/fa6';
-export { FaProjectDiagram } from 'react-icons/fa';
 
 
 export { HiMiniXMark } from 'react-icons/hi2';

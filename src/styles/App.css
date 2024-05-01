@@ -113,3 +113,7 @@
     clip-path: inset(0 -34% 0 0);
   }
 }
+
+.tooltip {
+  @apply bg-background-secondary p-2 font-medium text-text-tertiary border text-xs border-border rounded-lg !important;
+}
