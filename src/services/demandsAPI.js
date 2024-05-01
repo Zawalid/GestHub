@@ -8,6 +8,6 @@ export const addDemand = async (data) => await axiosFetch('demands', 'POST', dat
 
 export const deleteDemand = async (id) => await axiosFetch(`demands/${id}`, 'DELETE');
 
-export const approveDemand = async (id) => await axiosFetch(`demands/${id}/approve`, 'POST');
+export const approveDemand = async (id) => await axiosFetch(`demands/${id}/approve`, 'PUT');
 
-export const rejectDemand = async (id) => await axiosFetch(`demands/${id}/reject`, 'POST');
+export const rejectDemand = async (id) => await axiosFetch(`demands/${id}/reject`, 'PUT');

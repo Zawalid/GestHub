@@ -46,7 +46,7 @@ export {
 export { RiTeamLine } from 'react-icons/ri';
 export { LiaUserTieSolid } from 'react-icons/lia';
 export { FiLogOut, FiSettings, FiPhone, FiCheck } from 'react-icons/fi';
-export { LuCalendarX, LuUser, LuUpload } from 'react-icons/lu';
+export { LuCalendarX, LuUser, LuUpload,LuClipboardList  } from 'react-icons/lu';
 export {
   MdDriveFileRenameOutline,
   MdDownload,
@@ -58,6 +58,7 @@ export {
   MdManageAccounts,
   MdOutlineLocationOn,
   MdOutlineTimelapse,
+  MdOutlinePendingActions 
 } from 'react-icons/md';
 export {
   FaSpinner,

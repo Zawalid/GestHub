@@ -9,3 +9,7 @@ export const addIntern = async (data) => await axiosFetch('profiles', 'POST', {.
 export const updateIntern = async (id, data) => await axiosFetch(`profiles/${id}`, 'PUT', {...data,role : 'intern'});
 
 export const deleteIntern = async (id) => await axiosFetch(`profiles/${id}`, 'DELETE');
+
+export const generateAttestation = async (id) => await axiosFetch(`generate/attestation/${id}`, 'POST');
+
+export const generateAttestations = async (data) => await axiosFetch('generate/attestations', 'POST', data);

@@ -1,5 +1,13 @@
 import { useMutate } from '@/hooks/useMutate';
-import { addIntern, deleteIntern, getAllInterns, getIntern, updateIntern } from '@/services/internsAPI';
+import {
+  addIntern,
+  deleteIntern,
+  generateAttestation,
+  generateAttestations,
+  getAllInterns,
+  getIntern,
+  updateIntern,
+} from '@/services/internsAPI';
 import { getFile } from '@/utils/helpers';
 import { useQuery } from '@tanstack/react-query';
 
@@ -8,7 +16,7 @@ import { useQuery } from '@tanstack/react-query';
 export const getAdditionalData = (data) => {
   return {
     fullName: `${data?.firstName} ${data?.lastName}`,
-    avatar: getFile(data,'avatar'),
+    avatar: getFile(data, 'avatar'),
   };
 };
 
@@ -18,7 +26,7 @@ export function useInterns() {
     queryFn: getAllInterns,
   });
 
-  const interns = data?.map((intern) => ({ ...intern, ...getAdditionalData(intern) }));
+  const interns = data?.map((intern) => ({ ...intern, ...getAdditionalData(intern),attestation: getFile(intern, 'attestation') }));
 
   return { interns, error, isLoading: isPending };
 }
@@ -72,4 +80,22 @@ export const useDeleteIntern = () =>
     loadingMessage: 'Deleting intern...',
     successMessage: 'Intern deleted successfully',
     errorMessage: 'Failed to delete intern',
+  });
+
+export const useGenerateAttestation = () =>
+  useMutate({
+    queryKey: ['interns', 'generateAttestation'],
+    mutationFn: generateAttestation,
+    loadingMessage: 'Generating attestation...',
+    successMessage: 'Attestation generated successfully',
+    errorMessage: 'Failed to generate attestation',
+  });
+
+export const useGenerateAttestations = () =>
+  useMutate({
+    queryKey: ['interns', 'generateAttestations'],
+    mutationFn: generateAttestations,
+    loadingMessage: null,
+    successMessage: null,
+    errorMessage: null,
   });

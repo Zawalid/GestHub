@@ -96,6 +96,11 @@ export default function InternsList() {
           type: 'establishment',
         },
         {
+          name: 'specialty',
+          label: 'Specialty',
+          type: 'specialty',
+        },
+        {
           name: 'startDate',
           label: 'Start Date',
           type: 'date',
@@ -125,6 +130,7 @@ export default function InternsList() {
         phone: '',
         academicLevel: '',
         establishment: '',
+        specialty: '',
         startDate: '',
         endDate: '',
         password: '',

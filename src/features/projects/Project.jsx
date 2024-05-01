@@ -94,7 +94,7 @@ function ProgressBar({ project }) {
   );
 }
 
-function Members({ members, size = 'small' }) {
+export function Members({ members, size = 'small' }) {
   const { interns: teamMembers } = useInternsByIds(members);
   const [parent] = useAutoAnimate({ duration: 400 });
 

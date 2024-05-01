@@ -1,9 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { CheckBox, SearchInput, Status } from '@/components/ui';
+import { Button, CheckBox, SearchInput, Status, ToolTip } from '@/components/ui';
 import { useInterns } from '../../interns/useInterns';
 import { useEffect, useState } from 'react';
 import { Radio } from '@/components/ui/Radio';
+import { RiCheckboxMultipleBlankLine } from 'react-icons/ri';
 
 export const getSearchedInterns = (interns, query) => {
   return interns
@@ -73,7 +74,7 @@ export function TeamMembers({ updateStatus, updateState, state, projectManager, 
   );
 }
 
-export function AllInterns({ children, teamMembers, setTeamMembers, filter }) {
+export function AllInterns({ teamMembers, setTeamMembers, filter, selectedMembers }) {
   const { interns, error, isLoading } = useInterns();
   const [query, setQuery] = useState('');
   const [parent] = useAutoAnimate({ duration: 400 });
@@ -111,8 +112,28 @@ export function AllInterns({ children, teamMembers, setTeamMembers, filter }) {
   return (
     <>
       <div className='grid grid-cols-[auto_min-content] items-center'>
+        
         <SearchInput placeholder='Search for interns' query={query} onChange={setQuery} />
-        {children}
+
+        {selectedMembers && (
+          <ToolTip content={<span>Uncheck All</span>}>
+            <Button
+              shape='icon'
+              className='relative ml-3'
+              disabled={selectedMembers.length === 0}
+              onClick={() => setTeamMembers([])}
+            >
+              <RiCheckboxMultipleBlankLine />
+              <span
+                className={`absolute -right-2 -top-2 h-5 w-5 rounded-full bg-primary text-center text-xs font-bold leading-5 text-white transition-transform duration-300 ${
+                  selectedMembers.length > 0 ? 'scale-100' : 'scale-0'
+                }`}
+              >
+                {selectedMembers.length}
+              </span>
+            </Button>
+          </ToolTip>
+        )}
       </div>
       <div className='relative flex-1 space-y-1 overflow-y-auto overflow-x-hidden pr-2' ref={parent}>
         {renderInternsStatus(isLoading, error, searchedInterns, render)}

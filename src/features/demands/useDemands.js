@@ -85,7 +85,7 @@ export const useApproveDemand = () => {
   const approvement = useMutate({
     queryKey: ['demands', 'approve'],
     mutationFn: approveDemand,
-    loadingMessage: 'Approveing demand...',
+    loadingMessage: 'Approving demand...',
     successMessage: 'Demand approved successfully',
     errorMessage: 'Failed to approve demand',
   });
