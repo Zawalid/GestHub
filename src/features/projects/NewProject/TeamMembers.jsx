@@ -19,8 +19,6 @@ export const renderInternsStatus = (isLoading, error, searchedInterns, render) =
   return render();
 };
 
-// --
-
 export function TeamMembers({ updateStatus, updateState, state, projectManager, setProjectManager }) {
   const [teamMembers, setTeamMembers] = useState(state);
   const [parent] = useAutoAnimate({ duration: 400 });

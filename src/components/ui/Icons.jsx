@@ -43,10 +43,6 @@ export {
   BsSendFill,
   BsClipboard2Check,
 } from 'react-icons/bs';
-export { RiTeamLine } from 'react-icons/ri';
-export { LiaUserTieSolid } from 'react-icons/lia';
-export { FiLogOut, FiSettings, FiPhone, FiCheck } from 'react-icons/fi';
-export { LuCalendarX, LuUser, LuUpload,LuClipboardList  } from 'react-icons/lu';
 export {
   MdDriveFileRenameOutline,
   MdDownload,
@@ -70,10 +66,13 @@ export {
   FaStar,
   FaRegCircleXmark,
   FaDiagramProject, 
-  FaCalendarXmark 
+  FaCalendarXmark , 
+  FaListCheck
 } from 'react-icons/fa6';
-
-
+export { LuCalendarX, LuUser, LuUpload,LuClipboardList,LuListTodo   } from 'react-icons/lu';
+export { LiaUserTieSolid,LiaClipboardListSolid  } from 'react-icons/lia';
+export { FiLogOut, FiSettings, FiPhone, FiCheck } from 'react-icons/fi';
+export { RiTeamLine } from 'react-icons/ri';
 export { HiMiniXMark } from 'react-icons/hi2';
 export { RxDashboard, RxViewVertical } from 'react-icons/rx';
 export { TbProgressCheck, TbFileSearch } from 'react-icons/tb';
