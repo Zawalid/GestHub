@@ -1,10 +1,24 @@
 import { DateTime } from 'luxon';
 
 export const ROUTES = {
+  'super-admin': [
+    'overview',
+    'admins',
+    'supervisors',
+    'projects',
+    'projects/new',
+    'projects/:id',
+    'projects/:id/:tab',
+    'demands',
+    'demands/:id',
+    'offers',
+    'offers/:id',
+    'interns',
+    'interns/:id',
+  ],
   admin: [
     'overview',
     'supervisors',
-    'supervisors/:id',
     'demands',
     'demands/:id',
     'offers',

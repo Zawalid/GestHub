@@ -116,24 +116,24 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
                   {type}
                 </span>
               </div>
-              <div className='items- flex gap-3'>
-                <label className='text-nowrap text-sm font-medium text-text-tertiary'>Skills :</label>
-                <div className='flex flex-wrap items-center gap-3'>
-                  {skills?.length > 0 ? (
-                    skills?.map((skill) => (
-                      <span
-                        key={skill}
-                        className='rounded-md border border-border px-2 py-1 text-center text-xs font-medium text-text-secondary'
-                      >
-                        {skill}
-                      </span>
-                    ))
-                  ) : (
-                    <span className='w-fit rounded-md border border-border px-2 py-1 text-center text-xs font-medium text-text-secondary'>
-                      No skills required
+            </div>
+            <div className='flex gap-3'>
+              <label className='text-nowrap text-sm font-medium text-text-tertiary'>Skills :</label>
+              <div className='flex flex-wrap items-center gap-3'>
+                {skills?.length > 0 ? (
+                  skills?.map((skill) => (
+                    <span
+                      key={skill}
+                      className='rounded-md border border-border px-2 py-1 text-center text-xs font-medium text-text-secondary'
+                    >
+                      {skill}
                     </span>
-                  )}
-                </div>
+                  ))
+                ) : (
+                  <span className='w-fit rounded-md border border-border px-2 py-1 text-center text-xs font-medium text-text-secondary'>
+                    No skills required
+                  </span>
+                )}
               </div>
             </div>
           </div>

@@ -46,7 +46,8 @@ export const canViewProject = (user, project) => {
 
   return (
     (user?.role === 'intern' && user?.projects?.includes(project.id)) ||
-    (user?.role === 'supervisor' && project?.supervisor === user?.id)
+    (user?.role === 'supervisor' && project?.supervisor === user?.id) ||
+    user?.role === 'super-admin'
   );
 };
 

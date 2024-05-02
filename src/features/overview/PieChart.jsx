@@ -4,7 +4,7 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Sector } from 'recharts';
 
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
-  const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent } = props;
+  const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
   const sx = cx + (outerRadius + 10) * cos;
@@ -28,6 +28,7 @@ const renderActiveShape = (props) => {
         startAngle={startAngle}
         endAngle={endAngle}
         fill={fill}
+        cornerRadius='30%'
       />
       <Sector
         cx={cx}
@@ -36,26 +37,46 @@ const renderActiveShape = (props) => {
         endAngle={endAngle}
         innerRadius={outerRadius + 6}
         outerRadius={outerRadius + 10}
+        cornerRadius='30%'
         fill={fill}
       />
-      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill='none' />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke='none' />
-      <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
-        y={ey}
-        dy={3}
-        textAnchor={textAnchor}
-        fill='var(--text-secondary)'
-        className='font-medium'
-      >
-        {`${getProgress(percent * 100)}%`}
-      </text>
+      {!props.isLoading && (
+        <>
+          <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill='none' />
+          <circle cx={ex} cy={ey} r={2} fill={fill} stroke='none' />
+          <text
+            x={ex + (cos >= 0 ? 1 : -1) * 12}
+            y={ey}
+            textAnchor={textAnchor}
+            fill='var(--text-primary)'
+            className='font-semibold text-sm'
+          >
+            {value}
+          </text>
+          <text
+            x={ex + (cos >= 0 ? 1 : -1) * 12}
+            y={ey}
+            dy={12}
+            textAnchor={textAnchor}
+            fill='var(--text-secondary)'
+            className='text-[8px] font-bold'
+          >
+            {`${getProgress(percent * 100)}%`}
+          </text>
+        </>
+      )}
     </g>
   );
 };
 
-export default function PieChartStats({ data, title, legend, COLORS, className = '' }) {
+export default function PieChartStats({ data, title, legend, COLORS, className = '', isLoading }) {
   const [activeIndex, setActiveIndex] = useState(1);
+
+  const loadingData = [
+    { name: 'Loading...', value: 20 },
+    { name: 'Loading...', value: 55 },
+    { name: 'Loading...', value: 25 },
+  ];
 
   return (
     <div className={`flex flex-col gap-5 rounded-lg border border-border p-3 shadow-md ${className}`}>
@@ -68,19 +89,10 @@ export default function PieChartStats({ data, title, legend, COLORS, className =
           </div>
         ))}
       </div>
-      <ResponsiveContainer className='flex-1'>
+      <ResponsiveContainer className={`flex-1 ${isLoading ? 'animate-pulse' : ''}`}>
         <PieChart>
-          <text
-            x='50%'
-            y='50%'
-            dy={8}
-            textAnchor='middle'
-            className='text-2xl font-bold'
-            fill='var(--text-primary'
-          ></text>
-
           <Pie
-            data={data}
+            data={isLoading ? loadingData : data}
             cx='50%'
             cy='50%'
             innerRadius={60}
@@ -91,11 +103,16 @@ export default function PieChartStats({ data, title, legend, COLORS, className =
             paddingAngle={5}
             className='text-xs outline-none'
             activeIndex={activeIndex}
-            activeShape={renderActiveShape}
+            activeShape={(props) => renderActiveShape({ ...props, isLoading })}
             onMouseEnter={(_, i) => setActiveIndex(i)}
           >
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} className='outline-none' stroke='transparent' fill={COLORS[index]} />
+            {(isLoading ? loadingData : data).map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                className='outline-none'
+                stroke='transparent'
+                fill={isLoading ? 'var(--background-secondary)' : COLORS[index]}
+              />
             ))}
           </Pie>
         </PieChart>

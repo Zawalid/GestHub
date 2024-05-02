@@ -21,6 +21,7 @@ import {
   Login,
   Register,
   HomePageOffers,
+  Admins,
 } from './pages';
 
 import { ProtectedRoute } from './components/ProtectedRoute';
@@ -28,8 +29,8 @@ import { useUser } from './hooks/useUser';
 
 const routesElements = {
   overview: <Overview />,
+  admins: <Admins />,
   supervisors: <Supervisors />,
-  'supervisors/:id': <Supervisors />,
   interns: <Interns />,
   'interns/:id': <Interns />,
   offers: <Offers />,

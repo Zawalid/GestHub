@@ -23,14 +23,12 @@
 - [x] disable image manipulation when updating profile
 - [x] Fix the routing
 - [ ] to many requests (user)
-- [ ] intern profile (show profile)
-- [ ] add specialty to the intern form
-- [ ] admin and super-admin are the same as the user role
+- [x] intern profile (show profile)
+- [x] add specialty to the intern form
+- [x] admin and super-admin are the same as the user role
+- [x] add checkbox for accept terms
 
 
 
 
---- Overviews
 
-number of demands
-number of demands pending

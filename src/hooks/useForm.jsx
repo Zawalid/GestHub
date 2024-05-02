@@ -91,7 +91,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
   const isValid = useMemo(() => {
     return (
       fields
-        .map((field) => {
+        ?.map((field) => {
           const { name, type, label } = field;
           const rules = getRules(name, label, type, field.rules);
           return getError(values?.[name], rules, getValue);

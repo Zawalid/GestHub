@@ -1,9 +1,11 @@
 import { useMutate } from '@/hooks/useMutate';
 import {
+  acceptUsers,
   addIntern,
   deleteIntern,
   generateAttestation,
   generateAttestations,
+  getAcceptedUsers,
   getAllInterns,
   getIntern,
   updateIntern,
@@ -26,7 +28,11 @@ export function useInterns() {
     queryFn: getAllInterns,
   });
 
-  const interns = data?.map((intern) => ({ ...intern, ...getAdditionalData(intern),attestation: getFile(intern, 'attestation') }));
+  const interns = data?.map((intern) => ({
+    ...intern,
+    ...getAdditionalData(intern),
+    attestation: getFile(intern, 'attestation'),
+  }));
 
   return { interns, error, isLoading: isPending };
 }
@@ -51,6 +57,17 @@ export function useIntern(id) {
   const intern = { ...data, ...getAdditionalData(data) };
 
   return { intern, error, isLoading: isPending };
+}
+
+export function useAcceptedUsers() {
+  const { data, error, isPending } = useQuery({
+    queryKey: ['acceptedUsers'],
+    queryFn: getAcceptedUsers,
+  });
+
+  const acceptedUsers = data?.map((intern) => ({ ...intern, ...getAdditionalData(intern) }));
+
+  return { acceptedUsers, error, isLoading: isPending };
 }
 
 // Mutations
@@ -95,7 +112,16 @@ export const useGenerateAttestations = () =>
   useMutate({
     queryKey: ['interns', 'generateAttestations'],
     mutationFn: generateAttestations,
-    loadingMessage: null,
-    successMessage: null,
-    errorMessage: null,
+    loadingMessage: 'Generating attestations...',
+    successMessage: 'Attestations generated successfully',
+    errorMessage: 'Failed to generate attestations',
+  });
+
+export const useAcceptUsers = () =>
+  useMutate({
+    queryKey: ['interns', 'acceptUsers'],
+    mutationFn: acceptUsers,
+    loadingMessage: 'Accepting users...',
+    successMessage: 'Users accepted successfully',
+    errorMessage: 'Failed to accept users',
   });

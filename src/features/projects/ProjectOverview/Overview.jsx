@@ -40,7 +40,7 @@ export default function Overview() {
             </p>
           </div>
         </div>
-        {user?.role === 'supervisor' && (
+        {['supervisor', 'super-admin'].includes(user?.role) && (
           <>
             <Actions id={id} onEdit={() => setIsOpen(true)} />
             <EditProject isOpen={isOpen} onClose={() => setIsOpen(false)} project={project} />

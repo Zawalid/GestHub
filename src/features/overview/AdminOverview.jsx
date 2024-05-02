@@ -1,15 +1,12 @@
-import { IoPeople, LuClipboardList, MdOutlinePendingActions } from '@/components/ui/Icons';
-import { useDemands } from '../demands/useDemands';
-import { useGenerateAttestation, useGenerateAttestations, useInterns } from '../interns/useInterns';
-import PieChartStats from './PieChart';
-import { Bar, BarChart, Rectangle, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { useSupervisors } from '../supervisors/useSupervisors';
-import { useOffers } from '../offers/useOffers';
-import { Button, Modal } from '@/components/ui';
-import { AllInterns, Intern } from '../projects/NewProject/TeamMembers';
-import { getTimelineDates } from '@/utils/helpers';
 import { useState } from 'react';
-import { toast } from 'sonner';
+import { Bar, BarChart, Rectangle, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import PieChartStats from './PieChart';
+import { AllInterns, Intern } from '../projects/NewProject/TeamMembers';
+import { IoPeople, LuClipboardList, MdOutlinePendingActions } from '@/components/ui/Icons';
+import { Button, Modal, Status } from '@/components/ui';
+import { getTimelineDates } from '@/utils/helpers';
+import { useGenerateAttestation, useGenerateAttestations } from '../interns/useInterns';
+import { useAdmins, useDemands, useOffers, useSupervisors, useInterns } from '@/hooks/index';
 
 export default function AdminOverview() {
   return (
@@ -21,17 +18,21 @@ export default function AdminOverview() {
 }
 
 function Stats() {
-  const { demands } = useDemands();
-  const { interns } = useInterns();
-  const { supervisors } = useSupervisors();
-  // const { admins } = useAdmins();
+  const { demands, isLoading: isDemandsLoading } = useDemands();
+  const { interns, isLoading: isInternsLoading } = useInterns();
+  const { supervisors, isLoading: isSupervisorsLoading } = useSupervisors();
+  const { admins, isLoading: isAdminsLoading } = useAdmins();
 
   return (
-    <div className='flex flex-col mobile:grid md:grid-rows-[repeat(3,auto)] gap-5 mobile:grid-cols-2 md:grid-cols-4'>
+    <div className='flex flex-col gap-5 mobile:grid mobile:grid-cols-2 md:grid-cols-4 md:grid-rows-[repeat(3,auto)]'>
       <div className='flex items-start justify-between rounded-lg bg-primary p-3 shadow-md'>
         <div className='space-y-3'>
           <h4 className='text-sm font-medium text-white/80'>Total Demands</h4>
-          <h3 className='text-3xl font-bold text-white'>{demands?.length}</h3>
+          {isDemandsLoading ? (
+            <div className='sending'></div>
+          ) : (
+            <h3 className='text-3xl font-bold text-white'>{demands?.length}</h3>
+          )}
         </div>
         <div className='rounded-lg bg-white/30 p-2 text-xl text-white'>
           <LuClipboardList />
@@ -40,7 +41,11 @@ function Stats() {
       <div className='flex items-start justify-between rounded-lg bg-orange-500 p-3 shadow-md dark:bg-orange-600'>
         <div className='space-y-3'>
           <h4 className='text-sm font-medium text-white/80'>Pending Demands</h4>
-          <h3 className='text-3xl font-bold text-white'>{demands?.filter((p) => p.status === 'Pending').length}</h3>
+          {isDemandsLoading ? (
+            <div className='sending'></div>
+          ) : (
+            <h3 className='text-3xl font-bold text-white'>{demands?.filter((p) => p.status === 'Pending').length}</h3>
+          )}
         </div>
         <div className='rounded-lg bg-white/30 p-2 text-xl text-white'>
           <MdOutlinePendingActions />
@@ -59,8 +64,9 @@ function Stats() {
           { text: 'Approved', color: 'bg-green-600' },
           { text: 'Rejected', color: 'bg-red-500' },
         ]}
-        COLORS={['#16a34a', '#f97316', '#ef4444']}
+        COLORS={['#f97316', '#16a34a', '#ef4444']}
         className='col-span-2 row-span-3 min-h-[350px]'
+        isLoading={isDemandsLoading}
       />
 
       <div className='col-span-2 flex items-start justify-between rounded-lg border border-border bg-background-secondary p-3 shadow-md'>
@@ -68,16 +74,28 @@ function Stats() {
           <h4 className='text-sm font-medium text-text-secondary'>Total Personnel</h4>
           <div className='flex gap-4'>
             <div className='flex items-center gap-3 rounded-lg bg-background-tertiary p-2'>
-              <h3 className='lg:text-xl font-bold text-text-primary'>{interns?.length}</h3>
-              <h5 className='text-xs lg:text-sm text-text-secondary'>Interns</h5>
+              {isInternsLoading ? (
+                <div className='sending'></div>
+              ) : (
+                <h3 className='font-bold text-text-primary lg:text-xl'>{interns?.length}</h3>
+              )}
+              <h5 className='text-xs text-text-secondary lg:text-sm'>Interns</h5>
             </div>
             <div className='flex items-center gap-3 rounded-lg bg-background-tertiary p-2'>
-              <h3 className='lg:text-xl font-bold text-text-primary'>{supervisors?.length}</h3>
-              <h5 className='text-xs lg:text-sm text-text-secondary'>Supervisors</h5>
+              {isSupervisorsLoading ? (
+                <div className='sending'></div>
+              ) : (
+                <h3 className='font-bold text-text-primary lg:text-xl'>{supervisors?.length}</h3>
+              )}
+              <h5 className='text-xs text-text-secondary lg:text-sm'>Supervisors</h5>
             </div>
             <div className='flex items-center gap-3 rounded-lg bg-background-tertiary p-2'>
-              <h3 className='lg:text-xl font-bold text-text-primary'>{interns?.length}</h3>
-              <h5 className='text-xs lg:text-sm text-text-secondary'>Admins</h5>
+              {isAdminsLoading ? (
+                <div className='sending'></div>
+              ) : (
+                <h3 className='font-bold text-text-primary lg:text-xl'>{admins?.length}</h3>
+              )}
+              <h5 className='text-xs text-text-secondary lg:text-sm'>Admins</h5>
             </div>
           </div>
         </div>
@@ -94,12 +112,12 @@ function Stats() {
 function CompletedInternships() {
   const { interns } = useInterns();
   const [isOpen, setIsOpen] = useState(false);
-  const {mutate} = useGenerateAttestation()
+  const { mutate } = useGenerateAttestation();
 
   const completedInternships = interns
     ?.filter((intern) => {
       const { isOverdue } = getTimelineDates(intern.startDate, intern.endDate);
-      return isOverdue && !intern.attestation
+      return isOverdue && !intern.attestation;
     })
     .toSorted((a, b) => new Date(a?.startDate) - new Date(b?.startDate));
 
@@ -145,7 +163,7 @@ function CompletedInternships() {
 
 function GenerateAttestation({ isOpen, onClose, completedInternships }) {
   const [generateTo, setGenerateTo] = useState([]);
-  const {mutate} = useGenerateAttestations()
+  const { mutate } = useGenerateAttestations();
 
   const close = () => (onClose(), setGenerateTo([]));
 
@@ -172,9 +190,7 @@ function GenerateAttestation({ isOpen, onClose, completedInternships }) {
           disabled={generateTo.length === 0}
           onClick={() => {
             close();
-            mutate({ids : generateTo.map(g => g.id)},{
-              onSuccess : () => toast.success('Attestations generated successfully')
-            });
+            mutate({ ids: generateTo.map((g) => g.id) });
           }}
         >
           Generate
@@ -185,7 +201,7 @@ function GenerateAttestation({ isOpen, onClose, completedInternships }) {
 }
 
 function OffersAnalytics() {
-  const { offers } = useOffers();
+  const { offers, isLoading } = useOffers();
 
   const latestOffers = offers
     ?.filter((offer) => offer.demands?.length > 0)
@@ -203,10 +219,10 @@ function OffersAnalytics() {
   });
 
   return (
-    <div className='grid min-h-[300px] gap-5 rounded-lg border border-border bg-background-secondary p-3'>
+    <div className='relative grid min-h-[300px] gap-5 rounded-lg border border-border bg-background-secondary p-3'>
       <div className='flex justify-between gap-5'>
         <h2 className='text-lg font-bold text-text-primary'>Latest Offers</h2>
-        <div className='flex gap-3'>
+        <div className='flex items-start gap-3 pt-3'>
           <div className='flex items-center gap-2'>
             <span className='h-3 w-6 rounded-md bg-green-500'></span>
             <span className='text-xs font-medium'>Approved</span>
@@ -217,20 +233,23 @@ function OffersAnalytics() {
           </div>
         </div>
       </div>
-
-      <ResponsiveContainer width='100%' height='100%'>
-        <BarChart data={data}>
-          <XAxis dataKey='name' className='text-xs font-medium' />
-          <YAxis domain={[0, 'dataMax']} allowDecimals={false} />{' '}
-          <Tooltip
-            wrapperClassName='tooltip'
-            itemStyle={{ color: 'var(--text-primary)' }}
-            cursor={<Rectangle radius={5} stroke='var(--border)' fill='var(--background-tertiary)' />}
-          />
-          <Bar dataKey='Approved' fill='#16a34a' legendType='circle' />
-          <Bar dataKey='Rejected' fill='#ef4444' legendType='circle' />
-        </BarChart>
-      </ResponsiveContainer>
+      {isLoading ? (
+        <Status status='loading' />
+      ) : (
+        <ResponsiveContainer width='100%' height='100%'>
+          <BarChart data={data}>
+            <XAxis dataKey='name' className='text-xs font-medium' />
+            <YAxis domain={[0, 'dataMax']} allowDecimals={false} />{' '}
+            <Tooltip
+              wrapperClassName='tooltip'
+              itemStyle={{ color: 'var(--text-primary)' }}
+              cursor={<Rectangle radius={5} stroke='var(--border)' fill='var(--background-tertiary)' />}
+            />
+            <Bar dataKey='Approved' fill='#16a34a' legendType='circle' />
+            <Bar dataKey='Rejected' fill='#ef4444' legendType='circle' />
+          </BarChart>
+        </ResponsiveContainer>
+      )}
     </div>
   );
 }

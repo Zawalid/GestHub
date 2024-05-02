@@ -49,7 +49,7 @@ export default function OffersList({ hideFilter, onHomePage }) {
         ref={parent}
       >
         {!appliedFiltersNumber && !query && !onHomePage && !error && !isLoading && (
-          <New type='Project' layout={layout} onAdd={() => navigate('/app/offers/new')} />
+          <New type='Offer' layout={layout} onAdd={() => navigate('/app/offers/new')} />
         )}
         {renderOffersList({ offers, isLoading, error, layout, appliedFiltersNumber, query })}
       </div>
