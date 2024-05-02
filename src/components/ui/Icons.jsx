@@ -77,3 +77,4 @@ export {
 export { HiMiniXMark } from 'react-icons/hi2';
 export { RxDashboard, RxViewVertical } from 'react-icons/rx';
 export { TbProgressCheck, TbFileSearch } from 'react-icons/tb';
+export { GrUserAdmin } from "react-icons/gr";

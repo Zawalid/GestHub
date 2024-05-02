@@ -34,7 +34,7 @@ export default function Tasks() {
   const { mutate: deleteTask } = useDeleteTask();
 
   const canManipulateTasks =
-    user?.role === 'supervisor' || (user?.role === 'intern' && user?.id === project?.projectManager);
+  ['supervisor', 'super-admin'].includes(user?.role) || (user?.role === 'intern' && user?.id === project?.projectManager);
 
   // const getProjectStatus = (tasks) => {
   //   const notStarted = tasks.every((task) => task.status === 'To Do');

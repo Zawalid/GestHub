@@ -1,4 +1,5 @@
 export { Overview } from './Overview';
+export { Admins } from './Admins';
 export { Supervisors } from './Supervisors';
 export { Interns } from './Interns';
 export { Projects } from './projects/Projects';

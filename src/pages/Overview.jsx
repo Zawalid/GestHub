@@ -10,6 +10,7 @@ export function Overview() {
 
   const overviews = {
     admin: <AdminOverview />,
+    'super-admin': <AdminOverview />,
     supervisor: <SupervisorOverview />,
     intern: <InternOverview />,
     user: <UserOverview />,

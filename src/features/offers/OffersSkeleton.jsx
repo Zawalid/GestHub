@@ -57,6 +57,7 @@ export function OfferSkeleton() {
       </div>
       <div className='mt-5 space-y-3 border-t border-border pt-2'>
         <div className='mb-4 h-2.5 w-32 rounded-lg bg-background-tertiary'></div>
+        <div className='grid gap-3 sm:grid-cols-2'>
         <div className='flex items-center gap-5'>
           <div className='h-2 w-20 rounded-lg bg-background-tertiary'></div>
           <div className='h-4 w-12 rounded-md bg-background-secondary'></div>
@@ -76,6 +77,7 @@ export function OfferSkeleton() {
         <div className='flex items-center gap-5'>
           <div className='h-2 w-16 rounded-lg bg-background-tertiary'></div>
           <div className='h-4 w-16 rounded-md bg-background-secondary'></div>
+        </div>
         </div>
         <div className='flex items-center gap-5'>
           <div className='h-2 w-10 rounded-lg bg-background-tertiary'></div>

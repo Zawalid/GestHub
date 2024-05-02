@@ -1,5 +1,5 @@
 import { useForm } from '@/hooks/useForm';
-import { Button, DropDown } from '../../components/ui';
+import { Button, CheckBox, DropDown } from '../../components/ui';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { MdOutlineSchool } from 'react-icons/md';
@@ -22,6 +22,7 @@ export function Register() {
       academicLevel: 'Bac+2',
       password: '',
       password_confirmation: '',
+      accept: null,
     },
     fields: [
       {
@@ -60,12 +61,12 @@ export function Register() {
         name: 'password_confirmation',
         type: 'password',
         label: t('auth.register.confirmPassword.label'),
-        rules: { ...RULES.passwordConfirmation},
-
+        rules: { ...RULES.passwordConfirmation },
       },
+      { name: 'accept', hidden: true },
     ],
     onSubmit: register,
-    submitOnEnter : true
+    submitOnEnter: true,
   });
 
   return (
@@ -105,6 +106,15 @@ export function Register() {
         </div>
         {formInputs['password']}
         {formInputs['password_confirmation']}
+      </div>
+      <div className='mt-5 flex items-center gap-3'>
+        <CheckBox checked={getValue('accept')} onChange={(e) => setValue('accept', e.target.checked || null)} />
+        <label className='text-sm font-medium text-text-tertiary'>
+          Accept the terms of information access law {' '}
+          <a href='https://www.oc.gov.ma/sites/default/files/loi%2031-13/1.%20BO%20Loi%2031.13%20en%20francais.pdf' className='font-bold text-blue-500 underline'>
+          31-13
+          </a>
+        </label>
       </div>
 
       <Button className={'w-full'} disabled={!isValid} isLoading={isRegistering} onClick={handleSubmit}>

@@ -15,6 +15,7 @@ import {
   LiaUserTieSolid,
   LuCalendarX,
   RiTeamLine,
+  GrUserAdmin
 } from './ui/Icons';
 
 import { ROUTES } from '../utils/constants';
@@ -28,6 +29,7 @@ const routesIcons = {
   interns: <BsPeople />,
   teams: <RiTeamLine />,
   supervisors: <LiaUserTieSolid />,
+  admins: <GrUserAdmin size={16} />,
   absences: <LuCalendarX />,
   offers: <IoBriefcaseOutline />,
   demands: <IoDocumentsOutline />,
@@ -76,7 +78,7 @@ export default function Sidebar({ openSettings }) {
         </Button>
       </div>
       <ul className='space-y-1'>
-        {ROUTES[user?.role || 'admin']
+        {ROUTES[user?.role]
           ?.filter((r) => !r.includes('/'))
           .map((route) => (
             <li key={route}>

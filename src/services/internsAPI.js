@@ -4,11 +4,15 @@ export const getAllInterns = async () => await axiosFetch('interns');
 
 export const getIntern = async (id) => (!id ? null : await axiosFetch(`interns/${id}`));
 
-export const addIntern = async (data) => await axiosFetch('profiles', 'POST', {...data,role : 'intern'});
+export const addIntern = async (data) => await axiosFetch('profiles', 'POST', { ...data, role: 'intern' });
 
-export const updateIntern = async (id, data) => await axiosFetch(`profiles/${id}`, 'PUT', {...data,role : 'intern'});
+export const updateIntern = async (id, data) => await axiosFetch(`profiles/${id}`, 'PUT', { ...data, role: 'intern' });
 
 export const deleteIntern = async (id) => await axiosFetch(`profiles/${id}`, 'DELETE');
+
+export const getAcceptedUsers = async () => await axiosFetch('users/accepted');
+
+export const acceptUsers = async (data) => await axiosFetch('users/accept', 'POST', data);
 
 export const generateAttestation = async (id) => await axiosFetch(`generate/attestation/${id}`, 'POST');
 

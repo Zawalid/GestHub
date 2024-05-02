@@ -69,7 +69,7 @@ export function TeamMembers({ project }) {
             </ToolTip>
           )}
         </h2>
-        {user?.role === 'supervisor' && (
+        {['supervisor', 'super-admin'].includes(user?.role) && (
           <>
             <Button display='with-icon' color='secondary' className='text-nowrap' onClick={() => setIsOpen(true)}>
               <MdOutlineGroupAdd size={18} />

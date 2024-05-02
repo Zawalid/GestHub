@@ -23,7 +23,11 @@ export function TableLayout({ onAdd, onUpdate, onDelete, layoutOptions = default
           <div className='flex items-center justify-between gap-3'>
             {filter}
             <Table.Download />
-            {displayNewRecord && <Table.NewRecord onAdd={onAdd} />}
+            {typeof displayNewRecord === 'boolean' && displayNewRecord ? (
+              <Table.NewRecord onAdd={onAdd} />
+            ) : (
+              displayNewRecord
+            )}
           </div>
         </div>
         <div
@@ -31,7 +35,7 @@ export function TableLayout({ onAdd, onUpdate, onDelete, layoutOptions = default
           ref={parent}
         >
           <Table.Table actions={<Table.Actions onUpdate={onUpdate} onDelete={onDelete} actions={actions} />} />
-          {displayTableRecord && <Table.TableRecord />}
+          {(displayTableRecord ) && <Table.TableRecord />}
           <Table.Pagination />
         </div>
       </Table>

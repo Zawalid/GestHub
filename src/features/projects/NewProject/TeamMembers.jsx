@@ -74,12 +74,12 @@ export function TeamMembers({ updateStatus, updateState, state, projectManager, 
   );
 }
 
-export function AllInterns({ teamMembers, setTeamMembers, filter, selectedMembers }) {
+export function AllInterns({ teamMembers, setTeamMembers, filter, selectedMembers, users }) {
   const { interns, error, isLoading } = useInterns();
   const [query, setQuery] = useState('');
   const [parent] = useAutoAnimate({ duration: 400 });
 
-  const searchedInterns = getSearchedInterns(filter ? filter(interns) : interns, query);
+  const searchedInterns = getSearchedInterns(users ? users : filter ? filter(interns) : interns, query);
 
   const render = () => {
     return searchedInterns?.map((intern) => {
@@ -112,8 +112,7 @@ export function AllInterns({ teamMembers, setTeamMembers, filter, selectedMember
   return (
     <>
       <div className='grid grid-cols-[auto_min-content] items-center'>
-        
-        <SearchInput placeholder='Search for interns' query={query} onChange={setQuery} />
+        <SearchInput placeholder={`Search for ${users ? 'users' : 'interns'}`} query={query} onChange={setQuery} />
 
         {selectedMembers && (
           <ToolTip content={<span>Uncheck All</span>}>
