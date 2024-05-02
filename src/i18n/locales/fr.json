@@ -37,14 +37,7 @@
     "register": "S'inscrire",
     "login": "Se connecter",
     "submit": "Soumettre",
-    "close": "Fermer",
-    "save": "Enregistrer",
-    "edit": "Modifier",
-    "delete": "Supprimer",
-    "add": "Ajouter",
-    "update": "Mettre à jour",
-    "cancel": "Annuler",
-    "search": "Rechercher",
+
     "welcome": "Bienvenue",
     "email": {
       "label": "Votre e-mail",
@@ -95,16 +88,64 @@
       "placeholder": "Confirmez votre mot de passe"
     }
   },
+  "about": {
+    "title": "À propos de nous",
+    "phone": "Téléphone",
+    "email": "Email",
+    "location": "Localisation",
+    "description": "Description"
+  },
 
   "offers": {
     "Recents": "Les Offres de stage récentes",
     "exploreMore": "Explorer plus",
     "internshipOffers": "Offres de stage",
-    "apply": "Postuler",
+    "apply": "Postuler"
+  },
+  "overview": {
+    "title": "Vue d'ensemble",
+    "interns": "Stagiaires",
+    "supervisors": "Encadrants",
+    "admins": "Admins",
+    "offers": "Offers",
+    "demands": "Demandes",
+    "projects": "Projets",
+    "totalDemands": "Total Demandes",
+    "totalOffers": "Total Offers",
+    "totalProjects": "Total Projets",
+    "totalPersonnel": "Total Personnel",
+    "pendingDemands": "Demandes en attente",
+    "demandsStatus": "Statut des demandes",
+    "pending": "En attente",
+    "approved": "Approuvé",
+    "rejected": "Rejeté",
+    "latestOffers": "Dernières offres",
+    "completedInternship": "Stages terminés",
+    "noCompletedInternship": "Aucun stage terminé"
+  },
+  "actions": {
     "duration": "Durée",
     "Urgency": "Urgence",
     "publicationDate": "Date de publication",
-    "experience": "Expérience"
+    "experience": "Expérience",
+    "filter": "Filtrer",
+    "sortBby": "Trier par",
+    "orderBy": "ordrer par",
+    "asc": "Ascendant",
+    "desc": "Descendant",
+    "close": "Fermer",
+    "showAll": "Afficher tout",
+    "save": "Enregistrer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "add": "Ajouter",
+    "update": "Mettre à jour",
+    "download": "Télécharger",
+    "cancel": "Annuler",
+    "search": "Rechercher",
+    "reset": "Réinitialiser",
+    "addOffer": "Ajouter une offre",
+    "addProject": "Ajouter un projet"
   },
 
   "app": {
@@ -113,7 +154,7 @@
       "interns": "Stagiaires",
       "teams": "Équipes",
       "supervisors": "Encadrants",
-            "admins": "Admins",
+      "admins": "Admins",
       "absences": "Absences",
       "offers": "Offres",
       "demands": "Demandes",

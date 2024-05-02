@@ -27,20 +27,6 @@
     "alraedyHaveAccount": "Already have an account?",
     "register": "Register",
     "submit": "Submit",
-    "search": "Search",
-    "close": "Close",
-    "save": "Save",
-    "edit": "Edit",
-    "delete": "Delete",
-    "add": "Add",
-    "update": "Update",
-    "cancel": "Cancel",
-    "filter": "Filter",
-    "reset": "Reset",
-    "sortBby": "Sort By",
-    "orderBy": "Order By",
-    "asc": "Ascending",
-    "desc": "Descending",
     "login": "Login",
     "welcome": "Welcome To ",
     "email": {
@@ -105,11 +91,8 @@
     "Recents": "Recent Internship Offers",
     "exploreMore": "Explore More Offers",
     "internshipOffers": "Internship Offers",
-    "apply": "Apply",
-    "duration": "Duration",
-    "Urgency": "Urgency",
-    "publicationDate": "Publication Date",
-    "experience": "Experience"
+    "apply": "Apply"
+
   },
   "about": {
     "title": "About Us",
@@ -118,20 +101,62 @@
     "location": "Location",
     "description": "Description"
   },
+
+
+
+
+
+
+  
   "overview": {
     "title": "Overview",
     "interns": "Interns",
-    "teams": "Teams",
     "supervisors": "Supervisors",
-    "absences": "Absences",
+    "admins": "Admins",
     "offers": "Offers",
     "demands": "Demands",
     "projects": "Projects",
-    "settings": "Settings"
+    "totalDemands": "Total Demands",
+    "totalOffers": "Total Offers",
+    "totalProjects": "Total Projects",
+    "totalPersonnel": "Total Personnel",
+    "pendingDemands": "Pending Demands",
+    "demandsStatus": "Demands Status",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "latestOffers": "Latest Offers",
+    "completedInternship":"Completed Internship",
+    "noCompletedInternship":"No interns have finished their internship yet."
+  },
+
+  "actions":{
+      "duration": "Duration",
+    "Urgency": "Urgency",
+    "publicationDate": "Publication Date",
+    "experience": "Experience",
+    "search": "Search",
+    "close": "Close",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "showAll":"Show All",
+    "update": "Update",
+    "download": "Download",
+    "cancel": "Cancel",
+    "filter": "Filter",
+    "reset": "Reset",
+    "sortBby": "Sort By",
+    "orderBy": "Order By",
+    "asc": "Ascending",
+    "desc": "Descending"
+
   },
 
   "app": {
     "sidebar": {
+      
       "overview": "Overview",
       "interns": "Interns",
       "teams": "Teams",
