@@ -7,7 +7,9 @@
     },
     "auth": {
       "login": "Login",
-      "register": "Sign Up"
+      "register": "Sign Up",
+      "logout": "Logout",
+      "dashboard": "dashboard"
     },
     "theme": {
       "dark": "Dark",
@@ -20,56 +22,74 @@
       "ar": "Arabic"
     }
   },
-  "auth": {
-    "login": {
-      "title1": "Welcome Back",
-      "title2": "MenStage",
-      "email": {
-        "label": "Email Address",
-        "placeholder": "Enter your email"
-      },
-      "password": {
-        "label": "Password",
-        "placeholder": "Enter your password"
-      },
-      "submit": "Login"
+  "form": {
+    "dontHaveAccount": "Don't have an account?",
+    "alraedyHaveAccount": "Already have an account?",
+    "register": "Register",
+    "submit": "Submit",
+    "search": "Search",
+    "close": "Close",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "update": "Update",
+    "cancel": "Cancel",
+    "filter": "Filter",
+    "reset": "Reset",
+    "sortBby": "Sort By",
+    "orderBy": "Order By",
+    "asc": "Ascending",
+    "desc": "Descending",
+    "login": "Login",
+    "welcome": "Welcome To ",
+    "email": {
+      "label": "Your Email",
+      "placeholder": "Your Email"
     },
-    "register": {
-      "title1": "Welcome To ",
-      "title2": "Internship",
-      "email": {
-        "label": "Your Email",
-        "placeholder": "Your Email"
-      },
-      "fullName": {
-        "label": "Full Name",
-        "placeholder": "Full Name "
-      },
-      "lastName": {
-        "label": "Last Name",
-        "placeholder": "First Name   "
-      },
-      "phone": {
-        "label": "Your Phone Number",
-        "placeholder": ""
-      },
-      "birthday": {
-        "label": "Birthday",
-        "placeholder": ""
-      },
-      "city": {
-        "label": "City",
-        "placeholder": ""
-      },
-      "password": {
-        "label": "Password ",
-        "placeholder": ""
-      },
-      "confirmPassword": {
-        "label": "Confirme Password",
-        "placeholder": ""
-      },
-      "submit": "Register"
+    "fullName": {
+      "label": "Full Name",
+      "placeholder": "Full Name "
+    },
+    "firstName": {
+      "label": "First Name",
+      "placeholder": "First Name   "
+    },
+    "lastName": {
+      "label": "Last Name",
+      "placeholder": "First Name   "
+    },
+    "phone": {
+      "label": "Your Phone Number",
+      "placeholder": ""
+    },
+    "Establishment": {
+      "label": "Establishment",
+      "placeholder": ""
+    },
+    "AcademicLevel": {
+      "label": "Academic Level",
+      "placeholder": ""
+    },
+    "speciality": {
+      "label": "Speciality",
+      "placeholder": ""
+    },
+    "birthday": {
+      "label": "Birthday",
+      "placeholder": ""
+    },
+    "city": {
+      "label": "City",
+      "placeholder": ""
+    },
+    "password": {
+      "label": "Password ",
+      "placeholder": ""
+    },
+    "confirmPassword": {
+      "label": "Confirme Password",
+      "placeholder": ""
     }
   },
   "hero": {
@@ -80,6 +100,36 @@
     "placeholder": "Search for an internship",
     "categories": "Categories"
   },
+
+  "offers": {
+    "Recents": "Recent Internship Offers",
+    "exploreMore": "Explore More Offers",
+    "internshipOffers": "Internship Offers",
+    "apply": "Apply",
+    "duration": "Duration",
+    "Urgency": "Urgency",
+    "publicationDate": "Publication Date",
+    "experience": "Experience"
+  },
+  "about": {
+    "title": "About Us",
+    "phone": "Phone",
+    "email": "Email",
+    "location": "Location",
+    "description": "Description"
+  },
+  "overview": {
+    "title": "Overview",
+    "interns": "Interns",
+    "teams": "Teams",
+    "supervisors": "Supervisors",
+    "absences": "Absences",
+    "offers": "Offers",
+    "demands": "Demands",
+    "projects": "Projects",
+    "settings": "Settings"
+  },
+
   "app": {
     "sidebar": {
       "overview": "Overview",
@@ -89,7 +139,7 @@
       "absences": "Absences",
       "offers": "Offers",
       "demands": "Demands",
-      "projects" : "Projects",
+      "projects": "Projects",
       "settings": "Settings",
       "logout": "Logout"
     }

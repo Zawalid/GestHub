@@ -7,7 +7,9 @@
     },
     "auth": {
       "login": "تسجيل الدخول",
-      "register": "إنشاء حساب"
+      "register": "إنشاء حساب",
+      "logout": "تسجيل الخروج",
+      "dashboard": "لوحة التحكم"
     },
     "theme": {
       "dark": "داكن",
@@ -28,60 +30,99 @@
     "placeholder": "ابحث عن تدريب",
     "categories": "الفئات"
   },
-   "auth": {
-    "login": {
-      "title1": "مرحبا بكم",
-      "title2": "MenStage",
-      "email": {
-        "label": "البريد الإلكتروني",  
-        "placeholder": "أدخل البريد الإلكتروني الخاص بك" 
-      },
-      "password": {
-        "label": "كلمة المرور",  
-        "placeholder": "أدخل كلمة المرور الخاصة بك"  
-      },
-      "submit": "تسجيل الدخول"  
+  "form": {
+    "dontHaveAccount": "ليس لديك حساب؟",
+    "alraedyHaveAccount": "لديك حساب؟",
+    "register": "إنشاء حساب",
+    "submit": "تسجيل الدخول",
+    "search": "بحث",
+    "close": "إغلاق",
+    "save": "حفظ",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "add": "إضافة",
+    "update": "تحديث",
+    "cancel": "إلغاء",
+    "welcome": "مرحبا بكم في",
+    "email": {
+      "label": "بريدك الالكتروني",
+      "placeholder": "أدخل البريد الالكتروني الخاص بك"
     },
-    "register":{
-  "title1": "مرحبا بكم",
-  "title2": "التدريب",
-  "email": {
-    "label": "بريدك الالكتروني",
-    "placeholder": "أدخل البريد الالكتروني الخاص بك"
+    "fullName": {
+      "label": "الاسم ",
+      "placeholder": "أدخل الاسم "
+    },
+    "firstName": {
+      "label": "الاسم الأول",
+      "placeholder": "أدخل الاسم الأول"
+    },
+    "lastName": {
+      "label": "الاسم الأخير",
+      "placeholder": "أدخل الاسم الأخير"
+    },
+    "phone": {
+      "label": "رقم هاتفك",
+      "placeholder": "أدخل رقم هاتفك"
+    },
+    "Establishment": {
+      "label": "المؤسسة",
+      "placeholder": "أدخل اسم المؤسسة"
+    },
+    "AcademicLevel": {
+      "label": "المستوى الدراسي",
+      "placeholder": "أدخل المستوى الدراسي"
+    },
+    "birthday": {
+      "label": "تاريخ الميلاد",
+      "placeholder": "أدخل تاريخ ميلادك"
+    },
+    "city": {
+      "label": "المدينة",
+      "placeholder": "أدخل مدينتك"
+    },
+    "password": {
+      "label": "كلمة المرور",
+      "placeholder": "أدخل كلمة المرور"
+    },
+    "confirmPassword": {
+      "label": "تأكيد كلمة المرور",
+      "placeholder": "أعد كتابة كلمة المرور"
+    }
   },
-  "fullName": {
-    "label": "الاسم ",
-    "placeholder": "أدخل الاسم "
+  "offers":{
+    "Recents": "العروض الأخيرة",
+    "exploreMore": "استكشف المزيد",
+    "internshipOffers": "عروض التدريب",
+    "apply": "تقديم",
+     "duration": "المدة",
+    "Urgency": "العاجلية",
+    "publicationDate": "تاريخ النشر",
+    "experience": "الخبرة"
   },
-  "lastName": {
-    "label": "الاسم الأخير",
-    "placeholder": "أدخل الاسم الأخير"
-  },
-  "phone": {
-    "label": "رقم هاتفك",
-    "placeholder": "أدخل رقم هاتفك"
-  },
-  "birthday": {
-    "label": "تاريخ الميلاد",
-    "placeholder": "أدخل تاريخ ميلادك"
-  },
-  "city": {
-    "label": "المدينة",
-    "placeholder": "أدخل مدينتك"
-  },
-  "password": {
-    "label": "كلمة المرور",
-    "placeholder": "أدخل كلمة المرور"
-  },
-  "confirmPassword": {
-    "label": "تأكيد كلمة المرور",
-    "placeholder": "أعد كتابة كلمة المرور"
-  },
-  "submit": "تسجيل"
-}
 
-  },
-   "app": {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  "app": {
     "sidebar": {
       "overview": "نظرة عامة",
       "interns": "المتدربون",

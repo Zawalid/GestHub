@@ -1,94 +1,124 @@
 {
-    "header":{
-        "navbar":{
-            "home":"Principale",
-            "offers":"Offers",
-            "About":"à propos"
-        },
-        "auth":{
-            "login":"S'autentifier",
-            "register":"S'inscrire"
-        },
-        "theme":{
-            "dark":"Sombre",
-            "light":"Lumière",
-            "system":"Système"
-        },
-        "languages": {
-            "en": " Anglais",
-            "fr": "Français",
-            "ar":"عربي"
-        }
-    },
-    "hero":{
-      "title1":"Trouver un",  
-      "title2":"Stage ",  
-      "title3":"Avec vos intérêts et vos capacités",  
-      "paragraph":"Lancez votre carrière avec un stage qui correspond à votre passion. Trouvez votre opportunité idéale" ,
-      "placeholder":"cherchez un stage",
-      "categories":"Catégories"
+  "header": {
+    "navbar": {
+      "home": "Principale",
+      "offers": "Offers",
+      "About": "à propos"
     },
     "auth": {
-        "login": {
-            "title1": "Bienvenue",
-            "title2": "MenStage", 
-            "email": {
-                "label": "Adresse e-mail",  
-                "placeholder": "Entrez votre adresse e-mail"  
-            },
-            "password": {
-                "label": "Mot de passe",  
-                "placeholder": "Entrez votre mot de passe"  
-            },
-            "submit": "Se connecter"
-        },
-        "register":{
-  "title1": "Bienvenue",
-  "title2": "Stage",
-  "email": {
-    "label": "Votre e-mail",
-    "placeholder": "Entrez votre adresse e-mail"
-  },
-  "fullName": {
-    "label": "Nom Complet",
-    "placeholder": "Entrez votre Nom Complet"
-  },
-  "phone": {
-    "label": "Votre numéro de téléphone",
-    "placeholder": "Entrez votre numéro de téléphone"
-  },
-  "birthday": {
-    "label": "Anniversaire",
-    "placeholder": "Entrez votre date de naissance"
-  },
-  "city": {
-    "label": "Ville",
-    "placeholder": "Entrez votre ville"
-  },
-  "password": {
-    "label": "Mot de passe",
-    "placeholder": "Entrez votre mot de passe"
-  },
-  "confirmPassword": {
-    "label": "Confirmer le mot de passe",
-    "placeholder": "Confirmez votre mot de passe"
-  },
-  "submit": "S'inscrire"
-}
-
-  },
-    "app": {
-        "sidebar": {
-            "overview": "Acceuil",
-            "interns": "Stagiaires",
-            "teams": "Équipes",
-            "supervisors": "Encadrants",
-            "absences": "Absences",
-            "offers": "Offres",
-            "demands": "Demandes",
-            "projects" : "Projects",
-            "settings": "Paramètres",
-            "logout": "Déconnexion"
-        }
+      "login": "S'autentifier",
+      "register": "S'inscrire",
+      "logout": "Se déconnecter",
+      "dashboard": "Tableau de bord"
+    },
+    "theme": {
+      "dark": "Sombre",
+      "light": "Lumière",
+      "system": "Système"
+    },
+    "languages": {
+      "en": " Anglais",
+      "fr": "Français",
+      "ar": "عربي"
     }
+  },
+  "hero": {
+    "title1": "Trouver un",
+    "title2": "Stage ",
+    "title3": "Avec vos intérêts et vos capacités",
+    "paragraph": "Lancez votre carrière avec un stage qui correspond à votre passion. Trouvez votre opportunité idéale",
+    "placeholder": "cherchez un stage",
+    "categories": "Catégories"
+  },
+
+  "form": {
+    "dontHaveAccount": "Vous n'avez pas de compte?",
+    "alraedyHaveAccount": "Vous avez déjà un compte?",
+    "register": "S'inscrire",
+    "login": "Se connecter",
+    "submit": "Soumettre",
+    "close": "Fermer",
+    "save": "Enregistrer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "add": "Ajouter",
+    "update": "Mettre à jour",
+    "cancel": "Annuler",
+    "search": "Rechercher",
+    "welcome": "Bienvenue",
+    "email": {
+      "label": "Votre e-mail",
+      "placeholder": "Entrez votre adresse e-mail"
+    },
+    "fullName": {
+      "label": "Nom Complet",
+      "placeholder": "Entrez votre Nom Complet"
+    },
+    "firstName": {
+      "label": "Prénom",
+      "placeholder": "Entrez votre prénom"
+    },
+    "lastName": {
+      "label": "Nom",
+      "placeholder": "Entrez votre nom"
+    },
+    "Establishment": {
+      "label": "Établissement",
+      "placeholder": "Entrez votre établissement"
+    },
+    "speciality": {
+      "label": "Spécialité",
+      "placeholder": "Entrez votre spécialité"
+    },
+    "AcademicLevel": {
+      "label": "Niveau académique",
+      "placeholder": "Entrez votre niveau académique"
+    },
+    "phone": {
+      "label": "Votre numéro de téléphone",
+      "placeholder": "Entrez votre numéro de téléphone"
+    },
+    "birthday": {
+      "label": "Anniversaire",
+      "placeholder": "Entrez votre date de naissance"
+    },
+    "city": {
+      "label": "Ville",
+      "placeholder": "Entrez votre ville"
+    },
+    "password": {
+      "label": "Mot de passe",
+      "placeholder": "Entrez votre mot de passe"
+    },
+    "confirmPassword": {
+      "label": "Confirmer le mot de passe",
+      "placeholder": "Confirmez votre mot de passe"
+    }
+  },
+
+  "offers": {
+    "Recents": "Les Offres de stage récentes",
+    "exploreMore": "Explorer plus",
+    "internshipOffers": "Offres de stage",
+    "apply": "Postuler",
+    "duration": "Durée",
+    "Urgency": "Urgence",
+    "publicationDate": "Date de publication",
+    "experience": "Expérience"
+  },
+
+  "app": {
+    "sidebar": {
+      "overview": "Acceuil",
+      "interns": "Stagiaires",
+      "teams": "Équipes",
+      "supervisors": "Encadrants",
+      "absences": "Absences",
+      "offers": "Offres",
+      "demands": "Demandes",
+      "projects": "Projects",
+      "settings": "Paramètres",
+      "logout": "Déconnexion"
+    }
+  }
 }
