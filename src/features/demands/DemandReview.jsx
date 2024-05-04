@@ -4,11 +4,13 @@ import { Button, Modal, Status } from '@/components/ui';
 import { useForm } from '@/hooks/useForm';
 import { FaRegCircleCheck, FaRegCircleXmark, IoEyeOutline } from '@/components/ui/Icons';
 import { useApproveDemand, useDemand, useRejectDemand } from './useDemands';
+import { FileView } from '@/components/ui/FileView';
 
 export default function DemandReview() {
   const { id } = useParams();
   const { demand, isLoading, error } = useDemand(id);
   const [currentFile, setCurrentFile] = useState(null);
+
   const { approve } = useApproveDemand();
   const { reject } = useRejectDemand();
   const navigate = useNavigate();
@@ -157,16 +159,7 @@ export default function DemandReview() {
       >
         {render()}
       </Modal>
-
-      <Modal
-        isOpen={currentFile}
-        className='relative min-h-[470px] sm:h-fit md:max-h-[600px] md:w-[650px] md:border'
-        closeOnBlur={true}
-        closeButton={false}
-        onClose={() => setCurrentFile(null)}
-      >
-        <object data={currentFile} type='application/pdf' className='flex-1'></object>
-      </Modal>
+      <FileView isOpen={currentFile} onClose={() => setCurrentFile(null)} file={currentFile} />
     </>
   );
 }

@@ -19,6 +19,7 @@ export const getAdditionalData = (data) => {
   return {
     fullName: `${data?.firstName} ${data?.lastName}`,
     avatar: getFile(data, 'avatar'),
+    CV: getFile(data, 'CV'),
   };
 };
 

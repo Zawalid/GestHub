@@ -10,7 +10,7 @@ import { useUser } from '@/hooks/useUser';
 
 export function HomePageOffers() {
   const [isApplying, setIsApplying] = useState();
-  const { offers, isLoading, error, favorites, onToggleFavorite } = useVisibleOffers(true);
+  const { offers, isLoading, error, favorites, onToggleFavorite } = useVisibleOffers();
   const { user } = useUser();
 
 

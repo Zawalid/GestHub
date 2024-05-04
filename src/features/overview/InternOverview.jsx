@@ -62,8 +62,8 @@ function Stats() {
           ) : (
             <h3 className='text-3xl font-bold text-white'>
               {
-                user?.tasks?.filter((p) => {
-                  const { isOverdue } = getTimelineDates(p.created_at, p.dueDate);
+                user?.tasks?.filter((t) => {
+                  const { isOverdue } = getTimelineDates(t.created_at, t.dueDate);
                   return isOverdue;
                 }).length
               }

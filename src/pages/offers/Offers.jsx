@@ -60,7 +60,7 @@ export const getOffersProps = (offers, isLoading, error) => ({
     status: [{ value: 'Urgent', checked: false }],
   },
   defaultLayout: 'grid',
-  fieldsToSearch: ['title'],
+  fieldsToSearch: ['title','sector'],
 });
 
 export function Offers() {

@@ -5,8 +5,10 @@ import { Modal, Button } from '@/components/ui';
 const DEFAULT_OPTIONS = {
   message: '',
   title: '',
-  confirmText: 'Delete',
-  icon: <PiWarningFill />,
+  confirmText: '',
+  icon: '',
+  iconBg: '',
+  buttonClassName: '',
 };
 export const ModalContext = createContext();
 
@@ -48,10 +50,12 @@ export function ConfirmationModalProvider({ children }) {
         closeOnBlur={false}
       >
         <div className='flex items-center gap-3  pb-3'>
-          <div className='grid h-6 w-6 place-content-center rounded-full bg-[#F57800] text-white sm:h-8 sm:w-8 sm:text-lg'>
+          <div
+            className={`grid h-6 w-6 place-content-center rounded-full text-white sm:h-8 sm:w-8 sm:text-lg ${options.iconBg || 'bg-[#F57800]'}`}
+          >
             {options.icon || <PiWarningFill />}
           </div>
-          <h1 className='text-xl font-semibold text-text-primary   sm:text-2xl'>{options.title}</h1>
+          <h1 className='text-xl font-semibold text-text-primary sm:text-2xl'>{options.title}</h1>
         </div>
         <p className='text-sm text-text-secondary sm:text-base'>{options.message}</p>
 
@@ -59,7 +63,7 @@ export function ConfirmationModalProvider({ children }) {
           <Button color='tertiary' onClick={onCancel}>
             Cancel
           </Button>
-          <Button color='delete' onClick={onConfirm}>
+          <Button color='delete' className={options.buttonClassName || ''} onClick={onConfirm}>
             {options.confirmText || 'Delete'}
           </Button>
         </div>

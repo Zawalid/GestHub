@@ -18,7 +18,9 @@ export {
   IoSettingsOutline,
   IoFlag,
   IoSchool,
-  IoPeople 
+  IoPeople ,
+  IoLocationOutline ,
+  IoFilter
 } from 'react-icons/io5';
 export {
   PiCheckBold,
@@ -67,13 +69,14 @@ export {
   FaRegCircleXmark,
   FaDiagramProject, 
   FaCalendarXmark , 
-  FaListCheck
+  FaListCheck,
 } from 'react-icons/fa6';
-export { LuCalendarX, LuUser, LuUpload,LuClipboardList,LuListTodo   } from 'react-icons/lu';
+export { LuCalendarX, LuUser, LuUpload,LuClipboardList,LuListTodo,   } from 'react-icons/lu';
 export { LiaUserTieSolid,LiaClipboardListSolid  } from 'react-icons/lia';
 export { FiLogOut, FiSettings, FiPhone, FiCheck } from 'react-icons/fi';
 export { RiTeamLine } from 'react-icons/ri';
 export { HiMiniXMark } from 'react-icons/hi2';
 export { RxDashboard, RxViewVertical } from 'react-icons/rx';
-export { TbProgressCheck, TbFileSearch } from 'react-icons/tb';
-export { GrUserAdmin } from "react-icons/gr";
+export { TbProgressCheck, TbFileSearch,TbProgress  } from 'react-icons/tb';
+export { GrUserAdmin,GrMapLocation,GrPowerReset  } from "react-icons/gr";
+export { GoLink,GoUnlink  } from "react-icons/go";

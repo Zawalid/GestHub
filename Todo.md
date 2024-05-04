@@ -27,8 +27,16 @@
 - [x] add specialty to the intern form
 - [x] admin and super-admin are the same as the user role
 - [x] add checkbox for accept terms
-
-
-
-
+- [ ] intern overview
+- [ ] notifications for the user
+- [ ] only super-admin can create a project
+- [ ] supervisor can see their projects only
+- [x] clicks on the overview
+- [ ] project title on the interns table
+- [x] filter by sector in demands
+- [ ] only free interns in project's creation team members selection
+- [ ] pages creation / update home page
+- [x] green for approve button
+- [x] full screen file view
+- [ ] use slugs instead of ids (projects/offers/interns)
 

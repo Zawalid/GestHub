@@ -8,7 +8,7 @@ import { Filter } from './Filter';
 import { Layout } from './Layout';
 
 // Array methods
-Array.prototype.customFilter = function (filters) {
+Array.prototype.customFilter = function (filters, filterCondition) {
   if (!filters) return this;
 
   const conditions = Object.keys(filters)
@@ -20,21 +20,21 @@ Array.prototype.customFilter = function (filters) {
 
   if (!conditions.length) return this;
 
-  return this.filter((el) =>
-    conditions.some((c) => {
+  return this.filter((el) => {
+    const conditionFn = (c) => {
       let condition = false;
       c.value.forEach((v) => {
         if (v.condition) return (condition = c.value.map((v) => v.condition(el)).some((v) => v));
         condition = c.value.includes(el[c.field]);
       });
       return condition;
-    })
-  );
+    };
+    return filterCondition === 'AND' ? conditions.every(conditionFn) : conditions.some(conditionFn);
+  });
 };
 
 Array.prototype.customSort = function (sortBy, direction, sortOptions) {
   if (!sortOptions) return this;
-
 
   const stringFields = sortOptions.filter((c) => c.type === 'string').map((c) => c.key);
   const numberFields = sortOptions.filter((c) => c.type === 'number').map((c) => c.key);
@@ -101,18 +101,17 @@ export function Operations({
   fieldsToSearch,
 }) {
   const [filters, setFilters] = useState(initialFilters || {});
+  const [filterCondition, setFilterCondition] = useState('OR');
   const [layout, setLayout] = useState(defaultLayout, 'grid');
-
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('search') || '';
   const sortBy = searchParams.get('sort') || defaultSortBy;
   const direction = searchParams.get('dir') || defaultDirection;
 
-
-  const data =  initialData
+  const data = initialData
     ?.search(query, fieldsToSearch)
-    .customFilter(filters)
-    .customSort(sortBy, direction, sortOptions);
+    .customFilter(filters, filterCondition)
+    .customSort(sortBy, direction, sortOptions)
 
   const appliedFiltersNumber = Object.values(filters)
     .flat()
@@ -127,6 +126,12 @@ export function Operations({
     if (!query) searchParams.delete('search');
     setSearchParams(searchParams);
   }, [direction, searchParams, sortBy, query, setSearchParams, defaultDirection, defaultSortBy]);
+
+  useEffect(() => {
+    setFilters(initialFilters || {});
+  }, [initialFilters]);
+
+
 
   // Perform operations
 
@@ -146,6 +151,7 @@ export function Operations({
     const newFilters = reset ? initialFilters : { ...filters, ...filter };
     setFilters(newFilters);
   };
+  const onChangeFilterCondition = () => setFilterCondition((prev) => (prev === 'OR' ? 'AND' : 'OR'));
   const onchangeLayout = (layout) => setLayout(layout);
 
   const context = {
@@ -160,8 +166,10 @@ export function Operations({
     direction,
     onOrder,
     filters,
+    filterCondition,
     appliedFiltersNumber,
     onFilter,
+    onChangeFilterCondition,
     layout,
     onchangeLayout,
   };

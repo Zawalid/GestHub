@@ -12,6 +12,8 @@ import {
   IoSchool,
   FaCity,
   MdOutlineTimelapse,
+  IoLocationOutline,
+  GrMapLocation,
 } from './Icons';
 import { cn } from '../../utils/helpers';
 import { tv } from 'tailwind-variants';
@@ -36,6 +38,8 @@ const icons = {
   academicLevel: <IoSchool />,
   city: <FaCity />,
   duration: <MdOutlineTimelapse />,
+  location: <IoLocationOutline />,
+  maps: <GrMapLocation />,
 };
 
 function Label({ label, message }) {
@@ -79,16 +83,19 @@ function Icon({ icon, className = '' }) {
 }
 
 export const InputField = forwardRef(
-  ({ children, type, className, name, errorMessage, label, showIcon = true, iconClassName, ...props }, ref) => {
+  (
+    { children, type, className, name, errorMessage, label, showIcon = true, iconClassName, customIcon, ...props },
+    ref
+  ) => {
     const icon = showIcon && (icons[name] || icons[type]);
 
     return (
       <div className='space-y-1.5'>
         <Label label={label} message={errorMessage} />
         <div
-          className={cn(input({ icon: Boolean(icon), disabled: props.disabled, readOnly: props.readOnly }), className)}
+          className={cn(input({ icon: Boolean(customIcon || icon), disabled: props.disabled, readOnly: props.readOnly }), className)}
         >
-          {showIcon && <Icon icon={icon} className={iconClassName} />}
+          {customIcon ? customIcon : showIcon && <Icon icon={icon} className={iconClassName} />}
           {type === 'textarea' ? (
             <textarea ref={ref} {...props}></textarea>
           ) : (

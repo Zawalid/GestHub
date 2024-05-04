@@ -84,7 +84,6 @@ export default function Profile() {
     >
       <div className='space-y-5'>
         <div>
-          <h3 className='mb-3 font-bold text-text-secondary'>Image</h3>
           <ProfileAvatar
             avatar={getValue('avatar')}
             onChange={(avatar) => setValue('avatar', avatar)}

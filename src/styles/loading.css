@@ -15,7 +15,7 @@
     left: var(--left);
     width: 35px;
     height: 7px;
-    background: #ffff;
+    background: var(--primary);
     animation: dominos 1s ease infinite;
     box-shadow: 2px 2px 3px 0px black;
   }

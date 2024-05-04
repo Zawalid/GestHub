@@ -3,6 +3,7 @@ import { getAllDemands, getDemand, addDemand, deleteDemand, approveDemand, rejec
 import { useMutate } from '@/hooks/useMutate';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { getFile } from '@/utils/helpers';
+import { FaRegCircleCheck, FaRegCircleXmark } from 'react-icons/fa6';
 
 // Queries
 
@@ -95,10 +96,13 @@ export const useApproveDemand = () => {
       message: 'Are you sure you want to approve this demand?',
       title: 'Approve Demand',
       confirmText: 'Approve',
+      icon : <FaRegCircleCheck />,
+      iconBg : 'bg-green-600',
+      buttonClassName : 'bg-green-600 hover:bg-green-700',
       onConfirm: () => approvement.mutate(id, options),
     });
 
-  return { ...approvement, approve };
+    return { ...approvement, approve };
 };
 
 export const useRejectDemand = () => {
@@ -113,11 +117,13 @@ export const useRejectDemand = () => {
   });
 
   const reject = (id, options) =>
-    openModal({
-      message: 'Are you sure you want to reject this demand?',
-      title: 'Reject Demand',
-      confirmText: 'Reject',
-      onConfirm: () => rejection.mutate(id, options),
+  openModal({
+    message: 'Are you sure you want to reject this demand?',
+    title: 'Reject Demand',
+    confirmText: 'Reject',
+    icon : <FaRegCircleXmark />,
+    iconBg : 'bg-red-600',
+    onConfirm: () => rejection.mutate(id, options),
     });
 
   return { ...rejection, reject };

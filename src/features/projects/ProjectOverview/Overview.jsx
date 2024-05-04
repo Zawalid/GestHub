@@ -9,11 +9,12 @@ import { BasicInfo } from '../NewProject/BasicInfo';
 import { useUser } from '@/hooks/useUser';
 import { TeamMembers } from './TeamMembers';
 import { Details, Progress } from './Details';
+import { Stats } from './Stats';
 
 export default function Overview() {
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
-  const { project } = useProject(id);
+  const { project,isLoading } = useProject(id);
   const { subject, status, progress, priority } = project || {};
   const { user } = useUser();
 
@@ -47,8 +48,8 @@ export default function Overview() {
           </>
         )}
       </div>
-
       <Details project={project} />
+        <Stats isLoading={isLoading} tasks={project?.tasks || []} />
       <TeamMembers project={project} />
     </div>
   );

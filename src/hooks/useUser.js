@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { login, register, logout, getUser, updateProfile, updatePassword, updateAvatar } from '@/services/usersAPI';
+import { login, register, logout, getUser, updateProfile, updatePassword, updateAvatar, getSettings, updateSettings } from '@/services/usersAPI';
 import { useMutate } from './useMutate';
 import { getFile } from '@/utils/helpers';
 import { useConfirmationModal } from './useConfirmationModal';
@@ -70,11 +70,26 @@ export function useUser() {
   });
 
   return {
-    user: data ? { ...data, avatar: { src: getFile(data, 'avatar'), file: null }, cv: getFile(data, 'cv') } : null,
+    user: data ? { ...data, avatar: { src: getFile(data, 'avatar'), file: null }, cv: getFile(data, 'cv'),role : 'user' } : null,
     isAuthenticated: Boolean(data),
     isLoading: isPending,
     error,
   };
+}
+
+export function useSettings() {
+  const { data, error, isPending } = useQuery({
+    queryKey: ['settings'],
+    queryFn: getSettings,
+    retry: 1,
+  });
+
+  return {
+    settings: data,
+    isLoading: isPending,
+    error,
+  };
+
 }
 
 export function useUpdateProfile() {
@@ -86,6 +101,7 @@ export function useUpdateProfile() {
     errorMessage: 'Failed to update profile',
   });
 }
+
 export function useUpdateAvatar() {
   return useMutate({
     queryKey: ['user', 'updateAvatar'],
@@ -103,5 +119,15 @@ export function useUpdatePassword() {
     mutationFn: (passwords) => updatePassword(user?.profile_id, passwords),
     loadingMessage: 'Updating password...',
     successMessage: 'Password updated successfully',
+  });
+}
+
+export function useUpdateSettings() {
+  return useMutate({
+    queryKey: ['settings', 'update'],
+    mutationFn: (data) => updateSettings(data),
+    loadingMessage: 'Updating settings...',
+    successMessage: 'Settings updated successfully',
+    errorMessage: 'Failed to update settings',
   });
 }
