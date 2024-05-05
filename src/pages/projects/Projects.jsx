@@ -46,7 +46,7 @@ export function Projects() {
         <Operations.Search />
       </div>
       <ProjectsList />
-      {user?.role === 'supervisor' && <NewProject />}
+      {['supervisor', 'super-admin'].includes(user?.role) && <NewProject />}
     </Operations>
   );
 }

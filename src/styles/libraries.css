@@ -78,7 +78,7 @@
 }
 
 .tippy-box[data-theme~="light"] {
-  @apply rounded-lg bg-background-primary p-0 text-sm text-text-primary shadow-md !important;
+  @apply rounded-lg bg-background-primary p-0 text-sm text-text-primary shadow-md  !important;
 }
 
 .tippy-content {

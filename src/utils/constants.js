@@ -16,22 +16,13 @@ export const ROUTES = {
     'interns',
     'interns/:id',
   ],
-  admin: [
-    'overview',
-    'supervisors',
-    'demands',
-    'demands/:id',
-    'offers',
-    'offers/:id',
-    'interns',
-    'interns/:id',
-  ],
+  admin: ['overview', 'supervisors', 'demands', 'demands/:id', 'offers', 'offers/:id', 'interns', 'interns/:id'],
   supervisor: ['overview', 'projects', 'projects/new', 'projects/:id', 'projects/:id/:tab', 'interns', 'interns/:id'],
   intern: ['overview', 'projects', 'projects/:id', 'projects/:id/:tab'],
   user: ['overview'],
 };
 
-export const PAGE_LIMIT = 5;
+export const PAGE_LIMIT = 10;
 
 export const STATUS_COLORS = {
   'Not Started': { bg: 'bg-gray-500', text: 'text-gray-500' },
@@ -62,10 +53,9 @@ export const RULES = {
   },
   password: {
     pattern: {
-      value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      value: /^(?=.*?[A-Za-z])(?=.*?[0-9]).{8,}$/,
       message:
-        'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one symbol',
-    },
+'Password must contain at least 8 characters, one letter (either uppercase or lowercase), and one number',    },
   },
   passwordConfirmation: {
     validate: (value, getValue) => value === getValue('password') || 'Passwords do not match',

@@ -6,6 +6,7 @@ import { useUser } from '../hooks';
 import { useLogout } from '@/hooks/useUser';
 import { FiLogOut } from 'react-icons/fi';
 import { RxDashboard } from 'react-icons/rx';
+import { LuClipboardList } from 'react-icons/lu';
 
 export function AuthSwitcher({ size }) {
   const { pathname } = useLocation();
@@ -64,7 +65,12 @@ function User({ user }) {
         </div>
       </DropDown.Title>
       <DropDown.Divider />
-      {user?.role !== 'user' && (
+      {user?.role === 'user' ? (
+        <DropDown.Option onClick={() => navigate('/applications')}>
+          <LuClipboardList />
+          My Applications
+        </DropDown.Option>
+      ) : (
         <DropDown.Option onClick={() => navigate('/app')}>
           <RxDashboard />
           Dashboard

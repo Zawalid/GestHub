@@ -2,31 +2,36 @@ import { GrYoutube, GrInstagram, GrTwitter, GrLinkedin, GrFacebookOption } from 
 import { Button } from './Button';
 import { useState } from 'react';
 
-const socials = [
+export const socials = [
   {
     href: 'https://www.facebook.com',
     icon: <GrFacebookOption />,
     color: '#1877f2',
+    name : 'Facebook'
   },
   {
     href: 'https://www.twitter.com',
     icon: <GrTwitter />,
     color: '#0a66c2',
+    name : 'Twitter'
   },
   {
     href: 'https://www.instagram.com',
     icon: <GrInstagram />,
     color: '#e1306c',
+    name : 'Instagram'
   },
   {
     href: 'https://www.linkedin.com',
     icon: <GrLinkedin />,
     color: '#1da1f2',
+    name : 'Linkedin'
   },
   {
     href: 'https://www.youtube.com',
     icon: <GrYoutube />,
     color: '#ff0000',
+    name : 'Youtube'
   },
 ];
 export function SocialMedia() {

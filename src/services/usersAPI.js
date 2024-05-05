@@ -1,8 +1,8 @@
 import { axiosFetch } from '.';
 
-export const login = async (email, password) => await axiosFetch('login', 'POST', { email, password },true);
+export const login = async (email, password) => await axiosFetch('login', 'POST', { email, password }, true);
 
-export const register = async (user) => await axiosFetch('register', 'POST', user,true);
+export const register = async (user) => await axiosFetch('register', 'POST', user, true);
 
 export const logout = async () => await axiosFetch('logout', 'POST');
 
@@ -17,3 +17,7 @@ export const updateAvatar = async (id, file) => {
 };
 
 export const updatePassword = async (id, passwords) => await axiosFetch(`profiles/${id}/password`, 'POST', passwords);
+
+export const getSettings = async () => await axiosFetch('settings');
+
+export const updateSettings = async (data) => await axiosFetch('settings', 'POST', data);
