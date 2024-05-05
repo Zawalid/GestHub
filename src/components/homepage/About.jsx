@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { IoIosArrowDown, IoIosMail } from 'react-icons/io';
 import { BsTelephoneFill } from 'react-icons/bs';
 import { IoLocationSharp } from 'react-icons/io5';
-import Shade from '../ui/shade';
+import { useTranslation } from 'react-i18next';
 
 function About() {
+    const { t } = useTranslation();
   return (
     <div className='relative grid grid-cols-1 gap-3 p-2 py-24 md:px-10'>
       <div>
-        <h1 className='p-3 text-center text-5xl font-bold text-primary dark:text-text-primary'>About DSI</h1>
+        <h1 className='p-3 text-center text-5xl font-bold text-primary dark:text-text-primary'> {t('about.title')}</h1>
       </div>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
         <DsiSummary />
@@ -18,7 +19,7 @@ function About() {
               <BsTelephoneFill />
             </div>
             <div className='space-y-2'>
-              <h2 className=' font-bold text-primary'>Phone Number</h2>
+              <h2 className=' font-bold text-primary'> {t('about.phone')}</h2>
               <a href='tel:+212537889900' className='text-sm font-medium text-text-secondary '>
                 +212 537889900
               </a>
@@ -29,7 +30,7 @@ function About() {
               <IoIosMail />
             </div>
             <div className='space-y-2'>
-              <h2 className=' font-bold text-primary'>Email Address</h2>
+              <h2 className=' font-bold text-primary'>{t('about.email')}</h2>
               <a href='mailto:stagiaire@men.gov.ma' className='text-sm font-medium text-text-secondary '>
                 stagiaire@men.gov.ma
               </a>
@@ -96,6 +97,7 @@ function DsiSummary() {
 
 function DsiLocation() {
   const [mapIsOpen, setMapIsOpen] = useState(true);
+  const { t } = useTranslation();
 
   return (
     <div
@@ -107,7 +109,7 @@ function DsiLocation() {
           <IoLocationSharp />
         </div>
         <div className={`flex-1  ${mapIsOpen && 'pb-3'}  `}>
-          <h2 className=' font-bold text-primary'> Location</h2>
+          <h2 className=' font-bold text-primary'> {t('about.location')}</h2>
           <a
             href='https://maps.app.goo.gl/miz9LAa9i2FCbZNa7'
             target='_blank'

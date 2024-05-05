@@ -36,6 +36,7 @@ export function AuthSwitcher({ size }) {
 function User({ user }) {
   const { logout } = useLogout();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <DropDown
@@ -67,12 +68,12 @@ function User({ user }) {
       {user?.role !== 'user' && (
         <DropDown.Option onClick={() => navigate('/app')}>
           <RxDashboard />
-          Dashboard
+          {t(`header.auth.dashboard`)}
         </DropDown.Option>
       )}
       <DropDown.Option onClick={logout}>
         <FiLogOut />
-        Logout
+        {t(`header.auth.logout`)}
       </DropDown.Option>
     </DropDown>
   );

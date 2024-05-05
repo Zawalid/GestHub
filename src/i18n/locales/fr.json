@@ -32,6 +32,7 @@
   },
 
   "form": {
+    "accepteTerms": "J'accepte les termes et conditions de la politique de confidentialité",
     "dontHaveAccount": "Vous n'avez pas de compte?",
     "alraedyHaveAccount": "Vous avez déjà un compte?",
     "register": "S'inscrire",
@@ -55,7 +56,7 @@
       "label": "Nom",
       "placeholder": "Entrez votre nom"
     },
-    "Establishment": {
+    "establishment": {
       "label": "Établissement",
       "placeholder": "Entrez votre établissement"
     },
@@ -63,7 +64,7 @@
       "label": "Spécialité",
       "placeholder": "Entrez votre spécialité"
     },
-    "AcademicLevel": {
+    "academicLevel": {
       "label": "Niveau académique",
       "placeholder": "Entrez votre niveau académique"
     },
@@ -100,7 +101,8 @@
     "Recents": "Les Offres de stage récentes",
     "exploreMore": "Explorer plus",
     "internshipOffers": "Offres de stage",
-    "apply": "Postuler"
+    "apply": "Postuler",
+    "alreadyApplied": "Déjà postulé"
   },
   "overview": {
     "title": "Vue d'ensemble",

@@ -2,19 +2,20 @@ import { IoFilter } from 'react-icons/io5';
 import { GrPowerReset } from 'react-icons/gr';
 import { Button, CheckBox, DropDown } from '@/components/ui';
 import { useOperations } from './useOperations';
+import { useTranslation } from 'react-i18next';
 
 const toggleChecked = (filter, value) => filter.map((f) => (f.value === value ? { ...f, checked: !f.checked } : f));
 
 export function Filter({ className = '' }) {
   const { filters, onFilter, appliedFiltersNumber, isLoading, error } = useOperations();
-
+  const { t } = useTranslation();
   if (!filters) return null;
 
   return (
     <DropDown
       toggler={
         <Button display='with-icon' color='tertiary'>
-          Filter
+          {t('actions.filter')}
           <IoFilter />
           <span
             className={`absolute -right-2 -top-2 h-5 w-5 rounded-full bg-primary text-center text-xs font-bold leading-5 text-white transition-transform duration-300 ${

@@ -27,24 +27,24 @@ export function Register() {
     fields: [
       {
         name: 'firstName',
-        label: 'First Name',
+        label: t('form.firstName.label'),
       },
       {
         name: 'lastName',
-        label: 'Last Name',
+        label: t('form.lastName.label'),
       },
       {
         name: 'email',
         type: 'email',
-        label: t('auth.register.email.label'),
+        label: t('form.email.label'),
       },
       {
         name: 'phone',
-        label: t('auth.register.phone.label'),
+        label: t('form.phone.label'),
       },
       {
         name: 'establishment',
-        label: 'Establishment',
+        label: t('form.establishment.label'),
         type: 'establishment',
       },
       {
@@ -55,12 +55,12 @@ export function Register() {
       {
         name: 'password',
         type: 'password',
-        label: t('auth.register.password.label'),
+        label: t('form.password.label'),
       },
       {
         name: 'password_confirmation',
         type: 'password',
-        label: t('auth.register.confirmPassword.label'),
+        label: t('form.confirmPassword.label'),
         rules: { ...RULES.passwordConfirmation },
       },
       { name: 'accept', hidden: true },
@@ -71,7 +71,7 @@ export function Register() {
 
   return (
     <div className='relative flex h-full w-full flex-col justify-center space-y-6 p-2 md:p-5 '>
-      <h1 className='mb-8 text-2xl font-bold text-text-primary sm:text-3xl'>{t('auth.register.title1')} </h1>
+      <h1 className='mb-8 text-2xl font-bold text-text-primary sm:text-3xl'>{t('form.welcome')} GestHub</h1>
       <div className='grid grid-cols-1 gap-2 gap-x-4 lg:grid-cols-2'>
         {formInputs.firstName}
         {formInputs.lastName}
@@ -79,7 +79,7 @@ export function Register() {
         {formInputs.phone}
         {formInputs.establishment}
         <div className='flex flex-col gap-1.5'>
-          <label className='text-sm font-medium text-text-tertiary'>Academic Level</label>
+          <label className='text-sm font-medium text-text-tertiary'> {t('form.academicLevel.label')}</label>
           <DropDown
             toggler={
               <DropDown.Toggler>
@@ -110,20 +110,23 @@ export function Register() {
       <div className='mt-5 flex items-center gap-3'>
         <CheckBox checked={getValue('accept')} onChange={(e) => setValue('accept', e.target.checked || null)} />
         <label className='text-sm font-medium text-text-tertiary'>
-          Accept the terms of information access law {' '}
-          <a href='https://www.oc.gov.ma/sites/default/files/loi%2031-13/1.%20BO%20Loi%2031.13%20en%20francais.pdf' className='font-bold text-blue-500 underline'>
-          31-13
+          {t('form.accepteTerms')} &nbsp;
+          <a
+            href='https://www.oc.gov.ma/sites/default/files/loi%2031-13/1.%20BO%20Loi%2031.13%20en%20francais.pdf'
+            className='font-bold text-blue-500 underline'
+          >
+            31-13
           </a>
         </label>
       </div>
 
       <Button className={'w-full'} disabled={!isValid} isLoading={isRegistering} onClick={handleSubmit}>
-        {isRegistering ? 'Registering...' : t('auth.register.submit')}
+        {isRegistering ? 'Registering...' : t('form.register')}
       </Button>
       <p className='flex items-center justify-center gap-1 border-t border-border py-4 text-center text-text-primary'>
-        Already have an account ?
+        {t('form.alraedyHaveAccount')}
         <Link to='/login' className='ml-2 cursor-pointer text-sm font-bold text-primary underline '>
-          Login
+          {t('form.login')}
         </Link>
       </p>
     </div>

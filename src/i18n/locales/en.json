@@ -23,6 +23,7 @@
     }
   },
   "form": {
+    "accepteTerms": "Accept the terms of information access law",
     "dontHaveAccount": "Don't have an account?",
     "alraedyHaveAccount": "Already have an account?",
     "register": "Register",
@@ -49,11 +50,11 @@
       "label": "Your Phone Number",
       "placeholder": ""
     },
-    "Establishment": {
+    "establishment": {
       "label": "Establishment",
       "placeholder": ""
     },
-    "AcademicLevel": {
+    "academicLevel": {
       "label": "Academic Level",
       "placeholder": ""
     },
@@ -91,7 +92,8 @@
     "Recents": "Recent Internship Offers",
     "exploreMore": "Explore More Offers",
     "internshipOffers": "Internship Offers",
-    "apply": "Apply"
+    "apply": "Apply",
+    "alreadyApplied": "Already Applied"
 
   },
   "about": {

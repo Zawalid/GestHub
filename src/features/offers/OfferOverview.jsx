@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import { OfferSkeleton } from './OffersSkeleton';
 import { FaRegStar } from 'react-icons/fa';
 import { useUser } from '@/hooks/useUser';
+import { useTranslation } from 'react-i18next';
 
 export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite, onApply }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -25,7 +26,7 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
   const navigate = useNavigate();
   const { offer, isLoading, error } = useOffer(id);
   const { mutate } = useUpdateOffer();
-
+  const {t}=useTranslation();
   const { title, description, duration, city, publicationDate, direction, sector, type, experience, status, skills } =
     offer || {};
 
@@ -168,14 +169,14 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
       {onHomePage && (
         <div className='z-10 mt-auto flex justify-end gap-3'>
           <Button color='tertiary' onClick={() => navigate('/offers')}>
-            Close
+            {t('actions.close')}
           </Button>
           {(user?.role === 'user' || !user) && (
             <Button
               disabled={isLoading || error || isAlreadyApplied(user, id)}
               onClick={() => (user ? onApply() : navigate('/login'))}
             >
-              {isAlreadyApplied(user, id) ? 'Already Applied' : 'Apply'}
+              {isAlreadyApplied(user, id) ? t('offers.alreadyApplied') : t('offers.apply')}
             </Button>
           )}
         </div>
