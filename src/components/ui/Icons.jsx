@@ -20,7 +20,8 @@ export {
   IoSchool,
   IoPeople ,
   IoLocationOutline ,
-  IoFilter
+  IoFilter,
+  
 } from 'react-icons/io5';
 export {
   PiCheckBold,

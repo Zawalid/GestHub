@@ -70,7 +70,7 @@ export function useUser() {
   });
 
   return {
-    user: data ? { ...data, avatar: { src: getFile(data, 'avatar'), file: null }, cv: getFile(data, 'cv'),role : 'user' } : null,
+    user: data ? { ...data, avatar: { src: getFile(data, 'avatar'), file: null }, cv: getFile(data, 'cv') } : null,
     isAuthenticated: Boolean(data),
     isLoading: isPending,
     error,

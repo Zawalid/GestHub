@@ -39,4 +39,10 @@
 - [x] green for approve button
 - [x] full screen file view
 - [ ] use slugs instead of ids (projects/offers/interns)
+- [ ] Fix the theme bug in App.jsx (re-renders the app)
 
+
+
+
+- Demand (created_at | updated_at)
+- 

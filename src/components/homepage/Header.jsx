@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useHref } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { FaChevronDown } from 'react-icons/fa6';
-import { RxHamburgerMenu } from 'react-icons/rx';
 import { MobileHeader } from './MobileHeader';
 import { AuthSwitcher } from '../AuthSwitcher';
 import { ThemeSwitcher } from '../ThemeSwitcher';
 import { LanguageSwitcher } from '../LanguageSwitcher';
 import { Button } from '../ui';
 import { Logo } from '../ui/Logo';
+import { FaChevronDown } from 'react-icons/fa6';
+import { RxHamburgerMenu } from 'react-icons/rx';
+import Notifications from './Notifications';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -26,7 +27,9 @@ export function Header() {
       <div className='flex items-center gap-4'>
         <ThemeSwitcher />
         <LanguageSwitcher />
+      <Notifications />
         <AuthSwitcher />
+        
 
         <Button shape='icon' onClick={() => setIsMobileMenuOpen(true)} className='lg:hidden'>
           <RxHamburgerMenu />
@@ -35,7 +38,6 @@ export function Header() {
 
       <MobileHeader isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
 
-      {/* <Shade className='absolute left-0 top-16 z-10 w-full overflow-hidden leading-[0]' /> */}
     </header>
   );
 }

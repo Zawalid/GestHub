@@ -113,8 +113,8 @@ function Title({ children,className='' }) {
   return <h4 className={`text-sm font-medium pl-1 text-text-primary ${className}`}>{children}</h4>;
 }
 
-function Divider() {
-  return <hr className="border border-border" />;
+function Divider({className = ''}) {
+  return <hr className={`border border-border ${className}`} />;
 }
 
 function NestedMenu({ children, toggler, togglerClassName, options }) {
