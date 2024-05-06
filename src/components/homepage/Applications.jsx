@@ -14,8 +14,7 @@ export default function Applications() {
     <Modal
       isOpen={location.pathname === '/applications'}
       className='relative overflow-auto p-5 sm:h-fit md:h-[500px] md:w-[700px] md:border'
-      closeOnBlur={true}
-      //   onClose={() => navigate('/')}
+      onClose={() => navigate('/')}
     >
       <h1 className='mb-5 text-lg font-bold text-text-primary'>My Applications</h1>
       <Operations
@@ -26,6 +25,7 @@ export default function Applications() {
           { key: 'offer', display: 'Offer Title', type: 'string' },
           { key: 'created_at', display: 'Application Date', type: 'date' },
         ]}
+        defaultSortBy='created_at'
         filters={{
           status: [
             { value: 'Pending', checked: false },
@@ -50,7 +50,11 @@ function ApplicationsList() {
     if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
     if (demands?.length === 0 && (query || appliedFiltersNumber))
       return (
-        <Status status='noResults' heading='No offers found' message='Try changing your search query or filters' />
+        <Status
+          status='noResults'
+          heading='No applications found'
+          message='Try changing your search query or filters'
+        />
       );
     return (
       <div className='space-y-3 pr-2' ref={parent}>
@@ -73,10 +77,7 @@ function ApplicationsList() {
         </div>
         <Operations.Search />
       </div>
-      <div className='relative flex-1 overflow-auto'>
-        {render()}
-        
-        </div>
+      <div className='relative flex-1 overflow-auto'>{render()}</div>
     </>
   );
 }
