@@ -58,19 +58,19 @@ export default function SupervisorsList() {
         {
           name: 'phone',
           label: 'Phone Number',
-          type : 'phone'
+          type: 'phone',
         },
         {
           name: 'password',
           type: 'password',
           label: 'Password',
+          rules: { required: false },
         },
         {
           name: 'password_confirmation',
           type: 'password',
           label: 'Confirm Password',
-          rules: { ...RULES.passwordConfirmation},
-
+          rules: { ...RULES.passwordConfirmation, required: false },
         },
       ]}
       formDefaults={{

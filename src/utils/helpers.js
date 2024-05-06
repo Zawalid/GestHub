@@ -43,7 +43,6 @@ export const getProgress = (ratio) => +(ratio ? (ratio % 1 === 0 ? Math.floor(ra
 
 export const canViewProject = (user, project) => {
   // return ['intern', 'supervisor'].includes(user?.role) && user?.projects?.includes(project.id);
-
   return (
     (user?.role === 'intern' && user?.projects?.includes(project.id)) ||
     (user?.role === 'supervisor' && project?.supervisor === user?.id) ||

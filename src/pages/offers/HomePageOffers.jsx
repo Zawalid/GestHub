@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 export function HomePageOffers() {
   const [isApplying, setIsApplying] = useState();
-  const { offers, isLoading, error, favorites, onToggleFavorite } = useVisibleOffers(true);
+  const { offers, isLoading, error, favorites, onToggleFavorite } = useVisibleOffers();
   const { user } = useUser();
   const { t } = useTranslation();
 

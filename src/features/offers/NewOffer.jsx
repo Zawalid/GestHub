@@ -197,7 +197,7 @@ function Sector({ getValue, setValue }) {
             <span>{getValue('sector')}</span>
           </DropDown.Toggler>
         }
-        options={{ className: 'overflow-auto max-h-[300px] w-[230px]', shouldCloseOnClick: false }}
+        options={{ className: 'overflow-auto max-h-[300px] w-[230px]', shouldCloseOnClick: false,placement : 'top-end' }}
       >
         <DropDown.Title>New Sector</DropDown.Title>
         <div className='mb-2 flex items-center gap-1'>

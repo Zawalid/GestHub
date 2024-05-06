@@ -129,12 +129,13 @@ export default function InternsList() {
             name: 'password',
             type: 'password',
             label: 'Password',
+            rules: { required: false },
           },
           {
             name: 'password_confirmation',
             type: 'password',
             label: 'Confirm Password',
-            rules: { ...RULES.passwordConfirmation },
+            rules: { ...RULES.passwordConfirmation,required: false },
           },
         ]}
         formDefaults={{
@@ -208,12 +209,7 @@ function SelectUsers({ isOpen, onClose }) {
       closeOnBlur={false}
     >
       <h1 className='mb-2 text-lg font-bold text-text-primary'>Select Users for Internship</h1>
-      <AllInterns
-        teamMembers={interns}
-        setTeamMembers={setInterns}
-        selectedMembers={interns}
-        users={acceptedUsers}
-      />
+      <AllInterns teamMembers={interns} setTeamMembers={setInterns} selectedMembers={interns} users={acceptedUsers} />
       <div className='mt-2 grid grid-cols-2 gap-4'>
         <Button color='tertiary' onClick={close}>
           Cancel

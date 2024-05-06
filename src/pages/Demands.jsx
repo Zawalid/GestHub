@@ -20,6 +20,7 @@ export function Demands() {
             { value: 'Approved', checked: false },
             { value: 'Rejected', checked: false },
           ],
+          sector: [...new Set(demands?.map((demand) => demand.sector))].map((s) => ({ value: s, checked: false })),
         }}
       >
         <DemandsList />

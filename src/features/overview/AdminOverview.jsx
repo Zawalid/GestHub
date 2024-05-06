@@ -7,6 +7,8 @@ import { Button, Modal, Status } from '@/components/ui';
 import { getTimelineDates } from '@/utils/helpers';
 import { useGenerateAttestation, useGenerateAttestations } from '../interns/useInterns';
 import { useAdmins, useDemands, useOffers, useSupervisors, useInterns } from '@/hooks/index';
+import { useNavigate } from 'react-router-dom';
+import { Stat } from './Stat';
 
 export default function AdminOverview() {
   return (
@@ -22,35 +24,28 @@ function Stats() {
   const { interns, isLoading: isInternsLoading } = useInterns();
   const { supervisors, isLoading: isSupervisorsLoading } = useSupervisors();
   const { admins, isLoading: isAdminsLoading } = useAdmins();
+  const navigate = useNavigate();
+
+  const stats = [
+    {
+      label: { value: 'Total Demands' },
+      value: { value: demands?.length },
+      icon: { icon: <LuClipboardList /> },
+      className: 'bg-primary p-3 shadow-md',
+    },
+    {
+      label: { value: 'Pending Demands' },
+      value: { value: demands?.filter((p) => p.status === 'Pending').length },
+      icon: { icon: <MdOutlinePendingActions /> },
+      className: 'bg-orange-500 p-3 shadow-md dark:bg-orange-600',
+    },
+  ];
 
   return (
     <div className='flex flex-col gap-5 mobile:grid mobile:grid-cols-2 md:grid-cols-4 md:grid-rows-[repeat(3,auto)]'>
-      <div className='flex items-start justify-between rounded-lg bg-primary p-3 shadow-md'>
-        <div className='space-y-3'>
-          <h4 className='text-sm font-medium text-white/80'>Total Demands</h4>
-          {isDemandsLoading ? (
-            <div className='sending'></div>
-          ) : (
-            <h3 className='text-3xl font-bold text-white'>{demands?.length}</h3>
-          )}
-        </div>
-        <div className='rounded-lg bg-white/30 p-2 text-xl text-white'>
-          <LuClipboardList />
-        </div>
-      </div>
-      <div className='flex items-start justify-between rounded-lg bg-orange-500 p-3 shadow-md dark:bg-orange-600'>
-        <div className='space-y-3'>
-          <h4 className='text-sm font-medium text-white/80'>Pending Demands</h4>
-          {isDemandsLoading ? (
-            <div className='sending'></div>
-          ) : (
-            <h3 className='text-3xl font-bold text-white'>{demands?.filter((p) => p.status === 'Pending').length}</h3>
-          )}
-        </div>
-        <div className='rounded-lg bg-white/30 p-2 text-xl text-white'>
-          <MdOutlinePendingActions />
-        </div>
-      </div>
+      {stats.map((stat, index) => (
+        <Stat key={index} isLoading={isDemandsLoading} {...stat} />
+      ))}
 
       <PieChartStats
         data={[
@@ -73,30 +68,25 @@ function Stats() {
         <div className='space-y-3'>
           <h4 className='text-sm font-medium text-text-secondary'>Total Personnel</h4>
           <div className='flex gap-4'>
-            <div className='flex items-center gap-3 rounded-lg bg-background-tertiary p-2'>
-              {isInternsLoading ? (
-                <div className='sending'></div>
-              ) : (
-                <h3 className='font-bold text-text-primary lg:text-xl'>{interns?.length}</h3>
-              )}
-              <h5 className='text-xs text-text-secondary lg:text-sm'>Interns</h5>
-            </div>
-            <div className='flex items-center gap-3 rounded-lg bg-background-tertiary p-2'>
-              {isSupervisorsLoading ? (
-                <div className='sending'></div>
-              ) : (
-                <h3 className='font-bold text-text-primary lg:text-xl'>{supervisors?.length}</h3>
-              )}
-              <h5 className='text-xs text-text-secondary lg:text-sm'>Supervisors</h5>
-            </div>
-            <div className='flex items-center gap-3 rounded-lg bg-background-tertiary p-2'>
-              {isAdminsLoading ? (
-                <div className='sending'></div>
-              ) : (
-                <h3 className='font-bold text-text-primary lg:text-xl'>{admins?.length}</h3>
-              )}
-              <h5 className='text-xs text-text-secondary lg:text-sm'>Admins</h5>
-            </div>
+            {[
+              { name: 'admins', value: admins?.length, isLoading: isAdminsLoading },
+              { name: 'supervisors', value: supervisors?.length, isLoading: isSupervisorsLoading },
+              { name: 'interns', value: interns?.length, isLoading: isInternsLoading },
+            ].map(({ name, value, isLoading }) => (
+              <Button
+                key={name}
+                display='with-icon'
+                className='bg-background-tertiary'
+                onClick={() => navigate(`/app/${name}`)}
+              >
+                {isLoading ? (
+                  <div className='sending'></div>
+                ) : (
+                  <h3 className='font-bold text-text-primary lg:text-xl'>{value}</h3>
+                )}
+                <h5 className='text-xs capitalize text-text-secondary lg:text-sm'>{name}</h5>
+              </Button>
+            ))}
           </div>
         </div>
         <div className='rounded-lg bg-background-tertiary p-2 text-xl'>
@@ -212,7 +202,8 @@ function OffersAnalytics() {
     const rejected = offer?.demands.filter((demand) => demand.status === 'Rejected');
     const approved = offer?.demands.filter((demand) => demand.status === 'Approved');
     return {
-      name: offer?.title,
+      name: `${offer?.title.slice(0, 8)}${offer?.title.slice(8).length ? '...' : ''}`,
+      fullName: offer?.title,
       Approved: approved?.length,
       Rejected: rejected?.length,
     };
@@ -239,8 +230,10 @@ function OffersAnalytics() {
         <ResponsiveContainer width='100%' height='100%'>
           <BarChart data={data}>
             <XAxis dataKey='name' className='text-xs font-medium' />
-            <YAxis domain={[0, 'dataMax']} allowDecimals={false} />{' '}
+            <YAxis domain={[0, 'dataMax']} allowDecimals={false} />
+
             <Tooltip
+              content={CustomTooltip}
               wrapperClassName='tooltip'
               itemStyle={{ color: 'var(--text-primary)' }}
               cursor={<Rectangle radius={5} stroke='var(--border)' fill='var(--background-tertiary)' />}
@@ -252,4 +245,18 @@ function OffersAnalytics() {
       )}
     </div>
   );
+}
+
+function CustomTooltip({ payload, active }) {
+  if (active && payload && payload.length) {
+    return (
+      <div className='tooltip'>
+        <p className='label'>{`Offer : ${payload[0].payload.fullName}`}</p>
+        <p className='intro'>{`Approved : ${payload[0].payload.Approved}`}</p>
+        <p className='intro'>{`Rejected : ${payload[0].payload.Rejected}`}</p>
+      </div>
+    );
+  }
+
+  return null;
 }

@@ -1,13 +1,13 @@
-import { IoFilter } from 'react-icons/io5';
-import { GrPowerReset } from 'react-icons/gr';
-import { Button, CheckBox, DropDown } from '@/components/ui';
+import { IoFilter, GoLink, GoUnlink , GrPowerReset } from '@/components/ui/Icons';
+import { Button, CheckBox, DropDown, ToolTip } from '@/components/ui';
 import { useOperations } from './useOperations';
 import { useTranslation } from 'react-i18next';
 
 const toggleChecked = (filter, value) => filter.map((f) => (f.value === value ? { ...f, checked: !f.checked } : f));
 
 export function Filter({ className = '' }) {
-  const { filters, onFilter, appliedFiltersNumber, isLoading, error } = useOperations();
+  const { filters, onFilter, filterCondition, onChangeFilterCondition, appliedFiltersNumber, isLoading, error } =
+    useOperations();
   const { t } = useTranslation();
   if (!filters) return null;
 
@@ -27,7 +27,7 @@ export function Filter({ className = '' }) {
         </Button>
       }
       options={{
-        className: 'w-44 max-h-[300px] overflow-y-auto',
+        className: 'min-w-[180px] max-h-[300px] overflow-y-auto',
         shouldCloseOnClick: false,
       }}
       togglerClassName={`relative w-28 justify-between ${className}`}
@@ -46,10 +46,17 @@ export function Filter({ className = '' }) {
           <DropDown.Divider key={`${key}-divider`} />
         </div>
       ))}
-      <DropDown.Option key='reset' onClick={() => onFilter(null, true)} disabled={appliedFiltersNumber === 0}>
-        <GrPowerReset />
-        Reset Filters
-      </DropDown.Option>
+      <div className='flex items-center gap-1.5'>
+        <DropDown.Option key='reset' onClick={() => onFilter(null, true)} disabled={appliedFiltersNumber === 0}>
+          <GrPowerReset />
+          Reset Filters
+        </DropDown.Option>
+        <ToolTip content={`Toggle filter condition (currently ${filterCondition})`}>
+          <Button shape='icon' onClick={onChangeFilterCondition}>
+            {filterCondition === 'OR' ? <GoLink /> : <GoUnlink  />}
+          </Button>
+        </ToolTip>
+      </div>
     </DropDown>
   );
 }

@@ -49,7 +49,7 @@ export default function ProjectsList() {
       );
     return (
       <>
-        {!appliedFiltersNumber && !query && user?.role === 'supervisor' && <New type='Project' layout={layout} onAdd={onAdd} />}
+        {!appliedFiltersNumber && !query && ['supervisor', 'super-admin'].includes(user?.role) && <New type='Project' layout={layout} onAdd={onAdd} />}
         {projects?.map((project) => (
           <Project key={project.id} project={project} layout={layout} />
         ))}

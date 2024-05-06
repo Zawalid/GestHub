@@ -3,6 +3,8 @@ import { getAllDemands, getDemand, addDemand, deleteDemand, approveDemand, rejec
 import { useMutate } from '@/hooks/useMutate';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { getFile } from '@/utils/helpers';
+import { FaRegCircleCheck, FaRegCircleXmark } from 'react-icons/fa6';
+import { useUser } from '@/hooks/useUser';
 
 // Queries
 
@@ -15,6 +17,7 @@ const getDemandData = (demand) => {
     endDate,
     status,
     motivationLetter,
+    isRead,
   } = demand || {};
   return {
     id,
@@ -26,6 +29,7 @@ const getDemandData = (demand) => {
     offer: title,
     sector: sector,
     status,
+    isRead: Boolean(isRead),
     motivationLetter,
     cv: getFile(demand?.owner, 'cv'),
     demandeStage: getFile(demand, 'demandeStage'),
@@ -56,6 +60,20 @@ export const useDemand = (id) => {
     error,
     isLoading: isPending,
   };
+};
+
+export const useUserDemands = () => {
+  const { user } = useUser();
+  const ids = user?.demands?.map((d) => d.id) || [];
+
+  const { data, error, isPending } = useQuery({
+    queryKey: ['demands', ...ids],
+    queryFn: () => Promise.all(ids.map((id) => getDemand(id))),
+  });
+
+  const demands = data?.map((demand) => getDemandData(demand)).filter((d) => d.status !== 'Rejected');
+
+  return { demands, error, isLoading: isPending };
 };
 
 // Mutations
@@ -95,6 +113,9 @@ export const useApproveDemand = () => {
       message: 'Are you sure you want to approve this demand?',
       title: 'Approve Demand',
       confirmText: 'Approve',
+      icon: <FaRegCircleCheck />,
+      iconBg: 'bg-green-600',
+      buttonClassName: 'bg-green-600 hover:bg-green-700',
       onConfirm: () => approvement.mutate(id, options),
     });
 
@@ -117,6 +138,8 @@ export const useRejectDemand = () => {
       message: 'Are you sure you want to reject this demand?',
       title: 'Reject Demand',
       confirmText: 'Reject',
+      icon: <FaRegCircleXmark />,
+      iconBg: 'bg-red-600',
       onConfirm: () => rejection.mutate(id, options),
     });
 

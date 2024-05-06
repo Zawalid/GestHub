@@ -6,6 +6,7 @@ import { getTimelineDates } from '@/utils/helpers';
 import { useTasks } from '@/features/projects/useTasks';
 import PieChartStats from '@/features/overview/PieChart';
 import { Status } from '@/components/ui';
+import { Stat } from './Stat';
 
 export default function SupervisorOverview() {
   const { projects, isLoading } = useProjects();
@@ -26,7 +27,7 @@ export default function SupervisorOverview() {
             { text: 'In Progress', color: 'bg-blue-500' },
             { text: 'Completed', color: 'bg-green-500' },
           ]}
-          COLORS={['#6B7280', '#16a34a', '#3b82f6']}
+          COLORS={['#6B7280', '#3b82f6', '#16a34a']}
           isLoading={isLoading}
         />
       </div>
@@ -35,7 +36,7 @@ export default function SupervisorOverview() {
 }
 
 function TasksAnalytics() {
-  const { tasks,isLoading } = useTasks();
+  const { tasks, isLoading } = useTasks();
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   const data = days.map((day, i) => {
@@ -53,10 +54,10 @@ function TasksAnalytics() {
   });
 
   return (
-    <div className='grid gap-5 relative rounded-lg border border-border bg-background-secondary p-3'>
+    <div className='relative grid gap-5 rounded-lg border border-border bg-background-secondary p-3'>
       <div className='flex justify-between gap-5'>
         <h2 className='text-lg font-bold text-text-primary'>Weekly Tasks Progress</h2>
-        <div className='flex items-start pt-3 gap-3'>
+        <div className='flex items-start gap-3 pt-3'>
           <div className='flex items-center gap-2'>
             <span className='h-3 w-6 rounded-md bg-green-500'></span>
             <span className='text-xs font-medium'>Completed</span>
@@ -70,89 +71,65 @@ function TasksAnalytics() {
       {isLoading ? (
         <Status status='loading' />
       ) : (
-      <ResponsiveContainer width='100%' height='100%'>
-        <BarChart data={data}>
-          <XAxis dataKey='name' className='text-xs font-medium' />
-          <YAxis domain={[0, 'dataMax']} allowDecimals={false} />{' '}
-          <Tooltip
-            wrapperClassName='tooltip'
-            itemStyle={{ color: 'var(--text-primary)' }}
-            cursor={<Rectangle radius={5} stroke='var(--border)' fill='var(--background-tertiary)' />}
-          />
-          <Bar dataKey='Added' fill='#3b82f6' legendType='circle' />
-          <Bar dataKey='Completed' fill='#16a34a' legendType='circle' />
-        </BarChart>
-      </ResponsiveContainer>)}
+        <ResponsiveContainer width='100%' height='100%'>
+          <BarChart data={data}>
+            <XAxis dataKey='name' className='text-xs font-medium' />
+            <YAxis domain={[0, 'dataMax']} allowDecimals={false} />{' '}
+            <Tooltip
+              wrapperClassName='tooltip'
+              itemStyle={{ color: 'var(--text-primary)' }}
+              cursor={<Rectangle radius={5} stroke='var(--border)' fill='var(--background-tertiary)' />}
+            />
+            <Bar dataKey='Added' fill='#3b82f6' legendType='circle' />
+            <Bar dataKey='Completed' fill='#16a34a' legendType='circle' />
+          </BarChart>
+        </ResponsiveContainer>
+      )}
     </div>
   );
 }
 
 function Stats({ projects, isLoading }) {
+  const stats = [
+    {
+      label: { value: 'Total Projects' },
+      value: { value: projects?.length },
+      icon: { icon: <FaDiagramProject /> },
+      className: 'bg-orange-400 p-3 shadow-md dark:bg-orange-500',
+    },
+    {
+      label: { value: 'Completed Projects' },
+      value: { value: projects?.filter((p) => p.status === 'Completed').length },
+      icon: { icon: <FaRegCircleCheck /> },
+      className: 'bg-green-500 p-3 shadow-md dark:bg-green-600',
+    },
+    {
+      label: { value: 'Overdue Projects' },
+      value: {
+        value: projects?.filter((p) => {
+          const { isOverdue } = getTimelineDates(p.startDate, p.endDate);
+          return isOverdue;
+        }).length,
+      },
+      icon: { icon: <FaCalendarXmark /> },
+      className: 'bg-red-400 p-3 shadow-md dark:bg-red-500',
+    },
+    {
+      label: { value: 'Team Members', color: 'text-text-secondary' },
+      value: {
+        value: [...new Set(projects?.map((p) => p.teamMembers).flat())].length,
+        color: 'text-text-primary',
+      },
+      icon: { icon: <IoPeople />, className: 'bg-background-tertiary' },
+      className: 'border border-border bg-background-secondary p-3 shadow-md',
+    },
+  ];
+
   return (
     <div className='flex flex-col gap-5 mobile:grid mobile:grid-cols-2 md:grid-cols-4'>
-      <div className='flex items-start justify-between rounded-lg bg-orange-400 p-3 shadow-md dark:bg-orange-500'>
-        <div className='space-y-3'>
-          <h4 className='text-sm font-medium text-white/80'>Total Projects</h4>
-          {isLoading ? (
-            <div className='sending'></div>
-          ) : (
-            <h3 className='text-3xl font-bold text-white'>{projects?.length}</h3>
-          )}
-        </div>
-        <div className='rounded-lg bg-white/30 p-2 text-xl text-white'>
-          <FaDiagramProject />
-        </div>
-      </div>
-      <div className='flex items-start justify-between rounded-lg bg-green-500 p-3 shadow-md dark:bg-green-600'>
-        <div className='space-y-3'>
-          <h4 className='text-sm font-medium text-white/80'>Completed Projects</h4>
-          {isLoading ? (
-            <div className='sending'></div>
-          ) : (
-            <h3 className='text-3xl font-bold text-white'>
-              {projects?.filter((p) => p.status === 'Completed').length}
-            </h3>
-          )}
-        </div>
-        <div className='rounded-lg bg-white/30 p-2 text-xl text-white'>
-          <FaRegCircleCheck />
-        </div>
-      </div>
-      <div className='flex items-start justify-between rounded-lg bg-red-400 p-3 shadow-md dark:bg-red-500'>
-        <div className='space-y-3'>
-          <h4 className='text-sm font-medium text-white/80'>Overdue Projects</h4>
-          {isLoading ? (
-            <div className='sending'></div>
-          ) : (
-            <h3 className='text-3xl font-bold text-white'>
-              {
-                projects?.filter((p) => {
-                  const { isOverdue } = getTimelineDates(p.startDate, p.endDate);
-                  return isOverdue;
-                }).length
-              }
-            </h3>
-          )}
-        </div>
-        <div className='rounded-lg bg-white/30 p-2 text-xl text-white'>
-          <FaCalendarXmark />
-        </div>
-      </div>
-      <div className='flex items-start justify-between rounded-lg border border-border bg-background-secondary p-3 shadow-md'>
-        <div className='space-y-3'>
-          <h4 className='text-sm font-medium text-text-secondary'>Team Members</h4>
-          {isLoading ? (
-            <div className='sending'></div>
-          ) : (
-            <h3 className='text-3xl font-bold text-text-primary'>
-              {[...new Set(projects?.map((p) => p.teamMembers).flat())].length}
-            </h3>
-          )}
-        </div>
-        <div className='rounded-lg bg-background-tertiary p-2 text-xl'>
-          <IoPeople />
-        </div>
-      </div>
+      {stats.map((stat, index) => (
+        <Stat key={index} isLoading={isLoading} {...stat} />
+      ))}
     </div>
   );
 }

@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 
 const defaultOptions = {
   type: 'Image',
-  accept: ['.png', '.jpg', '.jpeg'],
+  accept: ['.png', '.jpg', '.jpeg','.PNG', '.JPG', '.JPEG'],
   readAs: 'DataURL',
   maxFiles: 1,
   maxFileSize: 5,

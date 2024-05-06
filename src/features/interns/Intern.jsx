@@ -1,13 +1,16 @@
-import { Modal, Status } from '@/components/ui';
+import { Button, Modal, Status } from '@/components/ui';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useIntern } from './useInterns';
-import { IoMailOutline, FiPhone, BsBuilding, IoSchool, BsListCheck, FaDiagramProject  } from '@/components/ui/Icons';
+import { IoMailOutline, FiPhone, BsBuilding, IoSchool, BsListCheck, FaDiagramProject } from '@/components/ui/Icons';
 import { formatDate, getTimelineDates } from '@/utils/helpers';
 import { useAnimatedProgress } from '@/hooks/useAnimatedProgress';
+import { useState } from 'react';
+import { FileView } from '@/components/ui/FileView';
 
 export default function Intern() {
   const { id } = useParams();
   const { intern, isLoading, error } = useIntern(id);
+  const [isCvOpen, setIsCvOpen] = useState(false);
   const navigate = useNavigate();
   const {
     avatar,
@@ -21,6 +24,7 @@ export default function Intern() {
     specialty,
     projects,
     tasks,
+    CV,
   } = intern;
   const { isOverdue } = getTimelineDates(startDate, endDate);
 
@@ -49,9 +53,14 @@ export default function Intern() {
             alt='avatar'
             className='h-24 w-24 rounded-full border border-border object-cover shadow-md'
           />
-          <div className=''>
-            <h3 className='text-xl font-semibold text-text-primary'>{fullName}</h3>
-            <p className='text-sm font-medium text-text-secondary'>{specialty || 'Not specified'}</p>
+          <div className='flex flex-1 items-center justify-between'>
+            <div className=''>
+              <h3 className='text-xl font-semibold text-text-primary'>{fullName}</h3>
+              <p className='text-sm font-medium text-text-secondary'>{specialty || 'Not specified'}</p>
+            </div>
+            <Button size='small' color='secondary' onClick={() => setIsCvOpen(true)} disabled={!CV}>
+              View CV
+            </Button>
           </div>
         </div>
         <div className='mb-5 flex justify-between border-t border-border pt-3'>
@@ -99,7 +108,7 @@ export default function Intern() {
           </div>
           <div className='flex items-center gap-3 rounded-lg bg-green-600 p-2'>
             <div className='grid h-8 w-8 place-content-center rounded-full bg-white  text-black'>
-              <FaDiagramProject  />
+              <FaDiagramProject />
             </div>
             <div className='flex-1 text-end'>
               <h4 className='text-xs font-medium text-white/80'>Projects</h4>
@@ -112,15 +121,18 @@ export default function Intern() {
   };
 
   return (
-    <Modal
-      isOpen={location.pathname.includes('/interns') && id}
-      className='relative flex flex-col gap-3 p-5 sm:h-fit sm:min-h-[450px] sm:w-[420px] sm:border'
-      closeOnBlur={false}
-      closeButton={true}
-      onClose={() => navigate('/app/interns')}
-    >
-      {render()}
-    </Modal>
+    <>
+      <Modal
+        isOpen={location.pathname.includes('/interns') && id}
+        className='relative flex flex-col gap-3 p-5 sm:h-fit sm:min-h-[450px] sm:w-[450px] sm:border'
+        closeOnBlur={false}
+        closeButton={true}
+        onClose={() => navigate('/app/interns')}
+      >
+        {render()}
+      </Modal>
+      <FileView isOpen={isCvOpen} onClose={() => setIsCvOpen(false)} file={CV} />
+    </>
   );
 }
 
@@ -136,7 +148,7 @@ function TimeLine({ startDate, endDate }) {
           className={`absolute top-0 w-full max-w-full rounded-lg transition-all duration-[3s] ${isOverdue ? 'bg-primary' : 'bg-secondary'}`}
           style={{ height: daysToStart > 0 ? '12px' : `${isOverdue ? 100 : progress}%` }}
         >
-          <span className='absolute -right-0.5 bottom-0 h-3 w-3 rounded-full bg-text-secondary'></span>
+          <span className='absolute -right-0.5 bottom-0 h-3 w-3 rounded-full bg-primary'></span>
         </div>
       </div>
       <span className='text-xs font-medium text-text-secondary'>{formatDate(endDate)}</span>
