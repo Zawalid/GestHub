@@ -62,6 +62,7 @@ export default function App() {
             <Route path='/' element={<HomePageLayout />}>
               <Route index element={<HomePage />} />
               <Route path='applications' element={<HomePage />} />
+              <Route path='applications/:id' element={<HomePage />} />
               <Route path='offers/' element={<HomePageOffers />}>
                 <Route path=':id' element={<HomePageOffers />} />
               </Route>

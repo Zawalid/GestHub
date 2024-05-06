@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { changeTitle } from '@/utils/helpers';
 import { useTranslation } from 'react-i18next';
 import Applications from '@/components/homepage/Applications';
+import DemandReview from '@/features/demands/DemandReview';
 
 export function HomePage() {
   useEffect(() => {
@@ -21,6 +22,7 @@ export function HomePage() {
       <LatestOffers />
       <About />
       <Applications />
+      <DemandReview closeUrl='/applications' />
     </>
   );
 }
@@ -32,7 +34,6 @@ function LatestOffers() {
   return (
     <div className='relative my-12 flex  flex-col gap-8 p-3 md:p-5'>
       <h1 className='text-3xl font-bold text-text-primary'> {t('offers.Recents')}</h1>
-
       <div
         className={`relative flex-1 gap-5  ${!isLoading ? 'grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] ' : ''}
         ${error ? 'min-h-screen' : ''}`}

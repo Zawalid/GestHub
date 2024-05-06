@@ -6,14 +6,15 @@ import { FaRegCircleCheck, FaRegCircleXmark, IoEyeOutline } from '@/components/u
 import { useApproveDemand, useDemand, useRejectDemand } from './useDemands';
 import { FileView } from '@/components/ui/FileView';
 
-export default function DemandReview() {
+export default function DemandReview({ closeUrl }) {
   const { id } = useParams();
   const { demand, isLoading, error } = useDemand(id);
   const [currentFile, setCurrentFile] = useState(null);
-
   const { approve } = useApproveDemand();
   const { reject } = useRejectDemand();
   const navigate = useNavigate();
+
+  const path = location.pathname;
 
   const {
     options: { formInputs, updateValues },
@@ -78,7 +79,7 @@ export default function DemandReview() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [demand?.id]);
 
-  const close = () => navigate('/app/demands');
+  const close = () => navigate(closeUrl);
 
   const render = () => {
     if (isLoading) return <Status status='loading' />;
@@ -123,7 +124,7 @@ export default function DemandReview() {
             />
           </div>
         </div>
-        {demand?.status === 'Pending' && (
+        {(demand?.status === 'Pending' && closeUrl !== '/applications') && (
           <div className='mt-5 grid grid-cols-2 gap-4'>
             <Button
               color='delete'
@@ -151,7 +152,7 @@ export default function DemandReview() {
   return (
     <>
       <Modal
-        isOpen={location.pathname.includes('/demands') && id}
+        isOpen={(path.includes('/demands') || path.includes('/applications')) && id}
         className='relative min-h-[400px] overflow-auto p-5 sm:h-fit md:max-h-[600px] md:w-[650px] md:border'
         closeOnBlur={true}
         closeButton={false}

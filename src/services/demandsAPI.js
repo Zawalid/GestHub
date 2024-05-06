@@ -11,3 +11,5 @@ export const deleteDemand = async (id) => await axiosFetch(`demands/${id}`, 'DEL
 export const approveDemand = async (id) => await axiosFetch(`demands/${id}/approve`, 'PUT');
 
 export const rejectDemand = async (id) => await axiosFetch(`demands/${id}/reject`, 'PUT');
+
+export const markAsRead = async (id) => await axiosFetch(`demands/${id}/read`, 'PUT');

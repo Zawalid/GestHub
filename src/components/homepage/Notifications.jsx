@@ -1,18 +1,20 @@
 import { IoNotificationsOutline } from 'react-icons/io5';
 import { Button, DropDown } from '../ui';
 import { FaRegCircleCheck } from 'react-icons/fa6';
-import { useUserDemands } from '@/features/demands/useDemands';
+import { useMarkAsRead, useUserDemands } from '@/features/demands/useDemands';
 import { useUser } from '@/hooks/useUser';
 
 export default function Notifications() {
-  const { user} = useUser();
+  const { user } = useUser();
   const { demands, isLoading } = useUserDemands();
+  const { mutate } = useMarkAsRead();
 
-  if(!user) return null
+  if (!user) return null;
 
   const notifications = demands
     ?.filter((d) => d.status === 'Approved')
     ?.map((d) => ({
+      id: d.id,
       icon: <FaRegCircleCheck />,
       title: 'Your internship application has been accepted',
       subtitle: d.offer,
@@ -20,10 +22,7 @@ export default function Notifications() {
       isRead: d.isRead,
     }));
 
-
   const unread = notifications?.filter((n) => !n.isRead).length;
-
-  console.log(demands,unread)
 
   const render = () => {
     if (isLoading) {
@@ -44,6 +43,7 @@ export default function Notifications() {
       <DropDown.Option
         key={index}
         className={!notification.isRead ? 'bg-background-secondary' : 'hover:bg-background-disabled'}
+        onClick={() => !notification.isRead && mutate(notification.id)}
       >
         <div className='grid h-11 w-11 place-content-center rounded-full bg-green-600 text-white sm:text-xl'>
           {notification.icon}

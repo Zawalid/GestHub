@@ -82,9 +82,11 @@ function ApplicationsList() {
   );
 }
 
-function Application({ demand: { offer, sector, status, startDate } }) {
+function Application({ demand: { id,offer, sector, status, startDate } }) {
+  const navigate = useNavigate()
+
   return (
-    <button className='flex w-full items-center gap-3 rounded-md px-3 py-2 text-start transition-colors duration-200 hover:bg-background-secondary'>
+    <button className='flex w-full items-center gap-3 rounded-md px-3 py-2 text-start transition-colors duration-200 hover:bg-background-secondary' onClick={() => navigate(String(id))}>
       <div
         className={`grid h-11 w-11 place-content-center rounded-full bg-green-600 text-white sm:text-xl ${status === 'Pending' ? 'bg-orange-500' : 'bg-green-600'}`}
       >

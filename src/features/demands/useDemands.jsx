@@ -1,5 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import { getAllDemands, getDemand, addDemand, deleteDemand, approveDemand, rejectDemand } from '@/services/demandsAPI';
+import {
+  getAllDemands,
+  getDemand,
+  addDemand,
+  deleteDemand,
+  approveDemand,
+  rejectDemand,
+  markAsRead,
+} from '@/services/demandsAPI';
 import { useMutate } from '@/hooks/useMutate';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { getFile } from '@/utils/helpers';
@@ -145,3 +153,12 @@ export const useRejectDemand = () => {
 
   return { ...rejection, reject };
 };
+
+export const useMarkAsRead = () =>
+  useMutate({
+    queryKey: ['demands', 'read'],
+    mutationFn: markAsRead,
+    loadingMessage: null,
+    successMessage: null,
+    errorMessage: null,
+  });

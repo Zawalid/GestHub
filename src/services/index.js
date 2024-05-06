@@ -4,7 +4,7 @@ export const axiosFetch = async (resource, method, data) => {
   try {
     const response = await axios({
       method: method || 'GET',
-      url: `${import.meta.env.VITE_API_URL}/${resource}`,
+      url: `/api/${resource}`,
       data: data,
       withCredentials: true,
       withXSRFToken: true,
