@@ -2,7 +2,6 @@ import About from '@/components/homepage/About';
 import Hero from '@/components/homepage/Hero';
 import { renderOffersList } from '@/features/offers/OffersList';
 import { useVisibleOffers } from '@/features/offers/useOffers';
-import { useVisibleOffers } from '@/features/offers/useOffers';
 import { Button } from '@/components/ui';
 import { MdOutlineExplore } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
