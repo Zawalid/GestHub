@@ -80,6 +80,6 @@ export const getTimelineDates = (startDate, endDate) => {
   return { currentDay, duration, daysLeft, daysToStart, isOverdue };
 };
 
-export const getFile = (data, type) => data?.files.find((file) => file.type === type)?.url || null;
+export const getFile = (data, type) => data?.files?.find((file) => file.type === type)?.url || null;
 
 export const isAlreadyApplied = (user, offer_id) => user?.demands?.find((d) => d.offer_id === +offer_id);
