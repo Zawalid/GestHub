@@ -27,7 +27,7 @@ export function Header() {
       <div className='flex items-center gap-4'>
         <ThemeSwitcher />
         <LanguageSwitcher />
-      <Notifications />
+         <Notifications />
         <AuthSwitcher />
         
 

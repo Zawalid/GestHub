@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { MdOutlineSchool } from 'react-icons/md';
 import { useRegister } from '@/hooks/useUser';
 import { LEVELS, RULES } from '@/utils/constants';
+import { Radio } from '@/components/ui/Radio';
 
 export function Register() {
   const { t } = useTranslation();
@@ -104,9 +105,31 @@ export function Register() {
             ))}
           </DropDown>
         </div>
+        <div className='col-span-2 flex flex-col gap-1.5'>
+          <label className='text-sm font-medium text-text-tertiary'>Gender</label>
+          <div className='flex gap-3'>
+            <div className='flex items-center gap-3'>
+              <Radio
+                name='gender'
+                checked={getValue('gender') === 'Male'}
+                onChange={(e) => setValue('gender', e.target.checked && 'Male')}
+              />
+              <label className='text-sm font-medium text-text-tertiary'>Male</label>
+            </div>
+            <div className='flex items-center gap-3'>
+              <Radio
+                name='gender'
+                checked={getValue('gender') === 'Female'}
+                onChange={(e) => setValue('gender', e.target.checked && 'Female')}
+              />
+              <label className='text-sm font-medium text-text-tertiary'>Female</label>
+            </div>
+          </div>
+        </div>
         {formInputs['password']}
         {formInputs['password_confirmation']}
       </div>
+
       <div className='mt-5 flex items-center gap-3'>
         <CheckBox checked={getValue('accept')} onChange={(e) => setValue('accept', e.target.checked || null)} />
         <label className='text-sm font-medium text-text-tertiary'>

@@ -2,9 +2,13 @@ import { IoNotificationsOutline } from 'react-icons/io5';
 import { Button, DropDown } from '../ui';
 import { FaRegCircleCheck } from 'react-icons/fa6';
 import { useUserDemands } from '@/features/demands/useDemands';
+import { useUser } from '@/hooks/useUser';
 
 export default function Notifications() {
+  const { user} = useUser();
   const { demands, isLoading } = useUserDemands();
+
+  if(!user) return null
 
   const notifications = demands
     ?.filter((d) => d.status === 'Approved')
@@ -16,45 +20,10 @@ export default function Notifications() {
       isRead: d.isRead,
     }));
 
-  // const notifications = [
-  //   {
-  //     icon: <FaRegCircleCheck />,
-  //     title: 'Your internship application has been accepted',
-  //     subtitle: 'UI/UX Designer',
-  //     time: '5h ago',
-  //     isRead: false,
-  //   },
-  //   {
-  //     icon: <FaRegCircleCheck />,
-  //     title: 'Your internship application has been accepted',
-  //     subtitle: 'Front End Developer',
-  //     time: '1d ago',
-  //     isRead: true,
-  //   },
-  //   {
-  //     icon: <FaRegCircleCheck />,
-  //     title: 'Your internship application has been accepted',
-  //     subtitle: 'Back End Developer',
-  //     time: '2d ago',
-  //     isRead: false,
-  //   },
-  //   {
-  //     icon: <FaRegCircleCheck />,
-  //     title: 'Your internship application has been accepted',
-  //     subtitle: 'UI/UX Designer',
-  //     time: '3d ago',
-  //     isRead: true,
-  //   },
-  //   {
-  //     icon: <FaRegCircleCheck />,
-  //     title: 'Your internship application has been accepted',
-  //     subtitle: 'UI/UX Designer',
-  //     time: '4d ago',
-  //     isRead: false,
-  //   },
-  // ];
 
   const unread = notifications?.filter((n) => !n.isRead).length;
+
+  console.log(demands,unread)
 
   const render = () => {
     if (isLoading) {

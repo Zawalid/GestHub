@@ -12,7 +12,7 @@ import Applications from '@/components/homepage/Applications';
 
 export function HomePage() {
   useEffect(() => {
-    changeTitle('MenStage');
+    changeTitle('GestHub');
   }, []);
 
   return (

@@ -29,7 +29,7 @@ const getDemandData = (demand) => {
     offer: title,
     sector: sector,
     status,
-    isRead: Boolean(isRead),
+    isRead: isRead === 'true',
     motivationLetter,
     cv: getFile(demand?.owner, 'cv'),
     demandeStage: getFile(demand, 'demandeStage'),

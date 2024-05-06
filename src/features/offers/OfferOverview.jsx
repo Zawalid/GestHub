@@ -34,6 +34,8 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
     changeTitle(title ? `Offers | ${title}` : 'Offers');
   }, [title]);
 
+  const close = () => navigate('/offers');
+
   const render = () => {
     if (isLoading) return <OfferSkeleton />;
     if (error) {
@@ -147,7 +149,7 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
     <Modal
       isOpen={location.pathname.includes('/offers') && id && id !== 'new'}
       className='p-5 sm:h-fit sm:min-h-[400px] sm:w-[650px] sm:border'
-      closeOnBlur={false}
+      onClose={close}
     >
       <div className='z-10 flex justify-end gap-2'>
         {!isEditing && !onHomePage && (
@@ -168,7 +170,7 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
       {render()}
       {onHomePage && (
         <div className='z-10 mt-auto flex justify-end gap-3'>
-          <Button color='tertiary' onClick={() => navigate('/offers')}>
+          <Button color='tertiary' onClick={close}>
             {t('actions.close')}
           </Button>
           {(user?.role === 'user' || !user) && (
