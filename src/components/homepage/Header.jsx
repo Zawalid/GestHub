@@ -27,9 +27,8 @@ export function Header() {
       <div className='flex items-center gap-4'>
         <ThemeSwitcher />
         <LanguageSwitcher />
-         <Notifications />
+        <Notifications />
         <AuthSwitcher />
-        
 
         <Button shape='icon' onClick={() => setIsMobileMenuOpen(true)} className='lg:hidden'>
           <RxHamburgerMenu />
@@ -37,7 +36,6 @@ export function Header() {
       </div>
 
       <MobileHeader isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
-
     </header>
   );
 }

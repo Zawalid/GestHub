@@ -3,26 +3,28 @@ import { Button, DropDown } from '../ui';
 import { FaRegCircleCheck } from 'react-icons/fa6';
 import { useMarkAsRead, useUserDemands } from '@/features/demands/useDemands';
 import { useUser } from '@/hooks/useUser';
+import { useNavigate } from 'react-router-dom';
+import { getRelativeTime } from '@/utils/helpers';
 
 export default function Notifications() {
   const { user } = useUser();
   const { demands, isLoading } = useUserDemands();
   const { mutate } = useMarkAsRead();
-
-  if (!user) return null;
+  const navigate = useNavigate();
 
   const notifications = demands
     ?.filter((d) => d.status === 'Approved')
+    .toSorted((a, b) => new Date(b?.updated_at) - new Date(a?.updated_at))
     ?.map((d) => ({
       id: d.id,
       icon: <FaRegCircleCheck />,
       title: 'Your internship application has been accepted',
       subtitle: d.offer,
-      time: '5h ago',
+      time: getRelativeTime(d.updated_at),
       isRead: d.isRead,
     }));
 
-  const unread = notifications?.filter((n) => !n.isRead).length;
+  const unread = notifications?.filter((n) => !n.isRead);
 
   const render = () => {
     if (isLoading) {
@@ -43,7 +45,10 @@ export default function Notifications() {
       <DropDown.Option
         key={index}
         className={!notification.isRead ? 'bg-background-secondary' : 'hover:bg-background-disabled'}
-        onClick={() => !notification.isRead && mutate(notification.id)}
+        onClick={() => {
+          !notification.isRead && mutate(notification.id);
+          navigate(`/applications/${notification.id}`);
+        }}
       >
         <div className='grid h-11 w-11 place-content-center rounded-full bg-green-600 text-white sm:text-xl'>
           {notification.icon}
@@ -57,6 +62,8 @@ export default function Notifications() {
     ));
   };
 
+  if (!user || user?.role !== 'user') return null;
+
   return (
     <DropDown
       toggler={
@@ -64,10 +71,10 @@ export default function Notifications() {
           <IoNotificationsOutline />
           <span
             className={`absolute -right-2 -top-2 h-5 w-5 rounded-full bg-primary text-center text-xs font-bold leading-5 text-white transition-transform duration-300 ${
-              unread > 0 ? 'scale-100' : 'scale-0'
+              unread?.length > 0 ? 'scale-100' : 'scale-0'
             }`}
           >
-            {unread}
+            {unread?.length}
           </span>
         </Button>
       }
@@ -82,6 +89,7 @@ export default function Notifications() {
         <button
           className='text-xs font-medium text-text-secondary transition-colors duration-300 hover:text-text-tertiary disabled:text-text-disabled'
           disabled={notifications?.every((n) => n.isRead)}
+          onClick={() => unread?.forEach(({ id }) => mutate(id))}
         >
           Mark all as read
         </button>

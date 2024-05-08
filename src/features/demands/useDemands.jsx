@@ -26,6 +26,8 @@ const getDemandData = (demand) => {
     status,
     motivationLetter,
     isRead,
+    created_at,
+    updated_at,
   } = demand || {};
   return {
     id,
@@ -35,9 +37,11 @@ const getDemandData = (demand) => {
     startDate,
     endDate,
     offer: title,
-    sector: sector,
+    sector,
     status,
     isRead: isRead === 'true',
+    created_at,
+    updated_at,
     motivationLetter,
     cv: getFile(demand?.owner, 'cv'),
     demandeStage: getFile(demand, 'demandeStage'),

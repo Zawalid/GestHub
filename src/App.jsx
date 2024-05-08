@@ -61,9 +61,12 @@ export default function App() {
             {/* HomePage */}
             <Route path='/' element={<HomePageLayout />}>
               <Route index element={<HomePage />} />
-              <Route path='applications' element={<HomePage />} />
-              <Route path='applications/:id' element={<HomePage />} />
-              <Route path='offers/' element={<HomePageOffers />}>
+              {user?.role === 'user' && (
+                <Route path='applications' element={<HomePage />}>
+                  <Route path=':id' element={<HomePage />} />
+                </Route>
+              )}
+              <Route path='offers' element={<HomePageOffers />}>
                 <Route path=':id' element={<HomePageOffers />} />
               </Route>
             </Route>

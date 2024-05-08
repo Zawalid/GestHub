@@ -91,7 +91,7 @@
     }
   },
   "offers": {
-    "Recents": "العروض الأخيرة",
+    "recent": "العروض الأخيرة",
     "exploreMore": "استكشف المزيد",
     "internshipOffers": "عروض التدريب",
     "apply": "تقديم",

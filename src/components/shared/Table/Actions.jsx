@@ -6,19 +6,19 @@ import {
   MdDriveFileRenameOutline,
 } from '@/components/ui/Icons';
 import { useTable } from '.';
-import { useNavigate } from 'react-router-dom';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
+import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
 export function Actions({ onUpdate, onDelete, row, actions }) {
   const { showForm, confirmOptions, resourceName, rows, onPrevPage } = useTable();
-  const navigate = useNavigate();
+  const navigate = useNavigateWithQuery();
   const { openModal } = useConfirmationModal();
 
   const defaultActions = [
     {
       text: 'View',
       icon: <IoEyeOutline />,
-      onClick: () => navigate(String(row.id)),
+      onClick: () => navigate(row.id),
       hidden: () => ['Supervisor', 'Admin'].includes(resourceName),
     },
     {

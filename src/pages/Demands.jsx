@@ -25,7 +25,7 @@ export function Demands() {
       >
         <DemandsList />
       </Operations>
-      <DemandReview closeUrl='/app/demands' />
+      <DemandReview source='app' />
     </>
   );
 }

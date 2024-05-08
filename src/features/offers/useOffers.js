@@ -12,7 +12,7 @@ export function useOffers() {
 
   const offers = data?.map((offer) => ({ ...offer, skills: getSkills(offer) }));
 
-  return {
+return {
     offers,
     error,
     isLoading: isPending,

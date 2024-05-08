@@ -1,20 +1,23 @@
-import { useNavigate } from 'react-router-dom';
 import { Modal, Status } from '../ui';
 import { useUserDemands } from '@/features/demands/useDemands';
 import { BsClipboard2Check, MdOutlinePendingActions } from '@/components/ui/Icons';
 import { Operations } from '../shared/operations/Operations';
 import { useOperations } from '../shared/operations/useOperations';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { formatDate } from '@/utils/helpers';
+import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
 export default function Applications() {
-  const navigate = useNavigate();
+  const navigate = useNavigateWithQuery();
   const { demands, isLoading, error } = useUserDemands();
+
 
   return (
     <Modal
-      isOpen={location.pathname === '/applications'}
+      isOpen={location.pathname.startsWith('/applications')}
       className='relative overflow-auto p-5 sm:h-fit md:h-[500px] md:w-[700px] md:border'
       onClose={() => navigate('/')}
+      closeButton={false}
     >
       <h1 className='mb-5 text-lg font-bold text-text-primary'>My Applications</h1>
       <Operations
@@ -26,6 +29,7 @@ export default function Applications() {
           { key: 'created_at', display: 'Application Date', type: 'date' },
         ]}
         defaultSortBy='created_at'
+        defaultDirection='desc'
         filters={{
           status: [
             { value: 'Pending', checked: false },
@@ -46,9 +50,28 @@ function ApplicationsList() {
   const [parent] = useAutoAnimate({ duration: 400 });
 
   const render = () => {
-    if (isLoading) return <Status status='loading' />;
+    if (isLoading) {
+      return (
+        <div className='space-y-3 pr-2'>
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Skeleton key={i} />
+          ))}
+        </div>
+      );
+    }
     if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
-    if (demands?.length === 0 && (query || appliedFiltersNumber))
+    if (demands?.length === 0 && !query && !appliedFiltersNumber) {
+      return (
+        <div className='absolute grid h-full w-full place-content-center place-items-center gap-5'>
+          <img src='/SVG/no-applications.svg' alt='' className='w-[140px]' />
+          <div className='space-y-2 text-center'>
+            <h2 className='font-medium text-text-primary'>No applications have been filed yet</h2>
+            <p className='text-sm text-text-secondary'>Start by applying for an offer.</p>
+          </div>
+        </div>
+      );
+    }
+    if (demands?.length === 0 && (query || appliedFiltersNumber)) {
       return (
         <Status
           status='noResults'
@@ -56,6 +79,7 @@ function ApplicationsList() {
           message='Try changing your search query or filters'
         />
       );
+    }
     return (
       <div className='space-y-3 pr-2' ref={parent}>
         {demands?.map((d) => (
@@ -82,11 +106,14 @@ function ApplicationsList() {
   );
 }
 
-function Application({ demand: { id,offer, sector, status, startDate } }) {
-  const navigate = useNavigate()
+function Application({ demand: { id, offer, sector, status, created_at } }) {
+  const navigate = useNavigateWithQuery();
 
   return (
-    <button className='flex w-full items-center gap-3 rounded-md px-3 py-2 text-start transition-colors duration-200 hover:bg-background-secondary' onClick={() => navigate(String(id))}>
+    <button
+      className='flex w-full flex-col items-center  gap-3 rounded-md px-3 py-2 text-center transition-colors duration-200 hover:bg-background-secondary mobile:flex-row mobile:text-start'
+      onClick={() => navigate(id)}
+    >
       <div
         className={`grid h-11 w-11 place-content-center rounded-full bg-green-600 text-white sm:text-xl ${status === 'Pending' ? 'bg-orange-500' : 'bg-green-600'}`}
       >
@@ -102,8 +129,22 @@ function Application({ demand: { id,offer, sector, status, startDate } }) {
         </span>
       </div>
       <span className='rounded-md bg-background-tertiary px-2 py-1 text-xs font-medium text-text-secondary'>
-        {startDate}
+        {formatDate(created_at, true)}
       </span>
     </button>
+  );
+}
+
+function Skeleton() {
+  return (
+    <div className='flex animate-pulse cursor-auto items-center gap-5 px-3 py-2 hover:bg-transparent'>
+      <div className='grid h-12 w-12 rounded-full bg-background-secondary'></div>
+      <div className='flex-1 space-y-1.5'>
+        <div className='h-2.5 w-40 rounded-lg bg-background-tertiary'></div>
+        <div className='h-1 w-24 rounded-lg bg-background-secondary'></div>
+        <div className='h-2 w-12 rounded-lg bg-background-secondary'></div>
+      </div>
+      <div className='h-3 w-24 rounded-lg bg-background-secondary'></div>
+    </div>
   );
 }

@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Button, Modal, Status } from '@/components/ui';
 import { useForm } from '@/hooks/useForm';
 import { FaRegCircleCheck, FaRegCircleXmark, IoEyeOutline } from '@/components/ui/Icons';
 import { useApproveDemand, useDemand, useRejectDemand } from './useDemands';
 import { FileView } from '@/components/ui/FileView';
+import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
-export default function DemandReview({ closeUrl }) {
+export default function DemandReview({ source }) {
   const { id } = useParams();
   const { demand, isLoading, error } = useDemand(id);
   const [currentFile, setCurrentFile] = useState(null);
   const { approve } = useApproveDemand();
   const { reject } = useRejectDemand();
-  const navigate = useNavigate();
+  const navigate = useNavigateWithQuery();
 
   const path = location.pathname;
 
@@ -79,7 +80,7 @@ export default function DemandReview({ closeUrl }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [demand?.id]);
 
-  const close = () => navigate(closeUrl);
+  const close = () => navigate(source === 'app' ? '/app/demands' : '/applications');
 
   const render = () => {
     if (isLoading) return <Status status='loading' />;
@@ -124,7 +125,7 @@ export default function DemandReview({ closeUrl }) {
             />
           </div>
         </div>
-        {(demand?.status === 'Pending' && closeUrl !== '/applications') && (
+        {demand?.status === 'Pending' && source === 'app' && (
           <div className='mt-5 grid grid-cols-2 gap-4'>
             <Button
               color='delete'

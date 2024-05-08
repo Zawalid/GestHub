@@ -19,7 +19,7 @@ export const ROUTES = {
   admin: ['overview', 'supervisors', 'demands', 'demands/:id', 'offers', 'offers/:id', 'interns', 'interns/:id'],
   supervisor: ['overview', 'projects', 'projects/new', 'projects/:id', 'projects/:id/:tab', 'interns', 'interns/:id'],
   intern: ['overview', 'projects', 'projects/:id', 'projects/:id/:tab'],
-  user: ['overview'],
+  user: ['applications','applications/:id'],
 };
 
 export const PAGE_LIMIT = 10;

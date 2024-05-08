@@ -9,7 +9,7 @@
       "login": "Login",
       "register": "Sign Up",
       "logout": "Logout",
-      "dashboard": "dashboard"
+      "dashboard": "Dashboard"
     },
     "theme": {
       "dark": "Dark",
@@ -36,15 +36,15 @@
     },
     "fullName": {
       "label": "Full Name",
-      "placeholder": "Full Name "
+      "placeholder": "Full Name"
     },
     "firstName": {
       "label": "First Name",
-      "placeholder": "First Name   "
+      "placeholder": "First Name"
     },
     "lastName": {
       "label": "Last Name",
-      "placeholder": "First Name   "
+      "placeholder": "First Name"
     },
     "phone": {
       "label": "Your Phone Number",
@@ -58,8 +58,8 @@
       "label": "Academic Level",
       "placeholder": ""
     },
-    "speciality": {
-      "label": "Speciality",
+    "specialty": {
+      "label": "Specialty",
       "placeholder": ""
     },
     "birthday": {
@@ -75,7 +75,7 @@
       "placeholder": ""
     },
     "confirmPassword": {
-      "label": "Confirme Password",
+      "label": "Confirm Password",
       "placeholder": ""
     }
   },
@@ -87,14 +87,12 @@
     "placeholder": "Search for an internship",
     "categories": "Categories"
   },
-
   "offers": {
-    "Recents": "Recent Internship Offers",
+    "recent": "Recent Internship Offers",
     "exploreMore": "Explore More Offers",
     "internshipOffers": "Internship Offers",
     "apply": "Apply",
     "alreadyApplied": "Already Applied"
-
   },
   "about": {
     "title": "About Us",
@@ -103,13 +101,6 @@
     "location": "Location",
     "description": "Description"
   },
-
-
-
-
-
-
-  
   "overview": {
     "title": "Overview",
     "interns": "Interns",
@@ -128,12 +119,11 @@
     "approved": "Approved",
     "rejected": "Rejected",
     "latestOffers": "Latest Offers",
-    "completedInternship":"Completed Internship",
-    "noCompletedInternship":"No interns have finished their internship yet."
+    "completedInternship": "Completed Internship",
+    "noCompletedInternship": "No interns have finished their internship yet."
   },
-
-  "actions":{
-      "duration": "Duration",
+  "actions": {
+    "duration": "Duration",
     "Urgency": "Urgency",
     "publicationDate": "Publication Date",
     "experience": "Experience",
@@ -143,7 +133,7 @@
     "edit": "Edit",
     "delete": "Delete",
     "add": "Add",
-    "showAll":"Show All",
+    "showAll": "Show All",
     "update": "Update",
     "download": "Download",
     "cancel": "Cancel",
@@ -153,12 +143,9 @@
     "orderBy": "Order By",
     "asc": "Ascending",
     "desc": "Descending"
-
   },
-
   "app": {
     "sidebar": {
-      
       "overview": "Overview",
       "interns": "Interns",
       "teams": "Teams",

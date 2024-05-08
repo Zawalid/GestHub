@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Button, DropDown, Modal, Status, ToolTip } from '@/components/ui';
 import { useDeleteOffer, useOffer, useUpdateOffer } from './useOffers';
 import {
@@ -18,15 +18,16 @@ import { OfferSkeleton } from './OffersSkeleton';
 import { FaRegStar } from 'react-icons/fa';
 import { useUser } from '@/hooks/useUser';
 import { useTranslation } from 'react-i18next';
+import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
 export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite, onApply }) {
   const [isEditing, setIsEditing] = useState(false);
   const { id } = useParams();
   const { user } = useUser();
-  const navigate = useNavigate();
+  const navigate = useNavigateWithQuery();
   const { offer, isLoading, error } = useOffer(id);
   const { mutate } = useUpdateOffer();
-  const {t}=useTranslation();
+  const { t } = useTranslation();
   const { title, description, duration, city, publicationDate, direction, sector, type, experience, status, skills } =
     offer || {};
 
@@ -34,7 +35,7 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
     changeTitle(title ? `Offers | ${title}` : 'Offers');
   }, [title]);
 
-  const close = () => navigate('/offers');
+  const close = () => navigate(onHomePage ? '/offers' : '/app/offers');
 
   const render = () => {
     if (isLoading) return <OfferSkeleton />;
@@ -62,7 +63,7 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
           </div>
         )}
         <div
-          className={`absolute left-0  top-0 mb-5 h-full w-full overflow-auto p-5 pt-10 transition-transform duration-500 ${isEditing ? 'translate-y-full' : ''}`}
+          className={`absolute left-0 top-0 mb-5 flex h-[calc(100%-50px)] w-full flex-col p-5 pt-10 transition-transform duration-500 ${isEditing ? 'translate-y-[calc(100%+50px)] -z-10' : ''}`}
         >
           <div className='mb-3 flex items-center gap-2'>
             {status === 'Urgent' && (
@@ -75,68 +76,70 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
               <span className='ml-2 text-xs font-medium text-secondary'>({sector})</span>
             </h2>
           </div>
-          <p className='text-xs text-text-secondary sm:text-sm'>{description || 'No description'}</p>
-          <div className='mt-5 space-y-2   border-t border-border pt-2'>
-            <h3 className='text-lg font-medium text-text-primary'>Offer Details</h3>
-            <div className='grid gap-3 sm:grid-cols-2'>
-              <div className='flex items-center gap-3'>
-                <label className='text-sm font-medium text-text-tertiary'>Direction :</label>
-                <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
-                  {direction}
-                </span>
-              </div>
-              <div className='flex items-center gap-3'>
-                <label className='text-sm font-medium text-text-tertiary'>City :</label>
-                <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
-                  {city}
-                </span>
-              </div>
-              <div className='flex items-center gap-3'>
-                <label className='text-sm font-medium text-text-tertiary'>Publication Date :</label>
-                <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
-                  {formatDate(publicationDate)}
-                </span>
-              </div>
-              <div className='flex items-center gap-3'>
-                <label className='text-sm font-medium text-text-tertiary'>Duration :</label>
-                <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
-                  {duration < 12
-                    ? `${duration} months`
-                    : duration === 12
-                      ? '1 year'
-                      : `1 year and ${duration - 12} months`}{' '}
-                </span>
-              </div>
-              <div className='flex items-center gap-3'>
-                <label className='text-sm font-medium text-text-tertiary'>Experience :</label>
-                <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
-                  {experience}
-                </span>
-              </div>
-              <div className='flex items-center gap-3'>
-                <label className='text-sm font-medium text-text-tertiary'>Type :</label>
-                <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
-                  {type}
-                </span>
-              </div>
-            </div>
-            <div className='flex gap-3'>
-              <label className='text-nowrap text-sm font-medium text-text-tertiary'>Skills :</label>
-              <div className='flex flex-wrap items-center gap-3'>
-                {skills?.length > 0 ? (
-                  skills?.map((skill) => (
-                    <span
-                      key={skill}
-                      className='rounded-md border border-border px-2 py-1 text-center text-xs font-medium text-text-secondary'
-                    >
-                      {skill}
-                    </span>
-                  ))
-                ) : (
-                  <span className='w-fit rounded-md border border-border px-2 py-1 text-center text-xs font-medium text-text-secondary'>
-                    No skills required
+          <div className='overflow-auto'>
+            <p className='text-xs text-text-secondary sm:text-sm'>{description || 'No description'}</p>
+            <div className='mt-5 space-y-2   border-t border-border pt-2'>
+              <h3 className='text-lg font-medium text-text-primary'>Offer Details</h3>
+              <div className='grid gap-3 sm:grid-cols-2'>
+                <div className='flex items-center gap-3'>
+                  <label className='text-sm font-medium text-text-tertiary'>Direction :</label>
+                  <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
+                    {direction}
                   </span>
-                )}
+                </div>
+                <div className='flex items-center gap-3'>
+                  <label className='text-sm font-medium text-text-tertiary'>City :</label>
+                  <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
+                    {city}
+                  </span>
+                </div>
+                <div className='flex items-center gap-3'>
+                  <label className='text-sm font-medium text-text-tertiary'>Publication Date :</label>
+                  <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
+                    {formatDate(publicationDate)}
+                  </span>
+                </div>
+                <div className='flex items-center gap-3'>
+                  <label className='text-sm font-medium text-text-tertiary'>Duration :</label>
+                  <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
+                    {duration < 12
+                      ? `${duration} months`
+                      : duration === 12
+                        ? '1 year'
+                        : `1 year and ${duration - 12} months`}{' '}
+                  </span>
+                </div>
+                <div className='flex items-center gap-3'>
+                  <label className='text-sm font-medium text-text-tertiary'>Experience :</label>
+                  <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
+                    {experience}
+                  </span>
+                </div>
+                <div className='flex items-center gap-3'>
+                  <label className='text-sm font-medium text-text-tertiary'>Type :</label>
+                  <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
+                    {type}
+                  </span>
+                </div>
+              </div>
+              <div className='flex gap-3'>
+                <label className='text-nowrap text-sm font-medium text-text-tertiary'>Skills :</label>
+                <div className='flex flex-wrap items-center gap-3'>
+                  {skills?.length > 0 ? (
+                    skills?.map((skill) => (
+                      <span
+                        key={skill}
+                        className='rounded-md border border-border px-2 py-1 text-center text-xs font-medium text-text-secondary'
+                      >
+                        {skill}
+                      </span>
+                    ))
+                  ) : (
+                    <span className='w-fit rounded-md border border-border px-2 py-1 text-center text-xs font-medium text-text-secondary'>
+                      No skills required
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -191,7 +194,7 @@ function Actions({ offer, disabled, onEdit }) {
   const { openModal } = useConfirmationModal();
   const { mutate: deleteOffer } = useDeleteOffer();
   const { mutate: updateOffer } = useUpdateOffer();
-  const navigate = useNavigate();
+  const navigate = useNavigateWithQuery();
 
   return (
     <div className='self-end'>

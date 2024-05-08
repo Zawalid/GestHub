@@ -8,7 +8,7 @@ export  function FileView({isOpen,onClose,file}) {
   return (
     <Modal
     isOpen={isOpen}
-    className={`relative md:border ${isFullScreen ? 'h-full w-full' : 'min-h-[470px] sm:h-fit md:max-h-[600px] md:w-[650px]'}`}
+    className={`relative ${isFullScreen ? 'h-full w-full' : 'min-h-[470px] sm:h-fit md:max-h-[600px] md:w-[650px] md:border '}`}
     closeOnBlur={true}
     closeButton={false}
     onClose={onClose}

@@ -40,9 +40,23 @@
 - [x] full screen file view
 - [ ] use slugs instead of ids (projects/offers/interns)
 - [ ] Fix the theme bug in App.jsx (re-renders the app)
+- [ ] rename demands to applications
 
 
+ 
 
 
-- Demand (created_at | updated_at)
-- 
+# Bugs
+
+ - [ ] supervisor id is invalid (create project as a super-admin)
+ - [ ] offer overview height overlap
+ - [ ] server side dates are one hour behind (created_at)
+ - [ ] starter tasks add
+ - [ ] super admin shouldn't be returned with admins
+
+
+# Maybe
+- [ ] Multiple accounts login
+- [ ] Infinite scroll (projects/offers/notifications)
+- [ ] Emailing
+

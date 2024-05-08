@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom';
 import { useDeleteDemand, useApproveDemand, useRejectDemand } from './useDemands';
 import { TableLayout } from '@/layouts/TableLayout';
 import { FaRegCircleCheck, FaRegCircleXmark, TbFileSearch } from '@/components/ui/Icons';
 import { Operations } from '@/components/shared/operations/Operations';
 import { useOperations } from '@/components/shared/operations/useOperations';
+import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
 export default function DemandsList() {
   const { data: demands, isLoading, error } = useOperations();
@@ -11,7 +11,7 @@ export default function DemandsList() {
   const { approve } = useApproveDemand();
   const { reject } = useRejectDemand();
 
-  const navigate = useNavigate();
+  const navigate = useNavigateWithQuery();
 
   return (
     <TableLayout
@@ -69,8 +69,14 @@ export default function DemandsList() {
           visible: true,
           type: 'string',
         },
+        {
+          key: 'created_at',
+          displayLabel: 'Application Date',
+          visible: true,
+          type: 'date',
+        },
       ]}
-      fieldsToSearch={['firstName', 'lastName', 'email', 'offer']}
+      fieldsToSearch={['firstName', 'lastName', 'email', 'offer','sector']}
       downloadOptions={{
         csvFileName: 'Demands',
         pdfFileName: 'Demands',

@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { formatDate, isAlreadyApplied } from '@/utils/helpers';
 import {
   BsClipboard2Check,
@@ -7,6 +6,7 @@ import {
   MdOutlineLocationOn,
 } from '@/components/ui/Icons';
 import { useUser } from '@/hooks/useUser';
+import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
 export default function Offer({ offer, layout }) {
   const { user } = useUser();
@@ -26,7 +26,7 @@ export default function Offer({ offer, layout }) {
     type,
     isFavorite,
   } = offer;
-  const navigate = useNavigate();
+  const navigate = useNavigateWithQuery();
 
   return (
     <div

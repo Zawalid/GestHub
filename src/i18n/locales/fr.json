@@ -60,7 +60,7 @@
       "label": "Établissement",
       "placeholder": "Entrez votre établissement"
     },
-    "speciality": {
+    "specialty": {
       "label": "Spécialité",
       "placeholder": "Entrez votre spécialité"
     },
@@ -98,7 +98,7 @@
   },
 
   "offers": {
-    "Recents": "Les Offres de stage récentes",
+    "recent": "Les Offres de stage récentes",
     "exploreMore": "Explorer plus",
     "internshipOffers": "Offres de stage",
     "apply": "Postuler",

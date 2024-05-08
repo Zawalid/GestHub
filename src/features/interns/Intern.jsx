@@ -1,17 +1,18 @@
 import { Button, Modal, Status } from '@/components/ui';
-import { useNavigate, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import { useIntern } from './useInterns';
 import { IoMailOutline, FiPhone, BsBuilding, IoSchool, BsListCheck, FaDiagramProject } from '@/components/ui/Icons';
 import { formatDate, getTimelineDates } from '@/utils/helpers';
 import { useAnimatedProgress } from '@/hooks/useAnimatedProgress';
 import { useState } from 'react';
 import { FileView } from '@/components/ui/FileView';
+import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
 export default function Intern() {
   const { id } = useParams();
   const { intern, isLoading, error } = useIntern(id);
   const [isCvOpen, setIsCvOpen] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigateWithQuery();
   const {
     avatar,
     fullName,
@@ -148,7 +149,7 @@ function TimeLine({ startDate, endDate }) {
           className={`absolute top-0 w-full max-w-full rounded-lg transition-all duration-[3s] ${isOverdue ? 'bg-primary' : 'bg-secondary'}`}
           style={{ height: daysToStart > 0 ? '12px' : `${isOverdue ? 100 : progress}%` }}
         >
-          <span className='absolute -right-0.5 bottom-0 h-3 w-3 rounded-full bg-primary'></span>
+          <span className='absolute -right-0.5 bottom-0 h-3 w-3 rounded-full bg-text-primary'></span>
         </div>
       </div>
       <span className='text-xs font-medium text-text-secondary'>{formatDate(endDate)}</span>
