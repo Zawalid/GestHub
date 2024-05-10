@@ -1,11 +1,11 @@
-import { Modal } from "@/components/ui";
-import { useForm } from "@/hooks/useForm";
-import { ModalFormLayout } from "@/layouts/ModalFormLayout";
-import { useTable } from ".";
-import { useEffect } from "react";
+import { Modal } from '@/components/ui';
+import { useForm } from '@/hooks/useForm';
+import { ModalFormLayout } from '@/layouts/ModalFormLayout';
+import { useTable } from '.';
+import { useEffect } from 'react';
 
 export function TableRecord() {
-  const { formOptions: options } = useTable();
+  const { formOptions } = useTable();
 
   const {
     defaultValues,
@@ -17,16 +17,17 @@ export function TableRecord() {
     gridLayout,
     onSubmit,
     close,
-  } = options;
+    type,
+  } = formOptions;
 
   const {
     Form,
-    options: { isUpdated, isValid, handleSubmit, reset, updateValues },
+    options: { isUpdated, isValid, dirtyFields, handleSubmit, reset, updateValues },
   } = useForm({
     defaultValues,
     fields,
     gridLayout,
-    onSubmit,
+    onSubmit: (data) => onSubmit(type === 'create' ? data : dirtyFields),
   });
 
   useEffect(() => {
@@ -35,13 +36,9 @@ export function TableRecord() {
   }, [defaultValues]);
 
   return (
-    <Modal
-      isOpen={isOpen}
-      className="p-5 sm:w-3/4 sm:h-5/6 lg:w-1/2 md:border  md:h-fit"
-      closeOnBlur={false}
-    >
-      <div className="flex items-center">
-        <h1 className="text-text-primary font-bold text-2xl mb-6">{heading}</h1>
+    <Modal isOpen={isOpen} className='p-5 sm:h-5/6 sm:w-3/4 md:h-fit md:border  lg:w-1/2' closeOnBlur={false}>
+      <div className='flex items-center'>
+        <h1 className='mb-6 text-2xl font-bold text-text-primary'>{heading}</h1>
       </div>
       <ModalFormLayout
         submitButton={{

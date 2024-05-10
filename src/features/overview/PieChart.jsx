@@ -69,8 +69,8 @@ const renderActiveShape = (props) => {
   );
 };
 
-export default function PieChartStats({ data, title, legend, COLORS, className = '', isLoading }) {
-  const [activeIndex, setActiveIndex] = useState(1);
+export default function PieChartStats({ data, title, legend, COLORS, className = '', isLoading,active }) {
+  const [activeIndex, setActiveIndex] = useState(active);
 
   const loadingData = [
     { name: 'Loading...', value: 20 },

@@ -98,7 +98,6 @@ export function useUpdateProfile() {
     mutationFn: ({ id, user }) => updateProfile(id, user),
     loadingMessage: 'Updating profile...',
     successMessage: 'Profile updated successfully',
-    errorMessage: 'Failed to update profile',
   });
 }
 
@@ -108,7 +107,6 @@ export function useUpdateAvatar() {
     mutationFn: ({ id, file }) => updateAvatar(id, file),
     loadingMessage: 'Updating profile...',
     successMessage: 'Profile updated successfully',
-    errorMessage: 'Failed to update profile',
   });
 }
 

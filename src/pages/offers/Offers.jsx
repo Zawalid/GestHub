@@ -4,7 +4,7 @@ import { useOffers } from '@/features/offers/useOffers';
 import OffersList from '@/features/offers/OffersList';
 import NewOffer from '@/features/offers/NewOffer';
 import OfferOverview from '@/features/offers/OfferOverview';
-import { checkDateInIntervals } from '@/utils/helpers';
+import { getIntervals } from '@/utils/helpers';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const getOffersProps = (offers, isLoading, error) => ({
@@ -49,10 +49,7 @@ export const getOffersProps = (offers, isLoading, error) => ({
       { value: 'Hybrid', checked: false },
       { value: 'Remote', checked: false },
     ],
-    publicationDate: ['Today', 'This Week', 'This Month', 'This Year'].map((interval) => ({
-      value: { value: interval, condition: (offer) => checkDateInIntervals(offer.publicationDate, interval) },
-      checked: false,
-    })),
+    publicationDate: getIntervals('publicationDate'),
     visibility: [
       { value: 'Visible', checked: false },
       { value: 'Hidden', checked: false },
@@ -60,7 +57,7 @@ export const getOffersProps = (offers, isLoading, error) => ({
     status: [{ value: 'Urgent', checked: false }],
   },
   defaultLayout: 'grid',
-  fieldsToSearch: ['title','sector'],
+  fieldsToSearch: ['title', 'sector'],
 });
 
 export function Offers() {

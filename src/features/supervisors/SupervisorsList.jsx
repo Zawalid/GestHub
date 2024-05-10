@@ -1,6 +1,7 @@
 import { RULES } from '@/utils/constants';
 import { useSupervisors, useAddSupervisor, useDeleteSupervisor, useUpdateSupervisor } from './useSupervisors';
 import { TableLayout } from '@/layouts/TableLayout';
+import { Gender } from '@/pages/auth/Register';
 
 export default function SupervisorsList() {
   const { supervisors, isLoading, error } = useSupervisors();
@@ -61,16 +62,19 @@ export default function SupervisorsList() {
           type: 'phone',
         },
         {
+          name: 'gender',
+          customComponent: <Gender className='col-span-2' />,
+        },
+        {
           name: 'password',
           type: 'password',
           label: 'Password',
-          rules: { required: false },
         },
         {
           name: 'password_confirmation',
           type: 'password',
           label: 'Confirm Password',
-          rules: { ...RULES.passwordConfirmation, required: false },
+          rules: { ...RULES.passwordConfirmation },
         },
       ]}
       formDefaults={{
@@ -78,6 +82,7 @@ export default function SupervisorsList() {
         lastName: '',
         email: '',
         phone: '',
+        gender: 'M',
         password: '',
         password_confirmation: '',
       }}

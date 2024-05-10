@@ -1,24 +1,16 @@
-import Tippy from "@tippyjs/react";
-import { cloneElement, forwardRef } from "react";
-import { SearchInput } from "./SearchInput";
-import { IoChevronDownOutline } from "./Icons";
-import { cn } from "../../utils/helpers";
+import Tippy from '@tippyjs/react';
+import { cloneElement, forwardRef } from 'react';
+import { SearchInput } from './SearchInput';
+import { IoChevronDownOutline } from './Icons';
+import { cn } from '../../utils/helpers';
 
 const defaultOptions = {
-  className: "max-h-[200px]",
-  placement: "bottom-end",
-  trigger: "click",
+  className: 'max-h-[200px]',
+  placement: 'bottom-end',
+  trigger: 'click',
   shouldCloseOnClick: true,
 };
-export function DropDown({
-  children,
-  toggler,
-  togglerClassName,
-  togglerDisabled,
-  options,
-  onOpen,
-  onClose,
-}) {
+export function DropDown({ children, toggler, togglerClassName, togglerDisabled, options, onOpen, onClose }) {
   const buttonProps = {
     onClick: (e) => e?.stopPropagation(),
     className: togglerClassName,
@@ -27,13 +19,13 @@ export function DropDown({
 
   return (
     <Tippy
-      content={<ul className="grid gap-1 p-2">{children}</ul>}
+      content={<ul className='grid gap-1 p-2'>{children}</ul>}
       className={cn(
-        "dropdown rounded-md border border-border bg-background-primary p-0 shadow-md",
+        'dropdown rounded-md border border-border bg-background-primary p-0 shadow-md',
         defaultOptions.className,
-        options?.className,
+        options?.className
       )}
-      theme="light"
+      theme='light'
       trigger={options?.trigger || defaultOptions.trigger}
       interactive={true}
       arrow={false}
@@ -41,38 +33,31 @@ export function DropDown({
       onShow={(instance) => {
         onOpen?.();
         (options?.shouldCloseOnClick ?? defaultOptions.shouldCloseOnClick) &&
-          instance.popper.addEventListener("click", () => instance.hide());
+          instance.popper.addEventListener('click', () => instance.hide());
       }}
       onHidden={onClose}
     >
-      {["Button", "Toggler"].includes(toggler.type.displayName) ? (
+      {['Button', 'Toggler'].includes(toggler.type.displayName) ? (
         cloneElement(toggler, buttonProps)
       ) : (
-        <button {...buttonProps}>{toggler}</button>
+        <button type='button' {...buttonProps}>
+          {toggler}
+        </button>
       )}
     </Tippy>
   );
 }
 
-function Option({
-  children,
-  onClick,
-  className = "",
-  isDeleteButton,
-  size = "",
-  isCurrent,
-  disabled,
-  id,
-}) {
+function Option({ children, onClick, className = '', isDeleteButton, size = '', isCurrent, disabled, id }) {
   return (
     <li
       className={cn(
-        "dropdown-option",
+        'dropdown-option',
         size,
-        isDeleteButton && "delete",
-        isCurrent && "current",
+        isDeleteButton && 'delete',
+        isCurrent && 'current',
         className,
-        disabled && "disabled"
+        disabled && 'disabled'
       )}
       onClick={() => disabled || onClick?.()}
       id={id}
@@ -84,36 +69,25 @@ function Option({
 
 function SearchBar({ placeholder, query, onChange }) {
   return (
-    <SearchInput
-      placeholder={placeholder}
-      query={query}
-      onChange={onChange}
-      className="text-sm rounded-md mb-2"
-    />
+    <SearchInput placeholder={placeholder} query={query} onChange={onChange} className='mb-2 rounded-md text-sm' />
   );
 }
 
-const Toggler = forwardRef(({ children, icon, className = "" }, ref) => {
+const Toggler = forwardRef(({ children, icon, className = '' }, ref) => {
   return (
-    <button
-      className={cn(
-        "dropdown-toggler",
-        className
-      )}
-      ref={ref}
-    >
+    <button type='button' className={cn('dropdown-toggler', className)} ref={ref}>
       {children}
-      {icon || <IoChevronDownOutline className="text-text-tertiary" />}
+      {icon || <IoChevronDownOutline className='text-text-tertiary' />}
     </button>
   );
 });
-Toggler.displayName = "Toggler";
+Toggler.displayName = 'Toggler';
 
-function Title({ children,className='' }) {
-  return <h4 className={`text-sm font-medium pl-1 text-text-primary ${className}`}>{children}</h4>;
+function Title({ children, className = '' }) {
+  return <h4 className={`pl-1 text-sm font-medium text-text-primary ${className}`}>{children}</h4>;
 }
 
-function Divider({className = ''}) {
+function Divider({ className = '' }) {
   return <hr className={`border border-border ${className}`} />;
 }
 
@@ -124,7 +98,7 @@ function NestedMenu({ children, toggler, togglerClassName, options }) {
       togglerClassName={togglerClassName}
       options={{
         ...options,
-        trigger: options?.trigger || "mouseenter focus",
+        trigger: options?.trigger || 'mouseenter focus',
       }}
     >
       {children}

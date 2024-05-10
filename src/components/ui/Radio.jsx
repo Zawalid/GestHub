@@ -8,7 +8,7 @@ export function Radio({ checked, onChange, className = "", ...props }) {
     >
       <input
         type="radio"
-        className="peer transition-none h-5 w-5 shrink-0 cursor-pointer appearance-none rounded-full border border-border transition-colors duration-200 disabled:cursor-not-allowed  checked:border-0 checked:bg-primary focus:outline-none"
+        className="peer transition-none h-5 w-5 shrink-0 cursor-pointer appearance-none rounded-full border-2 border-border transition-colors duration-200 disabled:cursor-not-allowed  checked:border-0 checked:bg-primary focus:outline-none"
         checked={checked}
         onChange={onChange}
         {...props}

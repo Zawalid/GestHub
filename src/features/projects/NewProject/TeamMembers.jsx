@@ -11,10 +11,19 @@ export const getSearchedInterns = (interns, query) => {
     ?.filter((intern) => intern.fullName.trim().toLowerCase().includes(query.trim().toLowerCase()))
     .sort((a, b) => a.firstName.localeCompare(b.firstName));
 };
-export const renderInternsStatus = (isLoading, error, searchedInterns, render) => {
+export const renderInternsStatus = (isLoading, error, searchedInterns, render, query) => {
   if (isLoading) return <Status status='loading' size='small' />;
   if (error) return <Status status='error' heading={error?.message} size='small' />;
-  if (searchedInterns.length === 0) return <Status status='noResults' size='small' />;
+  if (searchedInterns?.length === 0 && query) return <Status status='noResults' size='small' />;
+  if (searchedInterns?.length === 0)
+    return (
+      <div className='absolute grid h-full w-full place-content-center gap-2 text-center'>
+        <h2 className='font-semibold text-text-primary'>Oops! It&apos;s empty here.</h2>
+        <p className='text-xs font-medium text-text-secondary'>
+          It seems like there&apos;s nothing to show at the moment. Please check back later.
+        </p>
+      </div>
+    );
 
   return render();
 };
@@ -110,7 +119,12 @@ export function AllInterns({ teamMembers, setTeamMembers, filter, selectedMember
   return (
     <>
       <div className='grid grid-cols-[auto_min-content] items-center'>
-        <SearchInput placeholder={`Search for ${users ? 'users' : 'interns'}`} query={query} onChange={setQuery} />
+        <SearchInput
+          placeholder={`Search for ${users ? 'users' : 'interns'}`}
+          query={query}
+          onChange={setQuery}
+          disabled={searchedInterns?.length === 0 && !query}
+        />
 
         {selectedMembers && (
           <ToolTip content={<span>Uncheck All</span>}>
@@ -133,7 +147,7 @@ export function AllInterns({ teamMembers, setTeamMembers, filter, selectedMember
         )}
       </div>
       <div className='relative flex-1 space-y-1 overflow-y-auto overflow-x-hidden pr-2' ref={parent}>
-        {renderInternsStatus(isLoading, error, searchedInterns, render)}
+        {renderInternsStatus(isLoading, error, searchedInterns, render, query)}
       </div>
     </>
   );

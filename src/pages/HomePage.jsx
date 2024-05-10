@@ -8,8 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { changeTitle } from '@/utils/helpers';
 import { useTranslation } from 'react-i18next';
-import Applications from '@/components/homepage/Applications';
-import DemandReview from '@/features/demands/DemandReview';
+import Applications from '@/features/applications/Applications';
+import ApplicationReview from '@/features/applications/ApplicationReview';
 import { useUser } from '../hooks';
 
 export function HomePage() {
@@ -27,7 +27,7 @@ export function HomePage() {
       {user?.role === 'user' && (
         <>
           <Applications />
-          <DemandReview source='home' />
+          <ApplicationReview source='home' />
         </>
       )}
     </>

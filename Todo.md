@@ -22,25 +22,27 @@
 - [x] academic level + start/endDate in intern 
 - [x] disable image manipulation when updating profile
 - [x] Fix the routing
-- [ ] to many requests (user)
 - [x] intern profile (show profile)
 - [x] add specialty to the intern form
 - [x] admin and super-admin are the same as the user role
 - [x] add checkbox for accept terms
 - [ ] intern overview
-- [ ] notifications for the user
+- [x] notifications for the user
 - [ ] only super-admin can create a project
 - [ ] supervisor can see their projects only
 - [x] clicks on the overview
 - [ ] project title on the interns table
-- [x] filter by sector in demands
+- [x] filter by sector in applications
 - [ ] only free interns in project's creation team members selection
 - [ ] pages creation / update home page
 - [x] green for approve button
 - [x] full screen file view
 - [ ] use slugs instead of ids (projects/offers/interns)
 - [ ] Fix the theme bug in App.jsx (re-renders the app)
-- [ ] rename demands to applications
+- [x] rename applications to applications
+- [x] add gender prop
+- [x] use academic level as a dropdown
+- [ ] virtual lists for performance
 
 
  
@@ -53,10 +55,12 @@
  - [ ] server side dates are one hour behind (created_at)
  - [ ] starter tasks add
  - [ ] super admin shouldn't be returned with admins
+ - [ ] too many requests (user)
 
 
 # Maybe
 - [ ] Multiple accounts login
 - [ ] Infinite scroll (projects/offers/notifications)
 - [ ] Emailing
-
+- [ ] More details about the error
+- [ ] Add a date picker and custom date interval

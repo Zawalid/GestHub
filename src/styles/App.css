@@ -47,7 +47,7 @@
   }
 }
 .dropdown-toggler {
-  @apply flex min-w-28 cursor-pointer items-center justify-between rounded-lg border border-border bg-background-secondary p-2 text-start  text-sm text-text-secondary transition-colors  duration-200 hover:bg-background-tertiary  focus:outline-none;
+  @apply flex min-w-28 cursor-pointer items-center justify-between rounded-lg border border-border bg-background-secondary p-2 text-start  text-sm text-text-secondary transition-colors  duration-200 hover:bg-background-tertiary  focus:outline-none !important;
 }
 .project-date {
   transform-style: preserve-3d;
@@ -74,7 +74,7 @@
 .input-field {
   & input,
   textarea {
-    @apply w-full resize-none bg-transparent text-sm text-text-primary  outline-none transition-colors duration-300 placeholder:text-sm disabled:cursor-not-allowed disabled:bg-background-disabled disabled:text-text-disabled disabled:placeholder:text-text-disabled read-only:cursor-auto read-only:bg-background-disabled
+    @apply w-full resize-none bg-transparent text-sm text-text-primary  outline-none transition-colors duration-300 placeholder:text-sm read-only:cursor-auto read-only:bg-background-disabled disabled:cursor-not-allowed disabled:bg-background-disabled disabled:text-text-disabled disabled:placeholder:text-text-disabled;
   }
 }
 
@@ -103,7 +103,8 @@
 .sending {
   width: 20px;
   aspect-ratio: 4;
-  background: radial-gradient(circle closest-side, var(--text-primary) 90%, var(--background-primary) ) 0 /    calc(100% / 3) 100% space;
+  background: radial-gradient(circle closest-side, var(--text-primary) 90%, var(--background-primary)) 0 /
+    calc(100% / 3) 100% space;
   clip-path: inset(0 100% 0 0);
   animation: l1 1s steps(4) infinite;
   -webkit-animation: l1 1s steps(4) infinite;
@@ -115,5 +116,5 @@
 }
 
 .tooltip {
-  @apply bg-background-secondary p-2 font-medium text-text-tertiary border text-xs border-border rounded-lg !important;
+  @apply rounded-lg border border-border bg-background-secondary p-2 text-xs font-medium text-text-tertiary !important;
 }

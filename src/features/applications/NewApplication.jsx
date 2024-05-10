@@ -7,11 +7,11 @@ import { useUser } from '@/hooks/useUser';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useOffer } from '../offers/useOffers';
 import { useEffect } from 'react';
-import { useAddDemand } from './useDemands';
+import { useAddApplication } from './useApplications';
 import { ErrorTooltip } from '@/components/ui/InputField';
 
-export default function NewDemand({ isOpen, onClose }) {
-  const { mutate, isPending, error, isSuccess, reset } = useAddDemand({ showToast: false });
+export default function NewApplication({ isOpen, onClose }) {
+  const { mutate, isPending, error, isSuccess, reset } = useAddApplication({ showToast: false });
   const navigate = useNavigate();
 
   const render = () => {
@@ -123,7 +123,7 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
     ],
     onSubmit: (data) => {
       const { startDate, endDate, motivationLetter, CV, ['Internship Application']: internshipApplication } = data;
-      const demand = {
+      const application = {
         user_id: user?.id,
         offer_id: id,
         startDate,
@@ -134,8 +134,8 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
       };
       const formData = new FormData();
 
-      for (const key in demand) {
-        formData.append(key, demand[key]);
+      for (const key in application) {
+        formData.append(key, application[key]);
       }
 
       onApply(formData, { onSuccess: () => setTimeout(() => onSuccess(reset), 1000) });

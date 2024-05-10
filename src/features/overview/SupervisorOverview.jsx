@@ -29,6 +29,7 @@ export default function SupervisorOverview() {
           ]}
           COLORS={['#6B7280', '#3b82f6', '#16a34a']}
           isLoading={isLoading}
+          active={1}
         />
       </div>
     </div>

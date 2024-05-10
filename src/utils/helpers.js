@@ -2,30 +2,94 @@ import { clsx } from 'clsx';
 import { DateTime, Interval } from 'luxon';
 import { twMerge } from 'tailwind-merge';
 
-
 //*------ Dates And Time
+const getIsoDate = (date) => DateTime.fromISO(new Date(date).toISOString());
+
 export const formatDate = (date, includeTime) => {
   if (!date) return null;
-  const isoDate = new Date(date).toISOString();
-  return DateTime.fromISO(isoDate).toLocaleString(includeTime ? DateTime.DATETIME_MED : DateTime.DATE_FULL);
+  return getIsoDate(date).toLocaleString(includeTime ? DateTime.DATETIME_MED : DateTime.DATE_FULL);
 };
 
-export const checkDateInIntervals = (publicationDate, date) => {
-  const dates = [
-    { name: 'Today', interval: 'day' },
-    { name: 'This Week', interval: 'week' },
-    { name: 'This Month', interval: 'month' },
-    { name: 'This Year', interval: 'year' },
-  ];
-
-  const interval = dates.find((d) => d.name === date).interval;
-  const now = DateTime.local();
-  const start = now.startOf(interval);
-  const end = now.endOf(interval);
-
-  return Interval.fromDateTimes(start, end).contains(DateTime.fromISO(publicationDate));
+const intervals = [
+  {
+    name: 'Yesterday',
+    interval: {
+      start: DateTime.local().minus({ days: 1 }).startOf('day'),
+      end: DateTime.local().minus({ days: 1 }).endOf('day'),
+    },
+  },
+  { name: 'Today', interval: { start: DateTime.local().startOf('day'), end: DateTime.local().endOf('day') } },
+  {
+    name: 'Tomorrow',
+    interval: {
+      start: DateTime.local().plus({ days: 1 }).startOf('day'),
+      end: DateTime.local().plus({ days: 1 }).endOf('day'),
+    },
+  },
+  {
+    name: 'Last 7 Days',
+    interval: {
+      start: DateTime.local().minus({ days: 7 }).startOf('day'),
+      end: DateTime.local().startOf('day').minus({ milliseconds: 1 }),
+    },
+  },
+  { name: 'This Week', interval: { start: DateTime.local().startOf('week'), end: DateTime.local().endOf('week') } },
+  {
+    name: 'Next Week',
+    interval: {
+      start: DateTime.local().plus({ weeks: 1 }).startOf('week'),
+      end: DateTime.local().plus({ weeks: 1 }).endOf('week'),
+    },
+  },
+  {
+    name: 'Last 30 Days',
+    interval: {
+      start: DateTime.local().minus({ days: 30 }).startOf('day'),
+      end: DateTime.local().startOf('day').minus({ milliseconds: 1 }),
+    },
+  },
+  { name: 'This Month', interval: { start: DateTime.local().startOf('month'), end: DateTime.local().endOf('month') } },
+  {
+    name: 'Next Month',
+    interval: {
+      start: DateTime.local().plus({ months: 1 }).startOf('month'),
+      end: DateTime.local().plus({ months: 1 }).endOf('month'),
+    },
+  },
+  {
+    name: 'Last 90 Days',
+    interval: {
+      start: DateTime.local().minus({ days: 90 }).startOf('day'),
+      end: DateTime.local().startOf('day').minus({ milliseconds: 1 }),
+    },
+  },
+  {
+    name: 'Last 6 Months',
+    interval: {
+      start: DateTime.local().minus({ months: 6 }).startOf('month'),
+      end: DateTime.local().startOf('month').minus({ milliseconds: 1 }),
+    },
+  },
+  { name: 'This Year', interval: { start: DateTime.local().startOf('year'), end: DateTime.local().endOf('year') } },
+  {
+    name: 'Next Year',
+    interval: {
+      start: DateTime.local().plus({ years: 1 }).startOf('year'),
+      end: DateTime.local().plus({ years: 1 }).endOf('year'),
+    },
+  },
+  {
+    name: 'Last Year',
+    interval: {
+      start: DateTime.local().minus({ years: 1 }).startOf('year'),
+      end: DateTime.local().startOf('year').minus({ milliseconds: 1 }),
+    },
+  },
+];
+export const checkDateInIntervals = (date, dateInterval) => {
+  const interval = intervals.find((d) => d.name === dateInterval).interval;
+  return Interval.fromDateTimes(interval.start, interval.end).contains(getIsoDate(date));
 };
-
 export const getTimelineDates = (startDate, endDate) => {
   const today = DateTime.fromISO(DateTime.now().toISO());
   const start = DateTime.fromISO(startDate);
@@ -40,12 +104,12 @@ export const getTimelineDates = (startDate, endDate) => {
   return { currentDay, duration, daysLeft, daysToStart, isOverdue };
 };
 
-export const getRelativeTime = (updated_at) => {
-  if (!updated_at) return null;
-  const now = DateTime.fromISO(DateTime.now().toISO());
-  const date = DateTime.fromISO(new Date(updated_at).toISOString());
+export const getRelativeTime = (date) => {
+  if (!date) return null;
+  const now = getIsoDate(new Date());
+  const isoDate = getIsoDate(date);
 
-  const get = (type) => Math.abs(Math.ceil(date.diff(now, type).toObject()[type]));
+  const get = (type) => Math.abs(Math.ceil(isoDate.diff(now, type).toObject()[type]));
 
   const seconds = get('seconds');
   if (seconds < 60) return `${seconds}s ago`;
@@ -69,7 +133,7 @@ export const getRelativeTime = (updated_at) => {
   return `${years}y ago`;
 };
 
-//* ----- Other 
+//* ----- Other
 export const cn = (...inputs) => twMerge(clsx(inputs));
 
 export const objectDeepEquals = (a, b) => {
@@ -107,5 +171,16 @@ export const canViewProject = (user, project) => {
 
 export const getFile = (data, type) => data?.files?.find((file) => file.type === type)?.url || null;
 
-export const isAlreadyApplied = (user, offer_id) => user?.demands?.find((d) => d.offer_id === +offer_id);
+export const isAlreadyApplied = (user, offer_id) => user?.applications?.find((d) => d.offer_id === +offer_id);
 
+// Filter
+export const getFilter = (data, key) =>
+  [...new Set(data?.map((el) => el[key]))].map((f) => ({ value: f, checked: false }));
+
+export const getIntervals = (key) =>
+  intervals
+    .map((interval) => interval.name)
+    .map((interval) => ({
+      value: { value: interval, condition: (el) => checkDateInIntervals(el[key], interval) },
+      checked: false,
+    }));

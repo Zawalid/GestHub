@@ -68,7 +68,7 @@ type
 visibility
 status
 
-## Demands
+## Applications
 id
 offerId
 userId
@@ -76,7 +76,7 @@ date
 startDate
 endDate
 cv
-internshipDemand
+internshipApplication
 
 
 ---

@@ -5,7 +5,7 @@ import OffersList from '@/features/offers/OffersList';
 import OfferOverview from '@/features/offers/OfferOverview';
 import { useEffect, useState } from 'react';
 import { changeTitle } from '@/utils/helpers';
-import NewDemand from '@/features/demands/NewDemand';
+import NewApplication from '@/features/applications/NewApplication';
 import { useUser } from '@/hooks/useUser';
 import { useTranslation } from 'react-i18next';
 
@@ -50,7 +50,7 @@ export function HomePageOffers() {
         onToggleFavorite={onToggleFavorite}
         onApply={() => setIsApplying(true)}
       />
-      {user?.role === 'user' && <NewDemand isOpen={isApplying} onClose={() => setIsApplying(false)} />}
+      {user?.role === 'user' && <NewApplication isOpen={isApplying} onClose={() => setIsApplying(false)} />}
     </div>
   );
 }

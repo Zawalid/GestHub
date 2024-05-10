@@ -1,4 +1,4 @@
-import { RULES } from '@/utils/constants';
+import { LEVELS, RULES } from '@/utils/constants';
 import {
   useInterns,
   useAddIntern,
@@ -13,6 +13,8 @@ import { FaPlus, LuUser } from '@/components/ui/Icons';
 import { Table } from '@/components/shared/Table/';
 import { AllInterns } from '../projects/NewProject/TeamMembers';
 import { useState } from 'react';
+import { AcademicLevel, Gender } from '@/pages/auth/Register';
+import { getFilter,getIntervals } from '@/utils/helpers';
 
 export default function InternsList() {
   const { interns, isLoading, error } = useInterns();
@@ -59,24 +61,28 @@ export default function InternsList() {
             displayLabel: 'Academic Level',
             visible: true,
             type: 'string',
+            filter: LEVELS.map((level) => ({ value: level, checked: false })),
           },
           {
             key: 'establishment',
             displayLabel: 'Establishment',
             visible: true,
             type: 'string',
+            filter: getFilter(interns, 'establishment'),
           },
           {
             key: 'startDate',
             displayLabel: 'Start Date',
             visible: true,
             type: 'date',
+            filter: getIntervals('startDate'),
           },
           {
             key: 'endDate',
             displayLabel: 'End Date',
             visible: true,
             type: 'date',
+            filter: getIntervals('endDate'),
           },
         ]}
         formFields={[
@@ -100,9 +106,11 @@ export default function InternsList() {
           },
           {
             name: 'academicLevel',
-            label: 'Academic Level',
-            type: 'academicLevel',
-            rules: { ...RULES.academicLevel },
+            customComponent: <AcademicLevel />,
+          },
+          {
+            name: 'gender',
+            customComponent: <Gender />,
           },
           {
             name: 'establishment',
@@ -129,13 +137,12 @@ export default function InternsList() {
             name: 'password',
             type: 'password',
             label: 'Password',
-            rules: { required: false },
           },
           {
             name: 'password_confirmation',
             type: 'password',
             label: 'Confirm Password',
-            rules: { ...RULES.passwordConfirmation,required: false },
+            rules: { ...RULES.passwordConfirmation },
           },
         ]}
         formDefaults={{
@@ -143,7 +150,8 @@ export default function InternsList() {
           lastName: '',
           email: '',
           phone: '',
-          academicLevel: '',
+          gender: 'M',
+          academicLevel: 'Bac+2',
           establishment: '',
           specialty: '',
           startDate: '',

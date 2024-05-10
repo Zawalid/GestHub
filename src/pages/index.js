@@ -6,7 +6,7 @@ export { Projects } from './projects/Projects';
 export { ProjectDetails } from './projects/ProjectDetails';
 export { Offers } from './offers/Offers';
 export { HomePageOffers } from './offers/HomePageOffers';
-export { Demands } from './Demands';
+export { Applications } from './Applications';
 export { NotFound } from './NotFound';
 export { HomePage } from './HomePage';
 export { Login } from './auth/Login';

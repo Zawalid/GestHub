@@ -32,7 +32,7 @@ const routesIcons = {
   admins: <GrUserAdmin size={16} />,
   absences: <LuCalendarX />,
   offers: <IoBriefcaseOutline />,
-  demands: <IoDocumentsOutline />,
+  applications: <IoDocumentsOutline />,
   projects: <RxDashboard />,
 };
 

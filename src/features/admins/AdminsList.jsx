@@ -1,6 +1,7 @@
 import { RULES } from '@/utils/constants';
 import { useAdmins, useAddAdmin, useDeleteAdmin, useUpdateAdmin } from './useAdmins';
 import { TableLayout } from '@/layouts/TableLayout';
+import { Gender } from '@/pages/auth/Register';
 
 export default function AdminsList() {
   const { admins, isLoading, error } = useAdmins();
@@ -61,23 +62,27 @@ export default function AdminsList() {
           type: 'phone',
         },
         {
-          name: 'password',
-          type: 'password',
-          label: 'Password',
-          rules: { required: false },
+          name: 'gender',
+          customComponent: <Gender className='col-span-2' />,
         },
-        {
-          name: 'password_confirmation',
-          type: 'password',
-          label: 'Confirm Password',
-          rules: { ...RULES.passwordConfirmation, required: false },
-        },
+         {
+            name: 'password',
+            type: 'password',
+            label: 'Password',
+          },
+          {
+            name: 'password_confirmation',
+            type: 'password',
+            label: 'Confirm Password',
+            rules: { ...RULES.passwordConfirmation },
+          },
       ]}
       formDefaults={{
         firstName: '',
         lastName: '',
         email: '',
         phone: '',
+        gender : 'M',
         password: '',
         password_confirmation: '',
       }}

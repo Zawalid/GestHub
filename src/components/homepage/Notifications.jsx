@@ -1,18 +1,18 @@
 import { IoNotificationsOutline } from 'react-icons/io5';
 import { Button, DropDown } from '../ui';
 import { FaRegCircleCheck } from 'react-icons/fa6';
-import { useMarkAsRead, useUserDemands } from '@/features/demands/useDemands';
+import { useMarkAsRead, useUserApplications } from '@/features/applications/useApplications';
 import { useUser } from '@/hooks/useUser';
 import { useNavigate } from 'react-router-dom';
 import { getRelativeTime } from '@/utils/helpers';
 
 export default function Notifications() {
   const { user } = useUser();
-  const { demands, isLoading } = useUserDemands();
+  const { applications, isLoading } = useUserApplications();
   const { mutate } = useMarkAsRead();
   const navigate = useNavigate();
 
-  const notifications = demands
+  const notifications = applications
     ?.filter((d) => d.status === 'Approved')
     .toSorted((a, b) => new Date(b?.updated_at) - new Date(a?.updated_at))
     ?.map((d) => ({

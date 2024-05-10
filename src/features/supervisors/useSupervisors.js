@@ -49,7 +49,6 @@ export const useUpdateSupervisor = () =>
     mutationFn: ({ id, data }) => updateSupervisor(id, data),
     loadingMessage: 'Updating supervisor...',
     successMessage: 'Supervisor updated successfully',
-    errorMessage: 'Failed to update supervisor',
   });
 
 export const useDeleteSupervisor = () =>

@@ -1,24 +1,23 @@
-import { useDeleteDemand, useApproveDemand, useRejectDemand } from './useDemands';
+import { useDeleteApplication, useApproveApplication, useRejectApplication, useApplications } from './useApplications';
 import { TableLayout } from '@/layouts/TableLayout';
 import { FaRegCircleCheck, FaRegCircleXmark, TbFileSearch } from '@/components/ui/Icons';
-import { Operations } from '@/components/shared/operations/Operations';
-import { useOperations } from '@/components/shared/operations/useOperations';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
+import { getFilter,getIntervals } from '@/utils/helpers';
 
-export default function DemandsList() {
-  const { data: demands, isLoading, error } = useOperations();
-  const { mutate: deleteDemand } = useDeleteDemand();
-  const { approve } = useApproveDemand();
-  const { reject } = useRejectDemand();
+export default function ApplicationsList() {
+  const { applications, isLoading, error } = useApplications();
+  const { mutate: deleteApplication } = useDeleteApplication();
+  const { approve } = useApproveApplication();
+  const { reject } = useRejectApplication();
 
   const navigate = useNavigateWithQuery();
 
   return (
     <TableLayout
-      data={demands}
+      data={applications}
       isLoading={isLoading}
       error={error}
-      resourceName='Demand'
+      resourceName='Application'
       columns={[
         { key: 'id', displayLabel: 'ID', visible: true, type: 'number' },
         {
@@ -40,48 +39,58 @@ export default function DemandsList() {
           type: 'string',
         },
         {
-          key: 'startDate',
-          displayLabel: 'Start Date',
-          visible: true,
-          type: 'date',
-        },
-        {
-          key: 'endDate',
-          displayLabel: 'End Date',
-          visible: true,
-          type: 'date',
-        },
-        {
           key: 'offer',
           displayLabel: 'Offer',
           visible: true,
           type: 'string',
+          filter: getFilter(applications, 'offer'),
         },
         {
           key: 'sector',
           displayLabel: 'Sector',
           visible: true,
           type: 'string',
+          filter: getFilter(applications, 'sector'),
+        },
+        {
+          key: 'startDate',
+          displayLabel: 'Start Date',
+          visible: true,
+          type: 'date',
+          filter: getIntervals('startDate'),
+        },
+        {
+          key: 'endDate',
+          displayLabel: 'End Date',
+          visible: true,
+          type: 'date',
+          filter: getIntervals('endDate'),
         },
         {
           key: 'status',
           displayLabel: 'Status',
           visible: true,
           type: 'string',
+          filter: [
+            { value: 'Pending', checked: false },
+            { value: 'Approved', checked: false },
+            { value: 'Rejected', checked: false },
+          ],
         },
         {
           key: 'created_at',
           displayLabel: 'Application Date',
           visible: true,
           type: 'date',
+          filter: getIntervals('created_at'),
         },
       ]}
-      fieldsToSearch={['firstName', 'lastName', 'email', 'offer','sector']}
+      fieldsToSearch={['firstName', 'lastName', 'email', 'offer', 'sector']}
       downloadOptions={{
-        csvFileName: 'Demands',
-        pdfFileName: 'Demands',
+        csvFileName: 'Applications',
+        pdfFileName: 'Applications',
       }}
-      onDelete={deleteDemand}
+      onDelete={deleteApplication}
       layoutOptions={{
         displayNewRecord: false,
         displayTableRecord: false,
@@ -89,22 +98,21 @@ export default function DemandsList() {
           {
             text: 'Review',
             icon: <TbFileSearch />,
-            onClick: (id) => navigate(`/app/demands/${id}`),
+            onClick: (id) => navigate(`/app/applications/${id}`),
           },
           {
             text: 'Approve',
             icon: <FaRegCircleCheck />,
             onClick: (id) => approve(id),
-            hidden: (demand) => demand?.status !== 'Pending',
+            hidden: (application) => application?.status !== 'Pending',
           },
           {
             text: 'Reject',
             icon: <FaRegCircleXmark />,
             onClick: (id) => reject(id),
-            hidden: (demand) => demand?.status !== 'Pending',
+            hidden: (application) => application?.status !== 'Pending',
           },
         ],
-        filter: <Operations.Filter />,
       }}
     />
   );

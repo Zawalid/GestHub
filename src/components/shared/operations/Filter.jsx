@@ -3,7 +3,7 @@ import { Button, CheckBox, DropDown, ToolTip } from '@/components/ui';
 import { useOperations } from './useOperations';
 import { useTranslation } from 'react-i18next';
 
-const toggleChecked = (filter, value) => filter.map((f) => (f.value === value ? { ...f, checked: !f.checked } : f));
+export const toggleChecked = (filter, value) => filter.map((f) => (f.value === value ? { ...f, checked: !f.checked } : f));
 
 export function Filter({ className = '' }) {
   const { filters, onFilter, filterCondition, onChangeFilterCondition, appliedFiltersNumber, isLoading, error } =

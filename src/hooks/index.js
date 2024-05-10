@@ -8,7 +8,7 @@ export { useAnimatedProgress } from './useAnimatedProgress';
 export { useLocalStorageState } from './useLocalStorageState';
 export { useInterns } from '@/features/interns/useInterns';
 export { useAdmins } from '@/features/admins/useAdmins';
-export { useDemands } from '@/features/demands/useDemands';
+export { useApplications } from '@/features/applications/useApplications';
 export { useSupervisors } from '@/features/supervisors/useSupervisors';
 export { useProjects } from '@/features/projects/useProjects';
 export { useOffers } from '@/features/offers/useOffers';

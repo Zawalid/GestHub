@@ -1,15 +1,15 @@
-import { Modal, Status } from '../ui';
-import { useUserDemands } from '@/features/demands/useDemands';
+import { Modal, Status } from '../../components/ui';
+import { useUserApplications } from '@/features/applications/useApplications';
 import { BsClipboard2Check, MdOutlinePendingActions } from '@/components/ui/Icons';
-import { Operations } from '../shared/operations/Operations';
-import { useOperations } from '../shared/operations/useOperations';
+import { Operations } from '../../components/shared/operations/Operations';
+import { useOperations } from '../../components/shared/operations/useOperations';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { formatDate } from '@/utils/helpers';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
 export default function Applications() {
   const navigate = useNavigateWithQuery();
-  const { demands, isLoading, error } = useUserDemands();
+  const { applications, isLoading, error } = useUserApplications();
 
 
   return (
@@ -21,7 +21,7 @@ export default function Applications() {
     >
       <h1 className='mb-5 text-lg font-bold text-text-primary'>My Applications</h1>
       <Operations
-        data={demands}
+        data={applications}
         isLoading={isLoading}
         error={error}
         sortOptions={[
@@ -35,18 +35,18 @@ export default function Applications() {
             { value: 'Pending', checked: false },
             { value: 'Approved', checked: false },
           ],
-          sector: [...new Set(demands?.map((demand) => demand.sector))].map((s) => ({ value: s, checked: false })),
+          sector: [...new Set(applications?.map((application) => application.sector))].map((s) => ({ value: s, checked: false })),
         }}
         fieldsToSearch={['offer', 'sector']}
       >
-        <ApplicationsList demands={demands} />
+        <ApplicationsList applications={applications} />
       </Operations>
     </Modal>
   );
 }
 
 function ApplicationsList() {
-  const { data: demands, isLoading, error, query, appliedFiltersNumber } = useOperations();
+  const { data: applications, isLoading, error, query, appliedFiltersNumber } = useOperations();
   const [parent] = useAutoAnimate({ duration: 400 });
 
   const render = () => {
@@ -60,7 +60,7 @@ function ApplicationsList() {
       );
     }
     if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
-    if (demands?.length === 0 && !query && !appliedFiltersNumber) {
+    if (applications?.length === 0 && !query && !appliedFiltersNumber) {
       return (
         <div className='absolute grid h-full w-full place-content-center place-items-center gap-5'>
           <img src='/SVG/no-applications.svg' alt='' className='w-[140px]' />
@@ -71,7 +71,7 @@ function ApplicationsList() {
         </div>
       );
     }
-    if (demands?.length === 0 && (query || appliedFiltersNumber)) {
+    if (applications?.length === 0 && (query || appliedFiltersNumber)) {
       return (
         <Status
           status='noResults'
@@ -82,8 +82,8 @@ function ApplicationsList() {
     }
     return (
       <div className='space-y-3 pr-2' ref={parent}>
-        {demands?.map((d) => (
-          <Application key={d.id} demand={d} />
+        {applications?.map((d) => (
+          <Application key={d.id} application={d} />
         ))}
       </div>
     );
@@ -106,7 +106,7 @@ function ApplicationsList() {
   );
 }
 
-function Application({ demand: { id, offer, sector, status, created_at } }) {
+function Application({ application: { id, offer, sector, status, created_at } }) {
   const navigate = useNavigateWithQuery();
 
   return (

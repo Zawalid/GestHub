@@ -17,7 +17,8 @@ export const axiosFetch = async (resource, method, data) => {
       e.request.responseURL.includes('login') ||
       e.request.responseURL.includes('register') ||
       e.request.responseURL.includes('logout') ||
-      e.request.responseURL.includes('password')
+      e.request.responseURL.includes('password') ||
+      e.request.responseURL.includes('profiles')
     ) {
       throw Error(e.response.data.message);
     }

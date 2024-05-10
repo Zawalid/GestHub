@@ -723,7 +723,7 @@
       "publicationDate": "2024-04-22"
     }
   ],
-  "demands": [
+  "applications": [
     {
       "id": "1",
       "offer_id": "",
@@ -731,7 +731,7 @@
       "startDate": "",
       "endDate": "",
       "cv": "",
-      "internshipDemand": ""
+      "internshipApplication": ""
     }
   ]
 }

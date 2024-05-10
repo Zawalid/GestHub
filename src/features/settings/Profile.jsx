@@ -66,7 +66,7 @@ export default function Profile() {
     onSubmit: (user) => {
       if (dirtyFields['avatar']) updateAvatar({ id: profile_id, file: user.avatar.file });
       if (Object.keys(dirtyFields).length === 1 && Object.keys(dirtyFields)[0] === 'avatar') return;
-      mutate({ user, id: profile_id });
+      mutate({ user : dirtyFields, id: profile_id },{onError : reset});
     },
     gridLayout: true,
   });

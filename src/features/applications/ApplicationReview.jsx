@@ -3,16 +3,16 @@ import { useParams } from 'react-router-dom';
 import { Button, Modal, Status } from '@/components/ui';
 import { useForm } from '@/hooks/useForm';
 import { FaRegCircleCheck, FaRegCircleXmark, IoEyeOutline } from '@/components/ui/Icons';
-import { useApproveDemand, useDemand, useRejectDemand } from './useDemands';
+import { useApproveApplication, useApplication, useRejectApplication } from './useApplications';
 import { FileView } from '@/components/ui/FileView';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
-export default function DemandReview({ source }) {
+export default function ApplicationReview({ source }) {
   const { id } = useParams();
-  const { demand, isLoading, error } = useDemand(id);
+  const { application, isLoading, error } = useApplication(id);
   const [currentFile, setCurrentFile] = useState(null);
-  const { approve } = useApproveDemand();
-  const { reject } = useRejectDemand();
+  const { approve } = useApproveApplication();
+  const { reject } = useRejectApplication();
   const navigate = useNavigateWithQuery();
 
   const path = location.pathname;
@@ -76,11 +76,11 @@ export default function DemandReview({ source }) {
   });
 
   useEffect(() => {
-    updateValues(demand);
+    updateValues(application);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [demand?.id]);
+  }, [application?.id]);
 
-  const close = () => navigate(source === 'app' ? '/app/demands' : '/applications');
+  const close = () => navigate(source === 'app' ? '/app/applications' : '/applications');
 
   const render = () => {
     if (isLoading) return <Status status='loading' />;
@@ -95,13 +95,13 @@ export default function DemandReview({ source }) {
     }
     return (
       <>
-        {demand?.status === 'Approved' && (
+        {application?.status === 'Approved' && (
           <div className='mb-5 flex w-fit items-center gap-2 rounded-lg bg-green-600 px-3 py-1'>
             <FaRegCircleCheck />
             <h2 className='text-sm font-medium'>Approved</h2>
           </div>
         )}
-        {demand?.status === 'Refused' && (
+        {application?.status === 'Refused' && (
           <div className='mb-5 flex w-fit items-center gap-2 rounded-lg bg-red-600 px-3 py-1'>
             <FaRegCircleXmark />
             <h2 className='text-sm font-medium'>Refused</h2>
@@ -117,15 +117,15 @@ export default function DemandReview({ source }) {
           {formInputs['motivationLetter']}
           <div className='grid-cols- grid gap-1.5'>
             <label className='text-sm font-medium text-text-tertiary'>Papers</label>
-            <File type='CV' file={demand?.cv} onOpen={() => setCurrentFile(demand.cv)} />
+            <File type='CV' file={application?.cv} onOpen={() => setCurrentFile(application.cv)} />
             <File
               type='Internship Application'
-              file={demand?.demandeStage}
-              onOpen={() => setCurrentFile(demand.demandeStage)}
+              file={application?.demandeStage}
+              onOpen={() => setCurrentFile(application.demandeStage)}
             />
           </div>
         </div>
-        {demand?.status === 'Pending' && source === 'app' && (
+        {application?.status === 'Pending' && source === 'app' && (
           <div className='mt-5 grid grid-cols-2 gap-4'>
             <Button
               color='delete'
@@ -153,7 +153,7 @@ export default function DemandReview({ source }) {
   return (
     <>
       <Modal
-        isOpen={(path.includes('/demands') || path.includes('/applications')) && id}
+        isOpen={(path.includes('/applications') || path.includes('/applications')) && id}
         className='relative min-h-[400px] overflow-auto p-5 sm:h-fit md:max-h-[600px] md:w-[650px] md:border'
         closeOnBlur={true}
         closeButton={false}

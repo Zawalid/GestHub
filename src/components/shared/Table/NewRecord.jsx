@@ -3,16 +3,18 @@ import { Button } from '@/components/ui';
 import { useTable } from '.';
 
 export function NewRecord({ onAdd, component }) {
-  const { showForm, isLoading, resourceName, formOptions } = useTable();
+  const { showForm, isLoading, resourceName, formOptions,formFields } = useTable();
 
   if (component)
     return component(() =>
       showForm({
         isOpen: true,
         onSubmit: onAdd,
+        fields: formFields,
         defaultValues: formOptions.defaultValues,
         heading: `New ${resourceName}`,
         submitButtonText: `Add ${resourceName}`,
+        type : 'create'
       })
     );
   return (

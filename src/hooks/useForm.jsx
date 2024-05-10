@@ -1,8 +1,9 @@
+/* eslint-disable react-refresh/only-export-components */
 import { InputField } from '@/components/ui';
 import { PasswordInput } from '@/components/ui/PasswordInput';
 import { RULES } from '@/utils/constants';
 import { objectDeepEquals } from '@/utils/helpers';
-import { cloneElement, useCallback, useEffect, useMemo, useState } from 'react';
+import { cloneElement, isValidElement, useCallback, useEffect, useMemo, useState } from 'react';
 
 const getError = (value, rules, getValue) => {
   if (!rules) return null;
@@ -108,36 +109,11 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
         (typeof [defaultValues[key]] === 'object' && !objectDeepEquals(values[key], defaultValues[key])) ||
         (typeof [defaultValues[key]] !== 'object' && values[key] !== defaultValues[key])
       ) {
-        dirty[key] = true;
+        dirty[key] = values[key];
       }
     });
     return dirty;
   }, [values, defaultValues]);
-  // Form Inputs
-  const formInputs = useMemo(() => {
-    const inputs = {};
-    fields
-      .filter((field) => !field.hidden)
-      .forEach((field) => {
-        const { name, type, placeholder, label, rules } = field;
-
-        inputs[name] = (
-          <Input
-            placeholder={placeholder || label}
-            value={values?.[name] || ''}
-            onChange={(e) => {
-              validate(name, e.target.value, getRules(name, label, type, rules));
-              setValue(name, e.target.value);
-            }}
-            errorMessage={errors?.[name]?.message}
-            type={type || 'text'}
-            {...field}
-          />
-        );
-      });
-    return inputs;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fields, errors, values]);
 
   // Validate fields
   const validate = (name, value, rules) => {
@@ -199,6 +175,34 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
     return () => window.removeEventListener('keydown', onEnter);
   }, [handleSubmit, submitOnEnter, isValid]);
 
+  // Form Inputs
+  const formInputs = useMemo(() => {
+    const inputs = {};
+    fields
+      .filter((field) => !field.hidden)
+      .forEach((field) => {
+        const { name, type, placeholder, label, rules, customComponent } = field;
+
+        inputs[name] = customComponent ? (
+          <Custom Component={customComponent} {...{ field, setValue, getValue }} />
+        ) : (
+          <Input
+            placeholder={placeholder || label}
+            value={values?.[name] || ''}
+            onChange={(e) => {
+              validate(name, e.target.value, getRules(name, label, type, rules));
+              setValue(name, e.target.value);
+            }}
+            errorMessage={errors?.[name]?.message}
+            type={type || 'text'}
+            {...field}
+          />
+        );
+      });
+    return inputs;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fields, errors, values]);
+
   return {
     Form: (
       <form
@@ -230,6 +234,8 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
   };
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 const Input = ({ type, name, ...props }) =>
   type === 'password' ? <PasswordInput {...props} /> : <InputField {...props} name={name} type={type} />;
+
+const Custom = ({ Component, ...props }) =>
+  isValidElement(Component) ? cloneElement(Component, props) : Component(props);

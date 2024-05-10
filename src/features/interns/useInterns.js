@@ -88,7 +88,6 @@ export const useUpdateIntern = () =>
     mutationFn: ({ id, data }) => updateIntern(id, data),
     loadingMessage: 'Updating intern...',
     successMessage: 'Intern updated successfully',
-    errorMessage: 'Failed to update intern',
   });
 
 export const useDeleteIntern = () =>

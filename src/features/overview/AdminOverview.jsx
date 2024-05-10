@@ -6,7 +6,7 @@ import { IoPeople, LuClipboardList, MdOutlinePendingActions } from '@/components
 import { Button, Modal, Status } from '@/components/ui';
 import { getTimelineDates } from '@/utils/helpers';
 import { useGenerateAttestation, useGenerateAttestations } from '../interns/useInterns';
-import { useAdmins, useDemands, useOffers, useSupervisors, useInterns } from '@/hooks/index';
+import { useAdmins, useApplications, useOffers, useSupervisors, useInterns } from '@/hooks/index';
 import { useNavigate } from 'react-router-dom';
 import { Stat } from './Stat';
 
@@ -20,7 +20,7 @@ export default function AdminOverview() {
 }
 
 function Stats() {
-  const { demands, isLoading: isDemandsLoading } = useDemands();
+  const { applications, isLoading: isApplicationsLoading } = useApplications();
   const { interns, isLoading: isInternsLoading } = useInterns();
   const { supervisors, isLoading: isSupervisorsLoading } = useSupervisors();
   const { admins, isLoading: isAdminsLoading } = useAdmins();
@@ -28,14 +28,14 @@ function Stats() {
 
   const stats = [
     {
-      label: { value: 'Total Demands' },
-      value: { value: demands?.length },
+      label: { value: 'Total Applications' },
+      value: { value: applications?.length },
       icon: { icon: <LuClipboardList /> },
       className: 'bg-primary p-3 shadow-md',
     },
     {
-      label: { value: 'Pending Demands' },
-      value: { value: demands?.filter((p) => p.status === 'Pending').length },
+      label: { value: 'Pending Applications' },
+      value: { value: applications?.filter((p) => p.status === 'Pending').length },
       icon: { icon: <MdOutlinePendingActions /> },
       className: 'bg-orange-500 p-3 shadow-md dark:bg-orange-600',
     },
@@ -44,16 +44,16 @@ function Stats() {
   return (
     <div className='flex flex-col gap-5 mobile:grid mobile:grid-cols-2 md:grid-cols-4 md:grid-rows-[repeat(3,auto)]'>
       {stats.map((stat, index) => (
-        <Stat key={index} isLoading={isDemandsLoading} {...stat} />
+        <Stat key={index} isLoading={isApplicationsLoading} {...stat} />
       ))}
 
       <PieChartStats
         data={[
-          { name: 'Pending', value: demands?.filter((p) => p.status === 'Pending').length },
-          { name: 'Approved', value: demands?.filter((p) => p.status === 'Approved').length },
-          { name: 'Rejected', value: demands?.filter((p) => p.status === 'Rejected').length },
+          { name: 'Pending', value: applications?.filter((p) => p.status === 'Pending').length },
+          { name: 'Approved', value: applications?.filter((p) => p.status === 'Approved').length },
+          { name: 'Rejected', value: applications?.filter((p) => p.status === 'Rejected').length },
         ]}
-        title='Demands Status'
+        title='Applications Status'
         legend={[
           { text: 'Pending', color: 'bg-orange-500' },
           { text: 'Approved', color: 'bg-green-600' },
@@ -61,7 +61,8 @@ function Stats() {
         ]}
         COLORS={['#f97316', '#16a34a', '#ef4444']}
         className='col-span-2 row-span-3 min-h-[350px]'
-        isLoading={isDemandsLoading}
+        isLoading={isApplicationsLoading}
+        active={0}
       />
 
       <div className='col-span-2 flex items-start justify-between rounded-lg border border-border bg-background-secondary p-3 shadow-md'>
@@ -194,13 +195,13 @@ function OffersAnalytics() {
   const { offers, isLoading } = useOffers();
 
   const latestOffers = offers
-    ?.filter((offer) => offer.demands?.length > 0)
+    ?.filter((offer) => offer.applications?.length > 0)
     .toSorted((a, b) => new Date(b?.publicationDate) - new Date(a?.publicationDate))
     .slice(0, 7);
 
   const data = latestOffers?.map((offer) => {
-    const rejected = offer?.demands.filter((demand) => demand.status === 'Rejected');
-    const approved = offer?.demands.filter((demand) => demand.status === 'Approved');
+    const rejected = offer?.applications.filter((application) => application.status === 'Rejected');
+    const approved = offer?.applications.filter((application) => application.status === 'Approved');
     return {
       name: `${offer?.title.slice(0, 8)}${offer?.title.slice(8).length ? '...' : ''}`,
       fullName: offer?.title,

@@ -17,16 +17,18 @@ export default function AppBar() {
 function UserInfo() {
   const { user } = useUser();
 
+  const { firstName, lastName, avatar, role, gender } = user || {};
+
   return (
     <div className='flex items-center gap-3'>
       <img
         className='h-8 w-8 rounded-full border-2 border-border object-cover text-center text-xs text-text-tertiary '
-        src={user?.avatar.src || '/images/default-profile.jpg'}
+        src={avatar.src || '/images/default-profile.jpg'}
         alt='profile image'
       />
       <div>
-        <h3 className='text-sm font-medium text-text-primary capitalize'>{`${user?.firstName} ${user?.lastName}`}</h3>
-        <h4 className='text-xs capitalize text-text-tertiary'>{user?.role?.replace('-',' ')}</h4>
+        <h3 className='text-sm font-medium capitalize text-text-primary'>{`${gender ? gender + '.' : ''}${firstName} ${lastName}`}</h3>
+        <h4 className='text-xs capitalize text-text-tertiary'>{role?.replace('-', ' ')}</h4>
       </div>
     </div>
   );

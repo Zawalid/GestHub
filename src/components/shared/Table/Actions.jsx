@@ -10,7 +10,7 @@ import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
 export function Actions({ onUpdate, onDelete, row, actions }) {
-  const { showForm, confirmOptions, resourceName, rows, onPrevPage } = useTable();
+  const { showForm, confirmOptions, resourceName, rows, onPrevPage, formOptions } = useTable();
   const navigate = useNavigateWithQuery();
   const { openModal } = useConfirmationModal();
 
@@ -26,6 +26,9 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
       icon: <MdDriveFileRenameOutline />,
       onClick: () =>
         showForm({
+          fields: formOptions.fields.map((field) =>
+            field.name.includes('password') ? { ...field, rules: { ...field.rules , required: false } } : field
+          ),
           defaultValues: row,
           onSubmit: (data) => onUpdate({ id: row.profile_id, data }),
           isOpen: true,
@@ -36,6 +39,7 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
               {row.id}
             </>
           ),
+          type : 'update'
         }),
     },
   ];

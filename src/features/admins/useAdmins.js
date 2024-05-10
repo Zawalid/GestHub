@@ -49,7 +49,6 @@ export const useUpdateAdmin = () =>
     mutationFn: ({ id, data }) => updateAdmin(id, data),
     loadingMessage: 'Updating admin...',
     successMessage: 'Admin updated successfully',
-    errorMessage: 'Failed to update admin',
   });
 
 export const useDeleteAdmin = () =>
