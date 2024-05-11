@@ -57,6 +57,27 @@ const button = tv({
   ],
 });
 
+/**
+ * Button component.
+ *
+ * @component
+ *
+ * @param {Object} props - Props that get passed to the Button component.
+ * @param {React.ReactNode} props.children - The content of the button.
+ * @param {boolean} [props.isLoading=false] - If true, a loading spinner is displayed in the button.
+ * @param {boolean} [props.disabled=false] - If true, the button is disabled.
+ * @param {function} [props.onClick] - The function to call when the button is clicked.
+ * @param {string} [props.className] - Additional CSS classes to apply to the button.
+ * @param {string} [props.type] - The type of the button. This can be 'outline' or 'transparent'.
+ * @param {string} [props.size='default'] - The size of the button. This can be 'small', 'default', or 'large'.
+ * @param {string} [props.color='primary'] - The color of the button. This can be 'primary', 'secondary', 'tertiary', or 'delete'.
+ * @param {string} [props.state] - The state of the button. This can be 'disabled' or 'active'.
+ * @param {string} [props.display='centered'] - The display of the button. This can be 'with-icon' or 'centered'.
+ * @param {string} [props.shape] - The shape of the button. This can be 'icon'.
+ * @param {React.LegacyRef<HTMLButtonElement>} ref - A ref that gets passed to the button element.
+ *
+ * @returns {React.ElementType} Returns a button element with the Button.
+ */
 export const Button = forwardRef(
   ({ children, isLoading, disabled, onClick, className, type, size, color, state, display, shape, ...props }, ref) => {
     return (

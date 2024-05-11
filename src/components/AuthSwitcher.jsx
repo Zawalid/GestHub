@@ -7,6 +7,7 @@ import { useLogout } from '@/hooks/useUser';
 import { FiLogOut } from 'react-icons/fi';
 import { RxDashboard } from 'react-icons/rx';
 import { LuClipboardList } from 'react-icons/lu';
+import Avatar from './ui/Avatar';
 
 export function AuthSwitcher({ size }) {
   const { pathname } = useLocation();
@@ -41,24 +42,14 @@ function User({ user }) {
 
   return (
     <DropDown
-      toggler={
-        <img
-          className='h-8 w-8 rounded-full border-2 border-border object-cover text-center text-xs text-text-tertiary '
-          src={user?.avatar?.src || '/images/default-profile.jpg'}
-          alt='profile image'
-        />
-      }
+      toggler={<Avatar />}
       options={{
         className: 'min-w-[200px]',
       }}
     >
       <DropDown.Title>
         <div className='flex gap-3 py-2'>
-          <img
-            className='h-8 w-8 rounded-full border-2 border-border object-cover text-center text-xs text-text-tertiary '
-            src={user?.avatar?.src || '/images/default-profile.jpg'}
-            alt='profile image'
-          />
+          <Avatar />
           <div className='grid'>
             <span className=''>{`${user?.firstName} ${user?.lastName}`}</span>
             <span className='text-xs font-medium text-text-secondary'>{user?.email}</span>

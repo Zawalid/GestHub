@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui';
+import Avatar from '@/components/ui/Avatar';
 import { useUploadFile } from '@/hooks/useUploadFile';
 
 export function ProfileAvatar({ avatar, onChange, disabled, name = 'Image' }) {
@@ -6,14 +7,15 @@ export function ProfileAvatar({ avatar, onChange, disabled, name = 'Image' }) {
 
   return (
     <div className='grid grid-cols-[7rem_auto] items-center gap-5'>
-      <img
+      {/* <img
         className={`h-28 w-28  border border-border text-center text-xs text-text-tertiary ${
           name === 'Image' ? 'rounded-full object-cover' : 'rounded-lg object-contain'
         }`}
         src={avatar?.src || (name === 'Image' ? '/images/default-profile.jpg' : '/SVG/logo.svg')}
         // src={avatar || "/images/default-profile.jpg"}
         alt={name}
-      />
+      /> */}
+      <Avatar className='h-28 w-28' custom={{ avatar: avatar?.src }} alt={name} />
       <div>
         <div className='flex w-fit flex-wrap gap-x-5 gap-y-2'>
           <Button

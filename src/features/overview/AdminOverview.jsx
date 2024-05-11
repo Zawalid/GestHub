@@ -62,7 +62,6 @@ function Stats() {
         COLORS={['#f97316', '#16a34a', '#ef4444']}
         className='col-span-2 row-span-3 min-h-[350px]'
         isLoading={isApplicationsLoading}
-        active={0}
       />
 
       <div className='col-span-2 flex items-start justify-between rounded-lg border border-border bg-background-secondary p-3 shadow-md'>
@@ -108,7 +107,8 @@ function CompletedInternships() {
   const completedInternships = interns
     ?.filter((intern) => {
       const { isOverdue } = getTimelineDates(intern.startDate, intern.endDate);
-      return isOverdue && !intern.attestation;
+      return isOverdue 
+      && !intern.attestation;
     })
     .toSorted((a, b) => new Date(a?.startDate) - new Date(b?.startDate));
 

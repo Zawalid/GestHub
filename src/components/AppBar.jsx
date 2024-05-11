@@ -1,6 +1,7 @@
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { ThemeSwitcher } from './ThemeSwitcher';
 import { useUser } from '@/hooks/useUser';
+import Avatar from './ui/Avatar';
 
 export default function AppBar() {
   return (
@@ -16,18 +17,13 @@ export default function AppBar() {
 
 function UserInfo() {
   const { user } = useUser();
-
-  const { firstName, lastName, avatar, role, gender } = user || {};
+  const { firstName, lastName, role } = user || {};
 
   return (
     <div className='flex items-center gap-3'>
-      <img
-        className='h-8 w-8 rounded-full border-2 border-border object-cover text-center text-xs text-text-tertiary '
-        src={avatar.src || '/images/default-profile.jpg'}
-        alt='profile image'
-      />
+      <Avatar />
       <div>
-        <h3 className='text-sm font-medium capitalize text-text-primary'>{`${gender ? gender + '.' : ''}${firstName} ${lastName}`}</h3>
+        <h3 className='text-sm font-medium capitalize text-text-primary'>{`${firstName} ${lastName}`}</h3>
         <h4 className='text-xs capitalize text-text-tertiary'>{role?.replace('-', ' ')}</h4>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { getProgress } from '@/utils/helpers';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Cell, Pie, PieChart, ResponsiveContainer, Sector } from 'recharts';
 
 const renderActiveShape = (props) => {
@@ -49,7 +49,7 @@ const renderActiveShape = (props) => {
             y={ey}
             textAnchor={textAnchor}
             fill='var(--text-primary)'
-            className='font-semibold text-sm'
+            className='text-sm font-semibold'
           >
             {value}
           </text>
@@ -69,14 +69,17 @@ const renderActiveShape = (props) => {
   );
 };
 
-export default function PieChartStats({ data, title, legend, COLORS, className = '', isLoading,active }) {
-  const [activeIndex, setActiveIndex] = useState(active);
-
+export default function PieChartStats({ data, title, legend, COLORS, className = '', isLoading }) {
+  const [activeIndex, setActiveIndex] = useState(0);
   const loadingData = [
     { name: 'Loading...', value: 20 },
     { name: 'Loading...', value: 55 },
     { name: 'Loading...', value: 25 },
   ];
+
+  useEffect(() => {
+    setActiveIndex(data[0].value > 0 ? 0 : data.findIndex((e) => e.value > 0))
+  },[data])
 
   return (
     <div className={`flex flex-col gap-5 rounded-lg border border-border p-3 shadow-md ${className}`}>

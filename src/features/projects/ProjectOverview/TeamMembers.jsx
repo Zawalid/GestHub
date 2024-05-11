@@ -16,6 +16,7 @@ import { useConfirmationModal } from '@/hooks';
 import { useUser } from '@/hooks/useUser';
 import { useInternsByIds } from '@/features/interns/useInterns';
 import { getProgress } from '@/utils/helpers';
+import Avatar from '@/components/ui/Avatar';
 
 export function TeamMembers({ project }) {
   const [isOpen, setIsOpen] = useState();
@@ -90,7 +91,7 @@ function Member({ member, project }) {
   const { user } = useUser();
 
   const { id: projectId, tasks, teamMembers, projectManager } = project || {};
-  const { id, avatar, fullName,email } = member;
+  const { id, avatar, fullName, email, gender } = member;
 
   const assignedTasks = tasks.filter((task) => task.assignee?.id === id);
   const doneTasks = assignedTasks.filter((task) => task.status === 'Done');
@@ -139,14 +140,10 @@ function Member({ member, project }) {
         ${id === projectManager ? 'scale-100' : 'scale-0'}
         `}
         />
-        <img
-          src={avatar || '/images/default-profile.jpg'}
-          alt='avatar'
-          className='mx-auto h-16 w-16 rounded-full border border-border object-cover shadow-md'
-        />
-        <div className="my-3">
-        <h3 className='text-lg font-semibold text-text-primary'>{fullName}</h3>
-        <p className='text-xs font-medium text-text-primary'>{email}</p>
+        <Avatar custom={{ avatar, gender }} className='mx-auto h-16 w-16' />
+        <div className='my-3'>
+          <h3 className='text-lg font-semibold text-text-primary'>{fullName}</h3>
+          <p className='text-xs font-medium text-text-primary'>{email}</p>
         </div>
         <p className='text-sm font-medium text-text-secondary'>
           {id === projectManager ? 'Project Manager' : 'Team Member'}
@@ -162,7 +159,6 @@ function Member({ member, project }) {
           <span className='text-xs font-medium '>{getProgress(doneTasks.length / assignedTasks.length)}%</span>
         </div>
       </div>
-      
     </div>
   );
 }

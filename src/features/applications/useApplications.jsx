@@ -44,7 +44,7 @@ const getApplicationData = (application) => {
     updated_at,
     motivationLetter,
     cv: getFile(application?.owner, 'cv'),
-    demandeStage: getFile(application, 'demandeStage'),
+    applicationStage: getFile(application, 'applicationStage'),
   };
 };
 

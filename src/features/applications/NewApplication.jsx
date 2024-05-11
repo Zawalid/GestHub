@@ -130,7 +130,7 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
         endDate,
         motivationLetter,
         cv: CV?.file || null,
-        demandeStage: internshipApplication?.file || null,
+        applicationStage: internshipApplication?.file || null,
       };
       const formData = new FormData();
 

@@ -63,7 +63,7 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
           </div>
         )}
         <div
-          className={`absolute left-0 top-0 mb-5 flex h-[calc(100%-50px)] w-full flex-col p-5 pt-10 transition-transform duration-500 ${isEditing ? 'translate-y-[calc(100%+50px)] -z-10' : ''}`}
+          className={`absolute left-0 top-0 mb-5 flex h-[calc(100%-50px)] w-full flex-col p-5 pt-10 transition-transform duration-500 ${isEditing ? '-z-10 translate-y-[calc(100%+50px)]' : ''}`}
         >
           <div className='mb-3 flex items-center gap-2'>
             {status === 'Urgent' && (
@@ -179,7 +179,7 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
           {(user?.role === 'user' || !user) && (
             <Button
               disabled={isLoading || error || isAlreadyApplied(user, id)}
-              onClick={() => (user ? onApply() : navigate('/login'))}
+              onClick={() => (user ? onApply() : navigate('/login', { state: { source: `/offers/${id}` } }))}
             >
               {isAlreadyApplied(user, id) ? t('offers.alreadyApplied') : t('offers.apply')}
             </Button>

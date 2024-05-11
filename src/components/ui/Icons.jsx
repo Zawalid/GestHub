@@ -71,6 +71,8 @@ export {
   FaDiagramProject, 
   FaCalendarXmark , 
   FaListCheck,
+  FaFileContract ,
+  FaImagePortrait 
 } from 'react-icons/fa6';
 export { LuCalendarX, LuUser, LuUpload,LuClipboardList,LuListTodo,   } from 'react-icons/lu';
 export { LiaUserTieSolid,LiaClipboardListSolid  } from 'react-icons/lia';

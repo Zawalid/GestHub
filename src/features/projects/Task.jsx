@@ -2,6 +2,7 @@ import { BsCalendar4Event, IoTrashOutline, MdDriveFileRenameOutline } from '@/co
 import { PRIORITY_COLORS } from '@/utils/constants';
 import { formatDate } from '@/utils/helpers';
 import { ToolTip } from '@/components/ui/ToolTip';
+import Avatar from '@/components/ui/Avatar';
 
 export default function Task({ task, onDelete, onEdit, layout, canManipulateTasks, isCreatingProject }) {
   const { title, description, dueDate, priority, assignee } = task;
@@ -65,15 +66,13 @@ export default function Task({ task, onDelete, onEdit, layout, canManipulateTask
 }
 
 function Assignee({ assignee }) {
+  const { firstName, lastName, avatar } = assignee || {};
+
   return typeof assignee !== 'object' ? (
     <span className='text-xs font-medium text-text-secondary'>N/A</span>
   ) : (
-    <ToolTip content={<span>{assignee.fullName}</span>}>
-      <img
-        src={assignee.avatar || '/images/default-profile.jpg'}
-        alt={assignee.fullName}
-        className='h-7 w-7 rounded-full border-2 border-border'
-      />
+    <ToolTip content={<span>{`${firstName} ${lastName}`}</span>}>
+      <Avatar custom={{ avatar }} className='h-7 w-7' alt={`${firstName} ${lastName}`} />
     </ToolTip>
   );
 }

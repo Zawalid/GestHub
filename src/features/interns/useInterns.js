@@ -20,6 +20,7 @@ export const getAdditionalData = (data) => {
     fullName: `${data?.firstName} ${data?.lastName}`,
     avatar: getFile(data, 'avatar'),
     CV: getFile(data, 'CV'),
+    attestation : getFile(data, 'attestation'),
   };
 };
 
@@ -79,7 +80,6 @@ export const useAddIntern = () =>
     mutationFn: addIntern,
     loadingMessage: 'Adding intern...',
     successMessage: 'Intern added successfully',
-    errorMessage: 'Failed to add intern',
   });
 
 export const useUpdateIntern = () =>

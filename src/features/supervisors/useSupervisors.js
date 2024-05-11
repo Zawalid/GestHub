@@ -40,7 +40,6 @@ export const useAddSupervisor = () =>
     mutationFn: addSupervisor,
     loadingMessage: 'Adding supervisor...',
     successMessage: 'Supervisor added successfully',
-    errorMessage: 'Failed to add supervisor',
   });
 
 export const useUpdateSupervisor = () =>

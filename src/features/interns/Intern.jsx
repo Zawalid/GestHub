@@ -1,23 +1,34 @@
-import { Button, Modal, Status } from '@/components/ui';
-import {  useParams } from 'react-router-dom';
+import { Button, Modal, Status, ToolTip } from '@/components/ui';
+import { useParams } from 'react-router-dom';
 import { useIntern } from './useInterns';
-import { IoMailOutline, FiPhone, BsBuilding, IoSchool, BsListCheck, FaDiagramProject } from '@/components/ui/Icons';
+import {
+  IoMailOutline,
+  FiPhone,
+  BsBuilding,
+  IoSchool,
+  BsListCheck,
+  FaDiagramProject,
+  FaFileContract,
+  FaImagePortrait,
+} from '@/components/ui/Icons';
 import { formatDate, getTimelineDates } from '@/utils/helpers';
 import { useAnimatedProgress } from '@/hooks/useAnimatedProgress';
 import { useState } from 'react';
 import { FileView } from '@/components/ui/FileView';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
+import Avatar from '@/components/ui/Avatar';
 
 export default function Intern() {
   const { id } = useParams();
   const { intern, isLoading, error } = useIntern(id);
-  const [isCvOpen, setIsCvOpen] = useState(false);
+  const [openedFile, setOpenedFile] = useState(null);
   const navigate = useNavigateWithQuery();
   const {
     avatar,
     fullName,
     email,
     phone,
+    gender,
     academicLevel,
     establishment,
     startDate,
@@ -26,6 +37,7 @@ export default function Intern() {
     projects,
     tasks,
     CV,
+    attestation,
   } = intern;
   const { isOverdue } = getTimelineDates(startDate, endDate);
 
@@ -49,19 +61,29 @@ export default function Intern() {
         )}
         <div className='absolute left-0 top-0 h-[90px] w-full bg-background-secondary'></div>
         <div className='relative z-10 mt-5 flex items-center gap-5'>
-          <img
-            src={avatar || '/images/default-profile.jpg'}
-            alt='avatar'
-            className='h-24 w-24 rounded-full border border-border object-cover shadow-md'
-          />
+          <Avatar className='h-24 w-24' custom={{avatar ,gender}} />
           <div className='flex flex-1 items-center justify-between'>
             <div className=''>
               <h3 className='text-xl font-semibold text-text-primary'>{fullName}</h3>
               <p className='text-sm font-medium text-text-secondary'>{specialty || 'Not specified'}</p>
             </div>
-            <Button size='small' color='secondary' onClick={() => setIsCvOpen(true)} disabled={!CV}>
-              View CV
-            </Button>
+            <div className='flex gap-2'>
+              <ToolTip content={<span className='text-xs text-text-secondary'>View CV</span>}>
+                <Button shape='icon' color='secondary' onClick={() => setOpenedFile(CV)} disabled={!CV}>
+                  <FaImagePortrait />
+                </Button>
+              </ToolTip>
+              <ToolTip content={<span className='text-xs text-text-secondary'>View attestation</span>}>
+                <Button
+                  shape='icon'
+                  color='secondary'
+                  onClick={() => setOpenedFile(attestation)}
+                  disabled={!attestation}
+                >
+                  <FaFileContract />
+                </Button>
+              </ToolTip>
+            </div>
           </div>
         </div>
         <div className='mb-5 flex justify-between border-t border-border pt-3'>
@@ -126,13 +148,12 @@ export default function Intern() {
       <Modal
         isOpen={location.pathname.includes('/interns') && id}
         className='relative flex flex-col gap-3 p-5 sm:h-fit sm:min-h-[450px] sm:w-[450px] sm:border'
-        closeOnBlur={false}
         closeButton={true}
         onClose={() => navigate('/app/interns')}
       >
         {render()}
       </Modal>
-      <FileView isOpen={isCvOpen} onClose={() => setIsCvOpen(false)} file={CV} />
+      <FileView isOpen={openedFile} onClose={() => setOpenedFile(null)} file={openedFile} />
     </>
   );
 }

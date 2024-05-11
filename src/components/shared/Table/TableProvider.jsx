@@ -19,6 +19,26 @@ Array.prototype.paginate = function (page, limit) {
 
 export const TableContext = createContext();
 
+/**
+ * TableProvider component.
+ *
+ * @component
+ *
+ * @param {Object} props - Props that get passed to the TableProvider component.
+ * @param {React.ReactNode} props.children - The children nodes of the TableProvider component.
+ * @param {Array} props.data - The initial data for the TableProvider component.
+ * @param {string} props.resourceName - The name of the resource.
+ * @param {boolean} props.isLoading - If true, the TableProvider component is in a loading state.
+ * @param {Object} props.error - The error object, if any error occurred.
+ * @param {Array} props.columns - The columns for the table.
+ * @param {Array} props.formFields - The fields for the form.
+ * @param {Object} props.formDefaults - The default values for the form.
+ * @param {Array} props.fieldsToSearch - The fields to search the data in.
+ * @param {Object} props.downloadOptions - The options for downloading the data.
+ * @param {boolean} props.displayAllData - If true, all data is displayed.
+ *
+ * @returns {React.ElementType} Returns a TableContext.Provider component with the TableProvider component.
+ */
 export function TableProvider({
   children,
   data,

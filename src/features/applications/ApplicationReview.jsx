@@ -120,8 +120,8 @@ export default function ApplicationReview({ source }) {
             <File type='CV' file={application?.cv} onOpen={() => setCurrentFile(application.cv)} />
             <File
               type='Internship Application'
-              file={application?.demandeStage}
-              onOpen={() => setCurrentFile(application.demandeStage)}
+              file={application?.applicationStage}
+              onOpen={() => setCurrentFile(application.applicationStage)}
             />
           </div>
         </div>

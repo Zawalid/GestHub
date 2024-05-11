@@ -115,7 +115,7 @@ export const getRelativeTime = (date) => {
   if (seconds < 60) return `${seconds}s ago`;
 
   const minutes = get('minutes');
-  if (minutes < 60) return `${minutes}min ago`;
+  if (minutes < 60) return `${minutes} min ago`;
 
   const hours = get('hours');
   if (hours < 24) return `${hours}h ago`;
@@ -127,7 +127,7 @@ export const getRelativeTime = (date) => {
   if (weeks < 4) return `${weeks}w ago`;
 
   const months = get('months');
-  if (months < 12) return `${months}mo ago`;
+  if (months < 12) return `${months} mo ago`;
 
   const years = get('years');
   return `${years}y ago`;

@@ -40,7 +40,6 @@ export const useAddAdmin = () =>
     mutationFn: addAdmin,
     loadingMessage: 'Adding admin...',
     successMessage: 'Admin added successfully',
-    errorMessage: 'Failed to add admin',
   });
 
 export const useUpdateAdmin = () =>

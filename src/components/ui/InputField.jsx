@@ -82,6 +82,25 @@ function Icon({ icon, className = '' }) {
   );
 }
 
+/**
+ * InputField component.
+ *
+ * @component
+ *
+ * @param {Object} props - Props that get passed to the InputField component.
+ * @param {React.ReactNode} [props.children] - The children nodes of the InputField.
+ * @param {string} [props.type] - The type of the input field. This can be 'text', 'password', 'email', etc.
+ * @param {string} [props.className] - Additional CSS classes to apply to the input field.
+ * @param {string} [props.name] - The name of the input field.
+ * @param {string} [props.errorMessage] - The error message to display.
+ * @param {string} [props.label] - The label for the input field.
+ * @param {boolean} [props.showIcon=true] - If true, an icon is displayed in the input field.
+ * @param {string} [props.iconClassName] - Additional CSS classes to apply to the icon.
+ * @param {React.ReactNode} [props.customIcon] - A custom icon to display in the input field.
+ * @param {React.LegacyRef<HTMLInputElement | HTMLTextAreaElement>} ref - A ref that gets passed to the input or textarea element.
+ *
+ * @returns {React.ElementType} Returns a div element with the InputField.
+ */
 export const InputField = forwardRef(
   (
     { children, type, className, name, errorMessage, label, showIcon = true, iconClassName, customIcon, ...props },

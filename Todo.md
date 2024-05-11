@@ -43,6 +43,7 @@
 - [x] add gender prop
 - [x] use academic level as a dropdown
 - [ ] virtual lists for performance
+- [ ] create a component for date range only
 
 
  
@@ -63,4 +64,4 @@
 - [ ] Infinite scroll (projects/offers/notifications)
 - [ ] Emailing
 - [ ] More details about the error
-- [ ] Add a date picker and custom date interval
+- [ ] Add a custom date picker and  date interval

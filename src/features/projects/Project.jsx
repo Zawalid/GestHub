@@ -7,6 +7,7 @@ import { useUser } from '@/hooks/useUser';
 import { SiAdguard } from 'react-icons/si';
 import { Button } from '@/components/ui';
 import { useInternsByIds } from '../interns/useInterns';
+import Avatar from '@/components/ui/Avatar';
 
 export default function Project({ project, layout }) {
   const { id, subject, description, startDate, endDate, status, priority, teamMembers } = project;
@@ -94,36 +95,31 @@ function ProgressBar({ project }) {
   );
 }
 
-export function Members({ members, size = 'small' }) {
+function Members({ members }) {
   const { interns: teamMembers } = useInternsByIds(members);
   const [parent] = useAutoAnimate({ duration: 400 });
 
   if (!members.length)
     return <div className='grid h-full place-content-center text-xs font-medium text-text-secondary'>No Team</div>;
 
-  const sizes = {
-    small: 'w-7 h-7',
-    large: 'w-9 h-9',
-  };
-
   const wrapperWidth = members.length === 1 ? 36 : (members.slice(0, 3).length + (members.length > 3 ? 1 : 0)) * 25;
 
   return (
     <div className='relative h-7' style={{ width: `${wrapperWidth}px` }} ref={parent}>
-      {teamMembers?.slice(0, 3).map((member, i) => (
-        <ToolTip key={member.id || member} content={<span className='text-xs text-text-secondary'>{member.fullName}</span>}>
-          <img
-            src={member.avatar || '/images/default-profile.jpg'}
-            alt={member.fullName}
-            className={`absolute top-0 z-[1] ${sizes[size]} rounded-full border-2 border-border`}
-            style={{ left: `${i * (size === 'small' ? 15 : 20)}px` }}
+      {teamMembers?.slice(0, 3).map(({ id, fullName, avatar, gender }, i) => (
+        <ToolTip key={id || fullName} content={<span className='text-xs text-text-secondary'>{fullName}</span>}>
+          <Avatar
+            custom={{ avatar, gender }}
+            className='absolute top-0 z-[1] h-7 w-7'
+            style={{ left: `${i * 15}px` }}
+            alt={fullName}
           />
         </ToolTip>
       ))}
       {members.length > 3 && (
         <span
-          className={`absolute z-[1] grid ${sizes[size]} place-content-center rounded-full border border-border bg-background-secondary text-xs font-bold text-text-primary`}
-          style={{ left: `${members.slice(0, 3).length * (size === 'small' ? 15 : 20)}px` }}
+          className={`absolute z-[1] grid h-7 w-7 place-content-center rounded-full border border-border bg-background-secondary text-xs font-bold text-text-primary`}
+          style={{ left: `${members.slice(0, 3).length * 15}px` }}
           color='tertiary'
         >
           +{members.slice(3).length}

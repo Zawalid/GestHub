@@ -88,6 +88,25 @@ Array.prototype.search = function (query, fieldsToSearch) {
 
 export const OperationsContext = createContext();
 
+/**
+ * Operations component.
+ *
+ * @component
+ *
+ * @param {Object} props - Props that get passed to the Operations component.
+ * @param {React.ReactNode} props.children - The children nodes of the Operations component.
+ * @param {Array} props.data - The initial data for the Operations component.
+ * @param {boolean} props.isLoading - If true, the Operations component is in a loading state.
+ * @param {Object} props.error - The error object, if any error occurred.
+ * @param {Array} props.sortOptions - The options for sorting the data.
+ * @param {string} props.defaultSortBy - The default field to sort the data by.
+ * @param {string} props.defaultDirection - The default direction to sort the data in.
+ * @param {Object} props.filters - The initial filters for the Operations component.
+ * @param {string} props.defaultLayout - The default layout for the Operations component.
+ * @param {Array} props.fieldsToSearch - The fields to search the data in.
+ *
+ * @returns {React.ElementType} Returns a OperationsContext.Provider component with the Operations component.
+ */
 export function Operations({
   children,
   data: initialData,

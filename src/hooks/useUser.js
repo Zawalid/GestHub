@@ -1,18 +1,28 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { login, register, logout, getUser, updateProfile, updatePassword, updateAvatar, getSettings, updateSettings } from '@/services/usersAPI';
+import {
+  login,
+  register,
+  logout,
+  getUser,
+  updateProfile,
+  updatePassword,
+  updateAvatar,
+  getSettings,
+  updateSettings,
+} from '@/services/usersAPI';
 import { useMutate } from './useMutate';
 import { getFile } from '@/utils/helpers';
 import { useConfirmationModal } from './useConfirmationModal';
 
-const useRedirect = (isLogout) => {
+const useRedirect = () => {
   const navigate = useNavigate();
+  const source = useLocation().state?.source;
 
-  if (isLogout) return () => navigate('/');
-  return (message) => {
+  return (message, role) => {
     toast.success(message);
-    navigate('/app');
+    navigate(source ? source : role === 'user' ? '/' : '/app');
   };
 };
 
@@ -22,7 +32,7 @@ export function useLogin() {
   const { mutate, isPending, error } = useMutation({
     mutationKey: ['login'],
     mutationFn: ({ email, password }) => login(email, password),
-    onSuccess: () => redirect("Logged in successfully. You'll be redirected now."),
+    onSuccess: (data) => redirect("Logged in successfully. You'll be redirected now.", data?.data?.role),
     onError: (error) => toast.error(error.message),
   });
 
@@ -35,7 +45,7 @@ export function useRegister() {
   const { mutate, isPending, error } = useMutation({
     mutationKey: ['register'],
     mutationFn: (user) => register(user),
-    onSuccess: () => redirect("Registered in successfully. You'll be redirected now."),
+    onSuccess: (data) => redirect("Registered in successfully. You'll be redirected now.", data?.role),
     onError: (error) => toast.error(error.message),
   });
 
@@ -89,7 +99,6 @@ export function useSettings() {
     isLoading: isPending,
     error,
   };
-
 }
 
 export function useUpdateProfile() {

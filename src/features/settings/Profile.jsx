@@ -8,25 +8,27 @@ export default function Profile() {
   const { user } = useUser();
   const { mutate } = useUpdateProfile();
   const { mutate: updateAvatar, isPending } = useUpdateAvatar();
-  
+
   const { profile_id, role, avatar, firstName, lastName, email, phone, academicLevel, establishment } = user || {};
+
+  const defaultValues = {
+    avatar: avatar || { src: null, file: null },
+    firstName: firstName || '',
+    lastName: lastName || '',
+    email: email || '',
+    phone: phone || '',
+    // Conditionally : if the user is and intern/user
+    ...(['intern', 'user'].includes(role) && {
+      academicLevel: academicLevel || '',
+      establishment: establishment || '',
+    }),
+  };
 
   const {
     Form,
-    options: { isUpdated, isValid, dirtyFields, handleSubmit, reset, setValue, getValue },
+    options: { isUpdated, isValid, dirtyFields, handleSubmit, reset, setValue, getValue, updateValues },
   } = useForm({
-    defaultValues: {
-      avatar: avatar || { src: null, file: null },
-      firstName: firstName || '',
-      lastName: lastName || '',
-      email: email || '',
-      phone: phone || '',
-      // Conditionally : if the user is and intern/user
-      ...(['intern', 'user'].includes(role) && {
-        academicLevel: academicLevel || '',
-        establishment: establishment || '',
-      }),
-    },
+    defaultValues,
     fields: [
       {
         name: 'firstName',
@@ -66,7 +68,7 @@ export default function Profile() {
     onSubmit: (user) => {
       if (dirtyFields['avatar']) updateAvatar({ id: profile_id, file: user.avatar.file });
       if (Object.keys(dirtyFields).length === 1 && Object.keys(dirtyFields)[0] === 'avatar') return;
-      mutate({ user : dirtyFields, id: profile_id },{onError : reset});
+      mutate({ user: dirtyFields, id: profile_id }, { onError: () => reset(() => updateValues(defaultValues)) });
     },
     gridLayout: true,
   });

@@ -5,6 +5,7 @@ import { useInterns } from '../../interns/useInterns';
 import { useEffect, useState } from 'react';
 import { Radio } from '@/components/ui/Radio';
 import { RiCheckboxMultipleBlankLine } from 'react-icons/ri';
+import Avatar from '@/components/ui/Avatar';
 
 export const getSearchedInterns = (interns, query) => {
   return interns
@@ -153,22 +154,18 @@ export function AllInterns({ teamMembers, setTeamMembers, filter, selectedMember
   );
 }
 
-export function Intern({ intern, isProjectManager }) {
+export function Intern({ intern: { fullName, email, avatar, gender }, isProjectManager }) {
   return (
     <div className='flex items-center gap-2'>
-      <img
-        src={intern?.avatar || '/images/default-profile.jpg'}
-        alt={intern?.fullName}
-        className='h-8 w-8 rounded-full border border-border'
-      />
+      <Avatar custom={{ avatar, gender }} alt={fullName} />
       <div>
         <p className='mb-1 text-sm font-semibold text-text-primary'>
-          {intern.fullName}
+          {fullName}
           {isProjectManager && (
             <span className='ml-1 text-xs font-normal text-text-secondary'>( Project Manager )</span>
           )}
         </p>
-        <p className='text-xs font-medium text-text-secondary'>{intern?.email}</p>
+        <p className='text-xs font-medium text-text-secondary'>{email}</p>
       </div>
     </div>
   );

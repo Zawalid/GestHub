@@ -68,7 +68,7 @@ html.theme-transition {
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  @apply h-[2px] w-[5px];
+  @apply h-1 w-1;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -77,6 +77,9 @@ html.theme-transition {
 
 ::-webkit-scrollbar-track {
   @apply bg-border;
+}
+::-webkit-scrollbar-corner {
+ @apply bg-border
 }
 
 .no_scrollbar::-webkit-scrollbar {
