@@ -7,7 +7,7 @@ export function Applications() {
     <>
       <Heading>Applications</Heading>
       <ApplicationsList />
-      <ApplicationReview source='app' />
+      <ApplicationReview />
     </>
   );
 }

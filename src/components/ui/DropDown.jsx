@@ -30,7 +30,16 @@ const defaultOptions = {
  *
  * @returns {React.ElementType} Returns a Tippy component with the DropDown.
  */
-export function DropDown({ children, toggler, togglerClassName, togglerDisabled, options, onOpen, onClose }) {
+export function DropDown({
+  children,
+  toggler,
+  togglerClassName,
+  togglerDisabled,
+  options,
+  onOpen,
+  onClose,
+  setIsOpen,
+}) {
   const buttonProps = {
     onClick: (e) => e?.stopPropagation(),
     className: togglerClassName,
@@ -51,11 +60,15 @@ export function DropDown({ children, toggler, togglerClassName, togglerDisabled,
       arrow={false}
       placement={options?.placement || defaultOptions.placement}
       onShow={(instance) => {
+        setIsOpen?.(true);
         onOpen?.();
         (options?.shouldCloseOnClick ?? defaultOptions.shouldCloseOnClick) &&
           instance.popper.addEventListener('click', () => instance.hide());
       }}
-      onHidden={onClose}
+      onHidden={() => {
+        setIsOpen?.(false);
+        onClose?.();
+      }}
     >
       {['Button', 'Toggler'].includes(toggler.type.displayName) ? (
         cloneElement(toggler, buttonProps)
@@ -79,7 +92,10 @@ function Option({ children, onClick, className = '', isDeleteButton, size = '', 
         className,
         disabled && 'disabled'
       )}
-      onClick={() => disabled || onClick?.()}
+      onClick={(e) => {
+        e.stopPropagation();
+        disabled || onClick?.();
+      }}
       id={id}
     >
       {children}

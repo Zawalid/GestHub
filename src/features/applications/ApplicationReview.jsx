@@ -5,17 +5,17 @@ import { useForm } from '@/hooks/useForm';
 import { FaRegCircleCheck, FaRegCircleXmark, IoEyeOutline } from '@/components/ui/Icons';
 import { useApproveApplication, useApplication, useRejectApplication } from './useApplications';
 import { FileView } from '@/components/ui/FileView';
-import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
+import { useNavigateState, useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
-export default function ApplicationReview({ source }) {
+export default function ApplicationReview() {
   const { id } = useParams();
   const { application, isLoading, error } = useApplication(id);
   const [currentFile, setCurrentFile] = useState(null);
   const { approve } = useApproveApplication();
   const { reject } = useRejectApplication();
   const navigate = useNavigateWithQuery();
-
-  const path = location.pathname;
+  const source =
+    useNavigateState()?.source || (location.pathname.includes('/app/') ? '/app/applications' : '/applications');
 
   const {
     options: { formInputs, updateValues },
@@ -80,7 +80,7 @@ export default function ApplicationReview({ source }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [application?.id]);
 
-  const close = () => navigate(source === 'app' ? '/app/applications' : '/applications');
+  const close = () => navigate(source);
 
   const render = () => {
     if (isLoading) return <Status status='loading' />;
@@ -153,7 +153,7 @@ export default function ApplicationReview({ source }) {
   return (
     <>
       <Modal
-        isOpen={(path.includes('/applications') || path.includes('/applications')) && id}
+        isOpen={location.pathname.includes('/applications') && id}
         className='relative min-h-[400px] overflow-auto p-5 sm:h-fit md:max-h-[600px] md:w-[650px] md:border'
         closeOnBlur={true}
         closeButton={false}

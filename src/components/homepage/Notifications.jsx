@@ -5,26 +5,35 @@ import { useMarkAsRead, useUserApplications } from '@/features/applications/useA
 import { useUser } from '@/hooks/useUser';
 import { useNavigate } from 'react-router-dom';
 import { getRelativeTime } from '@/utils/helpers';
+import { useEffect, useMemo, useState } from 'react';
 
 export default function Notifications() {
   const { user } = useUser();
+  const [isOpen, setIsOpen] = useState();
   const { applications, isLoading } = useUserApplications();
+  const notifications = useMemo(() => {
+    return applications
+      ?.filter((d) => d.status === 'Approved')
+      .toSorted((a, b) => new Date(b?.updated_at) - new Date(a?.updated_at))
+      ?.map((d) => ({
+        id: d.id,
+        icon: <FaRegCircleCheck />,
+        title: 'Your internship application has been accepted',
+        subtitle: d.offer,
+        time: getRelativeTime(d.updated_at),
+        isRead: d.isRead,
+      }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [applications, isOpen]);
+  const [unreadNotifications, setUnreadNotifications] = useState(null);
+
   const { mutate } = useMarkAsRead();
   const navigate = useNavigate();
 
-  const notifications = applications
-    ?.filter((d) => d.status === 'Approved')
-    .toSorted((a, b) => new Date(b?.updated_at) - new Date(a?.updated_at))
-    ?.map((d) => ({
-      id: d.id,
-      icon: <FaRegCircleCheck />,
-      title: 'Your internship application has been accepted',
-      subtitle: d.offer,
-      time: getRelativeTime(d.updated_at),
-      isRead: d.isRead,
-    }));
-
-  const unread = notifications?.filter((n) => !n.isRead);
+  useEffect(() => {
+    if (unreadNotifications) return;
+    setUnreadNotifications(notifications?.filter((n) => !n.isRead).map((n) => n.id));
+  }, [unreadNotifications, notifications]);
 
   const render = () => {
     if (isLoading) {
@@ -44,10 +53,12 @@ export default function Notifications() {
     return notifications?.map((notification, index) => (
       <DropDown.Option
         key={index}
-        className={!notification.isRead ? 'bg-background-secondary' : 'hover:bg-background-disabled'}
+        className={
+          unreadNotifications?.includes(notification.id) ? 'bg-background-secondary' : 'hover:bg-background-disabled'
+        }
         onClick={() => {
-          !notification.isRead && mutate(notification.id);
-          navigate(`/applications/${notification.id}`);
+          unread(notification.id);
+          navigate(`/applications/${notification.id}`, { state: { source: window.location.pathname } });
         }}
       >
         <div className='grid h-11 w-11 place-content-center rounded-full bg-green-600 text-white sm:text-xl'>
@@ -62,6 +73,12 @@ export default function Notifications() {
     ));
   };
 
+  const unread = (id) => {
+    if (!unreadNotifications?.includes(id)) return;
+    setUnreadNotifications((prev) => prev.filter((n) => n !== id));
+    mutate(id);
+  };
+
   if (!user || user?.role !== 'user') return null;
 
   return (
@@ -71,10 +88,10 @@ export default function Notifications() {
           <IoNotificationsOutline />
           <span
             className={`absolute -right-2 -top-2 h-5 w-5 rounded-full bg-primary text-center text-xs font-bold leading-5 text-white transition-transform duration-300 ${
-              unread?.length > 0 ? 'scale-100' : 'scale-0'
+              unreadNotifications?.length > 0 ? 'scale-100' : 'scale-0'
             }`}
           >
-            {unread?.length}
+            {unreadNotifications?.length}
           </span>
         </Button>
       }
@@ -82,6 +99,7 @@ export default function Notifications() {
         className: 'mobile:min-w-[400px] max-h-max overflow-auto h-[400px]',
         shouldCloseOnClick: false,
       }}
+      setIsOpen={setIsOpen}
       togglerClassName='relative'
     >
       <DropDown.Title className='z-10 flex items-center justify-between py-2'>
@@ -89,7 +107,7 @@ export default function Notifications() {
         <button
           className='text-xs font-medium text-text-secondary transition-colors duration-300 hover:text-text-tertiary disabled:text-text-disabled'
           disabled={notifications?.every((n) => n.isRead)}
-          onClick={() => unread?.forEach(({ id }) => mutate(id))}
+          onClick={() => unreadNotifications?.forEach(({ id }) => unread(id))}
         >
           Mark all as read
         </button>

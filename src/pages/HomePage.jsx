@@ -27,7 +27,7 @@ export function HomePage() {
       {user?.role === 'user' && (
         <>
           <Applications />
-          <ApplicationReview source='home' />
+          <ApplicationReview />
         </>
       )}
     </>

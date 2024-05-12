@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 
 const defaultOptions = {
   type: 'Image',
-  accept: ['.png', '.jpg', '.jpeg','.PNG', '.JPG', '.JPEG'],
+  accept: ['.png', '.jpg', '.jpeg', '.svg'],
   readAs: 'DataURL',
   maxFiles: 1,
   maxFileSize: 5,
@@ -18,6 +18,7 @@ const defaultOptions = {
 };
 
 export function useUploadFile({ options = defaultOptions, onChange, onError }) {
+  const accept = (options.accept || defaultOptions.accept).map((type) => type.replace('.', ''));
   const { openFilePicker } = useFilePicker({
     accept: options.accept || defaultOptions.accept,
     readAs: options.readAs || defaultOptions.readAs,
@@ -25,7 +26,7 @@ export function useUploadFile({ options = defaultOptions, onChange, onError }) {
       new FileAmountLimitValidator({
         max: options.maxFiles || defaultOptions.maxFiles,
       }),
-      new FileTypeValidator((options.accept || defaultOptions.accept).map((type) => type.replace('.', ''))),
+      new FileTypeValidator([...accept, ...accept.map((type) => type.toUpperCase())]),
       new FileSizeValidator({
         maxFileSize: (options.maxFileSize || defaultOptions.maxFileSize) * 1024 * 1024 /* To MB */,
       }),

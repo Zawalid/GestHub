@@ -25,7 +25,7 @@ export function useVisibleOffers(latest) {
   const queryClient = useQueryClient();
 
   const getOffers = () => {
-    const offers = data?.map((offer) =>
+    const offers = (data || [])?.map((offer) =>
       favorites.includes(String(offer.id)) ? { ...offer, isFavorite: true } : offer
     );
 

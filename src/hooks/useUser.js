@@ -72,6 +72,16 @@ export function useLogout() {
   return { logout: logoutFn, isLoggingOut: isPending, error };
 }
 
+export const formatUserData = (data, includeCv, isUser) => {
+  const avatar = getFile(data, 'avatar');
+  return {
+    ...(data || {}),
+    fullName: `${data?.firstName} ${data?.lastName}`,
+    avatar: isUser ? { src: avatar, file: null } : avatar,
+    ...(includeCv && { cv: getFile(data, 'cv') }),
+  };
+};
+
 export function useUser() {
   const { data, error, isPending } = useQuery({
     queryKey: ['user'],
@@ -80,7 +90,7 @@ export function useUser() {
   });
 
   return {
-    user: data ? { ...data, avatar: { src: getFile(data, 'avatar'), file: null }, cv: getFile(data, 'cv') } : null,
+    user: data ? { ...formatUserData(data, true, true), cv: getFile(data, 'cv') } : null,
     isAuthenticated: Boolean(data),
     isLoading: isPending,
     error,

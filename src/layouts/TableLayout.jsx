@@ -7,7 +7,7 @@ const defaultOptions = {
   actions: null,
 };
 
-export function TableLayout({ onAdd, onUpdate, onDelete, layoutOptions = defaultOptions, ...tableProps }) {
+export function TableLayout({ onAdd, onUpdate, onDelete, canView,layoutOptions = defaultOptions, ...tableProps }) {
   const [parent] = useAutoAnimate({ duration: 300 });
   const { displayTableRecord, displayNewRecord, actions } = layoutOptions;
 
@@ -32,7 +32,7 @@ export function TableLayout({ onAdd, onUpdate, onDelete, layoutOptions = default
           className='relative flex flex-1 flex-col overflow-hidden rounded-lg border border-border shadow-md'
           ref={parent}
         >
-          <Table.Table actions={<Table.Actions onUpdate={onUpdate} onDelete={onDelete} actions={actions} />} />
+          <Table.Table canView={canView} actions={<Table.Actions onUpdate={onUpdate} onDelete={onDelete} actions={actions} />} />
           {(displayTableRecord ) && <Table.TableRecord />}
           <Table.Pagination />
         </div>

@@ -18,16 +18,11 @@ export default function SupervisorsList() {
       columns={[
         { key: 'id', displayLabel: 'ID', visible: true, type: 'number' },
         {
-          key: 'firstName',
-          displayLabel: 'First Name',
+          key: 'fullName',
+          displayLabel: 'Full Name',
           visible: true,
           type: 'string',
-        },
-        {
-          key: 'lastName',
-          displayLabel: 'Last Name',
-          visible: true,
-          type: 'string',
+          format: (val, id) => `${supervisors?.find((i) => i.id === id)?.gender || 'M'}. ${val}`,
         },
         {
           key: 'email',
@@ -87,6 +82,7 @@ export default function SupervisorsList() {
         password_confirmation: '',
       }}
       fieldsToSearch={['firstName', 'lastName', 'email']}
+      canView={false}
       downloadOptions={{
         csvFileName: 'Supervisors',
         pdfFileName: 'Supervisors',

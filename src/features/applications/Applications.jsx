@@ -11,10 +11,9 @@ export default function Applications() {
   const navigate = useNavigateWithQuery();
   const { applications, isLoading, error } = useUserApplications();
 
-
   return (
     <Modal
-      isOpen={location.pathname.startsWith('/applications')}
+      isOpen={location.pathname === '/applications'}
       className='relative overflow-auto p-5 sm:h-fit md:h-[500px] md:w-[700px] md:border'
       onClose={() => navigate('/')}
       closeButton={false}
@@ -35,7 +34,10 @@ export default function Applications() {
             { value: 'Pending', checked: false },
             { value: 'Approved', checked: false },
           ],
-          sector: [...new Set(applications?.map((application) => application.sector))].map((s) => ({ value: s, checked: false })),
+          sector: [...new Set(applications?.map((application) => application.sector))].map((s) => ({
+            value: s,
+            checked: false,
+          })),
         }}
         fieldsToSearch={['offer', 'sector']}
       >
@@ -112,7 +114,7 @@ function Application({ application: { id, offer, sector, status, created_at } })
   return (
     <button
       className='flex w-full flex-col items-center  gap-3 rounded-md px-3 py-2 text-center transition-colors duration-200 hover:bg-background-secondary mobile:flex-row mobile:text-start'
-      onClick={() => navigate(id)}
+      onClick={() => navigate(`/applications/${id}`, { state: { source: '/applications' } })}
     >
       <div
         className={`grid h-11 w-11 place-content-center rounded-full bg-green-600 text-white sm:text-xl ${status === 'Pending' ? 'bg-orange-500' : 'bg-green-600'}`}

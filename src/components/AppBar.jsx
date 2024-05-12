@@ -17,13 +17,13 @@ export default function AppBar() {
 
 function UserInfo() {
   const { user } = useUser();
-  const { firstName, lastName, role } = user || {};
+  const { fullName, role } = user || {};
 
   return (
     <div className='flex items-center gap-3'>
       <Avatar />
       <div>
-        <h3 className='text-sm font-medium capitalize text-text-primary'>{`${firstName} ${lastName}`}</h3>
+        <h3 className='text-sm font-medium capitalize text-text-primary'>{fullName}</h3>
         <h4 className='text-xs capitalize text-text-tertiary'>{role?.replace('-', ' ')}</h4>
       </div>
     </div>

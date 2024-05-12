@@ -36,7 +36,7 @@ export default function Intern() {
     specialty,
     projects,
     tasks,
-    CV,
+    cv,
     attestation,
   } = intern;
   const { isOverdue } = getTimelineDates(startDate, endDate);
@@ -69,7 +69,7 @@ export default function Intern() {
             </div>
             <div className='flex gap-2'>
               <ToolTip content={<span className='text-xs text-text-secondary'>View CV</span>}>
-                <Button shape='icon' color='secondary' onClick={() => setOpenedFile(CV)} disabled={!CV}>
+                <Button shape='icon' color='secondary' onClick={() => setOpenedFile(cv)} disabled={!cv}>
                   <FaImagePortrait />
                 </Button>
               </ToolTip>

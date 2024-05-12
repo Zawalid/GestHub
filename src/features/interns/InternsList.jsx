@@ -14,7 +14,7 @@ import { Table } from '@/components/shared/Table/';
 import { AllInterns } from '../projects/NewProject/TeamMembers';
 import { useState } from 'react';
 import { AcademicLevel, Gender } from '@/pages/auth/Register';
-import { getFilter,getIntervals } from '@/utils/helpers';
+import { getFilter, getIntervals } from '@/utils/helpers';
 
 export default function InternsList() {
   const { interns, isLoading, error } = useInterns();
@@ -33,16 +33,11 @@ export default function InternsList() {
         columns={[
           { key: 'id', displayLabel: 'ID', visible: true, type: 'number' },
           {
-            key: 'firstName',
-            displayLabel: 'First Name',
+            key: 'fullName',
+            displayLabel: 'Full Name',
             visible: true,
             type: 'string',
-          },
-          {
-            key: 'lastName',
-            displayLabel: 'Last Name',
-            visible: true,
-            type: 'string',
+            format: (val, id) => `${interns?.find((i) => i.id === id)?.gender || 'M'}. ${val}`,
           },
           {
             key: 'email',
@@ -83,6 +78,31 @@ export default function InternsList() {
             visible: true,
             type: 'date',
             filter: getIntervals('endDate'),
+          },
+          {
+            key: 'status',
+            displayLabel: 'Status',
+            visible: true,
+            type: 'string',
+            format: (val, id, isDownload) => {
+              const colors = {
+                Completed: 'bg-green-600',
+                Upcoming: 'bg-yellow-600',
+                'Starting Today': 'bg-blue-600',
+                Ongoing: 'bg-orange-600',
+              };
+              return isDownload ? (
+                val
+              ) : (
+                <span className={`rounded-lg px-2.5 py-1 text-white ${colors[val]}`}>{val}</span>
+              );
+            },
+            filter: [
+              { value: 'Completed', checked: false },
+              { value: 'Upcoming', checked: false },
+              { value: 'Starting Today', checked: false },
+              { value: 'Ongoing', checked: false },
+            ],
           },
         ]}
         formFields={[

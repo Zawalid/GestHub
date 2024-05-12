@@ -15,7 +15,23 @@ const exportAsPdf = (data, config, headers, page) => {
   const { filename, tableHeaders } = config;
 
   const tableData = data
-    .map((el) => Object.fromEntries(Object.entries(el).filter(([key]) => headers.includes(key))))
+    // Filter the visible columns
+    .map((el) => Object.fromEntries(Object.entries(el).filter(([key]) => headers.map((c) => c.key).includes(key))))
+    // Sort the columns same as the headers
+    .map((el) =>
+      headers.reduce((acc, h) => {
+        acc[h.key] = el[h.key];
+        return acc;
+      }, {})
+    )
+    // Format the columns that needs to be formatted
+    .map((el) =>
+      Object.keys(el).reduce((acc, k) => {
+        const format = headers.find((h) => h.key === k).format; // value,id,isDownload
+        acc[k] = format ? format(el[k], null, true) : el[k];
+        return acc;
+      }, {})
+    )
     .map((row) => Object.values(row));
 
   const doc = new jsPDF(headers.length > 4 ? 'landscape' : 'portrait');
@@ -29,7 +45,7 @@ const exportAsPdf = (data, config, headers, page) => {
   });
   const name = page ? `${filename}-page-${page}.pdf` : filename;
   doc.save(name);
-  // doc.output("dataurlnewwindow");
+  // doc.output('dataurlnewwindow');
 };
 
 //* Download
@@ -62,7 +78,7 @@ function DownloadOption({ type, icon }) {
     exportAsPdf(
       data,
       pdfConfig,
-      columns.filter((c) => c.visible).map((c) => c.key),
+      columns.filter((c) => c.visible),
       page
     );
   const downloadCsv = (data, page) => exportAsCsv(data, csvConfig, page);

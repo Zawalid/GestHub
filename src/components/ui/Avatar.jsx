@@ -28,7 +28,7 @@ const Avatar = forwardRef(({ className = 'h-9 w-9', custom, ...props }, ref) => 
 
   const role = (custom && (customRole || 'intern')) || userRole;
   const gender = customGender || userGender || 'M';
-  const avatar = customAvatar || userAvatar;
+  const avatar = custom ? customAvatar : userAvatar;
 
   return (
     <img

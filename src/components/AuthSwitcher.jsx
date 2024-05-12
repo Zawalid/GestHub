@@ -51,7 +51,7 @@ function User({ user }) {
         <div className='flex gap-3 py-2'>
           <Avatar />
           <div className='grid'>
-            <span className=''>{`${user?.firstName} ${user?.lastName}`}</span>
+            <span className=''>{user?.fullName}</span>
             <span className='text-xs font-medium text-text-secondary'>{user?.email}</span>
           </div>
         </div>

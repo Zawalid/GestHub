@@ -24,7 +24,7 @@ export function FileView({ isOpen, onClose, file }) {
           message="We're having trouble loading the file. Please check your connection and try again."
         />
       )}
-      <object data={file} type='application/pdf' className='flex-1'  onLoad={() => setIsError(false)}>
+      <object key={file} data={file} type='application/pdf' className='flex-1' onLoad={() => setIsError(false)}>
         <link rel='stylesheet' href={file} onError={(e) => setIsError(e.type === 'error')} />
       </object>
     </Modal>

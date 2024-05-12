@@ -3,8 +3,9 @@ import { cloneElement, useRef } from 'react';
 import { Sort } from './Sort';
 import { useTable } from '.';
 import { Status } from '@/components/ui/';
+import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
-export function Table({ actions }) {
+export function Table({ actions, canView }) {
   const { columns, rows, error } = useTable();
   const table = useRef();
   const [parent] = useAutoAnimate({ duration: 300 });
@@ -26,9 +27,15 @@ export function Table({ actions }) {
             {actions && <Column hide={true} />}
           </tr>
         </thead>
-        <tbody className='h-fit divide-y divide-border text-sm font-medium text-text-primary' ref={parent}>
+        <tbody className='h-fit divide-y  divide-border text-sm font-medium text-text-primary' ref={parent}>
           {rows?.map((row) => (
-            <Row key={row.id} row={row} visibleColumns={columns.filter((c) => c.visible)} actions={actions} />
+            <Row
+              key={row.id}
+              row={row}
+              visibleColumns={columns.filter((c) => c.visible)}
+              actions={actions}
+              canView={canView}
+            />
           ))}
         </tbody>
       </table>
@@ -43,24 +50,21 @@ function Column({ column, hide }) {
     </th>
   );
 }
-function Row({ row, visibleColumns, actions }) {
+function Row({ row, visibleColumns, actions, canView = true }) {
+  const navigate = useNavigateWithQuery();
   const [parent] = useAutoAnimate({ duration: 300 });
-
-  const render = (row) => {
-    if (row === 'Pending') return <span className='rounded-lg text-white bg-orange-500 px-2.5 py-1'>{row}</span>;
-    if (row === 'Approved') return <span className='rounded-lg text-white bg-green-600 px-2.5 py-1'>{row}</span>;
-    if (row === 'Rejected') return <span className='rounded-lg text-white bg-red-500 px-2.5 py-1'>{row}</span>;
-    return row;
-  };
-
   return (
-    <tr ref={parent}>
+    <tr
+      ref={parent}
+      className='cursor-pointer transition-colors duration-200 hover:bg-background-disabled'
+      onClick={() => canView && navigate(row.id)}
+    >
       {visibleColumns.map((col) => (
         <td key={col.displayLabel} className='px-6 py-3.5'>
-          {render(row[col.key])}
+          {col.format ? col.format(row[col.key], row.id) : row[col.key]}
         </td>
       ))}
-      {actions && <td className='px-6 py-3.5'>{cloneElement(actions, { row })}</td>}
+      {actions && <td className='grid place-items-end px-6 py-3.5'>{cloneElement(actions, { row })}</td>}
     </tr>
   );
 }

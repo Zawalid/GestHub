@@ -49,7 +49,7 @@ export const getOffersProps = (offers, isLoading, error) => ({
       { value: 'Hybrid', checked: false },
       { value: 'Remote', checked: false },
     ],
-    publicationDate: getIntervals('publicationDate'),
+    publicationDate: getIntervals('publicationDate', ['past', 'present']),
     visibility: [
       { value: 'Visible', checked: false },
       { value: 'Hidden', checked: false },

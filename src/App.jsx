@@ -71,21 +71,23 @@ export default function App() {
               </Route>
             </Route>
             {/* App */}
-            <Route
-              path='app'
-              element={
-                <ProtectedRoute>
-                  <AppLayout />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<Navigate to='/app/overview' replace={true} />} />
-              {/*  Routes of specific role */}
-              {ROUTES[user?.role]?.map((route) => (
-                <Route key={route} path={route} element={<ProtectedRoute>{routesElements[route]}</ProtectedRoute>} />
-              ))}
-              <Route path='*' element={<NotFound />} />
-            </Route>
+            {user?.role !== 'user' && (
+              <Route
+                path='app'
+                element={
+                  <ProtectedRoute>
+                    <AppLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<Navigate to='/app/overview' replace={true} />} />
+                {/*  Routes of specific role */}
+                {ROUTES[user?.role]?.map((route) => (
+                  <Route key={route} path={route} element={<ProtectedRoute>{routesElements[route]}</ProtectedRoute>} />
+                ))}
+                <Route path='*' element={<NotFound />} />
+              </Route>
+            )}
             <Route path='*' element={<NotFound />} />
           </Routes>
         </BrowserRouter>

@@ -44,7 +44,7 @@
 - [x] use academic level as a dropdown
 - [ ] virtual lists for performance
 - [ ] create a component for date range only
-
+- [x] interns table filter (status/gender)
 
  
 
@@ -57,7 +57,7 @@
  - [ ] starter tasks add
  - [ ] super admin shouldn't be returned with admins
  - [ ] too many requests (user)
-
+ - [ ] user cv not saved
 
 # Maybe
 - [ ] Multiple accounts login
@@ -65,3 +65,4 @@
 - [ ] Emailing
 - [ ] More details about the error
 - [ ] Add a custom date picker and  date interval
+- [ ] table multi select (context menu of actions)

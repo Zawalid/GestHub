@@ -7,7 +7,7 @@ import {
   updateSupervisor,
   deleteSupervisor,
 } from '@/services/supervisorsAPI';
-import { getAdditionalData } from '../interns/useInterns';
+import { formatUserData } from '@/hooks/useUser';
 
 // Queries
 
@@ -17,9 +17,7 @@ export function useSupervisors() {
     queryFn: getAllSupervisors,
   });
 
-  const supervisors = data?.map((supervisor) => ({ ...supervisor, ...getAdditionalData(supervisor) }));
-
-  return { supervisors, error, isLoading: isPending };
+  return { supervisors: data?.map(formatUserData), error, isLoading: isPending };
 }
 
 export function useSupervisor(id) {
@@ -28,9 +26,7 @@ export function useSupervisor(id) {
     queryFn: () => getSupervisor(id),
   });
 
-  const supervisor = { ...data, ...getAdditionalData(data) };
-
-  return { supervisor, error, isLoading: isPending };
+  return { supervisor: formatUserData(data), error, isLoading: isPending };
 }
 
 // Mutations

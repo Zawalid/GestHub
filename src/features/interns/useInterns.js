@@ -1,4 +1,5 @@
 import { useMutate } from '@/hooks/useMutate';
+import { formatUserData } from '@/hooks/useUser';
 import {
   acceptUsers,
   addIntern,
@@ -10,17 +11,24 @@ import {
   getIntern,
   updateIntern,
 } from '@/services/internsAPI';
-import { getFile } from '@/utils/helpers';
+import { getFile, getTimelineDates } from '@/utils/helpers';
 import { useQuery } from '@tanstack/react-query';
 
 // Queries
 
-export const getAdditionalData = (data) => {
+const getAdditionalData = (data) => {
+  const { isOverdue, daysToStart } = getTimelineDates(data?.startDate, data?.endDate);
+  const status = isOverdue
+    ? 'Completed'
+    : daysToStart > 1
+      ? 'Upcoming'
+      : daysToStart === 1
+        ? 'Starting Today'
+        : 'Ongoing';
   return {
-    fullName: `${data?.firstName} ${data?.lastName}`,
-    avatar: getFile(data, 'avatar'),
-    CV: getFile(data, 'CV'),
-    attestation : getFile(data, 'attestation'),
+    ...formatUserData(data, true),
+    attestation: getFile(data, 'attestation'),
+    status,
   };
 };
 
@@ -33,7 +41,6 @@ export function useInterns() {
   const interns = data?.map((intern) => ({
     ...intern,
     ...getAdditionalData(intern),
-    attestation: getFile(intern, 'attestation'),
   }));
 
   return { interns, error, isLoading: isPending };

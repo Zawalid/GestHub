@@ -2,7 +2,7 @@ import { useDeleteApplication, useApproveApplication, useRejectApplication, useA
 import { TableLayout } from '@/layouts/TableLayout';
 import { FaRegCircleCheck, FaRegCircleXmark, TbFileSearch } from '@/components/ui/Icons';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
-import { getFilter,getIntervals } from '@/utils/helpers';
+import { getFilter, getIntervals } from '@/utils/helpers';
 
 export default function ApplicationsList() {
   const { applications, isLoading, error } = useApplications();
@@ -71,6 +71,14 @@ export default function ApplicationsList() {
           displayLabel: 'Status',
           visible: true,
           type: 'string',
+          format: (val, id, isDownload) => {
+            const colors = { Pending: 'bg-orange-500', Approved: 'bg-green-600', Rejected: 'bg-red-500' };
+            return isDownload ? (
+              val
+            ) : (
+              <span className={`rounded-lg  px-2.5 py-1 text-white ${colors[val]}`}>{val}</span>
+            );
+          },
           filter: [
             { value: 'Pending', checked: false },
             { value: 'Approved', checked: false },
@@ -82,7 +90,7 @@ export default function ApplicationsList() {
           displayLabel: 'Application Date',
           visible: true,
           type: 'date',
-          filter: getIntervals('created_at'),
+          filter: getIntervals('created_at', ['past', 'present']),
         },
       ]}
       fieldsToSearch={['firstName', 'lastName', 'email', 'offer', 'sector']}
@@ -98,7 +106,7 @@ export default function ApplicationsList() {
           {
             text: 'Review',
             icon: <TbFileSearch />,
-            onClick: (id) => navigate(`/app/applications/${id}`),
+            onClick: (id) => navigate(`/app/applications/${id}`, { state: { source: '/app/applications' } }),
           },
           {
             text: 'Approve',

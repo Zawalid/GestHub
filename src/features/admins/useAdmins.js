@@ -1,13 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMutate } from '@/hooks/useMutate';
-import {
-  getAllAdmins,
-  getAdmin,
-  addAdmin,
-  updateAdmin,
-  deleteAdmin,
-} from '@/services/adminsAPI';
-import { getAdditionalData } from '../interns/useInterns';
+import { getAllAdmins, getAdmin, addAdmin, updateAdmin, deleteAdmin } from '@/services/adminsAPI';
+import { formatUserData } from '@/hooks/useUser';
 
 // Queries
 
@@ -17,9 +11,7 @@ export function useAdmins() {
     queryFn: getAllAdmins,
   });
 
-  const admins = data?.map((admin) => ({ ...admin, ...getAdditionalData(admin) }));
-
-  return { admins, error, isLoading: isPending };
+  return { admins: data?.map(formatUserData), error, isLoading: isPending };
 }
 
 export function useAdmin(id) {
@@ -28,9 +20,7 @@ export function useAdmin(id) {
     queryFn: () => getAdmin(id),
   });
 
-  const admin = { ...data, ...getAdditionalData(data) };
-
-  return { admin, error, isLoading: isPending };
+  return { admin: formatUserData(data), error, isLoading: isPending };
 }
 
 // Mutations
