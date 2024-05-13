@@ -61,7 +61,7 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
   };
 
   const {
-    options: { formInputs, isUpdated, isValid, getValue, setValue, handleSubmit, reset, updateValues },
+    options: { formInputs, isUpdated,  getValue, setValue, handleSubmit, reset, updateValues },
   } = useForm({
     defaultValues,
     fields: [
@@ -184,7 +184,7 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
         </Button>
         <Button
           color='secondary'
-          disabled={!isUpdated || !isValid || (!user?.cv && !getValue('CV')?.file)}
+          disabled={!isUpdated || (!user?.cv && !getValue('CV')?.file)}
           onClick={() => handleSubmit()}
         >
           Apply

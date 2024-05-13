@@ -8,7 +8,7 @@ export default function General() {
   const { settings } = useSettings();
   const {
     Form,
-    options: { isUpdated, isValid, handleSubmit, reset },
+    options: { isUpdated,  handleSubmit, reset },
   } = useForm({
     defaultValues: {
       logo: { src: null, file: null },
@@ -62,7 +62,7 @@ export default function General() {
 
   const {
     Form: SocialMedia,
-    options: { setValue, getValue, isValid: isSocialMediaValid, isUpdated: isSocialMediaUpdated },
+    options: { setValue, getValue,  isUpdated: isSocialMediaUpdated },
   } = useForm({
     defaultValues: {
       facebook: '',
@@ -99,7 +99,7 @@ export default function General() {
     <ModalFormLayout
       submitButton={{
         onClick: handleSubmit,
-        disabled: !isUpdated || !isValid || !isSocialMediaValid || !isSocialMediaUpdated,
+        disabled: !isUpdated || !isSocialMediaUpdated,
       }}
       cancelButton={{
         onClick: reset,

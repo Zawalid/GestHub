@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 export const toggleChecked = (filter, value) => filter.map((f) => (f.value === value ? { ...f, checked: !f.checked } : f));
 
 export function Filter({ className = '' }) {
-  const { filters, onFilter, filterCondition, onChangeFilterCondition, appliedFiltersNumber, isLoading, error } =
+  const { filters, onFilter, filterCondition, onChangeFilterCondition, appliedFiltersNumber, disabled } =
     useOperations();
   const { t } = useTranslation();
   if (!filters) return null;
@@ -31,7 +31,7 @@ export function Filter({ className = '' }) {
         shouldCloseOnClick: false,
       }}
       togglerClassName={`relative w-28 justify-between ${className}`}
-      togglerDisabled={isLoading || error}
+      togglerDisabled={disabled}
     >
       {Object.keys(filters).map((key) => (
         <div key={key} className='space-y-1'>

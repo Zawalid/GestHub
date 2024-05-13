@@ -48,7 +48,7 @@ function Label({ label, message }) {
   return (
     <div className='flex items-center gap-2'>
       <label className='text-sm font-medium text-text-tertiary'>{label}</label>
-      {message && <ErrorTooltip message={message} />}
+      {<ErrorTooltip message={message} />}
     </div>
   );
 }
@@ -56,7 +56,7 @@ function Label({ label, message }) {
 export function ErrorTooltip({ message }) {
   return (
     <Tippy
-      content={message.split('\n').map((msg, index) => (
+      content={message?.split('\n').map((msg, index) => (
         <p key={index} className='text-white'>
           {msg}
         </p>
@@ -64,7 +64,7 @@ export function ErrorTooltip({ message }) {
       placement='top'
       className=' rounded-lg bg-red-500 p-2 text-xs font-semibold text-white'
     >
-      <span className='cursor-pointer text-red-500'>
+      <span className={`cursor-pointer text-lg text-red-500 transition-transform duration-300 ${message ? 'scale-100' : 'scale-0'}`}>
         <MdError />
       </span>
     </Tippy>
@@ -112,7 +112,10 @@ export const InputField = forwardRef(
       <div className='space-y-1.5'>
         <Label label={label} message={errorMessage} />
         <div
-          className={cn(input({ icon: Boolean(customIcon || icon), disabled: props.disabled, readOnly: props.readOnly }), className)}
+          className={cn(
+            input({ icon: Boolean(customIcon || icon), disabled: props.disabled, readOnly: props.readOnly }),
+            className
+          )}
         >
           {customIcon ? customIcon : showIcon && <Icon icon={icon} className={iconClassName} />}
           {type === 'textarea' ? (

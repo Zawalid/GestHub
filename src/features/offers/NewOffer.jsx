@@ -47,7 +47,7 @@ export default function NewOffer() {
 
 export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
   const {
-    options: { isUpdated, isValid, formInputs, getValue, setValue, handleSubmit, reset, updateValues },
+    options: { isUpdated,  formInputs, getValue, setValue, handleSubmit, reset, updateValues },
   } = useForm({
     defaultValues,
     fields: [
@@ -118,7 +118,7 @@ export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
     <ModalFormLayout
       submitButton={{
         text: type === 'add' ? 'Add Offer' : 'Update Offer',
-        disabled: type === 'add' ? !isValid : !isValid || !isUpdated,
+        disabled: type === 'add' ? false : !!isUpdated,
         onClick: () => handleSubmit(onClose, true),
       }}
       cancelButton={{ onClick: () => reset(onClose) }}

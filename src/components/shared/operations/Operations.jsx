@@ -177,6 +177,7 @@ export function Operations({
     data,
     isLoading,
     error,
+    disabled : isLoading || error || data?.length === 0 ,
     query,
     onSearch,
     sortBy,

@@ -30,22 +30,19 @@
 - [x] notifications for the user
 - [ ] only super-admin can create a project
 - [ ] supervisor can see their projects only
-- [x] clicks on the overview
-- [ ] project title on the interns table
-- [x] filter by sector in applications
 - [ ] only free interns in project's creation team members selection
+- [x] clicks on the overview
+- [x] filter by sector in applications
 - [ ] pages creation / update home page
+- [ ] settings
+- [ ] editor for about (TipTap)
 - [x] green for approve button
 - [x] full screen file view
-- [ ] use slugs instead of ids (projects/offers/interns)
-- [ ] Fix the theme bug in App.jsx (re-renders the app)
 - [x] rename applications to applications
 - [x] add gender prop
 - [x] use academic level as a dropdown
-- [ ] virtual lists for performance
 - [x] interns table filter (status/gender)
 - [x] fixed table header
-- [ ] handle currently precessed rows 
  
 
 
@@ -58,6 +55,7 @@
  - [ ] super admin shouldn't be returned with admins
  - [ ] too many requests (user)
  - [ ] user cv not saved
+ - [ ] Fix the theme bug in App.jsx (re-renders the app)
 
 # Maybe
 - [ ] Multiple accounts login
@@ -68,4 +66,8 @@
 - [ ] Add a custom date picker and  date interval
 - [ ] table multi select (context menu of actions)
 - [ ] import from file
+- [ ] use slugs instead of ids (projects/offers/interns)
 - [ ] optimistic mutations
+- [ ] virtual lists for performance
+- [ ] handle currently precessed rows 
+- [x] show errors when submitting instead

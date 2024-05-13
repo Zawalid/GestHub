@@ -26,6 +26,7 @@ const getAdditionalData = (data) => {
       : daysToStart === 1
         ? 'Starting Today'
         : 'Ongoing';
+        
   return {
     ...formatUserData(data, true),
     attestation: getFile(data, 'attestation'),

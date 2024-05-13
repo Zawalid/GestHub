@@ -11,7 +11,7 @@ export const options = {
 };
 
 export function ActionsDropDown({ children }) {
-  const { isLoading,error } = useOperations();
+  const { disabled} = useOperations();
   return (
     <D
       toggler={
@@ -25,7 +25,7 @@ export function ActionsDropDown({ children }) {
         className: "w-60 max-h-[100%]",
         shouldCloseOnClick: false,
       }}
-      togglerDisabled={isLoading || error}
+      togglerDisabled={disabled}
     >
       {children}
     </D>

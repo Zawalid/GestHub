@@ -4,6 +4,7 @@ import { PasswordInput } from '@/components/ui/PasswordInput';
 import { RULES } from '@/utils/constants';
 import { objectDeepEquals } from '@/utils/helpers';
 import { cloneElement, isValidElement, useCallback, useEffect, useMemo, useState } from 'react';
+import { toast } from 'sonner';
 
 const getError = (value, rules, getValue) => {
   if (!rules) return null;
@@ -87,8 +88,8 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
   const [defaultValues, setDefaultValues] = useState(def);
   const [values, setValues] = useState(def);
   const [isUpdated, setIsUpdated] = useState(false);
-  const [errors, setErrors] = useState(null);
-  // Is form valid
+  const [errors, setErrors] = useState({});
+  // Is Form Valid
   const isValid = useMemo(() => {
     return (
       fields
@@ -114,67 +115,6 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
     });
     return dirty;
   }, [values, defaultValues]);
-
-  // Validate fields
-  const validate = (name, value, rules) => {
-    const err = getError(value, rules, getValue);
-    setErrors((prev) => {
-      const errors = { ...prev };
-      if (!err) delete errors[name];
-      else errors[name] = err;
-
-      return errors;
-    });
-  };
-
-  // Get a field value (Must be 'function' for hoisting)
-  function getValue(name) {
-    return values?.[name];
-  }
-
-  // Set a field value
-  const setValue = (name, value) => {
-    setValues((prev) => ({ ...prev, [name]: value }));
-  };
-
-  // Update values and default values
-  const updateValues = (values) => {
-    setValues(values);
-    setDefaultValues(values);
-  };
-
-  // Submit handler
-  const handleSubmit = useCallback(
-    (callback, resetToDefaults) => {
-      onSubmit?.(values);
-      typeof callback === 'function' && callback?.(values);
-      resetToDefaults ? setValues(defaultValues) : setDefaultValues(values);
-    },
-    [defaultValues, onSubmit, values]
-  );
-
-  // Reset handler
-  const reset = (callback) => {
-    setValues(defaultValues);
-    setErrors(null);
-    typeof callback === 'function' && callback?.();
-  };
-
-  // Track if the form is updated
-  useEffect(() => {
-    setIsUpdated(!objectDeepEquals(values, defaultValues));
-  }, [values, defaultValues]);
-
-  // Submit form when hitting enter
-  useEffect(() => {
-    if (!submitOnEnter || !isValid) return;
-
-    const onEnter = (e) => e.key === 'Enter' && handleSubmit();
-    window.addEventListener('keydown', onEnter);
-
-    return () => window.removeEventListener('keydown', onEnter);
-  }, [handleSubmit, submitOnEnter, isValid]);
-
   // Form Inputs
   const formInputs = useMemo(() => {
     const inputs = {};
@@ -203,6 +143,81 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fields, errors, values]);
 
+  // Get a field value (Must be 'function' for hoisting)
+  function getValue(name) {
+    return values?.[name];
+  }
+
+  // Set a field value
+  function setValue(name, value) {
+    return setValues((prev) => ({ ...prev, [name]: value }));
+  }
+
+  // Update values and default values
+  const updateValues = (values) => {
+    setValues(values);
+    setDefaultValues(values);
+  };
+
+  // Validate fields
+  const validate = (name, value, rules) => {
+    const err = getError(value, rules, getValue);
+    setErrors((prev) => {
+      const errors = { ...prev };
+      if (!err) delete errors[name];
+      else errors[name] = err;
+
+      return errors;
+    });
+  };
+
+  // Submit handler
+  const handleSubmit = useCallback(
+    (callback, resetToDefaults) => {
+      fields?.forEach((field) => {
+        const { name, type, label } = field;
+        const rules = getRules(name, label, type, field.rules);
+        validate(name, values[name], rules);
+      });
+
+      if (!isValid) {
+        const firstError = fields.filter((f) => Object.keys(errors).includes(f.name)).map((f) => f.name)[0];
+        firstError && toast.error(errors[firstError]?.message);
+        return;
+      }
+
+      onSubmit?.(values);
+      typeof callback === 'function' && callback?.(values);
+      resetToDefaults ? setValues(defaultValues) : setDefaultValues(values);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [defaultValues, fields, onSubmit, values]
+  );
+
+  // Reset handler
+  const reset = (callback) => {
+    setValues(defaultValues);
+    setErrors(null);
+    typeof callback === 'function' && callback?.();
+  };
+
+  // Track if the form is updated
+  useEffect(() => {
+    const updated = !objectDeepEquals(values, defaultValues);
+    setIsUpdated(updated);
+    !updated && setErrors({});
+  }, [values, defaultValues]);
+
+  // Submit form when hitting enter
+  useEffect(() => {
+    if (!submitOnEnter) return;
+
+    const onEnter = (e) => e.key === 'Enter' && handleSubmit();
+    window.addEventListener('keydown', onEnter);
+
+    return () => window.removeEventListener('keydown', onEnter);
+  }, [handleSubmit, submitOnEnter]);
+
   return {
     Form: (
       <form
@@ -218,8 +233,8 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
       </form>
     ),
     options: {
-      isUpdated,
       isValid,
+      isUpdated,
       errors,
       values,
       defaultValues,

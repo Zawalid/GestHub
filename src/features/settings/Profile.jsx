@@ -26,7 +26,7 @@ export default function Profile() {
 
   const {
     Form,
-    options: { isUpdated, isValid, dirtyFields, handleSubmit, reset, setValue, getValue, updateValues },
+    options: { isUpdated,  dirtyFields, handleSubmit, reset, setValue, getValue, updateValues },
   } = useForm({
     defaultValues,
     fields: [
@@ -77,7 +77,7 @@ export default function Profile() {
     <ModalFormLayout
       submitButton={{
         onClick: handleSubmit,
-        disabled: !isUpdated || !isValid,
+        disabled: !isUpdated,
       }}
       cancelButton={{
         onClick: reset,

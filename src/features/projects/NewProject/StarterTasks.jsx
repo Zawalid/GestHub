@@ -114,7 +114,7 @@ export function NewTask({ className, status, onCancel, currentTask, onSubmit, te
   };
 
   const {
-    options: { isValid, isUpdated, formInputs, handleSubmit, reset, getValue, setValue, updateValues },
+    options: {  isUpdated, formInputs, handleSubmit, reset, getValue, setValue, updateValues },
   } = useForm({
     defaultValues: currentTask || defaultTask,
     fields: [
@@ -190,7 +190,7 @@ export function NewTask({ className, status, onCancel, currentTask, onSubmit, te
         <Button
           color='secondary'
           onClick={() => handleSubmit(onCancel, true)}
-          disabled={currentTask ? !isUpdated || !isValid : !isValid}
+          disabled={currentTask ? !isUpdated : false}
         >
           {currentTask ? 'Update Task' : 'Add Task'}
         </Button>

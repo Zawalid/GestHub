@@ -199,7 +199,7 @@ export default function InternsList() {
         selectedOptions={{
           deleteOptions: {
             resourceName: 'intern',
-            onConfirm: (ids,setIsOperating) => deleteInterns(ids,{ onSettled: () => setIsOperating(false) }),
+            onConfirm: (ids, setIsOperating) => deleteInterns(ids, { onSettled: () => setIsOperating(false) }),
           },
         }}
       />
@@ -208,7 +208,7 @@ export default function InternsList() {
   );
 }
 
-function NewIntern({setIsOpen}) {
+function NewIntern({ setIsOpen }) {
   const { disabled } = useTable();
   const { mutate: addIntern } = useAddIntern();
 
@@ -256,7 +256,12 @@ function SelectUsers({ isOpen, onClose }) {
       closeOnBlur={false}
     >
       <h1 className='mb-2 text-lg font-bold text-text-primary'>Select Users for Internship</h1>
-      <AllInterns teamMembers={interns} setTeamMembers={setInterns} selectedMembers={interns} users={acceptedUsers} />
+      <AllInterns
+        teamMembers={interns}
+        setTeamMembers={setInterns}
+        selectedMembers={interns}
+        users={acceptedUsers || []}
+      />
       <div className='mt-2 grid grid-cols-2 gap-4'>
         <Button color='tertiary' onClick={close}>
           Cancel

@@ -20,9 +20,10 @@ export function TableRecord() {
     type,
   } = formOptions;
 
+  
   const {
     Form,
-    options: { isUpdated, isValid, dirtyFields, handleSubmit, reset, updateValues },
+    options: { isUpdated,  dirtyFields, handleSubmit, reset, updateValues },
   } = useForm({
     defaultValues,
     fields,
@@ -43,7 +44,7 @@ export function TableRecord() {
       <ModalFormLayout
         submitButton={{
           text: submitButtonText,
-          disabled: !isValid || !isUpdated,
+          disabled:  !isUpdated,
           onClick: () => handleSubmit(close, { resetToDefault }),
         }}
         cancelButton={{ onClick: () => reset(close) }}

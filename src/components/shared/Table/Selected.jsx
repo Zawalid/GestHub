@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa6';
-import { Button, Modal } from '@/components/ui';
+import { Button, Modal, ToolTip } from '@/components/ui';
 import { useTable } from '.';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { capitalize } from '@/utils/helpers';
@@ -58,22 +58,31 @@ export function Selected() {
         </Button>
         <div className='relative overflow-hidden '>
           <Button className='invisible'>{finalActions.map((a) => a.text).toSorted()[0]}</Button>
-          {finalActions.map(({ text, color, onClick, disabledCondition }, i) => {
+          {finalActions.map(({ text, color, onClick, disabledCondition, message }, i) => {
             const disabled = disabledCondition ? disabledCondition(selected, data) : false;
             return (
-              <Button
+              <ToolTip
                 key={text}
-                color={color || 'red'}
-                className='absolute right-0 top-0 w-full transition-all duration-500'
-                style={{ transform: `translateY(${(currentAction - i) * 100}%)` }}
-                onClick={() => {
-                  setIsOperating(true);
-                  onClick(selected, close, setIsOperating);
-                }}
-                disabled={disabled}
+                hidden={!message}
+                content={<span className='text-xs text-text-secondary'>{message}</span>}
               >
-                {text}
-              </Button>
+                <div
+                  className='absolute right-0 top-0 w-full transition-all duration-500'
+                  style={{ transform: `translateY(${(currentAction - i) * 100}%)` }}
+                >
+                  <Button
+                    className='w-full'
+                    color={color || 'red'}
+                    onClick={() => {
+                      setIsOperating(true);
+                      onClick(selected, close, setIsOperating);
+                    }}
+                    disabled={disabled}
+                  >
+                    {text}
+                  </Button>
+                </div>
+              </ToolTip>
             );
           })}
         </div>

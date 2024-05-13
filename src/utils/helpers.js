@@ -175,6 +175,15 @@ export const objectDeepEquals = (a, b) => {
   return true;
 };
 
+export const filterObject = (obj, keys, keysType) => {
+  const filtered = {};
+  for (const key in obj) {
+    if (keysType === 'include' && keys.includes(key)) filtered[key] = obj[key];
+    if (keysType === 'exclude' && !keys.includes(key)) filtered[key] = obj[key];
+  }
+  return filtered;
+};
+
 export const getIncrementedID = (array) => {
   const ids = array.map((item) => item.id);
   return ids.length > 0 ? Math.max(...ids) + 1 : 1;
