@@ -15,32 +15,31 @@ export default function ProjectsList() {
   const navigate = useNavigate();
   const [parent] = useAutoAnimate({ duration: 500 });
 
+  const isAdmin = ['admin', 'super-admin'].includes(user?.role);
+
   const onAdd = () => navigate('/app/projects/new');
 
   const render = () => {
     if (isLoading) return <ProjectsSkeleton layout={layout} />;
     if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
     if (projects.length === 0 && !query && !appliedFiltersNumber) {
-      if (user?.role === 'supervisor') {
-        return (
-          <div className='absolute grid h-full w-full place-content-center place-items-center gap-5'>
-            <img src='/SVG/projects.svg' alt='' className='w-[200px]' />
-            <div className='space-y-2 text-center'>
-              <h2 className='font-medium text-text-primary'> It appears there are currently no projects available</h2>
-              <p className='text-sm text-text-secondary'>Start by creating a new one.</p>{' '}
-            </div>
-            <Button onClick={onAdd}>New Project</Button>
-          </div>
-        );
-      }
+      const heading = isAdmin
+        ? 'It appears there are currently no projects available'
+        : 'It appears you are not currently included in any projects';
+
+      const message = isAdmin
+        ? 'Start by creating a new one.'
+        : `Please wait for a project assignment or contact your ${user?.role === 'supervisor' ? 'administrator' : 'supervisor'}.`;
+
       return (
-       <div className='absolute grid h-full w-full place-content-center place-items-center gap-5'>
-  <img src='/SVG/projects.svg' alt='' className='w-[200px]' />
-  <div className='space-y-2 text-center'>
-    <h2 className='font-medium text-text-primary'> It appears you are not currently included in any projects</h2>
-    <p className='text-sm text-text-secondary'>Please wait for a project assignment or contact your supervisor.</p>{' '}
-  </div>
-</div>
+        <div className='absolute grid h-full w-full place-content-center place-items-center gap-5'>
+          <img src='/SVG/projects.svg' alt='' className='w-[200px]' />
+          <div className='space-y-2 text-center'>
+            <h2 className='font-medium text-text-primary'>{heading} </h2>
+            <p className='text-sm text-text-secondary'>{message}</p>{' '}
+          </div>
+          {isAdmin && <Button onClick={onAdd}>New Project</Button>}
+        </div>
       );
     }
     if (projects.length === 0 && (query || appliedFiltersNumber))
@@ -49,7 +48,7 @@ export default function ProjectsList() {
       );
     return (
       <>
-        {!appliedFiltersNumber && !query && ['supervisor', 'super-admin'].includes(user?.role) && <New type='Project' layout={layout} onAdd={onAdd} />}
+        {!appliedFiltersNumber && !query && isAdmin && <New type='Project' layout={layout} onAdd={onAdd} />}
         {projects?.map((project) => (
           <Project key={project.id} project={project} layout={layout} />
         ))}
@@ -84,7 +83,7 @@ export default function ProjectsList() {
   );
 }
 
-export function New({type, layout, onAdd }) {
+export function New({ type, layout, onAdd }) {
   return (
     <Button
       color='tertiary'

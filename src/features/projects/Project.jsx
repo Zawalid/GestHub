@@ -2,38 +2,26 @@ import { PRIORITY_COLORS, STATUS_COLORS } from '@/utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { ToolTip } from '@/components/ui/ToolTip';
-import { canViewProject, cn, formatDate } from '@/utils/helpers';
-import { useUser } from '@/hooks/useUser';
-import { SiAdguard } from 'react-icons/si';
-import { Button } from '@/components/ui';
+import { cn, formatDate } from '@/utils/helpers';
 import { useInternsByIds } from '../interns/useInterns';
 import Avatar from '@/components/ui/Avatar';
 
 export default function Project({ project, layout }) {
   const { id, subject, description, startDate, endDate, status, priority, teamMembers } = project;
   const navigate = useNavigate();
-  const { user } = useUser();
 
   return (
     <div
       className={cn(
-        'relative grid grid-rows-[24px_auto_20px_28px] gap-3 rounded-lg border  border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95',
+        'relative grid cursor-pointer grid-rows-[24px_auto_20px_28px] gap-3 rounded-lg  border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95',
         layout === 'grid' && 'h-[240px]',
-        canViewProject(user, project) ? 'cursor-pointer' : 'opacity-50',
         priority !== 'None' && 'rounded-tr-none'
       )}
-      onClick={() => canViewProject(user, project) && navigate(String(id))}
+      onClick={() => navigate(String(id))}
     >
       <PriorityIndicator priority={priority} />
       <div className='flex items-center justify-between'>
         <Date startDate={startDate} endDate={endDate} />
-        {user?.role === 'supervisor' && project.supervisor === user?.id && (
-          <ToolTip content={<span className='text-xs text-text-secondary'>Under Your Supervision</span>}>
-            <Button shape='icon' size='small' className='bg-primary text-white hover:bg-primary'>
-              <SiAdguard />
-            </Button>
-          </ToolTip>
-        )}
       </div>
       <div className='space-y-2'>
         <h3 className='line-clamp-2 text-lg font-semibold text-text-primary'>{subject}</h3>

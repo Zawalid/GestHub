@@ -62,7 +62,7 @@ export default function Intern() {
         <div className='absolute left-0 top-0 h-[90px] w-full bg-background-secondary'></div>
         <div className='relative z-10 mt-5 flex items-center gap-5'>
           <Avatar className='h-24 w-24' custom={{avatar ,gender}} />
-          <div className='flex flex-1 items-center justify-between'>
+          <div className='flex flex-1 gap-6 items-center justify-between'>
             <div className=''>
               <h3 className='text-xl font-semibold text-text-primary'>{fullName}</h3>
               <p className='text-sm font-medium text-text-secondary'>{specialty || 'Not specified'}</p>

@@ -2,7 +2,7 @@ import { Button } from '@/components/ui';
 import Avatar from '@/components/ui/Avatar';
 import { useUploadFile } from '@/hooks/useUploadFile';
 
-export function ProfileAvatar({ avatar, onChange, disabled, name = 'Image' }) {
+export function ProfileAvatar({ avatar, onChange, disabled, name = 'Image',role }) {
   const { openFilePicker } = useUploadFile({ onChange });
 
   return (
@@ -15,7 +15,7 @@ export function ProfileAvatar({ avatar, onChange, disabled, name = 'Image' }) {
         // src={avatar || "/images/default-profile.jpg"}
         alt={name}
       /> */}
-      <Avatar className='h-28 w-28' custom={{ avatar: avatar?.src }} alt={name} />
+      <Avatar className='h-28 w-28' custom={{ avatar: avatar?.src,role }} alt={name} />
       <div>
         <div className='flex w-fit flex-wrap gap-x-5 gap-y-2'>
           <Button

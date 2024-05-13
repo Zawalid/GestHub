@@ -63,7 +63,7 @@ export function Selected() {
             return (
               <ToolTip
                 key={text}
-                hidden={!message}
+                hidden={!message || !disabled}
                 content={<span className='text-xs text-text-secondary'>{message}</span>}
               >
                 <div

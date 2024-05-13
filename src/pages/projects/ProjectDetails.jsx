@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useProject } from '../../features/projects/useProjects';
 import ProjectOverview from '@/features/projects/ProjectOverview/ProjectOverview';
-import { canViewProject, capitalize, changeTitle } from '@/utils/helpers';
+import { capitalize, changeTitle } from '@/utils/helpers';
 import { Status } from '@/components/ui';
 import { useUser } from '@/hooks/useUser';
 
@@ -17,12 +17,7 @@ export function ProjectDetails() {
   }, [id, tab, navigate]);
 
   useEffect(() => {
-    const title =
-      project && !canViewProject(user, project)
-        ? 'Access Denied'
-        : project
-          ? `${project?.subject} | ${capitalize(tab)}`
-          : 'Project Not Found';
+    const title = project ? `${project?.subject} | ${capitalize(tab)}` : 'Project Not Found';
     changeTitle(title);
   }, [project, tab, user]);
 
@@ -39,13 +34,8 @@ export function ProjectDetails() {
         }
       />
     );
-  if (project && !canViewProject(user, project))
-    return (
-      <Status
-        status='locked'
-        message='You do not have the necessary permissions to view this project. Please verify the project ID .'
-      />
-    );
 
   return <ProjectOverview />;
 }
+
+// message='You do not have the necessary permissions to view this project. Please verify the project ID .'

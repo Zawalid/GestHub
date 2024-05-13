@@ -90,7 +90,7 @@ export function useUser() {
   });
 
   return {
-    user: data ? { ...formatUserData(data, true, true), cv: getFile(data, 'cv'),role : 'super-admin' } : null,
+    user: data ? { ...formatUserData(data, true, true), cv: getFile(data, 'cv'), } : null,
     isAuthenticated: Boolean(data),
     isLoading: isPending,
     error,

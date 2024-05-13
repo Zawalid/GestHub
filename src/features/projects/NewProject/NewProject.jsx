@@ -8,7 +8,6 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Summary } from './Summary';
 import { useAddProject } from '../useProjects';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useUser } from '@/hooks/useUser';
 
 const steps = [
   {
@@ -44,6 +43,7 @@ const defaultProject = {
     startDate: '',
     endDate: '',
     priority: 'None',
+    supervisor: 'Select Supervisor',
   },
   'Team Members': [],
   'Starter Tasks': [],
@@ -58,7 +58,6 @@ export default function NewProject() {
   const [projectManager, setProjectManager] = useState(null);
   const { mutate: addProject, isPending } = useAddProject();
   const [parent] = useAutoAnimate({ duration: 400 });
-  const { user } = useUser();
 
   const nextStep = steps.find((step) => step.number - 1 === currentStep.number);
   const backStep = steps.find((step) => step.number + 1 === currentStep.number);
@@ -89,7 +88,7 @@ export default function NewProject() {
       status: 'Not Started',
       tasks: projectData['Starter Tasks'],
       teamMembers: projectData['Team Members'].map((t) => t.id),
-      supervisor_id: user?.id,
+      supervisor_id: projectData['Basic Info']?.supervisor?.id,
       intern_id: projectManager,
     };
     addProject(project, {

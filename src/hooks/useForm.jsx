@@ -121,14 +121,14 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
     fields
       .filter((field) => !field.hidden)
       .forEach((field) => {
-        const { name, type, placeholder, label, rules, customComponent } = field;
+        const { name, type, placeholder, label, rules, customComponent, format } = field;
 
         inputs[name] = customComponent ? (
           <Custom Component={customComponent} {...{ field, setValue, getValue }} />
         ) : (
           <Input
             placeholder={placeholder || label}
-            value={values?.[name] || ''}
+            value={format?.(values?.[name]) || values?.[name] || ''}
             onChange={(e) => {
               validate(name, e.target.value, getRules(name, label, type, rules));
               setValue(name, e.target.value);

@@ -2,8 +2,11 @@ import { DropDown } from '@/components/ui/DropDown';
 import { useForm } from '@/hooks/useForm';
 import { RULES } from '@/utils/constants';
 import { useEffect } from 'react';
+import { UsersDropDown } from './StarterTasks';
+import { useSupervisors } from '@/hooks/index';
 
 export function BasicInfo({ updateStatus, updateState, state, onSubmit, className, actionButtons }) {
+  const { supervisors } = useSupervisors();
   const {
     options: { isValid, isUpdated, formInputs, values, getValue, setValue, handleSubmit, reset },
   } = useForm({
@@ -19,11 +22,7 @@ export function BasicInfo({ updateStatus, updateState, state, onSubmit, classNam
         label: 'Description',
         type: 'textarea',
         placeholder: 'Enter description...',
-        rows: '5',
-      },
-      {
-        name: 'priority',
-        hidden: true,
+        rows: '9',
       },
       {
         name: 'startDate',
@@ -35,6 +34,15 @@ export function BasicInfo({ updateStatus, updateState, state, onSubmit, classNam
         type: 'date',
         label: 'End Date',
         rules: { ...RULES.endDate },
+      },
+      {
+        name: 'priority',
+        hidden: true,
+      },
+      {
+        name: 'supervisor',
+        hidden: true,
+        rules: { validate: (val) => val !== 'Select Supervisor' || 'The supervisor is required' },
       },
     ],
     onSubmit,
@@ -76,6 +84,13 @@ export function BasicInfo({ updateStatus, updateState, state, onSubmit, classNam
               ))}
             </DropDown>
           </div>
+          <UsersDropDown
+            users={supervisors}
+            name='Supervisor'
+            defaultVal='Select Supervisor'
+            value={getValue('supervisor')}
+            setValue={(data) => setValue('supervisor', data)}
+          />
         </div>
       </div>
       {actionButtons && actionButtons({ handleSubmit, reset, isUpdated, isValid })}

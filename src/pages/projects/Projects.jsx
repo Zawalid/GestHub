@@ -11,7 +11,7 @@ export function Projects() {
 
   return (
     <Operations
-      data={user?.role === 'intern' ? projects?.filter((p) => user?.projects?.includes(+p.id)) : projects}
+      data={projects}
       isLoading={isLoading}
       error={error}
       sortOptions={[
@@ -46,7 +46,13 @@ export function Projects() {
         <Operations.Search />
       </div>
       <ProjectsList />
-      {['supervisor', 'super-admin'].includes(user?.role) && <NewProject />}
+      {['admin', 'super-admin'].includes(user?.role) && <NewProject />}
     </Operations>
   );
 }
+
+/* 
+ Admin | Super-Admin : Create/Delete/Access All
+ Supervisor | Project Manager : Update/Access/(Create/Delete/Update)Tasks  -> Assigned Projects
+ Intern : Access/(Update)Assigned Tasks -> Assigned Projects
+*/

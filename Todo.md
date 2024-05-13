@@ -26,13 +26,13 @@
 - [x] add specialty to the intern form
 - [x] admin and super-admin are the same as the user role
 - [x] add checkbox for accept terms
-- [ ] intern overview
 - [x] notifications for the user
-- [ ] only super-admin can create a project
-- [ ] supervisor can see their projects only
+- [x] only super-admin can create a project
+- [x] supervisor can see their projects only
 - [ ] only free interns in project's creation team members selection
 - [x] clicks on the overview
 - [x] filter by sector in applications
+- [ ] intern overview
 - [ ] pages creation / update home page
 - [ ] settings
 - [ ] editor for about (TipTap)
@@ -43,6 +43,8 @@
 - [x] use academic level as a dropdown
 - [x] interns table filter (status/gender)
 - [x] fixed table header
+- [ ] task view
+- [ ] add count to the heading
  
 
 

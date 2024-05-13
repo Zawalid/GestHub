@@ -90,6 +90,7 @@ export default function Profile() {
             avatar={getValue('avatar')}
             onChange={(avatar) => setValue('avatar', avatar)}
             disabled={isPending}
+            role={user?.role}
           />
         </div>
 

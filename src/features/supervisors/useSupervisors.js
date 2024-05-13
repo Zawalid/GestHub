@@ -18,7 +18,7 @@ export function useSupervisors() {
     queryFn: getAllSupervisors,
   });
 
-  return { supervisors: data?.map(formatUserData), error, isLoading: isPending };
+  return { supervisors: data?.map((s) => formatUserData(s)), error, isLoading: isPending };
 }
 
 export function useSupervisor(id) {

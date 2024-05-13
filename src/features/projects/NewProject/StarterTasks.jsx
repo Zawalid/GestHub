@@ -105,6 +105,8 @@ function TasksList({ tasks, setTasks, setCurrentTask, setCurrentTab, display }) 
 }
 
 export function NewTask({ className, status, onCancel, currentTask, onSubmit, teamMembers }) {
+  const { interns } = useInternsByIds(teamMembers);
+
   const defaultTask = {
     title: '',
     description: '',
@@ -114,7 +116,7 @@ export function NewTask({ className, status, onCancel, currentTask, onSubmit, te
   };
 
   const {
-    options: {  isUpdated, formInputs, handleSubmit, reset, getValue, setValue, updateValues },
+    options: { isUpdated, formInputs, handleSubmit, reset, getValue, setValue, updateValues },
   } = useForm({
     defaultValues: currentTask || defaultTask,
     fields: [
@@ -129,7 +131,7 @@ export function NewTask({ className, status, onCancel, currentTask, onSubmit, te
         type: 'textarea',
         placeholder: "Task's description",
         rows: '5',
-        rules : {required : false}
+        rules: { required: false },
       },
       {
         name: 'priority',
@@ -163,7 +165,13 @@ export function NewTask({ className, status, onCancel, currentTask, onSubmit, te
           {formInputs['description']}
         </div>
         <div className='flex flex-1 flex-col gap-3.5'>
-          <InternsDropDown teamMembers={teamMembers} getValue={getValue} setValue={setValue} />
+          <UsersDropDown
+            users={interns}
+            name='Assignee'
+            value={getValue('assignee')}
+            setValue={(data) => setValue('assignee', data)}
+            defaultVal='None'
+          />
           <div className='flex flex-col gap-1.5'>
             <label className='text-sm font-medium text-text-tertiary'>Priority</label>
             <DropDown
@@ -199,16 +207,18 @@ export function NewTask({ className, status, onCancel, currentTask, onSubmit, te
   );
 }
 
-function InternsDropDown({ teamMembers, getValue, setValue }) {
-  const { interns } = useInternsByIds(teamMembers);
-
+export function UsersDropDown({ users, name, value, setValue, defaultVal }) {
   return (
     <div className='flex flex-col gap-1.5'>
-      <label className='text-sm font-medium capitalize text-text-tertiary'>Assignee</label>
+      <label className='text-sm font-medium capitalize text-text-tertiary'>{name}</label>
       <DropDown
         toggler={
           <DropDown.Toggler>
-            {getValue('assignee') === 'None' ? 'None' : <Intern intern={getValue('assignee')} />}
+            {value === defaultVal ? (
+              defaultVal
+            ) : (
+              <Intern intern={{ ...value, fullName: `${value?.firstName} ${value?.lastName}` }} />
+            )}
           </DropDown.Toggler>
         }
         options={{
@@ -216,23 +226,25 @@ function InternsDropDown({ teamMembers, getValue, setValue }) {
           className: 'overflow-y-auto',
         }}
       >
-        {interns?.map((intern) => {
-          const { id, firstName, lastName, email, avatar } = intern;
+        {users?.map((user) => {
+          const { id, firstName, lastName, email, avatar } = user;
           return (
             <DropDown.Option
               size='small'
               key={id}
-              onClick={() => setValue('assignee', { id, firstName, lastName, email, avatar })}
-              isCurrent={intern === getValue('assignee')}
+              onClick={() => setValue({ id, firstName, lastName, email, avatar })}
+              isCurrent={user === value}
             >
-              <Intern intern={intern} />
+              <Intern intern={user} />
             </DropDown.Option>
           );
         })}
-        <DropDown.Option onClick={() => setValue('assignee', 'None')} isCurrent={'None' === getValue('assignee')}>
-          <MdOutlineDoNotDisturb size={20} />
-          <span className='text-base'>None</span>
-        </DropDown.Option>
+        {defaultVal === 'None' && (
+          <DropDown.Option onClick={() => setValue('None')} isCurrent={'None' === value}>
+            <MdOutlineDoNotDisturb size={20} />
+            <span className='text-base'>None</span>
+          </DropDown.Option>
+        )}
       </DropDown>
     </div>
   );

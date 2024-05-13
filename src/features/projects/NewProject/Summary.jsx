@@ -16,9 +16,16 @@ export function Summary({ projectData }) {
         name: 'description',
         label: 'Description',
         type: 'textarea',
-        rows: '5',
+        rows: '9',
         showIcon: false,
         readOnly: true,
+      },
+      {
+        name: 'supervisor',
+        label: 'Supervisor',
+        showIcon: false,
+        readOnly: true,
+        format: (val) => `${val?.firstName} ${val?.lastName}`,
       },
       {
         name: 'startDate',
@@ -52,7 +59,7 @@ export function Summary({ projectData }) {
           {formInputs['description']}
           <div className='flex flex-col gap-1.5'>
             <label className='text-sm font-medium text-text-tertiary'>Priority</label>
-            <button className='dropdown-toggler cursor-auto bg-background-disabled hover:bg-background-disabled'>
+            <button className='cursor-auto items-center justify-between rounded-lg border border-border p-2 text-start  text-sm text-text-secondary bg-background-disabled'>
               {projectData['Basic Info'].priority}
             </button>
           </div>
@@ -60,15 +67,16 @@ export function Summary({ projectData }) {
         <div className='flex flex-1 flex-col gap-5'>
           {formInputs['startDate']}
           {formInputs['endDate']}
+          {formInputs['supervisor']}
           <div className='flex flex-col gap-1.5'>
             <label className='text-sm font-medium text-text-tertiary'>Team Members</label>
-            <button className='dropdown-toggler bg-background-disabled cursor-auto hover:bg-background-disabled'>
+            <button className='cursor-auto items-center justify-between rounded-lg border border-border p-2 text-start  text-sm text-text-secondary bg-background-disabled'>
               {teamMembers.length > 0 ? `${teamMembers.map((t) => t.fullName).join(' | ')}` : 'No team assembled'}
             </button>
           </div>
           <div className='flex flex-col gap-1.5'>
             <label className='text-sm font-medium text-text-tertiary'>Tasks</label>
-            <button className='dropdown-toggler bg-background-disabled cursor-auto hover:bg-background-disabled'>
+            <button className='cursor-auto items-center justify-between rounded-lg border border-border p-2 text-start  text-sm text-text-secondary bg-background-disabled'>
               {tasks.length > 0 ? `${tasks.length} task${tasks.length > 1 ? 's' : ''} added` : 'No tasks added'}
             </button>
           </div>

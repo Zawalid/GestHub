@@ -154,7 +154,7 @@ export function AllInterns({ teamMembers, setTeamMembers, filter, selectedMember
   );
 }
 
-export function Intern({ intern: { fullName, email, avatar, gender }, isProjectManager }) {
+export function Intern({ intern: { fullName, email, avatar, gender } = {}, isProjectManager }) {
   return (
     <div className='flex items-center gap-2'>
       <Avatar custom={{ avatar, gender }} alt={fullName} />

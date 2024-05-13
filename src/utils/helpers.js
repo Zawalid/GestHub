@@ -195,15 +195,6 @@ export const capitalize = (string) => string?.charAt(0).toUpperCase() + string?.
 
 export const getProgress = (ratio) => +(ratio ? (ratio % 1 === 0 ? Math.floor(ratio) : ratio.toFixed(1)) : 0);
 
-export const canViewProject = (user, project) => {
-  // return ['intern', 'supervisor'].includes(user?.role) && user?.projects?.includes(project.id);
-  return (
-    (user?.role === 'intern' && user?.projects?.includes(project.id)) ||
-    (user?.role === 'supervisor' && project?.supervisor === user?.id) ||
-    user?.role === 'super-admin'
-  );
-};
-
 export const getFile = (data, type) => {
   const file = data?.files?.find((file) => file.type === type)?.url;
   return file ? `/assets${file}` : null;

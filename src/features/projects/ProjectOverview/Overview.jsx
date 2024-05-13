@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDeleteProject, useProject, useUpdateProject } from '../useProjects';
-import { Button, DropDown, Modal, ToolTip } from '@/components/ui';
-import { IoEllipsisHorizontalSharp, IoFlag, IoTrashOutline, MdDriveFileRenameOutline } from '@/components/ui/Icons';
+import { Button, Modal, ToolTip } from '@/components/ui';
+import {  IoFlag, IoTrashOutline, MdDriveFileRenameOutline } from '@/components/ui/Icons';
 import { PRIORITY_COLORS, STATUS_COLORS } from '@/utils/constants';
 import { useConfirmationModal } from '@/hooks';
 import { BasicInfo } from '../NewProject/BasicInfo';
@@ -14,7 +14,7 @@ import { Stats } from './Stats';
 export default function Overview() {
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
-  const { project,isLoading } = useProject(id);
+  const { project, isLoading } = useProject(id);
   const { subject, status, progress, priority } = project || {};
   const { user } = useUser();
 
@@ -41,52 +41,46 @@ export default function Overview() {
             </p>
           </div>
         </div>
-        {['supervisor', 'super-admin'].includes(user?.role) && (
+        {['super-admin', 'admin', 'supervisor'].includes(user?.role) && (
           <>
-            <Actions id={id} onEdit={() => setIsOpen(true)} />
+            <Actions id={id} onEdit={() => setIsOpen(true)} role={user?.role} />
             <EditProject isOpen={isOpen} onClose={() => setIsOpen(false)} project={project} />
           </>
         )}
       </div>
       <Details project={project} />
-        <Stats isLoading={isLoading} tasks={project?.tasks || []} />
+      <Stats isLoading={isLoading} tasks={project?.tasks || []} />
       <TeamMembers project={project} />
     </div>
   );
 }
 
-function Actions({ id, onEdit }) {
+function Actions({ id, onEdit, role }) {
   const { openModal } = useConfirmationModal();
   const { mutate } = useDeleteProject();
   const navigate = useNavigate();
 
   return (
-    <DropDown
-      toggler={
-        <Button shape='icon'>
-          <IoEllipsisHorizontalSharp />
+    <div className='flex gap-1.5'>
+      {role !== 'supervisor' && (
+        <Button
+          shape='icon'
+          onClick={() => {
+            openModal({
+              message: 'Are you sure you want to delete this project ?',
+              title: 'Delete Project',
+              confirmText: 'Delete',
+              onConfirm: () => mutate(id, { onSuccess: () => navigate('/app/projects') }),
+            });
+          }}
+        >
+          <IoTrashOutline />
         </Button>
-      }
-      options={{ className: 'w-[200px]' }}
-    >
-      <DropDown.Option onClick={onEdit}>
+      )}
+      <Button shape='icon' onClick={onEdit}>
         <MdDriveFileRenameOutline />
-        Edit Project
-      </DropDown.Option>
-      <DropDown.Option
-        onClick={() =>
-          openModal({
-            message: 'Are you sure you want to delete this project ?',
-            title: 'Delete Project',
-            confirmText: 'Delete',
-            onConfirm: () => mutate(id, { onSuccess: () => navigate('/app/projects') }),
-          })
-        }
-      >
-        <IoTrashOutline />
-        Delete Project
-      </DropDown.Option>
-    </DropDown>
+      </Button>
+    </div>
   );
 }
 
