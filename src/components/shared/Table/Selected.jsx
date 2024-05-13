@@ -1,0 +1,105 @@
+import { useState } from 'react';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa6';
+import { Button, Modal } from '@/components/ui';
+import { useTable } from '.';
+import { useConfirmationModal } from '@/hooks/useConfirmationModal';
+import { capitalize } from '@/utils/helpers';
+
+export function Selected() {
+  const [currentAction, setCurrentAction] = useState(0);
+  const {
+    data,
+    selected,
+    selectedOptions: { isOpen, actions, deleteOptions, onClose },
+    onSelect,
+    setIsOperating,
+  } = useTable();
+  const { openModal } = useConfirmationModal();
+
+  const close = () => {
+    onClose();
+    setCurrentAction(0);
+    selected.forEach((id) => onSelect(id));
+  };
+
+  const finalActions = deleteOptions
+    ? [
+        ...actions,
+        {
+          text: 'Delete',
+          onClick: () =>
+            openModal({
+              message: `Are you sure you want to delete ${selected.length} ${deleteOptions.resourceName.toLowerCase()}(s) ?`,
+              title: `Delete ${capitalize(deleteOptions.resourceName)}s`,
+              confirmText: 'Delete',
+              onConfirm: () => {
+                setIsOperating(true);
+                deleteOptions.onConfirm(selected, () => setIsOperating(false));
+                close();
+              },
+            }),
+        },
+      ]
+    : actions;
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      className={`fixed left-1/2 z-30 h-fit w-[95%] -translate-x-1/2 flex-row items-center justify-between rounded-lg border px-5 py-3 shadow-lg transition-[bottom] duration-300 sm:w-[500px] ${isOpen ? 'bottom-11' : '-bottom-[100px]'}`}
+      hideOverlay={true}
+    >
+      <h2 className='text-sm font-semibold text-text-secondary '>
+        <span className='mr-2 rounded-md bg-secondary px-2 py-1 text-white  '>{selected.length}</span>
+        Row(s) Selected.
+      </h2>
+      <div className='flex items-center gap-3'>
+        <Button color='tertiary' onClick={close}>
+          Cancel
+        </Button>
+        <div className='relative overflow-hidden '>
+          <Button className='invisible'>{finalActions.map((a) => a.text).toSorted()[0]}</Button>
+          {finalActions.map(({ text, color, onClick, disabledCondition }, i) => {
+            const disabled = disabledCondition ? disabledCondition(selected, data) : false;
+            return (
+              <Button
+                key={text}
+                color={color || 'red'}
+                className='absolute right-0 top-0 w-full transition-all duration-500'
+                style={{ transform: `translateY(${(currentAction - i) * 100}%)` }}
+                onClick={() => {
+                  setIsOperating(true);
+                  onClick(selected, close, setIsOperating);
+                }}
+                disabled={disabled}
+              >
+                {text}
+              </Button>
+            );
+          })}
+        </div>
+        {finalActions.length > 1 && (
+          <div className='flex flex-col gap-0.5'>
+            <Button
+              size='small'
+              shape='icon'
+              className='h-fit w-fit text-xs'
+              disabled={currentAction === 0}
+              onClick={() => currentAction > 0 && setCurrentAction((prev) => prev - 1)}
+            >
+              <FaChevronUp />
+            </Button>
+            <Button
+              size='small'
+              shape='icon'
+              className='h-fit w-fit text-xs'
+              disabled={currentAction === finalActions.length - 1}
+              onClick={() => currentAction < finalActions.length - 1 && setCurrentAction((prev) => prev + 1)}
+            >
+              <FaChevronDown />
+            </Button>
+          </div>
+        )}
+      </div>
+    </Modal>
+  );
+}

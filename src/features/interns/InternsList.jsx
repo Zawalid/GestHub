@@ -6,11 +6,12 @@ import {
   useUpdateIntern,
   useAcceptUsers,
   useAcceptedUsers,
+  useDeleteInterns,
 } from './useInterns';
 import { TableLayout } from '@/layouts/TableLayout';
 import { Button, DropDown, Modal } from '@/components/ui';
 import { FaPlus, LuUser } from '@/components/ui/Icons';
-import { Table } from '@/components/shared/Table/';
+import { Table, useTable } from '@/components/shared/Table/';
 import { AllInterns } from '../projects/NewProject/TeamMembers';
 import { useState } from 'react';
 import { AcademicLevel, Gender } from '@/pages/auth/Register';
@@ -18,9 +19,9 @@ import { getFilter, getIntervals } from '@/utils/helpers';
 
 export default function InternsList() {
   const { interns, isLoading, error } = useInterns();
-  const { mutate: addIntern } = useAddIntern();
   const { mutate: updateIntern } = useUpdateIntern();
   const { mutate: deleteIntern } = useDeleteIntern();
+  const { mutate: deleteInterns } = useDeleteInterns();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -31,7 +32,12 @@ export default function InternsList() {
         error={error}
         resourceName='Intern'
         columns={[
-          { key: 'id', displayLabel: 'ID', visible: true, type: 'number' },
+          {
+            key: 'id',
+            displayLabel: 'ID',
+            visible: true,
+            type: 'number',
+          },
           {
             key: 'fullName',
             displayLabel: 'Full Name',
@@ -187,38 +193,51 @@ export default function InternsList() {
         onUpdate={updateIntern}
         onDelete={deleteIntern}
         layoutOptions={{
-          displayNewRecord: (
-            <DropDown
-              toggler={
-                <Button display='with-icon'>
-                  <FaPlus />
-                  New Intern
-                </Button>
-              }
-              togglerDisabled={isLoading}
-              options={{ className: 'w-32' }}
-            >
-              <Table.NewRecord
-                onAdd={addIntern}
-                component={(onAdd) => (
-                  <DropDown.Option onClick={onAdd}>
-                    <FaPlus />
-                    New
-                  </DropDown.Option>
-                )}
-              />
-
-              <DropDown.Option onClick={() => setIsOpen(true)}>
-                <LuUser />
-                Select
-              </DropDown.Option>
-            </DropDown>
-          ),
+          displayNewRecord: <NewIntern setIsOpen={setIsOpen} />,
           displayTableRecord: true,
+        }}
+        selectedOptions={{
+          deleteOptions: {
+            resourceName: 'intern',
+            onConfirm: (ids,setIsOperating) => deleteInterns(ids,{ onSettled: () => setIsOperating(false) }),
+          },
         }}
       />
       <SelectUsers isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
+  );
+}
+
+function NewIntern({setIsOpen}) {
+  const { disabled } = useTable();
+  const { mutate: addIntern } = useAddIntern();
+
+  return (
+    <DropDown
+      toggler={
+        <Button display='with-icon'>
+          <FaPlus />
+          New Intern
+        </Button>
+      }
+      togglerDisabled={disabled}
+      options={{ className: 'w-32' }}
+    >
+      <Table.NewRecord
+        onAdd={addIntern}
+        component={(onAdd) => (
+          <DropDown.Option onClick={onAdd}>
+            <FaPlus />
+            New
+          </DropDown.Option>
+        )}
+      />
+
+      <DropDown.Option onClick={() => setIsOpen(true)}>
+        <LuUser />
+        Select
+      </DropDown.Option>
+    </DropDown>
   );
 }
 
@@ -247,7 +266,7 @@ function SelectUsers({ isOpen, onClose }) {
           disabled={interns.length === 0}
           onClick={() => {
             close();
-            mutate({ ids: interns.map((g) => g.id) });
+            mutate(interns.map((g) => g.id));
           }}
         >
           Add Interns

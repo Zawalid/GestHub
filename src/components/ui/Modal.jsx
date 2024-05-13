@@ -3,23 +3,39 @@ import { cn } from '../../utils/helpers';
 import { Button } from './Button';
 import { PiX } from 'react-icons/pi';
 
-export function Modal({ children, isOpen, onClose, className, overlayClassName, closeButton, closeOnBlur = true }) {
+export function Modal({
+  children,
+  isOpen,
+  onClose,
+  className,
+  overlayClassName,
+  closeButton,
+  closeOnBlur = true,
+  hideOverlay,
+}) {
+  const content = (
+    <Content isOpen={isOpen} className={className}>
+      {(closeButton || closeButton === false) && (
+        <Button
+          className={`absolute right-2 top-2 z-10 ${closeButton === false ? 'flex md:hidden' : ''}`}
+          onClick={onClose}
+          shape='icon'
+          size='small'
+        >
+          <PiX />
+        </Button>
+      )}
+      {children}
+    </Content>
+  );
   return createPortal(
-    <Overlay isOpen={isOpen} closeOnBlur={closeOnBlur} onClose={onClose} className={overlayClassName}>
-      <Content isOpen={isOpen} className={className}>
-        {(closeButton || closeButton === false) && (
-          <Button
-            className={`absolute right-2 top-2 z-10 ${closeButton === false ? 'flex md:hidden' : ''}`}
-            onClick={onClose}
-            shape='icon'
-            size='small'
-          >
-            <PiX />
-          </Button>
-        )}
-        {children}
-      </Content>
-    </Overlay>,
+    hideOverlay ? (
+      content
+    ) : (
+      <Overlay isOpen={isOpen} closeOnBlur={closeOnBlur} onClose={onClose} className={overlayClassName}>
+        {content}
+      </Overlay>
+    ),
     document.getElementById('root')
   );
 }

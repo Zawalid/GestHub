@@ -10,7 +10,8 @@ const button = tv({
       primary: 'bg-primary text-white hover:bg-primary-hover',
       secondary: 'bg-secondary text-white hover:bg-secondary-hover',
       tertiary: 'bg-background-secondary text-text-primary hover:bg-background-tertiary',
-      delete: 'bg-red-600 text-white hover:bg-red-700',
+      red: 'bg-red-600 text-white hover:bg-red-700',
+      green: 'bg-green-600 text-white hover:bg-green-700',
     },
     size: {
       small: 'px-2 py-1.5 text-xs rounded-md',

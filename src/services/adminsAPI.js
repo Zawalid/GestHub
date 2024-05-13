@@ -9,3 +9,5 @@ export const addAdmin = async (data) => await axiosFetch('profiles', 'POST', {..
 export const updateAdmin = async (id, data) => await axiosFetch(`profiles/${id}`, 'PUT', {...data,role : 'admin'});
 
 export const deleteAdmin = async (id) => await axiosFetch(`profiles/${id}`, 'DELETE');
+
+export const deleteAdmins = async (ids) => await axiosFetch(`multiple/admins/delete`, 'POST', { ids });

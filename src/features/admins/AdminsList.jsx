@@ -1,5 +1,5 @@
 import { RULES } from '@/utils/constants';
-import { useAdmins, useAddAdmin, useDeleteAdmin, useUpdateAdmin } from './useAdmins';
+import { useAdmins, useAddAdmin, useDeleteAdmin, useUpdateAdmin, useDeleteAdmins } from './useAdmins';
 import { TableLayout } from '@/layouts/TableLayout';
 import { Gender } from '@/pages/auth/Register';
 
@@ -8,6 +8,7 @@ export default function AdminsList() {
   const { mutate: addAdmin } = useAddAdmin();
   const { mutate: updateAdmin } = useUpdateAdmin();
   const { mutate: deleteAdmin } = useDeleteAdmin();
+  const { mutate: deleteAdmins } = useDeleteAdmins();
 
   return (
     <TableLayout
@@ -60,24 +61,24 @@ export default function AdminsList() {
           name: 'gender',
           customComponent: <Gender className='col-span-2' />,
         },
-         {
-            name: 'password',
-            type: 'password',
-            label: 'Password',
-          },
-          {
-            name: 'password_confirmation',
-            type: 'password',
-            label: 'Confirm Password',
-            rules: { ...RULES.passwordConfirmation },
-          },
+        {
+          name: 'password',
+          type: 'password',
+          label: 'Password',
+        },
+        {
+          name: 'password_confirmation',
+          type: 'password',
+          label: 'Confirm Password',
+          rules: { ...RULES.passwordConfirmation },
+        },
       ]}
       formDefaults={{
         firstName: '',
         lastName: '',
         email: '',
         phone: '',
-        gender : 'M',
+        gender: 'M',
         password: '',
         password_confirmation: '',
       }}
@@ -90,6 +91,12 @@ export default function AdminsList() {
       onAdd={addAdmin}
       onUpdate={updateAdmin}
       onDelete={deleteAdmin}
+      selectedOptions={{
+        deleteOptions: {
+          resourceName: 'admin',
+          onConfirm: (ids,setIsOperating) => deleteAdmins(ids,{ onSettled: () => setIsOperating(false) }),
+        },
+      }}
     />
   );
 }

@@ -4,6 +4,7 @@ import {
   acceptUsers,
   addIntern,
   deleteIntern,
+  deleteInterns,
   generateAttestation,
   generateAttestations,
   getAcceptedUsers,
@@ -104,6 +105,15 @@ export const useDeleteIntern = () =>
     loadingMessage: 'Deleting intern...',
     successMessage: 'Intern deleted successfully',
     errorMessage: 'Failed to delete intern',
+  });
+
+export const useDeleteInterns = () =>
+  useMutate({
+    queryKey: ['interns', 'delete', 'multiple'],
+    mutationFn: deleteInterns,
+    loadingMessage: 'Deleting interns...',
+    successMessage: 'Interns deleted successfully',
+    errorMessage: 'Failed to delete interns',
   });
 
 export const useGenerateAttestation = () =>

@@ -9,11 +9,12 @@ export function useMutate({ queryKey, mutationFn, showToast = true, loadingMessa
   const { mutate, isPending, error, isSuccess, reset, } = useMutation({
     mutationKey: queryKey,
     mutationFn,
-    onMutate: () => {
+    onMutate: async() => {
       if (loadingMessage && showToast)
         toastId.current = toast.loading(loadingMessage, {
           id: toastId.current,
         });
+     
     },
     onSuccess: () => {
       queryClient.invalidateQueries(queryKey);

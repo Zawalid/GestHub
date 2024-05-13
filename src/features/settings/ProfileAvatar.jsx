@@ -27,7 +27,7 @@ export function ProfileAvatar({ avatar, onChange, disabled, name = 'Image' }) {
             Change {name}
           </Button>
           <Button
-            color='delete'
+            color='red'
             className='min-w-[132px] flex-1 md:min-w-max'
             disabled={disabled || !avatar?.src}
             onClick={() => onChange({ src: null, file: null })}

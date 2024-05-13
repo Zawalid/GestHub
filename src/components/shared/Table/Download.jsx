@@ -50,7 +50,7 @@ const exportAsPdf = (data, config, headers, page) => {
 
 //* Download
 export function Download() {
-  const { isLoading } = useTable();
+  const { disabled} = useTable();
 
   return (
     <DropDown
@@ -60,7 +60,7 @@ export function Download() {
           Download
         </Button>
       }
-      togglerDisabled={isLoading}
+      togglerDisabled={disabled}
       options={{
         className: 'w-40',
       }}

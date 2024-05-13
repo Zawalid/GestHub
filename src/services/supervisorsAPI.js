@@ -9,3 +9,5 @@ export const addSupervisor = async (data) => await axiosFetch('profiles', 'POST'
 export const updateSupervisor = async (id, data) => await axiosFetch(`profiles/${id}`, 'PUT', {...data,role : 'supervisor'});
 
 export const deleteSupervisor = async (id) => await axiosFetch(`profiles/${id}`, 'DELETE');
+
+export const deleteSupervisors = async (ids) => await axiosFetch(`multiple/supervisors/delete`, 'POST', { ids });

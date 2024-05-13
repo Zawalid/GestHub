@@ -1,5 +1,11 @@
 import { RULES } from '@/utils/constants';
-import { useSupervisors, useAddSupervisor, useDeleteSupervisor, useUpdateSupervisor } from './useSupervisors';
+import {
+  useSupervisors,
+  useAddSupervisor,
+  useDeleteSupervisor,
+  useUpdateSupervisor,
+  useDeleteSupervisors,
+} from './useSupervisors';
 import { TableLayout } from '@/layouts/TableLayout';
 import { Gender } from '@/pages/auth/Register';
 
@@ -8,6 +14,7 @@ export default function SupervisorsList() {
   const { mutate: addSupervisor } = useAddSupervisor();
   const { mutate: updateSupervisor } = useUpdateSupervisor();
   const { mutate: deleteSupervisor } = useDeleteSupervisor();
+  const { mutate: deleteSupervisors } = useDeleteSupervisors();
 
   return (
     <TableLayout
@@ -90,6 +97,12 @@ export default function SupervisorsList() {
       onAdd={addSupervisor}
       onUpdate={updateSupervisor}
       onDelete={deleteSupervisor}
+      selectedOptions={{
+        deleteOptions: {
+          resourceName: 'supervisor',
+          onConfirm: (ids, setIsOperating) => deleteSupervisors(ids, { onSettled: () => setIsOperating(false) }),
+        },
+      }}
     />
   );
 }

@@ -9,6 +9,7 @@ import { PAGE_LIMIT } from '../../../utils/constants';
 import { TableRecord } from './TableRecord';
 import { Actions } from './Actions';
 import { NewRecord } from './NewRecord';
+import { Selected } from './Selected';
 
 Array.prototype.paginate = function (page, limit) {
   const start = (page - 1) * limit;
@@ -47,12 +48,15 @@ export function TableProvider({
   error,
   columns: tableColumns,
   formFields,
+  selectedOptions: defaultSelectedOptions,
   formDefaults,
   fieldsToSearch,
   downloadOptions,
   displayAllData,
 }) {
   const [columns, setColumns] = useState(tableColumns);
+  const [selected, setSelected] = useState([]);
+  const [isOperating, setIsOperating] = useState(false);
   const [formOptions, setFormOptions] = useState({
     defaultValues: formDefaults,
     fields: formFields,
@@ -63,6 +67,11 @@ export function TableProvider({
     heading: '',
     isOpen: false,
     type: 'create',
+  });
+  const [selectedOptions, setSelectedOptions] = useState({
+    isOpen: false,
+    actions: defaultSelectedOptions?.actions || [],
+    deleteOptions: defaultSelectedOptions?.deleteOptions,
   });
   const [filters, setFilters] = useState({});
   const [limit, setLimit] = useState(PAGE_LIMIT);
@@ -177,6 +186,18 @@ export function TableProvider({
     }));
   };
 
+  const onSelect = (id, isAll) => {
+    setSelected((prev) => {
+      const selected = prev.includes(id) ? (isAll ? prev : prev.filter((s) => s !== id)) : [...prev, id];
+      setSelectedOptions((prev) => ({
+        ...prev,
+        isOpen: selected.length > 0,
+        onClose: () => setSelectedOptions((p) => ({ ...p, isOpen: false })),
+      }));
+      return selected;
+    });
+  };
+
   // Context value
   const context = {
     // data
@@ -187,6 +208,14 @@ export function TableProvider({
     // table
     columns,
     rows: displayAllData ? rows : rows?.paginate(page, limit),
+    disabled: isLoading || selected.length > 0 || isOperating,
+    // Selection
+    selected,
+    isSelecting: selected.length > 0,
+    selectedOptions,
+    onSelect,
+    isOperating,
+    setIsOperating,
     // search
     query,
     onSearch,
@@ -228,3 +257,4 @@ TableProvider.Pagination = Pagination;
 TableProvider.NewRecord = NewRecord;
 TableProvider.TableRecord = TableRecord;
 TableProvider.Actions = Actions;
+TableProvider.Selected = Selected;

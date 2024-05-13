@@ -181,7 +181,7 @@ function GenerateAttestation({ isOpen, onClose, completedInternships }) {
           disabled={generateTo.length === 0}
           onClick={() => {
             close();
-            mutate({ ids: generateTo.map((g) => g.id) });
+            mutate(generateTo.map((g) => g.id));
           }}
         >
           Generate

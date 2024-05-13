@@ -56,7 +56,7 @@ export default function NewProject() {
   const [projectData, setProjectData] = useState(defaultProject);
   const [currentStep, setCurrentStep] = useState(steps[0]);
   const [projectManager, setProjectManager] = useState(null);
-  const { mutate: addProject,isPending } = useAddProject();
+  const { mutate: addProject, isPending } = useAddProject();
   const [parent] = useAutoAnimate({ duration: 400 });
   const { user } = useUser();
 
@@ -140,9 +140,7 @@ function Steps({ steps, currentStep }) {
         <div className='flex flex-col items-center gap-2' key={step.title}>
           <div className='relative h-2 w-16 overflow-hidden rounded-lg bg-background-secondary'>
             <div
-              className={`absolute left-0 h-full bg-primary transition-all duration-500
-     ${currentStep.number >= step.number ? 'w-full' : 'w-0'}
-     `}
+              className={`absolute left-0 h-full bg-primary transition-all duration-500 ${currentStep.number >= step.number ? 'w-full' : 'w-0'}`}
             ></div>
           </div>
           <span className='text-[10px] font-medium text-text-primary'>{step.title}</span>

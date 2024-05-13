@@ -10,7 +10,7 @@ import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
 export function Actions({ onUpdate, onDelete, row, actions }) {
-  const { showForm, confirmOptions, resourceName, rows, onPrevPage, formOptions } = useTable();
+  const { showForm, confirmOptions, resourceName, rows, onPrevPage, formOptions, isSelecting } = useTable();
   const navigate = useNavigateWithQuery();
   const { openModal } = useConfirmationModal();
 
@@ -27,7 +27,7 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
       onClick: () =>
         showForm({
           fields: formOptions.fields.map((field) =>
-            field.name.includes('password') ? { ...field, rules: { ...field.rules , required: false } } : field
+            field.name.includes('password') ? { ...field, rules: { ...field.rules, required: false } } : field
           ),
           defaultValues: row,
           onSubmit: (data) => onUpdate({ id: row.profile_id, data }),
@@ -39,7 +39,7 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
               {row.id}
             </>
           ),
-          type : 'update'
+          type: 'update',
         }),
     },
   ];
@@ -51,6 +51,7 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
           <IoEllipsisHorizontalSharp />
         </Button>
       }
+      togglerDisabled={isSelecting}
     >
       {(actions || defaultActions)
         .filter((action) => !action.hidden?.(row))

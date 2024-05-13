@@ -43,9 +43,9 @@
 - [x] add gender prop
 - [x] use academic level as a dropdown
 - [ ] virtual lists for performance
-- [ ] create a component for date range only
 - [x] interns table filter (status/gender)
-
+- [x] fixed table header
+- [ ] handle currently precessed rows 
  
 
 
@@ -64,5 +64,8 @@
 - [ ] Infinite scroll (projects/offers/notifications)
 - [ ] Emailing
 - [ ] More details about the error
+- [ ] create a component for date range only
 - [ ] Add a custom date picker and  date interval
 - [ ] table multi select (context menu of actions)
+- [ ] import from file
+- [ ] optimistic mutations

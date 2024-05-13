@@ -1,4 +1,12 @@
-import { useDeleteApplication, useApproveApplication, useRejectApplication, useApplications } from './useApplications';
+import {
+  useDeleteApplication,
+  useApproveApplication,
+  useRejectApplication,
+  useApplications,
+  useApproveApplications,
+  useRejectApplications,
+  useDeleteApplications,
+} from './useApplications';
 import { TableLayout } from '@/layouts/TableLayout';
 import { FaRegCircleCheck, FaRegCircleXmark, TbFileSearch } from '@/components/ui/Icons';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
@@ -7,8 +15,11 @@ import { getFilter, getIntervals } from '@/utils/helpers';
 export default function ApplicationsList() {
   const { applications, isLoading, error } = useApplications();
   const { mutate: deleteApplication } = useDeleteApplication();
+  const { mutate: deleteApplications } = useDeleteApplications();
   const { approve } = useApproveApplication();
+  const { approve: approveMultiple } = useApproveApplications();
   const { reject } = useRejectApplication();
+  const { reject: rejectMultiple } = useRejectApplications();
 
   const navigate = useNavigateWithQuery();
 
@@ -21,16 +32,11 @@ export default function ApplicationsList() {
       columns={[
         { key: 'id', displayLabel: 'ID', visible: true, type: 'number' },
         {
-          key: 'firstName',
-          displayLabel: 'First Name',
+          key: 'fullName',
+          displayLabel: 'Full Name',
           visible: true,
           type: 'string',
-        },
-        {
-          key: 'lastName',
-          displayLabel: 'Last Name',
-          visible: true,
-          type: 'string',
+          format: (val, id) => `${applications?.find((i) => i.id === id)?.gender || 'M'}. ${val}`,
         },
         {
           key: 'email',
@@ -121,6 +127,25 @@ export default function ApplicationsList() {
             hidden: (application) => application?.status !== 'Pending',
           },
         ],
+      }}
+      selectedOptions={{
+        actions: [
+          ...[
+            { text: 'Approve', color: 'green', onClick: approveMultiple },
+            { text: 'Reject', onClick: rejectMultiple },
+          ].map((el) => ({
+            ...el,
+            onClick: (ids, onClose, setIsOperating) => {
+              el.onClick(ids, { onConfirm: () => setIsOperating(true), onSettled: () => setIsOperating(false) });
+              onClose();
+            },
+            disabledCondition: (ids, data) => data?.some((app) => ids.includes(app.id) && app.status !== 'Pending'),
+          })),
+        ],
+        deleteOptions: {
+          resourceName: 'application',
+          onConfirm: (ids, setIsOperating) => deleteApplications(ids, { onSettled: () => setIsOperating(false) }),
+        },
       }}
     />
   );

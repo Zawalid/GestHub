@@ -6,6 +6,7 @@ import {
   addSupervisor,
   updateSupervisor,
   deleteSupervisor,
+  deleteSupervisors,
 } from '@/services/supervisorsAPI';
 import { formatUserData } from '@/hooks/useUser';
 
@@ -53,4 +54,13 @@ export const useDeleteSupervisor = () =>
     loadingMessage: 'Deleting supervisor...',
     successMessage: 'Supervisor deleted successfully',
     errorMessage: 'Failed to delete supervisor',
+  });
+
+export const useDeleteSupervisors = () =>
+  useMutate({
+    queryKey: ['supervisors', 'delete', 'multiple'],
+    mutationFn: deleteSupervisors,
+    loadingMessage: 'Deleting supervisors...',
+    successMessage: 'Supervisors deleted successfully',
+    errorMessage: 'Failed to delete supervisors',
   });

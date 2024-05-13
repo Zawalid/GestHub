@@ -76,7 +76,7 @@ export function Pagination() {
 function Details() {
   const { totalItems, totalPages, page } = useTable();
   return (
-    <p className="text-xs overflow-auto flex-1  text-center">
+    <p className="text-xs overflow-auto no_scrollbar flex-1  text-center">
       <Span>Showing</Span>
       <Span variable>{page * PAGE_LIMIT - PAGE_LIMIT + 1}</Span>
       <Span>to</Span>

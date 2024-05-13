@@ -3,7 +3,7 @@ import { Button } from '@/components/ui';
 import { useTable } from '.';
 
 export function NewRecord({ onAdd, component }) {
-  const { showForm, isLoading, resourceName, formOptions,formFields } = useTable();
+  const { showForm,  resourceName, formOptions, formFields, disabled } = useTable();
 
   if (component)
     return component(() =>
@@ -14,7 +14,7 @@ export function NewRecord({ onAdd, component }) {
         defaultValues: formOptions.defaultValues,
         heading: `New ${resourceName}`,
         submitButtonText: `Add ${resourceName}`,
-        type : 'create'
+        type: 'create',
       })
     );
   return (
@@ -30,7 +30,7 @@ export function NewRecord({ onAdd, component }) {
           submitButtonText: `Add ${resourceName}`,
         });
       }}
-      disabled={isLoading}
+      disabled={disabled}
     >
       <FaPlus />
       {`New ${resourceName}`}

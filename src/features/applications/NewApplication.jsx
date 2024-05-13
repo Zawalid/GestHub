@@ -49,8 +49,8 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
   const { offer } = useOffer(id);
 
   const defaultValues = {
-    firstName: user?.firstName,
-    lastName: user?.lastName,
+    fullName: user?.fullName,
+    email: user?.email,
     offer: offer?.title,
     sector: offer?.sector,
     startDate: '',
@@ -66,13 +66,13 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
     defaultValues,
     fields: [
       {
-        name: 'firstName',
-        label: 'First Name',
+        name: 'fullName',
+        label: 'Full Name',
         readOnly: true,
       },
       {
-        name: 'lastName',
-        label: 'Last Name',
+        name: 'email',
+        label: 'Email',
         readOnly: true,
       },
       {
@@ -152,8 +152,8 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
     <>
       <h1 className='mb-5 text-2xl font-bold text-text-primary'>Internship Application</h1>
       <div className='grid items-center gap-x-4 gap-y-2.5 sm:grid-cols-2'>
-        {formInputs['firstName']}
-        {formInputs['lastName']}
+      {formInputs['fullName']}
+          {formInputs['email']}
         {formInputs['offer']}
         {formInputs['sector']}
         {formInputs['startDate']}
@@ -241,7 +241,7 @@ function File({ type, file: { name, size }, onChange, onDelete, disabled }) {
         <Button onClick={openFilePicker} shape='icon' color='secondary' size='small'>
           <LuUpload />
         </Button>
-        <Button shape='icon' size='small' color='delete' disabled={!name} onClick={onDelete}>
+        <Button shape='icon' size='small' color='red' disabled={!name} onClick={onDelete}>
           <IoTrashOutline />
         </Button>
       </div>

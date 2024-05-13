@@ -2,7 +2,7 @@ import { SearchInput } from "../../ui";
 import { useTable } from ".";
 
 export function Search() {
-  const { query, onSearch, isLoading } = useTable();
+  const { query, onSearch, disabled } = useTable();
 
   return (
     <SearchInput
@@ -10,7 +10,7 @@ export function Search() {
       className="flex-1 md:w-[300px]"
       query={query}
       onChange={onSearch}
-      disabled={isLoading}
+      disabled={disabled}
     />
   );
 }

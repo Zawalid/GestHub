@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Modal, Status } from '@/components/ui';
 import { useForm } from '@/hooks/useForm';
-import { FaRegCircleCheck, FaRegCircleXmark, IoEyeOutline } from '@/components/ui/Icons';
+import { FaRegCircleCheck, FaRegCircleXmark, IoEyeOutline, MdOutlinePendingActions } from '@/components/ui/Icons';
 import { useApproveApplication, useApplication, useRejectApplication } from './useApplications';
 import { FileView } from '@/components/ui/FileView';
 import { useNavigateState, useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
+import { formatDate } from '@/utils/helpers';
 
 export default function ApplicationReview() {
   const { id } = useParams();
@@ -17,12 +18,30 @@ export default function ApplicationReview() {
   const source =
     useNavigateState()?.source || (location.pathname.includes('/app/') ? '/app/applications' : '/applications');
 
+  const currentStatus = [
+    {
+      status: 'Pending',
+      color: 'bg-orange-500',
+      icon: <MdOutlinePendingActions />,
+    },
+    {
+      status: 'Approved',
+      color: 'bg-green-600',
+      icon: <FaRegCircleCheck />,
+    },
+    {
+      status: 'Rejected',
+      color: 'bg-red-500',
+      icon: <FaRegCircleXmark />,
+    },
+  ].find((s) => s.status === application?.status);
+
   const {
     options: { formInputs, updateValues },
   } = useForm({
     defaultValues: {
-      firstName: '',
-      lastName: '',
+      fullName: '',
+      email: '',
       startDate: '',
       endDate: '',
       offer: '',
@@ -30,13 +49,13 @@ export default function ApplicationReview() {
     },
     fields: [
       {
-        name: 'firstName',
-        label: 'First Name',
+        name: 'fullName',
+        label: 'Full Name',
         readOnly: true,
       },
       {
-        name: 'lastName',
-        label: 'Last Name',
+        name: 'email',
+        label: 'Email',
         readOnly: true,
       },
       {
@@ -95,21 +114,19 @@ export default function ApplicationReview() {
     }
     return (
       <>
-        {application?.status === 'Approved' && (
-          <div className='mb-5 flex w-fit items-center gap-2 rounded-lg bg-green-600 px-3 py-1'>
-            <FaRegCircleCheck />
-            <h2 className='text-sm font-medium'>Approved</h2>
+        <div className='mb-5 flex items-center justify-between'>
+          <div className={`flex w-fit items-center gap-2 rounded-lg px-3 py-1 ${currentStatus?.color}`}>
+            {currentStatus?.icon}
+            <h3 className='text-sm font-medium'>{currentStatus?.status}</h3>
           </div>
-        )}
-        {application?.status === 'Refused' && (
-          <div className='mb-5 flex w-fit items-center gap-2 rounded-lg bg-red-600 px-3 py-1'>
-            <FaRegCircleXmark />
-            <h2 className='text-sm font-medium'>Refused</h2>
-          </div>
-        )}
+
+          <span className='rounded-md bg-background-tertiary px-2 py-1 text-xs font-medium text-text-secondary'>
+            {formatDate(application?.created_at, true)}
+          </span>
+        </div>
         <div className='grid items-center gap-x-4 gap-y-2.5 sm:grid-cols-2'>
-          {formInputs['firstName']}
-          {formInputs['lastName']}
+          {formInputs['fullName']}
+          {formInputs['email']}
           {formInputs['offer']}
           {formInputs['sector']}
           {formInputs['startDate']}
@@ -125,10 +142,10 @@ export default function ApplicationReview() {
             />
           </div>
         </div>
-        {application?.status === 'Pending' && source === 'app' && (
+        {application?.status === 'Pending' && location.pathname.includes('/app/') && (
           <div className='mt-5 grid grid-cols-2 gap-4'>
             <Button
-              color='delete'
+              color='red'
               display='with-icon'
               className='justify-center'
               onClick={() => reject(id, { onSuccess: close })}

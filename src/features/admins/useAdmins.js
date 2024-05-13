@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMutate } from '@/hooks/useMutate';
-import { getAllAdmins, getAdmin, addAdmin, updateAdmin, deleteAdmin } from '@/services/adminsAPI';
+import { getAllAdmins, getAdmin, addAdmin, updateAdmin, deleteAdmin, deleteAdmins } from '@/services/adminsAPI';
 import { formatUserData } from '@/hooks/useUser';
 
 // Queries
@@ -47,4 +47,13 @@ export const useDeleteAdmin = () =>
     loadingMessage: 'Deleting admin...',
     successMessage: 'Admin deleted successfully',
     errorMessage: 'Failed to delete admin',
+  });
+
+export const useDeleteAdmins = () =>
+  useMutate({
+    queryKey: ['admins', 'delete', 'multiple'],
+    mutationFn: deleteAdmins,
+    loadingMessage: 'Deleting admins...',
+    successMessage: 'Admins deleted successfully',
+    errorMessage: 'Failed to delete admins',
   });

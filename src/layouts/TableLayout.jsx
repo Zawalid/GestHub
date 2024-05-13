@@ -1,5 +1,6 @@
-import { Table } from '@/components/shared/Table';
+import { Table,  } from '@/components/shared/Table';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+
 
 const defaultOptions = {
   displayNewRecord: true,
@@ -7,7 +8,7 @@ const defaultOptions = {
   actions: null,
 };
 
-export function TableLayout({ onAdd, onUpdate, onDelete, canView,layoutOptions = defaultOptions, ...tableProps }) {
+export function TableLayout({ onAdd, onUpdate, onDelete, canView, layoutOptions = defaultOptions, ...tableProps }) {
   const [parent] = useAutoAnimate({ duration: 300 });
   const { displayTableRecord, displayNewRecord, actions } = layoutOptions;
 
@@ -32,11 +33,16 @@ export function TableLayout({ onAdd, onUpdate, onDelete, canView,layoutOptions =
           className='relative flex flex-1 flex-col overflow-hidden rounded-lg border border-border shadow-md'
           ref={parent}
         >
-          <Table.Table canView={canView} actions={<Table.Actions onUpdate={onUpdate} onDelete={onDelete} actions={actions} />} />
-          {(displayTableRecord ) && <Table.TableRecord />}
+          <Table.Table
+            canView={canView}
+            actions={<Table.Actions onUpdate={onUpdate} onDelete={onDelete} actions={actions} />}
+          />
+          {displayTableRecord && <Table.TableRecord />}
           <Table.Pagination />
         </div>
+        <Table.Selected />
       </Table>
     </div>
   );
 }
+

@@ -5,12 +5,15 @@ import { useMarkAsRead, useUserApplications } from '@/features/applications/useA
 import { useUser } from '@/hooks/useUser';
 import { useNavigate } from 'react-router-dom';
 import { getRelativeTime } from '@/utils/helpers';
-import { useEffect, useMemo, useState } from 'react';
+import {  useMemo, useState } from 'react';
 
 export default function Notifications() {
   const { user } = useUser();
   const [isOpen, setIsOpen] = useState();
   const { applications, isLoading } = useUserApplications();
+  const { mutate } = useMarkAsRead();
+  const navigate = useNavigate();
+
   const notifications = useMemo(() => {
     return applications
       ?.filter((d) => d.status === 'Approved')
@@ -25,15 +28,14 @@ export default function Notifications() {
       }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applications, isOpen]);
-  const [unreadNotifications, setUnreadNotifications] = useState(null);
 
-  const { mutate } = useMarkAsRead();
-  const navigate = useNavigate();
+  const unreadNotifications = notifications?.filter((n) => !n.isRead).map((n) => n.id);
 
-  useEffect(() => {
-    if (unreadNotifications) return;
-    setUnreadNotifications(notifications?.filter((n) => !n.isRead).map((n) => n.id));
-  }, [unreadNotifications, notifications]);
+
+  const unread = (id) => {
+    if (!unreadNotifications?.includes(id)) return;
+    mutate(id);
+  };
 
   const render = () => {
     if (isLoading) {
@@ -71,12 +73,6 @@ export default function Notifications() {
         </div>
       </DropDown.Option>
     ));
-  };
-
-  const unread = (id) => {
-    if (!unreadNotifications?.includes(id)) return;
-    setUnreadNotifications((prev) => prev.filter((n) => n !== id));
-    mutate(id);
   };
 
   if (!user || user?.role !== 'user') return null;
