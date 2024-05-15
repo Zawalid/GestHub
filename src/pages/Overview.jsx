@@ -1,4 +1,3 @@
-import { Heading } from '@/components/Heading';
 import InternOverview from '@/features/overview/InternOverview';
 import AdminOverview from '@/features/overview/AdminOverview';
 import SupervisorOverview from '@/features/overview/SupervisorOverview';
@@ -16,10 +15,5 @@ export function Overview() {
     user: <UserOverview />,
   };
 
-  return (
-    <>
-      <Heading>Overview</Heading>
-      <div className='py-3 h-full'>{overviews[user?.role]}</div>
-    </>
-  );
+  return <div className='h-full py-3'>{overviews[user?.role]}</div>;
 }

@@ -29,7 +29,6 @@
 - [x] notifications for the user
 - [x] only super-admin can create a project
 - [x] supervisor can see their projects only
-- [ ] only free interns in project's creation team members selection
 - [x] clicks on the overview
 - [x] filter by sector in applications
 - [ ] intern overview
@@ -43,20 +42,21 @@
 - [x] use academic level as a dropdown
 - [x] interns table filter (status/gender)
 - [x] fixed table header
-- [ ] task view
-- [ ] add count to the heading
- 
+- [ ] task view (popover)
+- [ ] task overdue indicator
+- [ ] project supervisor (UI)
+- [x] add count to the heading
+ - [ ] update user cv
 
 
 # Bugs
 
- - [ ] supervisor id is invalid (create project as a super-admin)
- - [ ] offer overview height overlap
- - [ ] server side dates are one hour behind (created_at)
- - [ ] starter tasks add
- - [ ] super admin shouldn't be returned with admins
+ - [x] supervisor id is invalid (create project as a super-admin)
+ - [x] offer overview height overlap
+ - [x] server side dates are one hour behind (created_at)
+ - [x] starter tasks add
+ - [x] super admin shouldn't be returned with admins
  - [ ] too many requests (user)
- - [ ] user cv not saved
  - [ ] Fix the theme bug in App.jsx (re-renders the app)
 
 # Maybe

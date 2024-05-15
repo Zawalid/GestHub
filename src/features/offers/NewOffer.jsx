@@ -118,7 +118,7 @@ export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
     <ModalFormLayout
       submitButton={{
         text: type === 'add' ? 'Add Offer' : 'Update Offer',
-        disabled: type === 'add' ? false : !!isUpdated,
+        disabled: type === 'add' ? false : !isUpdated,
         onClick: () => handleSubmit(onClose, true),
       }}
       cancelButton={{ onClick: () => reset(onClose) }}
@@ -197,7 +197,7 @@ function Sector({ getValue, setValue }) {
             <span>{getValue('sector')}</span>
           </DropDown.Toggler>
         }
-        options={{ className: 'overflow-auto max-h-[300px] w-[230px]', shouldCloseOnClick: false,placement : 'top-end' }}
+        options={{ className: 'overflow-auto max-h-[300px] w-[230px]', shouldCloseOnClick: false,placement : 'auto-end' }}
       >
         <DropDown.Title>New Sector</DropDown.Title>
         <div className='mb-2 flex items-center gap-1'>

@@ -16,13 +16,15 @@ import { AllInterns } from '../projects/NewProject/TeamMembers';
 import { useState } from 'react';
 import { AcademicLevel, Gender } from '@/pages/auth/Register';
 import { getFilter, getIntervals } from '@/utils/helpers';
+import { useUser } from '@/hooks/useUser';
 
 export default function InternsList() {
+  const [isOpen, setIsOpen] = useState(false);
+  const { user } = useUser();
   const { interns, isLoading, error } = useInterns();
   const { mutate: updateIntern } = useUpdateIntern();
   const { mutate: deleteIntern } = useDeleteIntern();
   const { mutate: deleteInterns } = useDeleteInterns();
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -193,7 +195,7 @@ export default function InternsList() {
         onUpdate={updateIntern}
         onDelete={deleteIntern}
         layoutOptions={{
-          displayNewRecord: <NewIntern setIsOpen={setIsOpen} />,
+          displayNewRecord: user?.role !== 'supervisor' ? <NewIntern setIsOpen={setIsOpen} /> : null,
           displayTableRecord: true,
         }}
         selectedOptions={{
@@ -202,8 +204,9 @@ export default function InternsList() {
             onConfirm: (ids, setIsOperating) => deleteInterns(ids, { onSettled: () => setIsOperating(false) }),
           },
         }}
+        hideActions={user?.role === 'supervisor'}
       />
-      <SelectUsers isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      {user?.role !== 'supervisor' && <SelectUsers isOpen={isOpen} onClose={() => setIsOpen(false)} />}
     </>
   );
 }

@@ -1,10 +1,13 @@
 import { Heading } from '@/components/Heading';
 import SupervisorsList from '@/features/supervisors/SupervisorsList';
+import { useSupervisors } from '../hooks';
 
 export function Supervisors() {
+  const { supervisors } = useSupervisors();
+
   return (
     <>
-      <Heading>Supervisors</Heading>
+      <Heading count={supervisors?.length}>Supervisors</Heading>
       <SupervisorsList />
     </>
   );

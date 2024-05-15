@@ -20,7 +20,7 @@ export const axiosFetch = async (resource, method, data) => {
       e.request.responseURL.includes('password') ||
       e.request.responseURL.includes('profiles')
     ) {
-      throw Error(e.response.data.message);
+      throw Error(e.response.data.message || 'Something went wrong. Please try again.');
     }
     throw Error(e.response?.status === 404 ? 'Not found' : getAxiosErrorMessage(e.code));
   }

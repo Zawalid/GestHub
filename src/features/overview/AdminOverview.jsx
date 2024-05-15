@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Bar, BarChart, Rectangle, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import PieChartStats from './PieChart';
+import PieChartStats, { Legend, createCustomTooltip } from './PieChart';
 import { AllInterns, Intern } from '../projects/NewProject/TeamMembers';
 import { IoPeople, LuClipboardList, MdOutlinePendingActions } from '@/components/ui/Icons';
 import { Button, Modal, Status } from '@/components/ui';
@@ -31,13 +31,13 @@ function Stats() {
       label: { value: 'Total Applications' },
       value: { value: applications?.length },
       icon: { icon: <LuClipboardList /> },
-      className: 'bg-primary p-3 shadow-md',
+      className: 'bg-primary',
     },
     {
       label: { value: 'Pending Applications' },
       value: { value: applications?.filter((p) => p.status === 'Pending').length },
       icon: { icon: <MdOutlinePendingActions /> },
-      className: 'bg-orange-500 p-3 shadow-md dark:bg-orange-600',
+      className: 'bg-orange-500 dark:bg-orange-600',
     },
   ];
 
@@ -107,8 +107,7 @@ function CompletedInternships() {
   const completedInternships = interns
     ?.filter((intern) => {
       const { isOverdue } = getTimelineDates(intern.startDate, intern.endDate);
-      return isOverdue 
-      && !intern.attestation;
+      return isOverdue && !intern.attestation;
     })
     .toSorted((a, b) => new Date(a?.startDate) - new Date(b?.startDate));
 
@@ -210,20 +209,23 @@ function OffersAnalytics() {
     };
   });
 
+  const CustomTooltip = createCustomTooltip([
+    { key: 'fullName', label: 'Offer' },
+    { key: 'Approved', intro: 'Approved' },
+    { key: 'Rejected', intro: 'Rejected' },
+  ]);
+
   return (
     <div className='relative grid min-h-[300px] gap-5 rounded-lg border border-border bg-background-secondary p-3'>
       <div className='flex justify-between gap-5'>
         <h2 className='text-lg font-bold text-text-primary'>Latest Offers</h2>
-        <div className='flex items-start gap-3 pt-3'>
-          <div className='flex items-center gap-2'>
-            <span className='h-3 w-6 rounded-md bg-green-500'></span>
-            <span className='text-xs font-medium'>Approved</span>
-          </div>
-          <div className='flex items-center gap-2'>
-            <span className='h-3 w-6 rounded-md bg-red-500'></span>
-            <span className='text-xs font-medium'>Rejected</span>
-          </div>
-        </div>
+
+        <Legend
+          legend={[
+            { text: 'Approved', color: 'bg-green-500' },
+            { text: 'Rejected', color: 'bg-red-500' },
+          ]}
+        />
       </div>
       {isLoading ? (
         <Status status='loading' />
@@ -231,12 +233,11 @@ function OffersAnalytics() {
         <ResponsiveContainer width='100%' height='100%'>
           <BarChart data={data}>
             <XAxis dataKey='name' className='text-xs font-medium' />
-            <YAxis domain={[0, 'dataMax']} allowDecimals={false} />
+            <YAxis width={35} domain={[0, 'dataMax']} allowDecimals={false} />
 
             <Tooltip
               content={CustomTooltip}
               wrapperClassName='tooltip'
-              itemStyle={{ color: 'var(--text-primary)' }}
               cursor={<Rectangle radius={5} stroke='var(--border)' fill='var(--background-tertiary)' />}
             />
             <Bar dataKey='Approved' fill='#16a34a' legendType='circle' />
@@ -248,16 +249,3 @@ function OffersAnalytics() {
   );
 }
 
-function CustomTooltip({ payload, active }) {
-  if (active && payload && payload.length) {
-    return (
-      <div className='tooltip'>
-        <p className='label'>{`Offer : ${payload[0].payload.fullName}`}</p>
-        <p className='intro'>{`Approved : ${payload[0].payload.Approved}`}</p>
-        <p className='intro'>{`Rejected : ${payload[0].payload.Rejected}`}</p>
-      </div>
-    );
-  }
-
-  return null;
-}

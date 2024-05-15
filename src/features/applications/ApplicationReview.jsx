@@ -132,14 +132,14 @@ export default function ApplicationReview() {
           {formInputs['startDate']}
           {formInputs['endDate']}
           {formInputs['motivationLetter']}
-          <div className='grid-cols- grid gap-1.5'>
-            <label className='text-sm font-medium text-text-tertiary'>Papers</label>
-            <File type='CV' file={application?.cv} onOpen={() => setCurrentFile(application.cv)} />
-            <File
-              type='Internship Application'
-              file={application?.applicationStage}
-              onOpen={() => setCurrentFile(application.applicationStage)}
-            />
+          <div className='grid gap-1.5'>
+            <label className='text-sm font-medium text-text-tertiary'>Documents</label>
+            {[
+              { type: 'CV', file: application?.cv },
+              { type: 'Internship Application', file: application?.applicationStage },
+            ].map(({ type, file }) => (
+              <File key={type} type={type} file={file} onOpen={() => setCurrentFile(file)} />
+            ))}
           </div>
         </div>
         {application?.status === 'Pending' && location.pathname.includes('/app/') && (
@@ -183,11 +183,11 @@ export default function ApplicationReview() {
   );
 }
 
-function File({ type, file, onOpen }) {
+ function File({ type, file, onOpen }) {
   return (
     <div className='flex items-center gap-3 rounded-lg  bg-background-secondary px-3 py-1'>
       <div className='relative h-12 w-12'>
-        <img src={`/images/.add.png`} alt='add' />
+        <img src={`/images/.pdf.png`} alt='add' />
       </div>
       <div className='flex-1 space-y-0.5'>
         <h4 className='flex items-center gap-2 text-sm font-medium text-text-primary'>{type}</h4>

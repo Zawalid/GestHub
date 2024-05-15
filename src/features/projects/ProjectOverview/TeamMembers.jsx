@@ -70,7 +70,7 @@ export function TeamMembers({ project }) {
             </ToolTip>
           )}
         </h2>
-        {['supervisor', 'super-admin'].includes(user?.role) && (
+        {['super-admin', 'admin', 'supervisor'].includes(user?.role) && (
           <>
             <Button display='with-icon' color='secondary' className='text-nowrap' onClick={() => setIsOpen(true)}>
               <MdOutlineGroupAdd size={18} />
@@ -98,7 +98,7 @@ function Member({ member, project }) {
 
   return (
     <div className='rounded-lg border border-border bg-background-disabled p-5 pt-3'>
-      {user?.role === 'supervisor' && (
+      {['super-admin', 'admin', 'supervisor'].includes(user?.role) && (
         <div className='flex items-center justify-between'>
           <ToolTip content={<span className='text-xs text-text-secondary'> Remove Member</span>}>
             <Button

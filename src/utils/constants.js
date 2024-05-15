@@ -1,26 +1,32 @@
 import { DateTime } from 'luxon';
 
-export const ROUTES = {
-  'super-admin': [
-    'overview',
-    'admins',
-    'supervisors',
-    'projects',
-    'projects/new',
-    'projects/:id',
-    'projects/:id/:tab',
-    'applications',
-    'applications/:id',
-    'offers',
-    'offers/:id',
-    'interns',
-    'interns/:id',
-  ],
-  admin: ['overview', 'supervisors', 'applications', 'applications/:id', 'offers', 'offers/:id', 'interns', 'interns/:id'],
-  supervisor: ['overview', 'projects', 'projects/new', 'projects/:id', 'projects/:id/:tab', 'interns', 'interns/:id'],
-  intern: ['overview', 'projects', 'projects/:id', 'projects/:id/:tab'],
-  user: ['applications','applications/:id'],
-};
+export const ROUTES = (() => {
+  const routes = {
+    admins: ['admins', 'admins/:id'],
+    supervisors: ['supervisors', 'supervisors/:id'],
+    projects: ['projects', 'projects/:id', 'projects/:id/:tab'],
+    interns: ['interns', 'interns/:id'],
+    offers: ['offers', 'offers/:id'],
+    applications: ['applications', 'applications/:id'],
+  };
+  const generate = (types) => {
+    return Object.keys(routes).reduce(
+      (acc, key) => (types.includes(key) ? [...acc, ...routes[key]] : acc),
+      ['overview']
+    );
+  };
+
+  return {
+    'super-admin': [
+      ...generate(['admins', 'supervisors', 'projects', 'interns', 'offers', 'applications']),
+      'projects/new',
+    ],
+    admin: generate(['supervisors', 'projects', 'interns', 'offers', 'applications']),
+    supervisor: generate(['projects', 'interns']),
+    intern: generate(['projects']),
+    user: routes.applications,
+  };
+})();
 
 export const PAGE_LIMIT = 10;
 
@@ -55,7 +61,8 @@ export const RULES = {
     pattern: {
       value: /^(?=.*?[A-Za-z])(?=.*?[0-9]).{8,}$/,
       message:
-'Password must contain at least 8 characters, one letter (either uppercase or lowercase), and one number',    },
+        'Password must contain at least 8 characters, one letter (either uppercase or lowercase), and one number',
+    },
   },
   passwordConfirmation: {
     validate: (value, getValue) => value === getValue('password') || 'Passwords do not match',

@@ -1,6 +1,6 @@
 import { FaCalendarXmark, TbProgress, FaListCheck, LuListTodo } from '@/components/ui/Icons';
-import { getTimelineDates } from '@/utils/helpers';
-import { Stat } from '../../overview/Stat';
+import { checkIsTaskOverdue } from '@/utils/helpers';
+import { Stat } from '@/features/overview/Stat';
 
 export function Stats({ isLoading, tasks }) {
   const stats = [
@@ -8,30 +8,27 @@ export function Stats({ isLoading, tasks }) {
       label: { value: 'To Do Tasks' },
       value: { value: tasks?.filter((p) => p.status === 'To Do').length },
       icon: { icon: <LuListTodo /> },
-      className: 'bg-orange-400 p-3 shadow-md dark:bg-orange-500',
+      className: 'bg-orange-400 dark:bg-orange-500',
     },
     {
       label: { value: 'In Progress Tasks' },
       value: { value: tasks?.filter((p) => p.status === 'In Progress').length },
       icon: { icon: <TbProgress /> },
-      className: 'bg-blue-500 p-3 shadow-md dark:bg-blue-600',
+      className: 'bg-blue-500 dark:bg-blue-600',
     },
     {
       label: { value: 'Completed Tasks' },
       value: { value: tasks?.filter((p) => p.status === 'Done').length },
       icon: { icon: <FaListCheck /> },
-      className: 'bg-green-500 p-3 shadow-md dark:bg-green-600',
+      className: 'bg-green-500 dark:bg-green-600',
     },
     {
       label: { value: 'Overdue Tasks' },
       value: {
-        value: tasks?.filter((t) => {
-          const { isOverdue } = getTimelineDates(t.created_at, t.dueDate);
-          return isOverdue;
-        }).length,
+        value: tasks?.filter(checkIsTaskOverdue).length,
       },
       icon: { icon: <FaCalendarXmark /> },
-      className: 'bg-red-400 p-3 shadow-md dark:bg-red-500',
+      className: 'bg-red-400 dark:bg-red-500',
     },
   ];
 
@@ -46,5 +43,3 @@ export function Stats({ isLoading, tasks }) {
     </div>
   );
 }
-
-

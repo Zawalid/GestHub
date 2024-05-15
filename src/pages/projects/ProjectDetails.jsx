@@ -12,14 +12,21 @@ export function ProjectDetails() {
   const { user } = useUser();
   const navigate = useNavigate();
 
+  const canAccess = ['admin', 'super-admin'].includes(user?.role) || user?.projects?.includes(id);
+
   useEffect(() => {
     if (!['overview', 'tasks', 'notes'].includes(tab)) navigate(`/app/projects/${id}/overview`, { replace: true });
   }, [id, tab, navigate]);
 
   useEffect(() => {
-    const title = project ? `${project?.subject} | ${capitalize(tab)}` : 'Project Not Found';
+    const title =
+      project && !canAccess
+        ? 'Access Denied'
+        : project
+          ? `${project?.subject} | ${capitalize(tab)}`
+          : 'Project Not Found';
     changeTitle(title);
-  }, [project, tab, user]);
+  }, [project, tab, user, canAccess]);
 
   if (isLoading) return <Status status='loading' />;
   if (error)
@@ -34,8 +41,13 @@ export function ProjectDetails() {
         }
       />
     );
+  if (project && !canAccess)
+    return (
+      <Status
+        status='locked'
+        message='You do not have the necessary permissions to view this project. Please verify the project ID .'
+      />
+    );
 
   return <ProjectOverview />;
 }
-
-// message='You do not have the necessary permissions to view this project. Please verify the project ID .'

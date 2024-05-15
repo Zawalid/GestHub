@@ -39,6 +39,7 @@ export function BasicInfo({ updateStatus, updateState, state, onSubmit, classNam
         name: 'priority',
         hidden: true,
       },
+
       {
         name: 'supervisor',
         hidden: true,
@@ -57,6 +58,8 @@ export function BasicInfo({ updateStatus, updateState, state, onSubmit, classNam
     updateState?.(values);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values]);
+
+  console.log( getValue('supervisor'))
 
   return (
     <>
@@ -88,7 +91,11 @@ export function BasicInfo({ updateStatus, updateState, state, onSubmit, classNam
             users={supervisors}
             name='Supervisor'
             defaultVal='Select Supervisor'
-            value={getValue('supervisor')}
+            value={
+              typeof getValue('supervisor') === 'number'
+                ? supervisors?.find((s) => s.id === getValue('supervisor'))
+                : getValue('supervisor')
+            }
             setValue={(data) => setValue('supervisor', data)}
           />
         </div>

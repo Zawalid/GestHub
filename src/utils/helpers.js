@@ -216,3 +216,8 @@ export const getIntervals = (key, returned = ['past', 'present', 'future'], excl
       checked: false,
     }));
 };
+
+export const checkIsTaskOverdue = (task) => {
+  const { isOverdue } = getTimelineDates(task.created_at, task.dueDate);
+  return isOverdue && task.status !== 'Done';
+};

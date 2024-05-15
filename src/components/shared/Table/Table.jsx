@@ -8,7 +8,7 @@ import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 export function Table({ actions, canView }) {
   const { columns, rows, error, selected, onSelect, isLoading } = useTable();
   const table = useRef();
-  const [parent] = useAutoAnimate({ duration: 300 });
+  const [parent] = useAutoAnimate({ duration: 500 });
 
   const checked = rows?.length > 0 && rows?.map((r) => r.profile_id || r.id).every((id) => selected.includes(id));
 
@@ -16,12 +16,14 @@ export function Table({ actions, canView }) {
 
   return (
     <div className='relative flex-1 overflow-x-auto' ref={table}>
-      {rows?.length === 0 && <Status status='noResults' heading='No results found' />}
-      <table cellPadding={3} className='w-full overflow-x-auto whitespace-nowrap  text-left'>
+      {rows?.length === 0 && (
+        <Status status='noResults' heading='No results found' message='Try changing your search query or filters' />
+      )}
+      <table cellPadding={3} className='w-full overflow-x-auto whitespace-nowrap text-left'>
         <Skeleton table={table} />
-        <thead className='bg-background-secondary z-10 sticky top-0'>
+        <thead className='sticky top-0 z-10 bg-background-secondary'>
           <tr ref={parent}>
-            {isLoading || (
+            {isLoading || !actions || (
               <Select
                 checked={checked}
                 onChange={() => rows?.forEach((r) => onSelect(r.profile_id || r.id, !checked))}
@@ -59,25 +61,25 @@ function Column({ column, hide }) {
     </th>
   );
 }
+
 function Row({ row, visibleColumns, actions, canView = true, selected }) {
   const { disabled, onSelect, isSelecting } = useTable();
   const navigate = useNavigateWithQuery();
-  const [parent] = useAutoAnimate({ duration: 300 });
+  const [parent] = useAutoAnimate({ duration: 500 });
 
   return (
     <tr
       ref={parent}
       className={`transition-colors duration-200 ${selected ? 'bg-background-tertiary' : 'hover:bg-background-disabled'}
-      ${canView || isSelecting ? 'cursor-pointer' : ''}
-      `}
+      ${canView || isSelecting ? 'cursor-pointer' : ''}`}
       onClick={() => {
-        isSelecting && onSelect(row.profile_id || row.id)
+        isSelecting && onSelect(row.profile_id || row.id);
         canView && !disabled && navigate(row.id);
       }}
     >
-      <Select id={row.profile_id || row.id} />
+      {actions && <Select id={row.profile_id || row.id} />}
       {visibleColumns.map((col) => (
-        <td key={col.displayLabel} className='px-6 py-3.5'>
+        <td key={col.displayLabel} className={`px-6 ${actions ? 'py-3.5' : 'py-5'}`}>
           {col.format ? col.format(row[col.key], row.id) : row[col.key]}
         </td>
       ))}

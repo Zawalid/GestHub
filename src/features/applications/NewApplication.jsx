@@ -161,7 +161,7 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
         {formInputs['motivationLetter']}
         <div className='space-y-1.5'>
           <label className='text-sm font-medium text-text-tertiary'>
-            Papers
+            Documents
             <span className='ml-1 text-xs font-normal text-text-secondary'>
               ( Supports: .pdf, .doc, .docx. Max size: 5MB. )
             </span>

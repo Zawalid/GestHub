@@ -78,20 +78,13 @@ export default function PieChartStats({ data, title, legend, COLORS, className =
   ];
 
   useEffect(() => {
-    setActiveIndex(data[0].value > 0 ? 0 : data.findIndex((e) => e.value > 0))
-  },[data])
+    setActiveIndex(data[0].value > 0 ? 0 : data.findIndex((e) => e.value > 0));
+  }, [data]);
 
   return (
     <div className={`flex flex-col gap-5 rounded-lg border border-border p-3 shadow-md ${className}`}>
       <h2 className='text-lg font-bold text-text-primary'>{title}</h2>
-      <div className='flex justify-center gap-3'>
-        {legend.map((el) => (
-          <div key={el.text} className='flex items-center gap-2'>
-            <span className={`h-3 w-6 rounded-md ${el.color}`}></span>
-            <span className='text-xs font-medium'>{el.text}</span>
-          </div>
-        ))}
-      </div>
+      <Legend legend={legend} />
       <ResponsiveContainer className={`flex-1 ${isLoading ? 'animate-pulse' : ''}`}>
         <PieChart>
           <Pie
@@ -122,4 +115,44 @@ export default function PieChartStats({ data, title, legend, COLORS, className =
       </ResponsiveContainer>
     </div>
   );
+}
+
+export function Legend({ legend }) {
+  return (
+    <div className='flex items-start justify-center gap-3 pt-2'>
+      {legend.map((el) => (
+        <div key={el.text} className='flex items-center gap-2'>
+          <span className={`h-3 w-6 rounded-md ${el.color}`}></span>
+          <span className='text-xs font-medium'>{el.text}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function createCustomTooltip(fields) {
+  return function CustomTooltip({ payload, active }) {
+    if (active && payload && payload.length) {
+      return (
+        <div className='tooltip'>
+          {fields.map(({ key, label, intro }) => (
+            <>
+              {label && (
+                <p className='label mb-1 border-b border-border pb-1 text-text-secondary'>{payload[0].payload[key]}</p>
+              )}
+              {intro && (
+                <p
+                  className='intro mb-0.5 font-medium text-text-primary'
+                  key={key}
+                >{`${intro} : ${payload[0].payload[key]}`}</p>
+              )}
+            </>
+          ))}
+        </div>
+      );
+    }
+
+    return null;
+  };
 }

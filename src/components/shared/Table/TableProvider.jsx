@@ -53,6 +53,7 @@ export function TableProvider({
   fieldsToSearch,
   downloadOptions,
   displayAllData,
+  
 }) {
   const [columns, setColumns] = useState(tableColumns);
   const [selected, setSelected] = useState([]);

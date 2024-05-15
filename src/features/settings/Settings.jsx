@@ -1,21 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-
 import { PiArrowRight, PiX } from '@/components/ui/Icons';
 import { Panel } from './Panel';
-import Password from './Password';
-import Profile from './Profile';
 import { Button, Modal } from '@/components/ui';
-import General from './General';
 import { useUser } from '@/hooks/useUser';
+import Profile from './Profile';
+import Password from './Password';
+import General from './General';
 
 export default function Settings({ isOpen, onClose }) {
-  const [currentTab, setCurrentTab] = useState('general');
+  const [currentTab, setCurrentTab] = useState('profile');
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [key, setKey] = useState();
 
   useEffect(() => {
-    setCurrentTab('general');
+    setCurrentTab('profile');
     setKey(Math.random());
   }, [isOpen]);
 

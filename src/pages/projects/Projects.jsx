@@ -42,7 +42,7 @@ export function Projects() {
       fieldsToSearch={['subject']}
     >
       <div className='flex flex-col justify-between gap-3 mobile:flex-row mobile:items-center'>
-        <Heading>Projects</Heading>
+        <Heading count={projects?.length}>Projects</Heading>
         <Operations.Search />
       </div>
       <ProjectsList />
@@ -51,8 +51,3 @@ export function Projects() {
   );
 }
 
-/* 
- Admin | Super-Admin : Create/Delete/Access All
- Supervisor | Project Manager : Update/Access/(Create/Delete/Update)Tasks  -> Assigned Projects
- Intern : Access/(Update)Assigned Tasks -> Assigned Projects
-*/

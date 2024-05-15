@@ -26,7 +26,7 @@ const getAdditionalData = (data) => {
       : daysToStart === 1
         ? 'Starting Today'
         : 'Ongoing';
-        
+
   return {
     ...formatUserData(data, true),
     attestation: getFile(data, 'attestation'),
@@ -50,7 +50,7 @@ export function useInterns() {
 
 export function useInternsByIds(ids) {
   const { data, error, isPending } = useQuery({
-    queryKey: ['interns', ...ids],
+    queryKey: ['interns', ...(ids.length ? ids : ['loading'])],
     queryFn: () => Promise.all(ids.map((id) => getIntern(id))),
   });
 

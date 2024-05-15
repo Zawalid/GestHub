@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDeleteProject, useProject, useUpdateProject } from '../useProjects';
 import { Button, Modal, ToolTip } from '@/components/ui';
-import {  IoFlag, IoTrashOutline, MdDriveFileRenameOutline } from '@/components/ui/Icons';
+import { IoFlag, IoTrashOutline, MdDriveFileRenameOutline } from '@/components/ui/Icons';
 import { PRIORITY_COLORS, STATUS_COLORS } from '@/utils/constants';
 import { useConfirmationModal } from '@/hooks';
 import { BasicInfo } from '../NewProject/BasicInfo';
@@ -85,26 +85,26 @@ function Actions({ id, onEdit, role }) {
 }
 
 function EditProject({ isOpen, onClose, project }) {
-  const { id, subject, description, startDate, endDate, priority } = project || {};
+  const { id, subject, description, startDate, endDate, priority, supervisor } = project || {};
   const { mutate } = useUpdateProject();
 
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      className='relative flex flex-col gap-6 p-5 sm:h-fit sm:w-[400px] sm:border'
+      className='relative flex flex-col gap-6 overflow-auto p-5 sm:h-fit sm:w-[400px] sm:border md:max-h-[90%]'
       closeOnBlur={false}
     >
       <BasicInfo
-        state={{ subject, description, startDate, endDate, priority }}
+        state={{ subject, description, startDate, endDate, priority, supervisor }}
         onSubmit={(data) => mutate({ id, data: { ...data, intern_id: data.projectManager } })}
-        actionButtons={({ handleSubmit, reset, isUpdated, isValid }) => {
+        actionButtons={({ handleSubmit, reset, isUpdated }) => {
           return (
             <div className='mt-auto grid grid-cols-2 gap-4'>
               <Button color='tertiary' onClick={() => reset(onClose)}>
                 Cancel
               </Button>
-              <Button color='secondary' onClick={() => handleSubmit(onClose)} disabled={!isUpdated || !isValid}>
+              <Button color='secondary' onClick={() => handleSubmit(onClose)} disabled={!isUpdated}>
                 Update Project
               </Button>
             </div>

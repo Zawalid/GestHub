@@ -90,7 +90,9 @@ export function useUser() {
   });
 
   return {
-    user: data ? { ...formatUserData(data, true, true), cv: getFile(data, 'cv'), } : null,
+    user: data ? { ...formatUserData(data, true, true), cv: getFile(data, 'cv'),
+    // role : 'intern'
+   } : null,
     isAuthenticated: Boolean(data),
     isLoading: isPending,
     error,

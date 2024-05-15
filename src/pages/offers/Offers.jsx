@@ -66,7 +66,7 @@ export function Offers() {
   return (
     <Operations {...getOffersProps(offers, isLoading, error)}>
       <div className='flex flex-col justify-between gap-3 mobile:flex-row mobile:items-center'>
-        <Heading>Offers</Heading>
+        <Heading count={offers?.length}>Offers</Heading>
         <Operations.Search />
       </div>
       <OffersList />

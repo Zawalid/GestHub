@@ -1,5 +1,5 @@
 import { Modal, Status } from '../../components/ui';
-import { useUserApplications } from '@/features/applications/useApplications';
+import { useApplications } from '@/features/applications/useApplications';
 import { BsClipboard2Check, MdOutlinePendingActions } from '@/components/ui/Icons';
 import { Operations } from '../../components/shared/operations/Operations';
 import { useOperations } from '../../components/shared/operations/useOperations';
@@ -9,7 +9,7 @@ import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
 export default function Applications() {
   const navigate = useNavigateWithQuery();
-  const { applications, isLoading, error } = useUserApplications();
+  const { applications, isLoading, error } = useApplications();
 
   return (
     <Modal
@@ -20,7 +20,7 @@ export default function Applications() {
     >
       <h1 className='mb-5 text-lg font-bold text-text-primary'>My Applications</h1>
       <Operations
-        data={applications}
+        data={applications?.filter((d) => d.status !== 'Rejected')}
         isLoading={isLoading}
         error={error}
         sortOptions={[

@@ -1,7 +1,7 @@
 import { IoNotificationsOutline } from 'react-icons/io5';
 import { Button, DropDown } from '../ui';
 import { FaRegCircleCheck } from 'react-icons/fa6';
-import { useMarkAsRead, useUserApplications } from '@/features/applications/useApplications';
+import { useApplications, useMarkAsRead } from '@/features/applications/useApplications';
 import { useUser } from '@/hooks/useUser';
 import { useNavigate } from 'react-router-dom';
 import { getRelativeTime } from '@/utils/helpers';
@@ -10,7 +10,7 @@ import {  useMemo, useState } from 'react';
 export default function Notifications() {
   const { user } = useUser();
   const [isOpen, setIsOpen] = useState();
-  const { applications, isLoading } = useUserApplications();
+  const { applications, isLoading } = useApplications();
   const { mutate } = useMarkAsRead();
   const navigate = useNavigate();
 

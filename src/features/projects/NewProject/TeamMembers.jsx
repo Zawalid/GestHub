@@ -96,7 +96,7 @@ export function AllInterns({ teamMembers, setTeamMembers, filter, selectedMember
       return (
         <div
           key={intern.id}
-          className={`flex items-center gap-3 rounded-lg p-2.5 transition-colors duration-300 hover:bg-background-secondary ${
+          className={`flex items-center justify-between gap-3 rounded-lg p-2.5 transition-colors duration-300 hover:bg-background-secondary ${
             isChosen ? 'bg-background-secondary' : ''
           }`}
         >
@@ -111,7 +111,16 @@ export function AllInterns({ teamMembers, setTeamMembers, filter, selectedMember
               });
             }}
           />
-          <Intern intern={intern} />
+          <div className='flex-1'>
+            <Intern intern={intern} />
+          </div>
+          {intern?.projects && (
+            <ToolTip content={'Assigned Projects'}>
+              <span className='rounded-md bg-background-tertiary px-2.5 py-1 text-xs font-medium'>
+                {intern.projects.length}
+              </span>
+            </ToolTip>
+          )}
         </div>
       );
     });

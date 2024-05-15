@@ -15,7 +15,6 @@ import { useMutate } from '@/hooks/useMutate';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { getFile } from '@/utils/helpers';
 import { FaRegCircleCheck, FaRegCircleXmark } from 'react-icons/fa6';
-import { useUser } from '@/hooks/useUser';
 
 // Queries
 
@@ -75,23 +74,6 @@ export const useApplication = (id) => {
     error,
     isLoading: isPending,
   };
-};
-
-export const useUserApplications = () => {
-  const { user } = useUser();
-  const ids = user?.applications?.map((d) => d.id) || [];
-
-  const { data, error, isPending } = useQuery({
-    queryKey: ['applications', ...ids],
-    queryFn: () => Promise.all(ids.map((id) => getApplication(id))),
-    refetchInterval: 15000,
-  });
-
-  const applications = data
-    ?.map((application) => getApplicationData(application))
-    .filter((d) => d.status !== 'Rejected');
-
-  return { applications, error, isLoading: isPending };
 };
 
 // Mutations

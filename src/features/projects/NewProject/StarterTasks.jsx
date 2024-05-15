@@ -227,12 +227,12 @@ export function UsersDropDown({ users, name, value, setValue, defaultVal }) {
         }}
       >
         {users?.map((user) => {
-          const { id, firstName, lastName, email, avatar } = user;
+          const { id, firstName, lastName, email, avatar,gender } = user;
           return (
             <DropDown.Option
               size='small'
               key={id}
-              onClick={() => setValue({ id, firstName, lastName, email, avatar })}
+              onClick={() => setValue({ id, firstName, lastName, email, avatar,gender })}
               isCurrent={user === value}
             >
               <Intern intern={user} />
