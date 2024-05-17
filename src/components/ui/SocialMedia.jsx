@@ -39,7 +39,7 @@ export function SocialMedia() {
   const [hovered, setHovered] = useState(null);
   const { settings } = useSettings();
 
-  if(socials.map(s => s.name.toLocaleLowerCase()).some(s => !))
+  // if(socials.map(s => s.name.toLocaleLowerCase()).some(s => !))
 
   return socials.map((s, index) => (
     <a
