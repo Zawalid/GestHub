@@ -25,9 +25,9 @@ export function useVisibleOffers(latest) {
   const queryClient = useQueryClient();
 
   const getOffers = () => {
-    const offers = (data || [])?.map((offer) =>
-      favorites.includes(String(offer.id)) ? { ...offer, isFavorite: true } : offer
-    );
+   const offers = Array.isArray(data) ? data.map((offer) =>
+  favorites.includes(String(offer.id)) ? { ...offer, isFavorite: true } : offer
+) : [];
 
     return latest
       ? offers?.sort((a, b) => (a.status === b.status ? 0 : a.status === 'Urgent' ? -1 : 1)).slice(0, 5)
