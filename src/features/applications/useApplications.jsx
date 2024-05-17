@@ -56,7 +56,7 @@ export function useApplications() {
     queryFn: getAllApplications,
   });
 
-  const applications = data ? data?.map((application) => getApplicationData(application)) : [];
+  const applications = Array.isArray(data) ? data.map((application) => getApplicationData(application)) : [];
 
   return {
     applications,
