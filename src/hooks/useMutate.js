@@ -6,18 +6,19 @@ export function useMutate({ queryKey, mutationFn, showToast = true, loadingMessa
   const queryClient = useQueryClient();
   const toastId = useRef(null);
 
-  const { mutate, isPending, error, isSuccess, reset, } = useMutation({
+  const { mutate, isPending, error, isSuccess, reset } = useMutation({
     mutationKey: queryKey,
     mutationFn,
-    onMutate: async() => {
+    onMutate: async () => {
       if (loadingMessage && showToast)
         toastId.current = toast.loading(loadingMessage, {
           id: toastId.current,
         });
-     
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(queryKey);
+      queryClient.invalidateQueries({
+        queryKey: [queryKey[0]],
+      });
       successMessage && showToast && toast.success(successMessage, { id: toastId.current });
     },
     onError: (error) => {

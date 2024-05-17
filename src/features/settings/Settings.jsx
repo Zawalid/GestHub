@@ -9,12 +9,12 @@ import Password from './Password';
 import General from './General';
 
 export default function Settings({ isOpen, onClose }) {
-  const [currentTab, setCurrentTab] = useState('profile');
+  const [currentTab, setCurrentTab] = useState('general');
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [key, setKey] = useState();
 
   useEffect(() => {
-    setCurrentTab('profile');
+    setCurrentTab('general');
     setKey(Math.random());
   }, [isOpen]);
 

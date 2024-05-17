@@ -72,16 +72,15 @@ html.theme-transition {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-text-tertiary;
+  @apply bg-text-tertiary rounded-md;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-border;
+  @apply bg-transparent;
 }
 ::-webkit-scrollbar-corner {
- @apply bg-border
+ @apply bg-transparent
 }
-
 .no_scrollbar::-webkit-scrollbar {
   display: none;
 }

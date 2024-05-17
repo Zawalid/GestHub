@@ -2,11 +2,12 @@ import { useForm } from '@/hooks/useForm';
 import { Button } from '../../components/ui';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useLogin } from '@/hooks/useUser';
+import { useLogin, useSettings } from '@/hooks/useUser';
 
 export function Login() {
   const { t } = useTranslation();
   const { login, isLogging } = useLogin();
+  const {settings} = useSettings()
 
   const {
     Form,
@@ -23,7 +24,7 @@ export function Login() {
 
   return (
     <div className='relative flex h-full w-full flex-col justify-center gap-3 p-2 md:px-10 lg:px-20  '>
-      <h1 className='mb-8 text-2xl font-bold text-text-primary sm:text-3xl'>{t('form.welcome')} GestHub</h1>
+      <h1 className='mb-8 text-2xl font-bold text-text-primary sm:text-3xl'>{t('form.welcome')} {settings?.appName}</h1>
       {Form}
       <Button className={'my-4 w-full self-end'} disabled={!isValid} onClick={handleSubmit} isLoading={isLogging}>
         {isLogging ? 'Logging In...' : t('form.login')}

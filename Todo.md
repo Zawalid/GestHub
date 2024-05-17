@@ -56,7 +56,7 @@
  - [x] server side dates are one hour behind (created_at)
  - [x] starter tasks add
  - [x] super admin shouldn't be returned with admins
- - [ ] too many requests (user)
+ - [x] too many requests (user)
  - [ ] Fix the theme bug in App.jsx (re-renders the app)
 
 # Maybe

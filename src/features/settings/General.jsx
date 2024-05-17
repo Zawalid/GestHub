@@ -1,24 +1,31 @@
-import { useForm } from '@/hooks/index';
+import { useForm, useUploadFile } from '@/hooks/index';
 import { ModalFormLayout } from '@/layouts/index';
-import { ProfileAvatar } from './ProfileAvatar';
 import { socials } from '@/components/ui/SocialMedia';
-import { useSettings } from '@/hooks/useUser';
+import { useSettings, useUpdateSettings } from '@/hooks/useUser';
+import { Button } from '@/components/ui';
 
 export default function General() {
   const { settings } = useSettings();
+  
+  const defaultValues = {
+    appLogo: settings?.appLogo || { src: '/SVG/logo.svg', file: null },
+    appName: settings?.appName || 'GestHub',
+    companyName: settings?.companyName || 'DSI',
+    email: settings?.email || 'company@example.com',
+    phone: settings?.phone || '0674323434',
+    location: settings?.location || 'Rabat',
+    maps: settings?.maps || 'https://maps.app.goo.gl/fdserer',
+    facebook: settings?.facebook || '',
+    twitter: settings?.twitter || '',
+    instagram: settings?.instagram || '',
+    linkedin: settings?.linkedin || '',
+    youtube: settings?.youtube || '',
+  };
   const {
     Form,
-    options: { isUpdated,  handleSubmit, reset },
+    options: { isUpdated, handleSubmit, reset, getValue, setValue },
   } = useForm({
-    defaultValues: {
-      logo: { src: null, file: null },
-      appName: '',
-      companyName: '',
-      email: '',
-      phone: '',
-      location: '',
-      maps: '',
-    },
+    defaultValues,
     fields: [
       {
         name: 'appName',
@@ -55,72 +62,77 @@ export default function General() {
           },
         },
       },
-    ],
-    onSubmit: () => {},
-    gridLayout: true,
-  });
-
-  const {
-    Form: SocialMedia,
-    options: { setValue, getValue,  isUpdated: isSocialMediaUpdated },
-  } = useForm({
-    defaultValues: {
-      facebook: '',
-      twitter: '',
-      instagram: '',
-      linkedin: '',
-      youtube: '',
-    },
-    fields: socials.map((s) => ({
-      name: s.name.toLocaleLowerCase(),
-      label: s.name,
-      placeholder: s.href,
-      rules: {
-        pattern: {
-          value: new RegExp(`^(https://www\\.${s.name.toLocaleLowerCase()}\\.com)/.*$`),
-          message: `Invalid URL. Please enter a valid ${s.name} link.`,
+      ...socials.map((s) => ({
+        name: s.name.toLocaleLowerCase(),
+        label: s.name,
+        placeholder: s.href,
+        rules: {
+          pattern: {
+            value: new RegExp(`^(https://www\\.${s.name.toLocaleLowerCase()}\\.com)/.*$`),
+            message: `Invalid URL. Please enter a valid ${s.name} link.`,
+          },
+          required: false,
         },
-        required: false,
-      },
-      customIcon: (
-        <span
-          className='absolute left-0 top-0 z-10 grid h-full w-7 place-content-center border-r border-border text-white'
-          style={{ backgroundColor: s.color }}
-        >
-          {s.icon}
-        </span>
-      ),
-    })),
+        customIcon: (
+          <span
+            className='absolute left-0 top-0 z-10 grid h-full w-7 place-content-center border-r border-border text-white'
+            style={{ backgroundColor: s.color }}
+          >
+            {s.icon}
+          </span>
+        ),
+      })),
+    ],
+    onSubmit: (data) => {
+      const formData = new FormData();
+      for (const el in data) {
+        formData.append(el, el === 'appLogo' ? data[el].file : data[el]);
+      }
+      mutate(formData);
+    },
     gridLayout: true,
-    onSubmit: () => {},
   });
+  const { openFilePicker } = useUploadFile({ onChange: (logo) => setValue('appLogo', logo) });
+  const { mutate, isPending } = useUpdateSettings();
 
   return (
     <ModalFormLayout
       submitButton={{
         onClick: handleSubmit,
-        disabled: !isUpdated || !isSocialMediaUpdated,
+        disabled: !isUpdated,
       }}
       cancelButton={{
         onClick: reset,
-        disabled: !isUpdated || isSocialMediaUpdated,
+        disabled: !isUpdated,
       }}
     >
       <div className='space-y-5'>
         <h3 className='mb-3 font-bold text-text-secondary'>Basic Info</h3>
         <div>
-          <ProfileAvatar
-            avatar={getValue('logo')}
-            onChange={(logo) => setValue('logo', logo)}
-            name='Logo'
-            // disabled={isPending}
+          <img
+            className={`h-28 w-28  border border-border text-center text-xs text-text-tertiary ${
+              name === 'Image' ? 'rounded-full object-cover' : 'rounded-lg object-contain'
+            }`}
+            src={getValue('appLogo')?.src}
           />
+          <Button
+            type='outline'
+            className='min-w-[132px] flex-1 disabled:text-text-disabled disabled:hover:bg-background-disabled md:min-w-max'
+            // disabled={disabled}
+            onClick={openFilePicker}
+          >
+            Change Avatar
+          </Button>
+          <Button
+            color='red'
+            className='min-w-[132px] flex-1 md:min-w-max'
+            // disabled={disabled || !avatar?.src}
+            onClick={() => setValue('appLogo', { src: null, file: null })}
+          >
+            Remove Avatar
+          </Button>
         </div>
         {Form}
-      </div>
-      <div className='mt-5 border-t border-border pt-3'>
-        <h3 className='mb-3 font-bold text-text-secondary'>Social Media</h3>
-        {SocialMedia}
       </div>
     </ModalFormLayout>
   );

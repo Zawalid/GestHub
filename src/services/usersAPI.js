@@ -19,5 +19,6 @@ export const updateSettings = async (data) => await axiosFetch('settings', 'POST
 export const uploadFile = async (id, file, type) => {
   const formData = new FormData();
   formData.append(type, file);
+  formData.append('type', type);
   await axiosFetch(`files/${id}`, 'POST', formData);
 };

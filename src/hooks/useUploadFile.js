@@ -56,7 +56,7 @@ export function useUploadFile({ options = defaultOptions, onChange, onError }) {
     },
   });
 
-  return { openFilePicker };
+  return { openFilePicker,options };
 }
 
 function getErrorMessage(error, type, accept, maxFileSize, maxFiles, maxWidth, maxHeight) {

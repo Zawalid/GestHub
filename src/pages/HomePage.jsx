@@ -10,14 +10,15 @@ import { changeTitle } from '@/utils/helpers';
 import { useTranslation } from 'react-i18next';
 import Applications from '@/features/applications/Applications';
 import ApplicationReview from '@/features/applications/ApplicationReview';
-import { useUser } from '../hooks';
+import { useSettings,useUser } from '@/hooks/useUser';
 
 export function HomePage() {
   const { user } = useUser();
+  const { settings } = useSettings();
 
   useEffect(() => {
-    changeTitle('GestHub');
-  }, []);
+    changeTitle(settings?.appName);
+  }, [settings?.appName]);
 
   return (
     <>

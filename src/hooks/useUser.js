@@ -115,7 +115,7 @@ export function useSettings() {
   });
 
   return {
-    settings: data,
+    settings: data ? { ...data, appLogo: { src: getFile(data, 'appLogo'), file: null } } : null,
     isLoading: isPending,
     error,
   };
@@ -149,7 +149,7 @@ export function useUpdatePassword() {
 export function useUpdateSettings() {
   return useMutate({
     queryKey: ['settings', 'update'],
-    mutationFn: (data) => updateSettings(data),
+    mutationFn: updateSettings,
     loadingMessage: 'Updating settings...',
     successMessage: 'Settings updated successfully',
     errorMessage: 'Failed to update settings',

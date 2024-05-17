@@ -3,13 +3,14 @@ import { Button, CheckBox, DropDown } from '../../components/ui';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { MdOutlineSchool } from 'react-icons/md';
-import { useRegister } from '@/hooks/useUser';
+import { useRegister, useSettings } from '@/hooks/useUser';
 import { LEVELS, RULES } from '@/utils/constants';
 import { Radio } from '@/components/ui/Radio';
 
 export function Register() {
   const { t } = useTranslation();
   const { register, isRegistering } = useRegister();
+  const { settings } = useSettings();
 
   const {
     Form,
@@ -95,7 +96,9 @@ export function Register() {
 
   return (
     <div className='relative flex h-full w-full flex-col justify-center p-2 md:px-5 md:py-8 '>
-      <h1 className='mb-8 text-2xl font-bold text-text-primary sm:text-3xl'>{t('form.welcome')} GestHub</h1>
+      <h1 className='mb-8 text-2xl font-bold text-text-primary sm:text-3xl'>
+        {t('form.welcome')} {settings?.appName}
+      </h1>
       {Form}
 
       <Button className={'w-full'} disabled={!isValid} isLoading={isRegistering} onClick={handleSubmit}>
