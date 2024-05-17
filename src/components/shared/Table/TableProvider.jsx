@@ -53,7 +53,6 @@ export function TableProvider({
   fieldsToSearch,
   downloadOptions,
   displayAllData,
-  
 }) {
   const [columns, setColumns] = useState(tableColumns);
   const [selected, setSelected] = useState([]);
@@ -87,6 +86,13 @@ export function TableProvider({
 
   const totalItems = rows?.length;
   const totalPages = Math.ceil(totalItems / limit);
+
+  const appliedFiltersNumber = (filter) => {
+    if (!filters[filter]) return;
+    return Object.values(filters[filter])
+      .flat()
+      .filter((f) => f.checked).length;
+  };
 
   const excludedFields = columns.filter((c) => !c.visible).map((c) => c.displayLabel);
 
@@ -222,6 +228,7 @@ export function TableProvider({
     onSearch,
     // filter
     filters,
+    appliedFiltersNumber,
     onFilter,
     // pagination
     totalItems,

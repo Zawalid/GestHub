@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { UsersDropDown } from './StarterTasks';
 import { useSupervisors } from '@/hooks/index';
 
-export function BasicInfo({ updateStatus, updateState, state, onSubmit, className, actionButtons }) {
+export function BasicInfo({ updateStatus, updateState, state, onSubmit, className, actionButtons,isUpdate }) {
   const { supervisors } = useSupervisors();
   const {
     options: { isValid, isUpdated, formInputs, values, getValue, setValue, handleSubmit, reset },
@@ -59,8 +59,6 @@ export function BasicInfo({ updateStatus, updateState, state, onSubmit, classNam
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values]);
 
-  console.log( getValue('supervisor'))
-
   return (
     <>
       <div className={`flex h-full w-full flex-col gap-5 ${className}`}>
@@ -96,7 +94,7 @@ export function BasicInfo({ updateStatus, updateState, state, onSubmit, classNam
                 ? supervisors?.find((s) => s.id === getValue('supervisor'))
                 : getValue('supervisor')
             }
-            setValue={(data) => setValue('supervisor', data)}
+            setValue={(data) => setValue('supervisor', isUpdate ? data.id : data)}
           />
         </div>
       </div>

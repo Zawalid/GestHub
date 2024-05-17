@@ -8,12 +8,12 @@ import {
   getUser,
   updateProfile,
   updatePassword,
-  updateAvatar,
   getSettings,
   updateSettings,
+  uploadFile,
 } from '@/services/usersAPI';
 import { useMutate } from './useMutate';
-import { getFile } from '@/utils/helpers';
+import { filterObject, getFile } from '@/utils/helpers';
 import { useConfirmationModal } from './useConfirmationModal';
 
 const useRedirect = () => {
@@ -90,9 +90,17 @@ export function useUser() {
   });
 
   return {
-    user: data ? { ...formatUserData(data, true, true), cv: getFile(data, 'cv'),
-    // role : 'intern'
-   } : null,
+    user: data
+      ? {
+          ...formatUserData(data, true, true),
+          ...(data?.role === 'intern' && {
+            cv: getFile(data, 'cv'),
+            attestation: getFile(data, 'attestation'),
+            report: getFile(data, 'report'),
+          }),
+          // role : 'supervisor'
+        }
+      : null,
     isAuthenticated: Boolean(data),
     isLoading: isPending,
     error,
@@ -116,16 +124,13 @@ export function useSettings() {
 export function useUpdateProfile() {
   return useMutate({
     queryKey: ['user', 'update'],
-    mutationFn: ({ id, user }) => updateProfile(id, user),
-    loadingMessage: 'Updating profile...',
-    successMessage: 'Profile updated successfully',
-  });
-}
-
-export function useUpdateAvatar() {
-  return useMutate({
-    queryKey: ['user', 'updateAvatar'],
-    mutationFn: ({ id, file }) => updateAvatar(id, file),
+    mutationFn: ({ id, user }) => {
+      if (Object.keys(filterObject(user, ['avatar', 'cv'], 'exclude')).length) {
+        updateProfile(id, filterObject(user, ['avatar', 'cv'], 'exclude'));
+      }
+      if (user?.avatar) uploadFile(id, user.avatar?.file, 'avatar');
+      if (user?.cv) uploadFile(id, user.cv?.file, 'cv');
+    },
     loadingMessage: 'Updating profile...',
     successMessage: 'Profile updated successfully',
   });

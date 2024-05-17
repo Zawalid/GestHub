@@ -5,11 +5,8 @@
 - [x] Go to prev page when deleting the last record
 - [x] Interns dropdown only for team members
 - [x] Fix dates
-- [ ] Remove error message from error screen
-- [ ] Disable react devtools
 - [x] Rename confirmPassword to password_confirmation
 - [x] Discuss the levels dynamicity
-- [ ] Add translations to all the content
 - [x] Add illustrations across app (No projects yet / no team members...)
 - [x] Login or register when clicking enter
 - [x] remove the retry functionality of react query when fetching the user
@@ -31,10 +28,7 @@
 - [x] supervisor can see their projects only
 - [x] clicks on the overview
 - [x] filter by sector in applications
-- [ ] intern overview
-- [ ] pages creation / update home page
-- [ ] settings
-- [ ] editor for about (TipTap)
+- [x] intern overview
 - [x] green for approve button
 - [x] full screen file view
 - [x] rename applications to applications
@@ -42,11 +36,17 @@
 - [x] use academic level as a dropdown
 - [x] interns table filter (status/gender)
 - [x] fixed table header
-- [ ] task view (popover)
-- [ ] task overdue indicator
-- [ ] project supervisor (UI)
+- [x] task overdue indicator
+- [x] project supervisor (UI)
 - [x] add count to the heading
- - [ ] update user cv
+- [x] update user cv
+- [x] send info to applications route
+- [ ] Remove error message from error screen
+- [ ] Disable react devtools
+- [ ] Add translations to all the content
+- [ ] pages creation / update home page
+- [ ] settings
+- [ ] editor for about (TipTap)
 
 
 # Bugs
@@ -73,3 +73,6 @@
 - [ ] virtual lists for performance
 - [ ] handle currently precessed rows 
 - [x] show errors when submitting instead
+- [ ] control charts dates/filter...
+- [ ] complex dates on calendar (tasks due dates/projects deadlines...)
+- [ ] create a can function to handle permissions 

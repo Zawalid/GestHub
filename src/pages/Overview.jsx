@@ -15,5 +15,5 @@ export function Overview() {
     user: <UserOverview />,
   };
 
-  return <div className='h-full py-3'>{overviews[user?.role]}</div>;
+  return <div className='flex-1'>{overviews[user?.role]}</div>;
 }

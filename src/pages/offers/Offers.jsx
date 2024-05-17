@@ -15,6 +15,7 @@ export const getOffersProps = (offers, isLoading, error) => ({
     { key: 'title', display: 'Title', type: 'string' },
     { key: 'duration', display: 'Duration', type: 'number' },
     { key: 'publicationDate', display: 'Publication Date', type: 'date' },
+    { key: 'updated_at', display: 'Update Date', type: 'date' },
     {
       key: 'urgency',
       fn(a, b, direction) {
@@ -37,7 +38,7 @@ export const getOffersProps = (offers, isLoading, error) => ({
     },
   ],
   defaultSortBy: 'publicationDate',
-  defaultDirection: 'asc',
+  defaultDirection: 'desc',
   filters: {
     experience: [
       { value: 'Expert', checked: false },

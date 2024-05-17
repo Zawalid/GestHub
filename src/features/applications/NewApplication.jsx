@@ -2,7 +2,7 @@ import { Button, Modal } from '@/components/ui';
 import { useForm } from '@/hooks/useForm';
 import { useUploadFile } from '@/hooks/useUploadFile';
 import { RULES } from '@/utils/constants';
-import { LuUpload, IoTrashOutline, HiMiniXMark, FiCheck, BsSendFill } from '@/components/ui/Icons';
+import { LuUpload,  HiMiniXMark, FiCheck, BsSendFill, IoEyeOutline } from '@/components/ui/Icons';
 import { useUser } from '@/hooks/useUser';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useOffer } from '../offers/useOffers';
@@ -22,7 +22,7 @@ export default function NewApplication({ isOpen, onClose }) {
       <ApplicationForm
         onApply={mutate}
         onClose={onClose}
-      onSuccess={(resetForm) => {
+        onSuccess={(resetForm) => {
           onClose();
           resetForm();
           setTimeout(reset, 1000);
@@ -61,7 +61,7 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
   };
 
   const {
-    options: { formInputs, isUpdated,  getValue, setValue, handleSubmit, reset, updateValues },
+    options: { formInputs, isUpdated, getValue, setValue, handleSubmit, reset, updateValues },
   } = useForm({
     defaultValues,
     fields: [
@@ -152,8 +152,8 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
     <>
       <h1 className='mb-5 text-2xl font-bold text-text-primary'>Internship Application</h1>
       <div className='grid items-center gap-x-4 gap-y-2.5 sm:grid-cols-2'>
-      {formInputs['fullName']}
-          {formInputs['email']}
+        {formInputs['fullName']}
+        {formInputs['email']}
         {formInputs['offer']}
         {formInputs['sector']}
         {formInputs['startDate']}
@@ -172,7 +172,6 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
               type={type}
               file={getValue(type)?.file || {}}
               onChange={(file) => setValue(type, file)}
-              onDelete={() => setValue(type, null)}
               disabled={type === 'CV' && user?.cv}
             />
           ))}
@@ -194,12 +193,13 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
   );
 }
 
-function File({ type, file: { name, size }, onChange, onDelete, disabled }) {
+export function File({ type, file: { name, size }, onChange,  disabled, options = {}, onView }) {
   const { openFilePicker } = useUploadFile({
     onChange,
     options: {
       type,
       accept: ['.pdf', '.doc', '.docx'],
+      ...options,
     },
   });
 
@@ -241,9 +241,11 @@ function File({ type, file: { name, size }, onChange, onDelete, disabled }) {
         <Button onClick={openFilePicker} shape='icon' color='secondary' size='small'>
           <LuUpload />
         </Button>
-        <Button shape='icon' size='small' color='red' disabled={!name} onClick={onDelete}>
-          <IoTrashOutline />
+        {onView && (
+          <Button shape='icon' size='small' color='secondary' onClick={onView} disabled={!name}>
+          <IoEyeOutline />
         </Button>
+        )}
       </div>
     </div>
   );

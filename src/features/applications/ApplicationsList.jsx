@@ -9,7 +9,7 @@ import {
 } from './useApplications';
 import { TableLayout } from '@/layouts/TableLayout';
 import { FaRegCircleCheck, FaRegCircleXmark, TbFileSearch } from '@/components/ui/Icons';
-import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
+import { useNavigateState, useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 import { getFilter, getIntervals } from '@/utils/helpers';
 
 export default function ApplicationsList() {
@@ -22,6 +22,7 @@ export default function ApplicationsList() {
   const { reject: rejectMultiple } = useRejectApplications();
 
   const navigate = useNavigateWithQuery();
+  const state = useNavigateState();
 
   return (
     <TableLayout
@@ -49,7 +50,7 @@ export default function ApplicationsList() {
           displayLabel: 'Offer',
           visible: true,
           type: 'string',
-          filter: getFilter(applications, 'offer'),
+          filter: getFilter(applications, 'offer', state?.filter),
         },
         {
           key: 'sector',
@@ -86,7 +87,7 @@ export default function ApplicationsList() {
             );
           },
           filter: [
-            { value: 'Pending', checked: false },
+            { value: 'Pending', checked: state?.filter === 'Pending' },
             { value: 'Approved', checked: false },
             { value: 'Rejected', checked: false },
           ],

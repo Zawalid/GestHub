@@ -3,11 +3,14 @@ import { Operations } from '@/components/shared/operations/Operations';
 import NewProject from '@/features/projects/NewProject/NewProject';
 import ProjectsList from '@/features/projects/ProjectsList';
 import { useProjects } from '@/features/projects/useProjects';
+import { useNavigateState } from '@/hooks/useNavigateWithQuery';
 import { useUser } from '@/hooks/useUser';
+import { checkIsOverdue } from '@/utils/helpers';
 
 export function Projects() {
   const { projects, isLoading, error } = useProjects();
   const { user } = useUser();
+  const state = useNavigateState();
 
   return (
     <Operations
@@ -25,12 +28,16 @@ export function Projects() {
         { key: 'progress', display: 'Progress', type: 'number' },
       ]}
       defaultSortBy='updated_at'
-      defaultDirection='asc'
+      defaultDirection='desc'
       filters={{
         status: [
           { value: 'Not Started', checked: false },
           { value: 'In Progress', checked: false },
-          { value: 'Completed', checked: false },
+          { value: 'Completed', checked: state?.filter === 'Completed' },
+          {
+            value: { value: 'Overdue', condition: (el) => checkIsOverdue(el, 'project') },
+            checked: state?.filter === 'Overdue',
+          },
         ],
         priority: [
           { value: 'Low', checked: false },
@@ -50,4 +57,3 @@ export function Projects() {
     </Operations>
   );
 }
-

@@ -74,7 +74,7 @@ export function Progress({ progress: pr, status }) {
 }
 
 function TimeLine({ startDate, endDate, status }) {
-  const { currentDay, duration, daysLeft, daysToStart, isOverdue } = getTimelineDates(startDate,endDate);
+  const { currentDay, duration, daysLeft, daysToStart, isOverdue } = getTimelineDates(startDate, endDate);
   const progress = useAnimatedProgress((currentDay / duration) * 100);
 
   return (
@@ -96,14 +96,14 @@ function TimeLine({ startDate, endDate, status }) {
       </div>
       <div className='relative w-full rounded-lg bg-background-tertiary py-1'>
         <div
-          className={`absolute top-0 h-full max-w-full rounded-lg transition-all duration-[3s] ${isOverdue ? 'bg-red-500' : STATUS_COLORS[status]?.bg}`}
+          className={`absolute top-0 h-full max-w-full rounded-lg transition-all duration-[3s] ${isOverdue && status !== 'Completed' ? 'bg-red-500' : STATUS_COLORS[status]?.bg}`}
           style={{ width: daysToStart > 0 ? '12px' : `${isOverdue ? 100 : progress}%` }}
         >
           <ToolTip
             content={
               <span className='text-xs text-text-secondary'>
                 {isOverdue
-                  ? 'The project is overdue'
+                  ? `The project is ${status === 'Completed' ? 'completed' : 'overdue'}`
                   : daysToStart > 0
                     ? `The project will start in ${daysToStart} days`
                     : `${daysLeft} days left until the project ends`}{' '}

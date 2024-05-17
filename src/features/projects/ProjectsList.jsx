@@ -12,8 +12,9 @@ import { useUser } from '@/hooks/useUser';
 export default function ProjectsList() {
   const { data: projects, isLoading, error, layout, appliedFiltersNumber, query } = useOperations();
   const { user } = useUser();
-  const navigate = useNavigate();
   const [parent] = useAutoAnimate({ duration: 500 });
+  const navigate = useNavigate();
+
 
   const isAdmin = ['admin', 'super-admin'].includes(user?.role);
 

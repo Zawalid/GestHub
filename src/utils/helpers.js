@@ -3,7 +3,7 @@ import { DateTime, Interval } from 'luxon';
 import { twMerge } from 'tailwind-merge';
 
 //*------ Dates And Time
-const getIsoDate = (date) => DateTime.fromISO(new Date(date).toISOString());
+export const getIsoDate = (date) => DateTime.fromISO(new Date(date).toISOString());
 
 export const formatDate = (date, includeTime) => {
   if (!date) return null;
@@ -203,8 +203,8 @@ export const getFile = (data, type) => {
 export const isAlreadyApplied = (user, offer_id) => user?.applications?.find((d) => d.offer_id === +offer_id);
 
 // Filter
-export const getFilter = (data, key) =>
-  [...new Set(data?.map((el) => el[key]))].map((f) => ({ value: f, checked: false }));
+export const getFilter = (data, key, checked) =>
+  [...new Set(data?.map((el) => el[key]))].map((f) => ({ value: f, checked: f === checked }));
 
 export const getIntervals = (key, returned = ['past', 'present', 'future'], excluded = []) => {
   return intervals
@@ -217,7 +217,11 @@ export const getIntervals = (key, returned = ['past', 'present', 'future'], excl
     }));
 };
 
-export const checkIsTaskOverdue = (task) => {
-  const { isOverdue } = getTimelineDates(task.created_at, task.dueDate);
-  return isOverdue && task.status !== 'Done';
+export const checkIsOverdue = (el, type) => {
+  const startDate = type === 'task' ? el.created_at : el.startDate;
+  const endDate = type === 'task' ? el.dueDate : el.endDate;
+  const { isOverdue } = getTimelineDates(startDate, endDate);
+
+  if (type === 'task') return isOverdue && el.status !== 'Done';
+  return isOverdue && el.status !== 'Completed';
 };

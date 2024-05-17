@@ -10,7 +10,7 @@ const icons = {
 };
 
 export function Sort({ column }) {
-  const { sortBy, direction, onSort, onFilter, filters } = useTable();
+  const { sortBy, direction, onSort, onFilter, filters, appliedFiltersNumber } = useTable();
   const sort = (dir) => onSort(column.key, dir);
 
   if (column.filter)
@@ -25,12 +25,20 @@ export function Sort({ column }) {
           >
             {column.displayLabel}
             {sortBy === column.key ? icons[direction] : <FaSort size={12} />}
+            <span
+              className={`absolute -right-2 -top-2 h-5 w-5 rounded-full bg-primary text-center text-xs font-bold leading-5 text-white transition-transform duration-300 ${
+                appliedFiltersNumber(column.key) > 0 ? 'scale-100' : 'scale-0'
+              }`}
+            >
+              {appliedFiltersNumber(column.key)}
+            </span>
           </Button>
         }
         options={{
           className: 'min-w-[150px] max-h-[250px] overflow-y-auto',
           shouldCloseOnClick: false,
         }}
+        togglerClassName='relative'
       >
         <DropDown.Option onClick={() => sort('asc')}>
           {icons.asc}

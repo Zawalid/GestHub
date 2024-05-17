@@ -88,6 +88,7 @@ function EditProject({ isOpen, onClose, project }) {
   const { id, subject, description, startDate, endDate, priority, supervisor } = project || {};
   const { mutate } = useUpdateProject();
 
+
   return (
     <Modal
       isOpen={isOpen}
@@ -110,6 +111,7 @@ function EditProject({ isOpen, onClose, project }) {
             </div>
           );
         }}
+        isUpdate={true}
       />
     </Modal>
   );

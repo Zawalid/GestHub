@@ -1,20 +1,45 @@
-import { FaCalendarXmark, FaDiagramProject, LuClipboardList, FaListCheck } from '@/components/ui/Icons';
-import { checkIsTaskOverdue,  getTimelineDates } from '@/utils/helpers';
+import { useEffect, useState } from 'react';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
+import { DateCalendar, PickersDay } from '@mui/x-date-pickers';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { DateTime } from 'luxon';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import {
+  FaCalendarXmark,
+  FaDiagramProject,
+  LuClipboardList,
+  FaListCheck,
+  FaGithub,
+  FaGoogleDrive,
+} from '@/components/ui/Icons';
+import { checkIsOverdue, getTimelineDates } from '@/utils/helpers';
 import { useTasks } from '../projects/useTasks';
 import { useProjects } from '../projects/useProjects';
 import { TasksAnalytics } from './SupervisorOverview';
 import { Stat } from './Stat';
 import { useUser } from '@/hooks/useUser';
-import { Button } from '@/components/ui';
+import { Button, ToolTip } from '@/components/ui';
+import { useTheme } from '@/hooks/useTheme';
+import { FileView } from '@/components/ui/FileView';
+import { useForm } from '@/hooks/index';
+import { File } from '../applications/NewApplication';
+import { ErrorTooltip } from '@/components/ui/InputField';
+import { useSendInfo } from '../interns/useInterns';
 
 export default function InternOverview() {
+  const { user } = useUser();
+  const { startDate, endDate } = user || {};
+  const { daysLeft, isOverdue } = getTimelineDates(startDate, endDate);
+
   return (
     <div className='flex h-full flex-col gap-5'>
-      <div className='grid place-content-start gap-5 lg:grid-cols-[3fr,2fr]'>
-        <Stats />
-        <InternshipStatus />
+      <Stats />
+      <div className='grid flex-1 gap-5 lg:grid-cols-[4fr_2fr]'>
+        <TasksAnalytics />
+        {isOverdue ? <InternshipCompleted user={user} /> : <Calendar {...{ startDate, endDate, daysLeft }} />}
       </div>
-      <TasksAnalytics />
     </div>
   );
 }
@@ -45,14 +70,14 @@ function Stats() {
     {
       label: { value: 'Overdue Tasks' },
       value: {
-        value: tasks?.filter(checkIsTaskOverdue).length,
+        value: tasks?.filter((t) => checkIsOverdue(t, 'task')).length,
       },
       icon: { icon: <FaCalendarXmark /> },
       className: 'bg-red-400 dark:bg-red-500',
     },
   ];
   return (
-    <div className='flex flex-col gap-5 mobile:grid mobile:grid-cols-2'>
+    <div className='flex flex-col gap-5 mobile:grid mobile:grid-cols-2 md:grid-cols-4'>
       {stats.map((stat, index) => (
         <Stat key={index} isLoading={isLoading} {...stat} />
       ))}
@@ -60,17 +85,269 @@ function Stats() {
   );
 }
 
-function InternshipStatus() {
-  const { user } = useUser();
-  const { daysLeft, isOverdue } = getTimelineDates(user?.startDate, user?.endDate);
+function CustomDay({ day, startDate, endDate, outsideCurrentMonth, ...other }) {
+  const isEndDate = day.hasSame(endDate, 'day');
+  const isStartDate = day.hasSame(startDate, 'day');
+  const isBetween = day > startDate && day < endDate;
+
+  const style = isEndDate
+    ? { backgroundColor: '#ef4444', color: 'white' }
+    : isStartDate
+      ? { backgroundColor: '#2563eb', color: 'white' }
+      : isBetween
+        ? { backgroundColor: 'var(--background-secondary)', borderRadius: 0 }
+        : { backgroundColor: 'transparent' };
 
   return (
-    <div className='flex flex-col justify-center items-center gap-3 rounded-lg border border-border p-3 shadow-md'>
-      {/* <img src='/SVG/time.svg' alt='' className='absolute w-36' /> */}
-      <h3 className='w-4/5 text-center  font-medium text-text-secondary'>
-        You have <span className='mx-0.5 font-semibold text-text-primary'>{daysLeft}</span> days left on your internship
-      </h3>
-      <Button disabled={!isOverdue}>Generate Attestation</Button>
+    <ToolTip
+      content={<span className='text-xs text-text-secondary'>{isStartDate ? 'Start Date' : 'End Date'}</span>}
+      hidden={!isEndDate && !isStartDate}
+    >
+      <div
+        className={`flex h-9 w-9 ${isStartDate || isEndDate ? 'bg-background-secondary p-1' : ''} ${
+          isStartDate ? 'rounded-l-full' : 'rounded-r-full'
+        }`}
+      >
+        <PickersDay
+          {...other}
+          outsideCurrentMonth={outsideCurrentMonth}
+          day={day}
+          style={{ margin: 0, width: '100%', height: '100%', ...style }}
+        />
+      </div>
+    </ToolTip>
+  );
+}
+
+function Calendar({ startDate, endDate, daysLeft }) {
+  const { theme } = useTheme();
+
+  return (
+    <div className='flex flex-col items-center gap-3 rounded-lg border border-border p-3 shadow-md'>
+      <div className='space-y-1 self-start'>
+        <h3 className='text-lg font-semibold text-text-primary'>Internship Duration</h3>
+        <p className='text-sm font-medium text-text-secondary'>You have {daysLeft} days left on your internship.</p>
+      </div>
+
+      <LocalizationProvider dateAdapter={AdapterLuxon}>
+        <ThemeProvider theme={createTheme({ palette: { mode: theme } })}>
+          <DateCalendar
+            defaultValue={new DateTime(startDate)}
+            readOnly
+            className='calendar'
+            views={['day']}
+            slots={{ day: CustomDay }}
+            slotProps={{ day: { startDate: new Date(startDate), endDate: new Date(endDate) } }}
+          />
+        </ThemeProvider>
+      </LocalizationProvider>
     </div>
+  );
+}
+
+function InternshipCompleted({ user }) {
+  const [current, setCurrent] = useState('congrats');
+  const { attestation, projectLink, rapport } = user || {};
+
+  return (
+    <>
+      <div className='relative min-w-[360px] overflow-hidden rounded-lg border border-border shadow-md'>
+        <div
+          className={`absolute left-0 top-0 flex h-full w-full flex-col items-center justify-between gap-5 overflow-auto bg-background-primary p-3 transition-transform duration-500 ${['congrats', 'attestation'].includes(current) ? 'translate-y-0' : 'translate-y-full'}`}
+        >
+          <div className='space-y-1 text-center'>
+            <h3 className='text-xl font-bold text-primary'>Congratulations</h3>
+            <p className='text-sm font-medium text-text-secondary'>You have completed your internship</p>
+          </div>
+          <img src='/SVG/internship-completed.svg' alt='' className='w-36' />
+          <Button
+            className='w-full'
+            disabled={!attestation}
+            onClick={() => setCurrent(projectLink && rapport ? 'attestation' : 'info')}
+          >
+            Get Attestation
+          </Button>
+        </div>
+        <ProjectInfo current={current} setCurrent={setCurrent} />
+      </div>
+      <FileView isOpen={current === 'attestation'} onClose={() => setCurrent('congrats')} file={attestation} />
+    </>
+  );
+}
+
+function ProjectInfo({ current, setCurrent }) {
+  const [url, setUrl] = useState('github');
+  const { mutate } = useSendInfo();
+
+  const {
+    options: { formInputs, isUpdated, isValid, errors, getValue, setValue, handleSubmit },
+  } = useForm({
+    defaultValues: {
+      report: null,
+      github: '',
+      drive: '',
+    },
+    fields: [
+      {
+        name: 'report',
+        hidden: true,
+      },
+      ...[
+        {
+          name: 'github',
+          href: 'https://www.github.com',
+          color: '#000000',
+          icon: <FaGithub />,
+          pattern: `^(https://(www\\.)?github\\.com)/.*$`,
+        },
+        {
+          name: 'drive',
+          href: 'https://www.drive.google.com',
+          color: '#4285F4',
+          icon: <FaGoogleDrive />,
+          pattern: `^(https://drive\\.google\\.com)/.*$`,
+        },
+      ].map((s) => ({
+        name: s.name.toLowerCase(),
+        placeholder: s.href,
+        rules: {
+          pattern: {
+            value: new RegExp(s.pattern),
+            message: `Invalid URL. Please enter a valid ${s.name} link.`,
+          },
+          required: url === s.name,
+        },
+        customIcon: (
+          <span
+            className='absolute left-0 top-0 z-10 grid h-full w-7 place-content-center border-r border-border text-white'
+            style={{ backgroundColor: s.color }}
+          >
+            {s.icon}
+          </span>
+        ),
+      })),
+    ],
+    onSubmit: (data) => {
+      mutate({ projectLink: data?.[url], report: data?.report?.file }, { onSuccess: () => setCurrent('congrats') });
+    },
+  });
+
+  return (
+    <div
+      className={`absolute left-0 top-0 flex h-full w-full flex-col gap-5 overflow-auto  bg-background-primary p-3 transition-transform duration-500  ${current === 'info' ? 'translate-y-0' : '-translate-y-full'}`}
+    >
+      <div className='space-y-1'>
+        <h1 className='text-lg font-bold text-text-primary'>Internship&apos;s Project Info</h1>
+        <p className='text-xs font-medium text-text-secondary'>Please provide the following info about your project.</p>
+      </div>
+
+      <div className='space-y-1.5'>
+        <label className='text-sm font-medium text-text-tertiary'>
+          Report
+          <span className='ml-1 text-[10px] font-normal text-text-secondary'>
+            ( Supports: .pdf, .doc, .docx. Max size: 10MB. )
+          </span>
+        </label>
+
+        <File
+          type={'Report'}
+          file={getValue('report')?.file || {}}
+          onChange={(file) => setValue('report', file)}
+          options={{ maxFileSize: 10 }}
+        />
+      </div>
+      <div className='space-y-3'>
+        <div className='flex items-center justify-between'>
+          <div className='flex items-center gap-2'>
+            <label className='text-sm font-medium text-text-tertiary'>Project URL</label>
+            <ErrorTooltip message={errors?.[url]?.message} />
+          </div>
+          <div className='flex gap-1'>
+            {[
+              { url: 'github', icon: <FaGithub /> },
+              { url: 'drive', icon: <FaGoogleDrive /> },
+            ].map((button) => (
+              <Button
+                key={button.url}
+                shape='icon'
+                size='small'
+                state={url === button.url ? 'active' : null}
+                onClick={() => setUrl(button.url)}
+              >
+                {button.icon}
+              </Button>
+            ))}
+          </div>
+        </div>
+        {formInputs[url]}
+      </div>
+      {url === 'github' && (
+        <GitHub url={url} getValue={getValue} onClick={handleSubmit} disabled={!isUpdated || !isValid} />
+      )}
+    </div>
+  );
+}
+
+function GitHub({ url, getValue, onClick, disabled }) {
+  const github = getValue('github');
+  const isValidRepo = /^https:\/\/(www\.)?github\.com\/[A-z0-9_.-]+\/[A-z0-9_.-]+$/.test(github);
+  const {
+    data: repo,
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ['repo'],
+    queryFn: async () => {
+      try {
+        const repoPath = github.replace('https://github.com/', '');
+        const res = await axios.get(`https://api.github.com/repos/${repoPath}`);
+        return res?.data;
+      } catch (e) {
+        throw Error(e.response?.data.message || 'Something went wrong. Please try again.');
+      }
+    },
+    retry: 0,
+    enabled: isValidRepo,
+  });
+
+  useEffect(() => {
+    if (url === 'github' && isValidRepo) refetch();
+  }, [url, isValidRepo, refetch, github]);
+
+  const render = () => {
+    if (!isValidRepo) return <p className='text-xs font-medium'>Waiting for a GitHub repository URL...</p>;
+    if (isLoading) return <div className='sending mx-auto'></div>;
+    if (error) return <p className='line-clamp-2 text-xs font-medium'>{error?.message}</p>;
+    return (
+      <>
+        <div className='flex-1'>
+          <h4 className='text-sm font-medium text-text-primary'>{repo?.name}</h4>
+          <p className='text-[10px] font-medium text-text-secondary'>{repo?.language}</p>
+        </div>
+        <div className='rounded-md bg-background-tertiary px-1 py-0.5 text-[10px] font-medium capitalize text-text-primary'>
+          {repo?.visibility}
+        </div>
+      </>
+    );
+  };
+
+  return (
+    <>
+      <div className='space-y-2'>
+        <label className='text-sm font-medium text-text-tertiary'>Repository</label>
+        <a
+          className='flex items-center gap-3 rounded-lg bg-background-secondary p-2 transition-colors duration-300 hover:bg-background-tertiary'
+          href={repo?.html_url}
+          target='_blank'
+        >
+          <FaGithub className='text-xl' />
+          {render()}
+        </a>
+      </div>
+      <Button className='mt-auto' onClick={onClick} disabled={disabled || error}>
+        Send Info
+      </Button>
+    </>
   );
 }

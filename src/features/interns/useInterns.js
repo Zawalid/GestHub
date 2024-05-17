@@ -1,5 +1,5 @@
 import { useMutate } from '@/hooks/useMutate';
-import { formatUserData } from '@/hooks/useUser';
+import { formatUserData, useUser } from '@/hooks/useUser';
 import {
   acceptUsers,
   addIntern,
@@ -12,6 +12,7 @@ import {
   getIntern,
   updateIntern,
 } from '@/services/internsAPI';
+import { uploadFile } from '@/services/usersAPI';
 import { getFile, getTimelineDates } from '@/utils/helpers';
 import { useQuery } from '@tanstack/react-query';
 
@@ -143,3 +144,18 @@ export const useAcceptUsers = () =>
     successMessage: 'Users accepted successfully',
     errorMessage: 'Failed to accept users',
   });
+
+export const useSendInfo = () => {
+  const { user } = useUser();
+
+  return useMutate({
+    queryKey: ['user', 'info'],
+    mutationFn: async ({projectLink, report}) => {
+      await updateIntern(user?.profile_id, { projectLink });
+      await uploadFile(user?.profile_id, report, 'report');
+    },
+    loadingMessage: 'Sending info...',
+    successMessage: 'Info sent successfully',
+    errorMessage: 'Failed to send info',
+  });
+};

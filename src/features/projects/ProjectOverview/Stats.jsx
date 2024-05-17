@@ -1,5 +1,5 @@
 import { FaCalendarXmark, TbProgress, FaListCheck, LuListTodo } from '@/components/ui/Icons';
-import { checkIsTaskOverdue } from '@/utils/helpers';
+import { checkIsOverdue } from '@/utils/helpers';
 import { Stat } from '@/features/overview/Stat';
 
 export function Stats({ isLoading, tasks }) {
@@ -25,7 +25,7 @@ export function Stats({ isLoading, tasks }) {
     {
       label: { value: 'Overdue Tasks' },
       value: {
-        value: tasks?.filter(checkIsTaskOverdue).length,
+        value: tasks?.filter((t) => checkIsOverdue(t, 'task')).length,
       },
       icon: { icon: <FaCalendarXmark /> },
       className: 'bg-red-400 dark:bg-red-500',

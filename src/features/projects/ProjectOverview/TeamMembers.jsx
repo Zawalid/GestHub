@@ -17,6 +17,7 @@ import { useUser } from '@/hooks/useUser';
 import { useInternsByIds } from '@/features/interns/useInterns';
 import { getProgress } from '@/utils/helpers';
 import Avatar from '@/components/ui/Avatar';
+import { useSupervisor } from '@/features/supervisors/useSupervisors';
 
 export function TeamMembers({ project }) {
   const [isOpen, setIsOpen] = useState();
@@ -43,7 +44,8 @@ export function TeamMembers({ project }) {
       );
     }
     return (
-      <div className='grid auto-cols-[250px] grid-flow-col gap-6 overflow-auto pb-2' ref={parent}>
+      <div className='grid auto-cols-[250px] grid-flow-col gap-4 overflow-auto pb-2' ref={parent}>
+        <Supervisor id={project?.supervisor} />
         {teamMembers
           .sort((a, b) => a.firstName?.localeCompare(b.firstName))
           .map((member) => (
@@ -85,6 +87,42 @@ export function TeamMembers({ project }) {
     </div>
   );
 }
+
+function Supervisor({ id }) {
+  const { supervisor, isLoading } = useSupervisor(id);
+  const { user } = useUser();
+
+  if (isLoading)
+    return (
+      <div className='grid place-content-center rounded-lg border border-border bg-background-disabled p-5 pt-3'>
+        <div className='mb-8 mt-5 flex flex-col items-center gap-3'>
+          <div className='mb-2 h-16 w-16 rounded-full border border-border bg-background-tertiary'></div>
+          <div className='h-3 w-32 rounded-lg bg-background-tertiary'></div>
+          <div className='h-2 w-28 rounded-lg bg-background-secondary'></div>
+          <div className='mt-2 h-2 w-20 rounded-lg bg-background-secondary'></div>
+        </div>
+      </div>
+    );
+  return (
+    <div className='flex'>
+      <div className='grid flex-1 place-content-center rounded-lg border border-border bg-background-secondary p-5 text-center'>
+        <div className='relative'>
+          <PiCrown className='absolute -top-5 left-1/2 -translate-x-1/2 text-2xl text-primary transition-transform duration-300' />
+          <Avatar custom={{ avatar: supervisor?.avatar, gender: supervisor?.gender }} className='mx-auto h-16 w-16' />
+        </div>
+        <div className='my-3'>
+          <h3 className='text-lg font-semibold text-text-primary'>
+            {user?.id === id && user?.role === 'supervisor' ? 'You' : supervisor?.fullName}
+          </h3>
+          <p className='text-xs font-medium text-text-primary'>{supervisor?.email}</p>
+        </div>
+        <p className='text-sm font-medium text-text-secondary'>Supervisor</p>
+      </div>
+      <span className='ml-4 h-full w-0.5 rounded-lg bg-border'></span>
+    </div>
+  );
+}
+
 function Member({ member, project }) {
   const { openModal } = useConfirmationModal();
   const { mutate } = useUpdateProject();
@@ -142,7 +180,9 @@ function Member({ member, project }) {
         />
         <Avatar custom={{ avatar, gender }} className='mx-auto h-16 w-16' />
         <div className='my-3'>
-          <h3 className='text-lg font-semibold text-text-primary'>{fullName}</h3>
+          <h3 className='text-lg font-semibold text-text-primary'>
+            {user?.id === id && user?.role === 'intern' ? 'You' : fullName}
+          </h3>
           <p className='text-xs font-medium text-text-primary'>{email}</p>
         </div>
         <p className='text-sm font-medium text-text-secondary'>
@@ -156,7 +196,7 @@ function Member({ member, project }) {
         </div>
         <div className='flex items-center gap-1 text-text-secondary'>
           <TbProgressCheck />
-          <span className='text-xs font-medium '>{getProgress(doneTasks.length / assignedTasks.length)}%</span>
+          <span className='text-xs font-medium '>{getProgress(doneTasks.length / assignedTasks.length) * 100}%</span>
         </div>
       </div>
     </div>
@@ -174,15 +214,13 @@ function MembersSkeleton() {
           </div>
           <div className='mb-8 mt-5 flex flex-col items-center gap-3'>
             <div className='mb-2 h-16 w-16 rounded-full border border-border bg-background-tertiary'></div>
-            <div className='h-2 w-28 rounded-lg bg-background-tertiary'></div>
-            <div className='h-2 w-20 rounded-lg bg-background-secondary'></div>
+            <div className='h-3 w-32 rounded-lg bg-background-tertiary'></div>
+            <div className='h-2 w-28 rounded-lg bg-background-secondary'></div>
+            <div className='mt-2 h-2 w-20 rounded-lg bg-background-secondary'></div>
           </div>
           <div className='mb-5 flex items-center justify-between'>
             <div className='h-3 w-8 rounded-md bg-background-tertiary'></div>
             <div className='h-3 w-8 rounded-md bg-background-tertiary'></div>
-          </div>
-          <div className='flex justify-center rounded-lg border border-border p-4'>
-            <div className='h-2 w-20 rounded-lg bg-background-secondary'></div>
           </div>
         </div>
       ))}

@@ -118,3 +118,10 @@
 .tooltip {
   @apply rounded-lg border border-border bg-background-secondary p-2 text-xs font-medium text-text-tertiary !important;
 }
+.calendar {
+  @apply m-0 h-fit !important;
+
+  & .css-1t0788u-MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition {
+    @apply min-h-[200px];
+  }
+}

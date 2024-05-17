@@ -1,6 +1,6 @@
 import { BsCalendar4Event, IoTrashOutline, MdDriveFileRenameOutline } from '@/components/ui/Icons';
 import { PRIORITY_COLORS } from '@/utils/constants';
-import { formatDate } from '@/utils/helpers';
+import { checkIsOverdue, formatDate } from '@/utils/helpers';
 import { ToolTip } from '@/components/ui/ToolTip';
 import Avatar from '@/components/ui/Avatar';
 
@@ -15,7 +15,9 @@ export default function Task({ task, onDelete, onEdit, layout, canManipulateTask
           <h4 className='line-clamp-2 font-semibold text-text-primary'>{task.title || 'Untitled'}</h4>
         </div>
         <Assignee assignee={assignee} />
-        <span className='text-xs font-medium text-text-secondary'>
+        <span
+          className={`text-center text-xs font-medium ${checkIsOverdue(task, 'task') ? 'text-red-500' : 'text-text-secondary'}`}
+        >
           {task.dueDate ? formatDate(task.dueDate) : 'N/A'}
         </span>
         <span className={`rounded-md px-2 py-1 text-center text-xs text-white ${PRIORITY_COLORS[task.priority]?.bg}`}>
@@ -25,22 +27,28 @@ export default function Task({ task, onDelete, onEdit, layout, canManipulateTask
     );
 
   return (
-    <div className='relative flex min-h-[144px] flex-col gap-4 rounded-lg border border-border bg-background-secondary p-4 pt-6 shadow-sm transition-all duration-300'>
+    <div className='relative flex min-h-[144px] flex-col gap-4 rounded-lg border border-border bg-background-secondary p-4 pt-8 shadow-sm transition-all duration-300'>
       <div className='space-y-2.5'>
         <div className='flex items-center justify-between gap-5'>
           <h4 className='line-clamp-2 font-semibold text-text-primary'>{title || 'Untitled'}</h4>
           {priority !== 'None' && (
-            <span className={`rounded-md px-2 py-1 text-center text-xs text-white ${PRIORITY_COLORS[priority]?.bg}`}>
+            <span
+              className={`absolute right-2 top-2 rounded-md px-2 py-0.5 text-center text-[10px] font-medium text-white ${PRIORITY_COLORS[priority]?.bg}`}
+            >
               {priority}
             </span>
           )}
         </div>
-        <p className='line-clamp-2 text-xs text-text-secondary'>{description || 'No description'}</p>
+        <ToolTip content={<span>{description}</span>} hidden={!description || description.length < 90}>
+          <p className='line-clamp-2 text-xs text-text-secondary'>{description || 'No description'}</p>
+        </ToolTip>
       </div>
 
       <div className='flex flex-1 items-center justify-between border-t border-border pt-3'>
         <Assignee assignee={assignee} />
-        <div className='flex items-center gap-2 text-xs font-medium text-text-secondary'>
+        <div
+          className={`flex items-center gap-2 text-xs font-medium ${checkIsOverdue(task, 'task') ? 'text-red-500' : 'text-text-secondary'}`}
+        >
           <BsCalendar4Event />
           {dueDate ? <span>{formatDate(dueDate)}</span> : <span>N/A</span>}
         </div>

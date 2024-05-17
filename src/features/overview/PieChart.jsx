@@ -82,7 +82,7 @@ export default function PieChartStats({ data, title, legend, COLORS, className =
   }, [data]);
 
   return (
-    <div className={`flex flex-col gap-5 rounded-lg border border-border p-3 shadow-md ${className}`}>
+    <div className={`flex flex-col items-center gap-2 rounded-lg border border-border p-3 shadow-md ${className}`}>
       <h2 className='text-lg font-bold text-text-primary'>{title}</h2>
       <Legend legend={legend} />
       <ResponsiveContainer className={`flex-1 ${isLoading ? 'animate-pulse' : ''}`}>
@@ -136,18 +136,17 @@ export function createCustomTooltip(fields) {
     if (active && payload && payload.length) {
       return (
         <div className='tooltip'>
-          {fields.map(({ key, label, intro }) => (
-            <>
+          {fields.map(({ key, label, intro, condition }) => (
+            <div key={Math.random()}>
               {label && (
-                <p className='label mb-1 border-b border-border pb-1 text-text-secondary'>{payload[0].payload[key]}</p>
+                <p className='label mb-1 border-b border-border pb-1 text-text-secondary'>
+                  {payload[0].payload[key]} {condition?.(payload[0].payload[key])}
+                </p>
               )}
               {intro && (
-                <p
-                  className='intro mb-0.5 font-medium text-text-primary'
-                  key={key}
-                >{`${intro} : ${payload[0].payload[key]}`}</p>
+                <p className='intro mb-0.5 font-medium text-text-primary'>{`${intro} : ${payload[0].payload[key]}`}</p>
               )}
-            </>
+            </div>
           ))}
         </div>
       );

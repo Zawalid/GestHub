@@ -97,6 +97,7 @@ export const Button = forwardRef(
         ref={ref}
         disabled={disabled}
         onClick={(e) => state !== 'disabled' && onClick?.(e)}
+        type='button'
         {...props}
       >
         {isLoading ? (

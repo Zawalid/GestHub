@@ -60,7 +60,7 @@ export default function Offer({ offer, layout }) {
   );
 }
 
-function Layer({ condition, icon }) {
+export function Layer({ condition, icon }) {
   return (
     condition && (
       <div className='absolute left-0 top-0 grid h-full w-full place-content-center overflow-hidden rounded-lg transition-opacity duration-300 group-hover:opacity-0'>

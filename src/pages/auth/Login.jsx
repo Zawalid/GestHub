@@ -15,7 +15,7 @@ export function Login() {
     defaultValues: { email: '', password: '' },
     fields: [
       { name: 'email', type: 'email', label: t('form.email.label') },
-      { name: 'password', type: 'password', label: t('form.password.label') },
+      { name: 'password', type: 'password', label: t('form.password.label'),rules : {pattern : null} },
     ],
     onSubmit: login,
     submitOnEnter: true,

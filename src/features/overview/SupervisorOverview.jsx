@@ -2,11 +2,12 @@ import { DateTime } from 'luxon';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Rectangle } from 'recharts';
 import { FaCalendarXmark, FaDiagramProject, FaRegCircleCheck, IoPeople } from '@/components/ui/Icons';
 import { useProjects } from '@/features/projects/useProjects';
-import { checkIsTaskOverdue, getTimelineDates } from '@/utils/helpers';
+import { checkIsOverdue, getIsoDate } from '@/utils/helpers';
 import { useTasks } from '@/features/projects/useTasks';
 import PieChartStats, { Legend, createCustomTooltip } from '@/features/overview/PieChart';
 import { Status } from '@/components/ui';
 import { Stat } from './Stat';
+import { useNavigate } from 'react-router-dom';
 
 export default function SupervisorOverview() {
   const { projects, isLoading } = useProjects();
@@ -40,15 +41,15 @@ export function TasksAnalytics() {
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
   const data = days.map((day, i) => {
-    const tasksOnDay = tasks?.filter((task) => DateTime.fromISO(task.created_at).weekday === i + 1);
+    const tasksOnDay = tasks?.filter((task) => getIsoDate(task.created_at).weekday === i + 1);
     const completedTasksOnDay = tasks?.filter(
-      (task) => task.status === 'Done' && DateTime.fromISO(task.updated_at).weekday === i + 1
+      (task) => task.status === 'Done' && getIsoDate(task.updated_at).weekday === i + 1
     );
-    const overdueTasks = tasks?.filter((t) => checkIsTaskOverdue(t) && DateTime.fromISO(t.dueDate).weekday === i + 1);
+    const overdueTasks = tasks?.filter((t) => checkIsOverdue(t, 'task') && getIsoDate(t.dueDate).weekday === i + 1);
 
     return {
       name: day.slice(0, 3),
-      fullName : day,
+      fullName: day,
       Added: tasksOnDay?.length,
       Completed: completedTasksOnDay?.length,
       Overdue: overdueTasks?.length,
@@ -56,15 +57,21 @@ export function TasksAnalytics() {
   });
 
   const CustomTooltip = createCustomTooltip([
-    { key: 'fullName',label : 'Day'},
+    {
+      key: 'fullName',
+      label: 'Day',
+      condition: (day) => {
+        if (DateTime.local().weekdayLong === day) return '(Today)';
+      },
+    },
     { key: 'Added', intro: 'Added' },
     { key: 'Completed', intro: 'Completed' },
     { key: 'Overdue', intro: 'Overdue' },
   ]);
 
   return (
-    <div className='relative min-h-[300px] flex-1 grid gap-5 rounded-lg border border-border bg-background-secondary p-3'>
-      <div className='flex justify-between gap-5'>
+    <div className='relative min-h-[400px] grid gap-5 rounded-lg border border-border bg-background-secondary p-3'>
+      <div className='flex self-start justify-between flex-col items-center gap-2 sm:flex-row'>
         <h2 className='text-lg font-bold text-text-primary'>Weekly Tasks Progress</h2>
         <Legend
           legend={[
@@ -97,29 +104,31 @@ export function TasksAnalytics() {
 }
 
 function Stats({ projects, isLoading }) {
+  const navigate = useNavigate();
+
   const stats = [
     {
       label: { value: 'Total Projects' },
       value: { value: projects?.length },
       icon: { icon: <FaDiagramProject /> },
       className: 'bg-orange-400 dark:bg-orange-500',
+      onClick: () => navigate('/app/projects'),
     },
     {
       label: { value: 'Completed Projects' },
       value: { value: projects?.filter((p) => p.status === 'Completed').length },
       icon: { icon: <FaRegCircleCheck /> },
       className: 'bg-green-500 dark:bg-green-600',
+      onClick: () => navigate('/app/projects', { state: { filter: 'Completed' } }),
     },
     {
       label: { value: 'Overdue Projects' },
       value: {
-        value: projects?.filter((p) => {
-          const { isOverdue } = getTimelineDates(p.startDate, p.endDate);
-          return isOverdue;
-        }).length,
+        value: projects?.filter((p) => checkIsOverdue(p, 'project')).length,
       },
       icon: { icon: <FaCalendarXmark /> },
       className: 'bg-red-400 dark:bg-red-500',
+      onClick: () => navigate('/app/projects', { state: { filter: 'Overdue' } }),
     },
     {
       label: { value: 'Team Members', color: 'text-text-secondary' },

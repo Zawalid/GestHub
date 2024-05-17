@@ -1,15 +1,18 @@
 import { ProfileAvatar } from './ProfileAvatar';
 import { useForm } from '@/hooks/useForm';
 import { ModalFormLayout } from '@/layouts/ModalFormLayout';
-import { useUpdateAvatar, useUpdateProfile, useUser } from '@/hooks/useUser';
-import { RULES } from '@/utils/constants';
+import { useUpdateProfile, useUser } from '@/hooks/useUser';
+import { File } from '../applications/NewApplication';
+import { AcademicLevel } from '@/pages/auth/Register';
+import { useState } from 'react';
+import { FileView } from '@/components/ui/FileView';
 
 export default function Profile() {
+  const [isCvOpen,setIsCvOpen] = useState(false)
   const { user } = useUser();
-  const { mutate } = useUpdateProfile();
-  const { mutate: updateAvatar, isPending } = useUpdateAvatar();
+  const { mutate, isPending } = useUpdateProfile();
 
-  const { profile_id, role, avatar, firstName, lastName, email, phone, academicLevel, establishment } = user || {};
+  const { profile_id, role, avatar, firstName, lastName, email, phone, academicLevel, establishment, cv } = user || {};
 
   const defaultValues = {
     avatar: avatar || { src: null, file: null },
@@ -21,12 +24,13 @@ export default function Profile() {
     ...(['intern', 'user'].includes(role) && {
       academicLevel: academicLevel || '',
       establishment: establishment || '',
+      cv: cv || '',
     }),
   };
 
   const {
     Form,
-    options: { isUpdated,  dirtyFields, handleSubmit, reset, setValue, getValue, updateValues },
+    options: { isUpdated, dirtyFields, handleSubmit, reset, setValue, getValue, updateValues },
   } = useForm({
     defaultValues,
     fields: [
@@ -53,23 +57,39 @@ export default function Profile() {
         ? [
             {
               name: 'academicLevel',
-              type: 'academicLevel',
-              label: 'Academic Level',
-              rules: { ...RULES.academicLevel },
+              customComponent: <AcademicLevel />,
             },
             {
               name: 'establishment',
               type: 'establishment',
               label: 'Establishment',
             },
+            {
+              name: 'cv',
+              customComponent: () => (
+                <div className='col-span-2 space-y-1.5'>
+                  <label className='text-sm font-medium text-text-tertiary'>
+                    Cv
+                    <span className='ml-1 text-xs font-normal text-text-secondary'>
+                      ( Supports: .pdf, .doc, .docx. Max size: 5MB. )
+                    </span>
+                  </label>
+
+                  <File
+                    type={'Cv'}
+                    file={getValue('cv')?.file || {}}
+                    onChange={(file) => setValue('cv', file)}
+                    onDelete={() => setValue('cv', null)}
+                    onView={() => setIsCvOpen(true)}
+                  />
+                </div>
+              ),
+            },
           ]
         : []),
     ],
-    onSubmit: (user) => {
-      if (dirtyFields['avatar']) updateAvatar({ id: profile_id, file: user.avatar.file });
-      if (Object.keys(dirtyFields).length === 1 && Object.keys(dirtyFields)[0] === 'avatar') return;
-      mutate({ user: dirtyFields, id: profile_id }, { onError: () => reset(() => updateValues(defaultValues)) });
-    },
+    onSubmit: () =>
+      mutate({ user: dirtyFields, id: profile_id }, { onError: () => reset(() => updateValues(defaultValues)) }),
     gridLayout: true,
   });
 
@@ -95,6 +115,8 @@ export default function Profile() {
         </div>
 
         {Form}
+        <FileView isOpen={isCvOpen} onClose={() => setIsCvOpen(false)} file={getValue('cv')?.src} />
+
       </div>
     </ModalFormLayout>
   );

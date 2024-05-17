@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Bar, BarChart, Rectangle, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import PieChartStats, { Legend, createCustomTooltip } from './PieChart';
 import { AllInterns, Intern } from '../projects/NewProject/TeamMembers';
@@ -9,12 +9,45 @@ import { useGenerateAttestation, useGenerateAttestations } from '../interns/useI
 import { useAdmins, useApplications, useOffers, useSupervisors, useInterns } from '@/hooks/index';
 import { useNavigate } from 'react-router-dom';
 import { Stat } from './Stat';
+import SupervisorOverview from './SupervisorOverview';
 
 export default function AdminOverview() {
+  const [current, setCurrent] = useState('offers');
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') setCurrent('offers');
+      if (e.key === 'ArrowRight') setCurrent('projects');
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
-    <div className='flex h-full flex-col  gap-5'>
-      <Stats />
-      <OffersAnalytics />
+    <div className='flex flex-col gap-5'>
+      <div className='flex gap-1 self-center'>
+        {['offers', 'projects'].map((e) => (
+          <button
+            key={e}
+            className={`h-3 w-3 rounded-full border border-border shadow-md transition-colors duration-300 ${e === current ? 'bg-text-primary ' : 'bg-background-secondary'}`}
+            onClick={() => setCurrent(e)}
+          ></button>
+        ))}
+      </div>
+      <div className='grid overflow-hidden'>
+        <div
+          className={`col-[1] row-[1] flex h-full flex-col gap-5 transition-transform duration-500 ${current === 'offers' ? 'translate-x-0' : '-translate-x-full'}`}
+        >
+          <Stats />
+          <OffersAnalytics />
+        </div>
+        <div
+          className={`col-[1] row-[1] h-fit transition-transform duration-500 ${current === 'projects' ? 'translate-x-0' : 'translate-x-full'}`}
+        >
+          <SupervisorOverview />
+        </div>
+      </div>
     </div>
   );
 }
@@ -32,12 +65,14 @@ function Stats() {
       value: { value: applications?.length },
       icon: { icon: <LuClipboardList /> },
       className: 'bg-primary',
+      onClick: () => navigate('/app/applications'),
     },
     {
       label: { value: 'Pending Applications' },
       value: { value: applications?.filter((p) => p.status === 'Pending').length },
       icon: { icon: <MdOutlinePendingActions /> },
       className: 'bg-orange-500 dark:bg-orange-600',
+      onClick: () => navigate('/app/applications', { state: { filter: 'Pending' } }),
     },
   ];
 
@@ -192,6 +227,9 @@ function GenerateAttestation({ isOpen, onClose, completedInternships }) {
 
 function OffersAnalytics() {
   const { offers, isLoading } = useOffers();
+  const navigate = useNavigate();
+
+  const onClick = (data) => navigate('/app/applications', { state: { filter: data.fullName } });
 
   const latestOffers = offers
     ?.filter((offer) => offer.applications?.length > 0)
@@ -202,6 +240,7 @@ function OffersAnalytics() {
     const rejected = offer?.applications.filter((application) => application.status === 'Rejected');
     const approved = offer?.applications.filter((application) => application.status === 'Approved');
     return {
+      id: offer?.id,
       name: `${offer?.title.slice(0, 8)}${offer?.title.slice(8).length ? '...' : ''}`,
       fullName: offer?.title,
       Approved: approved?.length,
@@ -217,9 +256,8 @@ function OffersAnalytics() {
 
   return (
     <div className='relative grid min-h-[300px] gap-5 rounded-lg border border-border bg-background-secondary p-3'>
-      <div className='flex justify-between gap-5'>
+      <div className='flex flex-col items-center justify-between gap-2 self-start mobile:flex-row'>
         <h2 className='text-lg font-bold text-text-primary'>Latest Offers</h2>
-
         <Legend
           legend={[
             { text: 'Approved', color: 'bg-green-500' },
@@ -240,12 +278,11 @@ function OffersAnalytics() {
               wrapperClassName='tooltip'
               cursor={<Rectangle radius={5} stroke='var(--border)' fill='var(--background-tertiary)' />}
             />
-            <Bar dataKey='Approved' fill='#16a34a' legendType='circle' />
-            <Bar dataKey='Rejected' fill='#ef4444' legendType='circle' />
+            <Bar dataKey='Approved' fill='#16a34a' className='cursor-pointer' legendType='circle' onClick={onClick} />
+            <Bar dataKey='Rejected' fill='#ef4444' className='cursor-pointer' legendType='circle' onClick={onClick} />
           </BarChart>
         </ResponsiveContainer>
       )}
     </div>
   );
 }
-

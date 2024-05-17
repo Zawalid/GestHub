@@ -2,9 +2,11 @@ import { PRIORITY_COLORS, STATUS_COLORS } from '@/utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { ToolTip } from '@/components/ui/ToolTip';
-import { cn, formatDate } from '@/utils/helpers';
+import { checkIsOverdue, cn, formatDate,  } from '@/utils/helpers';
 import { useInternsByIds } from '../interns/useInterns';
 import Avatar from '@/components/ui/Avatar';
+import { Layer } from '../offers/Offer';
+import { FaCalendarXmark } from 'react-icons/fa6';
 
 export default function Project({ project, layout }) {
   const { id, subject, description, startDate, endDate, status, priority, teamMembers } = project;
@@ -13,12 +15,14 @@ export default function Project({ project, layout }) {
   return (
     <div
       className={cn(
-        'relative grid cursor-pointer grid-rows-[24px_auto_20px_28px] gap-3 rounded-lg  border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95',
+        'group relative grid cursor-pointer grid-rows-[24px_auto_20px_28px] gap-3 rounded-lg  border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95',
         layout === 'grid' && 'h-[240px]',
         priority !== 'None' && 'rounded-tr-none'
       )}
       onClick={() => navigate(String(id))}
     >
+      <Layer condition={checkIsOverdue(project, 'project')} icon={<FaCalendarXmark />} />
+
       <PriorityIndicator priority={priority} />
       <div className='flex items-center justify-between'>
         <Date startDate={startDate} endDate={endDate} />

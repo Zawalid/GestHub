@@ -37,7 +37,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={false} />
           <ConfirmationModalProvider>
-            <App />
+              <App />
           </ConfirmationModalProvider>
         </QueryClientProvider>
       </I18nextProvider>
