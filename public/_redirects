@@ -1,3 +1,2 @@
-/*  /index.html  200
 /api/*  https://gesthub-api.onrender.com/api/:splat 200
 /assets/*  https://gesthub-api.onrender.com/:splat  200

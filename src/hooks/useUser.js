@@ -89,6 +89,8 @@ export function useUser() {
     retry: 1,
   });
 
+  console.log(data)
+
   return {
     user: data
       ? {

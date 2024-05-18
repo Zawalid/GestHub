@@ -39,7 +39,7 @@ export default function About() {
               <div className='space-y-2'>
                 <h2 className=' font-bold text-primary'>{t('about.email')}</h2>
                 <a href='mailto:stagiaire@men.gov.ma' className='text-sm font-medium text-text-secondary '>
-                  stagiaire@men.gov.ma
+                 {settings?.email}
                 </a>
               </div>
             </div>
@@ -125,7 +125,7 @@ function Location() {
               rel='noreferrer'
               className='text-sm font-medium text-text-secondary '
             >
-              Av. Ibn Rochd, Rabat
+             {settings?.location}
             </a>
           </div>
           <button className={`text-text-primary transition-transform duration-500 ${isOpen && 'rotate-180'} `}>
@@ -141,7 +141,7 @@ function Location() {
         }}
       >
         <iframe
-          src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3308.16598525745!2d-6.858738424189181!3d33.98827007318123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda76d6b99660137%3A0x2e8e7d79b04b2d11!2sDSI%20MEN!5e0!3m2!1sfr!2sma!4v1712325098680!5m2!1sfr!2sma'
+          src={settings?.maps}
           allowFullScreen=''
           loading='lazy'
           referrerPolicy='no-referrer-when-downgrade'

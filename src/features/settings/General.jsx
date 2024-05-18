@@ -6,7 +6,7 @@ import { Button } from '@/components/ui';
 
 export default function General() {
   const { settings } = useSettings();
-  
+
   const defaultValues = {
     appLogo: settings?.appLogo || { src: '/SVG/logo.svg', file: null },
     appName: settings?.appName || 'GestHub',
@@ -52,13 +52,13 @@ export default function General() {
       },
       {
         name: 'maps',
-        label: 'Google Maps Link',
+        label: 'Embedded Google Maps',
         type: 'maps',
-        placeholder: 'https://maps.app.goo.gl/',
+        placeholder: 'https://www.google.com/maps/embed?',
         rules: {
           pattern: {
-            value: new RegExp('^\\s*(https://maps\\.google\\.com|https://maps\\.app\\.goo\\.gl).*\\s*$', 'i'),
-            message: 'Invalid URL. Please enter a valid Google Maps link.',
+            value: new RegExp('^\\s*(https://www\\.google\\.com/maps/embed\\?).*\\s*$', 'i'),
+            message: 'Invalid URL. Please enter a valid Google Maps embed link.',
           },
         },
       },
