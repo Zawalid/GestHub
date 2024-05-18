@@ -43,9 +43,7 @@ export function MobileHeader({ isOpen, onClose }) {
           </Button>
         </div>
         <Links />
-        <div className='mt-auto grid grid-cols-5 border-t border-border p-2'>
-          <SocialMedia color='text-text-primary' />{' '}
-        </div>
+        <SocialMedia color='text-text-primary' />
       </div>
     </>
   );
