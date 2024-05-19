@@ -8,13 +8,13 @@ export default function General() {
   const { settings } = useSettings();
 
   const defaultValues = {
-    appLogo: settings?.appLogo || { src: '/SVG/logo.svg', file: null },
+    appLogo: settings?.appLogo,
     appName: settings?.appName || 'GestHub',
     companyName: settings?.companyName || 'DSI',
     email: settings?.email || 'company@example.com',
     phone: settings?.phone || '0674323434',
     location: settings?.location || 'Rabat',
-    maps: settings?.maps || 'https://maps.app.goo.gl/fdserer',
+    maps: settings?.maps || 'https://www.google.com/maps/embed?',
     facebook: settings?.facebook || '',
     twitter: settings?.twitter || '',
     instagram: settings?.instagram || '',
@@ -93,7 +93,7 @@ export default function General() {
     gridLayout: true,
   });
   const { openFilePicker } = useUploadFile({ onChange: (logo) => setValue('appLogo', logo) });
-  const { mutate, isPending } = useUpdateSettings();
+  const { mutate } = useUpdateSettings();
 
   return (
     <ModalFormLayout
@@ -110,10 +110,8 @@ export default function General() {
         <h3 className='mb-3 font-bold text-text-secondary'>Basic Info</h3>
         <div>
           <img
-            className={`h-28 w-28  border border-border text-center text-xs text-text-tertiary ${
-              name === 'Image' ? 'rounded-full object-cover' : 'rounded-lg object-contain'
-            }`}
-            src={getValue('appLogo')?.src}
+            className='h-28 w-28 rounded-lg border border-border object-contain text-center text-xs text-text-tertiary'
+            src={getValue('appLogo')?.src || ''}
           />
           <Button
             type='outline'

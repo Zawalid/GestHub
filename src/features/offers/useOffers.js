@@ -54,7 +54,7 @@ export function useVisibleOffers(latest) {
 
 export const useOffer = (id) => {
   const { data, error, isPending } = useQuery({
-    queryKey: ['offer', id],
+    queryKey: ['offers', id],
     queryFn: () => getOffer(id),
   });
 

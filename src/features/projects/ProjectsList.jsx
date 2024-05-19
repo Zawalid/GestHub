@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { FaPlus } from 'react-icons/fa6';
-import { Operations } from '@/components/shared/operations/Operations';
-import { useOperations } from '@/components/shared/operations/useOperations';
+import { Operations } from '@/components/shared/Operations/Operations';
+import { useOperations } from '@/components/shared/Operations/useOperations';
 import { Button } from '@/components/ui';
 import { Status } from '@/components/ui/Status';
 import ProjectsSkeleton from './ProjectsSkeleton';

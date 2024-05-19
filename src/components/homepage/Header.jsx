@@ -10,9 +10,11 @@ import { Logo } from '../ui/Logo';
 import { FaChevronDown } from 'react-icons/fa6';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import Notifications from './Notifications';
+import { useUser } from '@/hooks/useUser';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user } = useUser();
   const currentPath = useHref().split('/')[1];
 
   useEffect(() => {
@@ -27,7 +29,7 @@ export function Header() {
       <div className='flex items-center gap-4'>
         <ThemeSwitcher />
         <LanguageSwitcher />
-        <Notifications />
+        {user?.role === 'user' && <Notifications />}
         <AuthSwitcher />
 
         <Button shape='icon' onClick={() => setIsMobileMenuOpen(true)} className='lg:hidden'>

@@ -1,4 +1,4 @@
-import { Operations } from '@/components/shared/operations/Operations';
+import { Operations } from '@/components/shared/Operations/Operations';
 import { getOffersProps } from './Offers';
 import { useVisibleOffers } from '@/features/offers/useOffers';
 import OffersList from '@/features/offers/OffersList';

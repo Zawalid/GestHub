@@ -4,7 +4,6 @@ import { BsTelephoneFill } from 'react-icons/bs';
 import { IoLocationSharp } from 'react-icons/io5';
 import { useTranslation } from 'react-i18next';
 import { useSettings } from '@/hooks/useUser';
-import axios from 'axios';
 
 export default function About() {
   const { settings } = useSettings();

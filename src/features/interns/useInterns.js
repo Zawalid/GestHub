@@ -62,7 +62,7 @@ export function useInternsByIds(ids) {
 
 export function useIntern(id) {
   const { data, error, isPending } = useQuery({
-    queryKey: ['intern', id],
+    queryKey: ['interns', id],
     queryFn: () => getIntern(id),
   });
 

@@ -23,7 +23,7 @@ export function useSupervisors() {
 
 export function useSupervisor(id) {
   const { data, error, isPending } = useQuery({
-    queryKey: ['supervisor', id],
+    queryKey: ['supervisors', id],
     queryFn: () => getSupervisor(id),
   });
 

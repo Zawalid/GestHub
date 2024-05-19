@@ -2,7 +2,7 @@ import { IoArrowUpOutline, IoArrowDownOutline, FaSort } from '@/components/ui/Ic
 
 import { Button, CheckBox, DropDown } from '@/components/ui';
 import { useTable } from '.';
-import { toggleChecked } from '../operations/Filter';
+import { toggleChecked } from '../Operations/Filter';
 
 const icons = {
   asc: <IoArrowUpOutline />,

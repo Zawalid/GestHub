@@ -52,7 +52,7 @@ const button = tv({
       className: 'hover:bg-secondary hover:text-white',
     },
     { color: 'delete', type: 'outline', className: 'hover:bg-red-700 ' },
-    { shape: 'icon', size: 'small', className: 'h-6 w-6 text-sm' },
+    { shape: 'icon', size: 'small', className: 'h-6 w-6 text-xs' },
     { shape: 'icon', size: 'large', className: 'text-xl w-10 h-10' },
     { shape: 'icon', type: 'transparent', className: 'bg-transparent' },
   ],

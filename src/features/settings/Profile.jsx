@@ -15,7 +15,7 @@ export default function Profile() {
   const { mutate, isPending } = useUpdateProfile();
 
   const defaultValues = {
-    avatar: user?.avatar || { src: null, file: null },
+    avatar: user?.avatar ,
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
     email: user?.email || '',

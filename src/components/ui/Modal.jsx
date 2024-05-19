@@ -1,44 +1,57 @@
+import { forwardRef } from 'react';
 import { createPortal } from 'react-dom';
+import { PiX } from 'react-icons/pi';
 import { cn } from '../../utils/helpers';
 import { Button } from './Button';
-import { PiX } from 'react-icons/pi';
 
-export function Modal({
-  children,
-  isOpen,
-  onClose,
-  className,
-  overlayClassName,
-  closeButton,
-  closeOnBlur = true,
-  hideOverlay,
-}) {
-  const content = (
-    <Content isOpen={isOpen} className={className}>
-      {(closeButton || closeButton === false) && (
-        <Button
-          className={`absolute right-2 top-2 z-10 ${closeButton === false ? 'flex md:hidden' : ''}`}
-          onClick={onClose}
-          shape='icon'
-          size='small'
-        >
-          <PiX />
-        </Button>
+export const Modal = forwardRef(
+  ({ children, isOpen, onClose, className, overlayClassName, closeButton, closeOnBlur = true, hideOverlay }, ref) => {
+    const content = (
+      <Content ref={ref} isOpen={isOpen} className={className}>
+        {(closeButton || closeButton === false) && (
+          <Button
+            className={`absolute right-2 top-2 z-10 ${closeButton === false ? 'flex md:hidden' : ''}`}
+            onClick={onClose}
+            shape='icon'
+            size='small'
+          >
+            <PiX />
+          </Button>
+        )}
+        {children}
+      </Content>
+    );
+    return createPortal(
+      hideOverlay ? (
+        content
+      ) : (
+        <Overlay isOpen={isOpen} closeOnBlur={closeOnBlur} onClose={onClose} className={overlayClassName}>
+          {content}
+        </Overlay>
+      ),
+      document.getElementById('root')
+    );
+  }
+);
+
+Modal.displayName = 'Modal';
+
+const Content = forwardRef(({ children, isOpen, className }, ref) => {
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        'relative flex h-full w-full flex-col overflow-hidden border-border bg-background-primary transition-transform duration-200 sm:rounded-xl',
+        className,
+        isOpen ? 'scale-100' : 'scale-0'
       )}
+    >
       {children}
-    </Content>
+    </div>
   );
-  return createPortal(
-    hideOverlay ? (
-      content
-    ) : (
-      <Overlay isOpen={isOpen} closeOnBlur={closeOnBlur} onClose={onClose} className={overlayClassName}>
-        {content}
-      </Overlay>
-    ),
-    document.getElementById('root')
-  );
-}
+});
+
+Content.displayName = 'Content';
 
 export function Overlay({ children, isOpen, closeOnBlur, onClose, className = 'z-30' }) {
   return (
@@ -53,20 +66,6 @@ export function Overlay({ children, isOpen, closeOnBlur, onClose, className = 'z
           closeOnBlur && onClose?.();
         }
       }}
-    >
-      {children}
-    </div>
-  );
-}
-
-function Content({ children, isOpen, className }) {
-  return (
-    <div
-      className={cn(
-        'relative flex h-full w-full flex-col overflow-hidden border-border bg-background-primary transition-transform duration-200 sm:rounded-xl',
-        className,
-        isOpen ? 'scale-100' : 'scale-0'
-      )}
     >
       {children}
     </div>

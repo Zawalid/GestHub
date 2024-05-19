@@ -13,3 +13,4 @@ export { useSupervisors } from '@/features/supervisors/useSupervisors';
 export { useProjects } from '@/features/projects/useProjects';
 export { useOffers } from '@/features/offers/useOffers';
 export { useNavigateWithQuery } from './useNavigateWithQuery';
+export { useFullScreen } from './useFullScreen';

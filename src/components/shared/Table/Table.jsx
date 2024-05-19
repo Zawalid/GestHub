@@ -16,7 +16,7 @@ export function Table({ actions, canView }) {
 
   return (
     <div className='relative flex-1 overflow-x-auto' ref={table}>
-      {rows?.length === 0 && (
+      {rows?.length === 0 && !isLoading && (
         <Status status='noResults' heading='No results found' message='Try changing your search query or filters' />
       )}
       <table cellPadding={3} className='w-full overflow-x-auto whitespace-nowrap text-left'>

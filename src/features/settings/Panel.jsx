@@ -7,7 +7,7 @@ export function Panel({ isOpen, onClose, currentTab, setCurrentTab }) {
   const { user } = useUser();
   return (
     <>
-      <Overlay isOpen={isOpen} onClose={onClose} />
+      <Overlay isOpen={isOpen} onClose={onClose} closeOnBlur={true} />
       <div
         className={`absolute top-0 z-40 flex h-full w-[200px] flex-col items-start gap-3 border-r border-border bg-background-disabled p-3  shadow-md transition-[left]  duration-500 sm:static sm:pt-[45px] sm:shadow-none ${
           isOpen ? 'left-0' : '-left-full'
@@ -18,6 +18,7 @@ export function Panel({ isOpen, onClose, currentTab, setCurrentTab }) {
         {user?.role === 'super-admin' && (
           <Tab tabName='general' icon={<PiGear />} currentTab={currentTab} setCurrentTab={setCurrentTab} />
         )}
+        <Tab tabName='editor' icon={<PiLockKey />} currentTab={currentTab} setCurrentTab={setCurrentTab} />
       </div>
     </>
   );

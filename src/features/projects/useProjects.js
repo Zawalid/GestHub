@@ -40,7 +40,7 @@ export function useProjects() {
 }
 export const useProject = (id) => {
   const { data, error, isPending } = useQuery({
-    queryKey: ['project', id],
+    queryKey: ['projects', id],
     queryFn: () => getProject(id),
   });
   return {

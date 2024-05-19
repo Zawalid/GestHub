@@ -114,7 +114,7 @@ export default function ApplicationReview() {
     }
     return (
       <>
-        <div className='mb-5 flex items-center justify-between'>
+        <div className='mb-5 flex items-center justify-between pt-5 md:pt-0'>
           <div className={`flex w-fit items-center gap-2 rounded-lg px-3 py-1 ${currentStatus?.color}`}>
             {currentStatus?.icon}
             <h3 className='text-sm font-medium'>{currentStatus?.status}</h3>

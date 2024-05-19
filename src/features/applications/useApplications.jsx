@@ -50,10 +50,11 @@ const getApplicationData = (application) => {
   };
 };
 
-export function useApplications() {
+export function useApplications({ refetchInterval } = {}) {
   const { data, error, isPending } = useQuery({
     queryKey: ['applications'],
     queryFn: getAllApplications,
+    refetchInterval,
   });
 
   const applications = Array.isArray(data) ? data.map((application) => getApplicationData(application)) : [];
@@ -66,7 +67,7 @@ export function useApplications() {
 }
 export const useApplication = (id) => {
   const { data, error, isPending } = useQuery({
-    queryKey: ['application', id],
+    queryKey: ['applications', id],
     queryFn: () => getApplication(id),
   });
   return {

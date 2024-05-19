@@ -16,7 +16,7 @@ export function useAdmins() {
 
 export function useAdmin(id) {
   const { data, error, isPending } = useQuery({
-    queryKey: ['admin', id],
+    queryKey: ['admins', id],
     queryFn: () => getAdmin(id),
   });
 

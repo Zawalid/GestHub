@@ -1,6 +1,6 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { Operations } from '@/components/shared/operations/Operations';
-import { useOperations } from '@/components/shared/operations/useOperations';
+import { Operations } from '@/components/shared/Operations/Operations';
+import { useOperations } from '@/components/shared/Operations/useOperations';
 import { Status } from '@/components/ui/Status';
 import Offer from './Offer';
 import OffersSkeleton from './OffersSkeleton';

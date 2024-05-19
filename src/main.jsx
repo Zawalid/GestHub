@@ -11,14 +11,7 @@ import { ConfirmationModalProvider } from './context/ConfirmationModal';
 import { i18n } from './i18n/config.js';
 import './styles/index.css';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 60 * 1000,
-      refetchOnWindowFocus: true,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <ThemeProvider>

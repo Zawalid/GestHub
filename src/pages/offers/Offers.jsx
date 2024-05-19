@@ -1,5 +1,5 @@
 import { Heading } from '@/components/Heading';
-import { Operations } from '@/components/shared/operations/Operations';
+import { Operations } from '@/components/shared/Operations/Operations';
 import { useOffers } from '@/features/offers/useOffers';
 import OffersList from '@/features/offers/OffersList';
 import NewOffer from '@/features/offers/NewOffer';

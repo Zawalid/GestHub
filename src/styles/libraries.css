@@ -4,10 +4,10 @@
   --normal-border: var(--border) !important;
 }
 
-.sonner-toast { 
-  @apply border border-border
+.sonner-toast {
+  @apply border border-border;
 }
-.sonner-toast:not([data-type="loading"]) {
+.sonner-toast:not([data-type='loading']) {
   & [data-icon] {
     height: calc(100% + 1px);
     position: absolute;
@@ -28,15 +28,15 @@
   }
 }
 
-.sonner-toast[data-type="success"] [data-icon] {
+.sonner-toast[data-type='success'] [data-icon] {
   background-color: limegreen;
 }
 
-.sonner-toast[data-type="error"] [data-icon] {
+.sonner-toast[data-type='error'] [data-icon] {
   background-color: #ff0000;
 }
 
-.sonner-toast[data-type="loading"] [data-icon] {
+.sonner-toast[data-type='loading'] [data-icon] {
   width: 20px;
   margin-right: 15px;
 }
@@ -62,7 +62,6 @@
 
 /** Tippy */
 [data-tippy-root] {
-
   &,
   .tippy-arrow {
     transition: none !important;
@@ -77,27 +76,30 @@
   width: calc(100% - 32px);
 }
 
-.tippy-box[data-theme~="light"] {
-  @apply rounded-lg bg-background-primary p-0 text-sm text-text-primary shadow-md max-w-[450px]  !important;
+.tippy-box[data-theme~='custom'] { 
+  @apply max-w-[450px] p-2 !important;
+}
+.tippy-box[data-theme~='bubbleMenu'] {
+  @apply bg-background-disabled p-2 
 }
 
 .tippy-content {
-  @apply p-0 h-full !important;
+  @apply h-full p-0 !important;
 }
 
 /* Tooltip arrow */
-.tippy-box[data-theme~="custom"][data-placement^="top"]>.tippy-arrow::before {
+.tippy-box[data-theme~='custom'][data-placement^='top'] > .tippy-arrow::before {
   @apply border-t-background-secondary;
 }
 
-.tippy-box[data-theme~="custom"][data-placement^="bottom"]>.tippy-arrow::before {
+.tippy-box[data-theme~='custom'][data-placement^='bottom'] > .tippy-arrow::before {
   @apply border-b-background-secondary;
 }
 
-.tippy-box[data-theme~="custom"][data-placement^="left"]>.tippy-arrow::before {
+.tippy-box[data-theme~='custom'][data-placement^='left'] > .tippy-arrow::before {
   @apply border-l-background-secondary;
 }
 
-.tippy-box[data-theme~="custom"][data-placement^="right"]>.tippy-arrow::before {
+.tippy-box[data-theme~='custom'][data-placement^='right'] > .tippy-arrow::before {
   @apply border-r-background-secondary;
 }

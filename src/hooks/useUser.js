@@ -87,9 +87,8 @@ export function useUser() {
     queryKey: ['user'],
     queryFn: getUser,
     retry: 1,
+    staleTime: 1000 * 60 * 2,
   });
-
-  console.log(data)
 
   return {
     user: data
@@ -117,7 +116,7 @@ export function useSettings() {
   });
 
   return {
-    settings: data ? { ...data, appLogo: { src: getFile(data, 'appLogo'), file: null } } : null,
+    settings: data ? { ...data, appLogo: { src: getFile(data, 'appLogo') || '/SVG/logo.svg', file: null } } : null,
     isLoading: isPending,
     error,
   };
