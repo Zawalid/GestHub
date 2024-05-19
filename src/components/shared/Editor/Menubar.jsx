@@ -24,13 +24,7 @@ const render = (buttons, size) => {
     if (custom) return cloneElement(custom, { key: i });
     return (
       <ToolTip key={toolTip} content={toolTip}>
-        <Button
-          onClick={onClick}
-          disabled={disabled}
-          state={active ? 'active' : 'not-active '}
-          shape='icon'
-          size={size}
-        >
+        <Button onClick={onClick} disabled={disabled} state={active ? 'active' : ''} shape='icon' size={size}>
           {icon}
         </Button>
       </ToolTip>
@@ -101,6 +95,7 @@ const Headings = ({ editor, size }) => {
           </Button>
         </ToolTip>
       }
+      togglerTooltip={true}
     >
       {Array.from({ length: 6 }).map((_, i) => (
         <DropDown.Option
@@ -231,7 +226,7 @@ export default function Menubar({ editor, size }) {
     },
     {
       custom: (
-        <div className='flex gap-2 flex-1 justify-end'>
+        <div className='flex flex-1 justify-end gap-2'>
           {render(
             [
               {

@@ -3,7 +3,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
 import { DateCalendar, PickersDay } from '@mui/x-date-pickers';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { DateTime } from 'luxon';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import {
@@ -14,7 +13,7 @@ import {
   FaGithub,
   FaGoogleDrive,
 } from '@/components/ui/Icons';
-import { checkIsOverdue, getTimelineDates } from '@/utils/helpers';
+import { checkIsOverdue, getIsoDate, getTimelineDates } from '@/utils/helpers';
 import { useTasks } from '../projects/useTasks';
 import { useProjects } from '../projects/useProjects';
 import { TasksAnalytics } from './SupervisorOverview';
@@ -85,7 +84,7 @@ function Stats() {
   );
 }
 
-function CustomDay({ day, startDate, endDate, outsideCurrentMonth, ...other }) {
+function CustomDay({ day, startDate, endDate, outsideCurrentMonth, today, ...other }) {
   const isEndDate = day.hasSame(endDate, 'day');
   const isStartDate = day.hasSame(startDate, 'day');
   const isBetween = day > startDate && day < endDate;
@@ -96,12 +95,18 @@ function CustomDay({ day, startDate, endDate, outsideCurrentMonth, ...other }) {
       ? { backgroundColor: '#2563eb', color: 'white' }
       : isBetween
         ? { backgroundColor: 'var(--background-secondary)', borderRadius: 0 }
-        : { backgroundColor: 'transparent' };
+        : today
+          ? { backgroundColor: 'var(--background-secondary)', color: 'var(--text-primary)' }
+          : { backgroundColor: 'transparent' };
 
   return (
     <ToolTip
-      content={<span className='text-xs text-text-secondary'>{isStartDate ? 'Start Date' : 'End Date'}</span>}
-      hidden={!isEndDate && !isStartDate}
+      content={
+        <span className='text-xs text-text-secondary'>
+          {isStartDate ? 'Start Date' : isEndDate ? 'End Date' : 'Today'}
+        </span>
+      }
+      hidden={!isEndDate && !isStartDate && !today}
     >
       <div
         className={`flex h-9 w-9 ${isStartDate || isEndDate ? 'bg-background-secondary p-1' : ''} ${
@@ -121,6 +126,7 @@ function CustomDay({ day, startDate, endDate, outsideCurrentMonth, ...other }) {
 
 function Calendar({ startDate, endDate, daysLeft }) {
   const { theme } = useTheme();
+  const [value, setValue] = useState(getIsoDate(new Date()));
 
   return (
     <div className='flex flex-col items-center gap-3 rounded-lg border border-border p-3 shadow-md'>
@@ -132,14 +138,42 @@ function Calendar({ startDate, endDate, daysLeft }) {
       <LocalizationProvider dateAdapter={AdapterLuxon}>
         <ThemeProvider theme={createTheme({ palette: { mode: theme } })}>
           <DateCalendar
-            defaultValue={new DateTime(startDate)}
+            value={value}
             readOnly
             className='calendar'
             views={['day']}
             slots={{ day: CustomDay }}
-            slotProps={{ day: { startDate: new Date(startDate), endDate: new Date(endDate) } }}
+            slotProps={{
+              day: { startDate: getIsoDate(startDate), endDate: getIsoDate(endDate) },
+            }}
           />
         </ThemeProvider>
+        <div className='grid grid-cols-3 gap-3'>
+          {[
+            {
+              label: 'Today',
+              value: getIsoDate(new Date()),
+            },
+            {
+              label: 'Start Date',
+              value: getIsoDate(startDate),
+            },
+            {
+              label: 'End Date',
+              value: getIsoDate(endDate),
+            },
+          ].map(({ label, value: val }) => (
+            <Button
+              key={label}
+              onClick={() => setValue(val)}
+              size='small'
+              color='tertiary'
+              state={value && val.hasSame(value, 'day') ? 'active' : ''}
+            >
+              {label}
+            </Button>
+          ))}
+        </div>
       </LocalizationProvider>
     </div>
   );

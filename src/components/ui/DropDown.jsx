@@ -20,6 +20,7 @@ const defaultOptions = {
  * @param {React.ReactNode} props.toggler - The element that triggers the dropdown.
  * @param {string} [props.togglerClassName] - Additional CSS classes to apply to the toggler.
  * @param {boolean} [props.togglerDisabled=false] - If true, the toggler is disabled.
+ * @param {boolean} [props.togglerTooltip=false] - Used to check if the toggler is a Tippy component.
  * @param {Object} [props.options] - Options for the dropdown.
  * @param {string} [props.options.className='max-h-[200px]'] - Additional CSS classes to apply to the dropdown.
  * @param {string} [props.options.placement='bottom-end'] - The placement of the dropdown.
@@ -35,6 +36,7 @@ export function DropDown({
   toggler,
   togglerClassName,
   togglerDisabled,
+  togglerTooltip,
   options,
   onOpen,
   onClose,
@@ -44,6 +46,16 @@ export function DropDown({
     onClick: (e) => e?.stopPropagation(),
     className: togglerClassName,
     disabled: togglerDisabled,
+  };
+
+  const render = () => {
+    if (togglerTooltip) return cloneElement(toggler);
+    if (['Button', 'Toggler'].includes(toggler.type.displayName)) return cloneElement(toggler, buttonProps);
+    return (
+      <button type='button' {...buttonProps}>
+        {toggler}
+      </button>
+    );
   };
 
   return (
@@ -70,13 +82,7 @@ export function DropDown({
         onClose?.();
       }}
     >
-      {['Button', 'Toggler'].includes(toggler.type.displayName) ? (
-        cloneElement(toggler, buttonProps)
-      ) : (
-        <button type='button' {...buttonProps}>
-          {toggler}
-        </button>
-      )}
+      {render()}
     </Tippy>
   );
 }
