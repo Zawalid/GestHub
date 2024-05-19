@@ -37,13 +37,13 @@ export default function AdminOverview() {
       </div>
       <div className='grid overflow-hidden'>
         <div
-          className={`col-[1] row-[1] flex h-full flex-col gap-5 transition-transform duration-500 ${current === 'offers' ? 'translate-x-0' : '-translate-x-full'}`}
+          className={`col-[1] row-[1] flex h-full flex-col gap-5 overflow-x-auto transition-transform duration-500 ${current === 'offers' ? 'translate-x-0' : '-translate-x-full'}`}
         >
           <Stats />
           <OffersAnalytics />
         </div>
         <div
-          className={`col-[1] row-[1] h-fit transition-transform duration-500 ${current === 'projects' ? 'translate-x-0' : 'translate-x-full'}`}
+          className={`col-[1] row-[1] h-fit overflow-x-auto transition-transform duration-500 ${current === 'projects' ? 'translate-x-0' : 'translate-x-full'}`}
         >
           <SupervisorOverview />
         </div>
@@ -135,7 +135,7 @@ function Stats() {
 }
 
 function CompletedInternships() {
-  const { interns } = useInterns();
+  const { interns, isLoading, error } = useInterns();
   const [isOpen, setIsOpen] = useState(false);
   const { mutate } = useGenerateAttestation();
 
@@ -146,6 +146,41 @@ function CompletedInternships() {
     })
     .toSorted((a, b) => new Date(a?.startDate) - new Date(b?.startDate));
 
+  const render = () => {
+    if (isLoading) {
+      return Array.from({ length: 2 }).map((_, i) => (
+        <div
+          key={i}
+          className='flex animate-pulse items-center justify-between gap-5 rounded-lg border border-border px-3 py-1.5'
+        >
+          <div className='h-9 w-9 rounded-full border border-border bg-background-tertiary'></div>
+          <div className='flex-1 space-y-2'>
+            <div className='h-2.5 w-24 rounded-lg bg-background-tertiary'></div>
+            <div className='h-1.5 w-28 rounded-lg bg-background-secondary'></div>
+          </div>
+          <div className='h-3.5 w-14 rounded-lg bg-background-secondary'></div>
+        </div>
+      ));
+    }
+    if (error) {
+      return <p className='text-sm font-medium text-text-secondary'>Something went wrong. Please try again later.</p>;
+    }
+    if (completedInternships?.length === 0) {
+      return <p className='text-sm font-medium text-text-secondary'>No interns have finished their internship yet.</p>;
+    }
+    return completedInternships?.slice(0, 2).map((intern) => (
+      <div
+        key={Intern.id}
+        className='flex items-center justify-between gap-5 rounded-lg border border-border px-3 py-1.5'
+      >
+        <Intern intern={intern} />
+        <Button color='tertiary' size='small' onClick={() => mutate(intern.id)}>
+          Generate
+        </Button>
+      </div>
+    ));
+  };
+
   return (
     <>
       <div className='col-span-2 flex flex-col gap-3'>
@@ -154,28 +189,14 @@ function CompletedInternships() {
           <Button
             color='secondary'
             size='small'
-            disabled={!completedInternships?.length}
+            disabled={!completedInternships?.length || isLoading || error}
             onClick={() => setIsOpen(true)}
           >
             Show All
           </Button>
         </div>
 
-        {completedInternships?.length ? (
-          completedInternships?.slice(0, 2).map((intern) => (
-            <div
-              key={Intern.id}
-              className='flex items-center justify-between gap-5 rounded-lg border border-border px-3 py-1.5'
-            >
-              <Intern intern={intern} />
-              <Button color='tertiary' size='small' onClick={() => mutate(intern.id)}>
-                Generate
-              </Button>
-            </div>
-          ))
-        ) : (
-          <p className='text-sm font-medium text-text-secondary'>No interns have finished their internship yet.</p>
-        )}
+        {render()}
       </div>
       <GenerateAttestation
         isOpen={isOpen}

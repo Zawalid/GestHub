@@ -45,11 +45,11 @@ export function Selected() {
   return (
     <Modal
       isOpen={isOpen}
-      className={`fixed left-1/2 z-30 h-fit w-[95%] -translate-x-1/2 flex-row items-center justify-between rounded-lg border px-5 py-3 shadow-lg transition-[bottom] duration-300 sm:w-[500px] ${isOpen ? 'bottom-11' : '-bottom-[100px]'}`}
+      className={`fixed left-1/2 z-30 h-fit -translate-x-1/2 flex-row items-center justify-between rounded-lg border px-3 mobile:px-5 py-3 shadow-lg transition-[bottom] duration-300 mobile:w-[500px] ${isOpen ? 'bottom-11' : '-bottom-[100px]'}`}
       hideOverlay={true}
     >
-      <h2 className='text-sm font-semibold text-text-secondary '>
-        <span className='mr-2 rounded-md bg-secondary px-2 py-1 text-white  '>{selected.length}</span>
+      <h2 className='text-xs text-nowrap font-semibold text-text-secondary '>
+        <span className='mr-2 rounded-md bg-secondary px-2 py-1 text-white'>{selected.length}</span>
         Row(s) Selected.
       </h2>
       <div className='flex items-center gap-3'>

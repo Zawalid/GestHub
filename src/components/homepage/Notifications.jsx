@@ -87,7 +87,7 @@ export default function Notifications() {
         </Button>
       }
       options={{
-        className: 'mobile:min-w-[400px] max-h-max overflow-auto h-[400px]',
+        className: 'w-[350px] max-h-max overflow-auto h-[400px]',
         shouldCloseOnClick: false,
       }}
       setIsOpen={setIsOpen}

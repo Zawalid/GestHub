@@ -1,101 +1,78 @@
-import { useEffect, useRef, useState } from 'react';
-import { NavLink as L } from 'react-router-dom';
-import { FaChevronDown } from 'react-icons/fa6';
-import { SocialMedia } from '../ui/SocialMedia';
-import { useTranslation } from 'react-i18next';
+import { NavLink } from 'react-router-dom';
+import { FiLogOut } from 'react-icons/fi';
 import { PiX } from 'react-icons/pi';
+import { ThemeSwitcher } from '../ThemeSwitcher';
+import { LanguageSwitcher } from '../LanguageSwitcher';
+import { LoggedUser } from '../AuthSwitcher';
 import { Button } from '../ui';
-import { Logo } from '../ui/Logo';
-export function MobileHeader({ isOpen, onClose }) {
-  const ref = useRef();
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        onClose();
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [ref, onClose]);
+import { Overlay } from '../ui/Modal';
+import { SocialMedia } from '../ui/SocialMedia';
+import { useLogout, useUser } from '@/hooks/useUser';
 
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : 'auto';
-  }, [isOpen]);
+export function MobileHeader({ isOpen, onClose }) {
+  const { user } = useUser();
+  const { logout } = useLogout();
 
   return (
     <>
-      <div
-        className={'fixed left-0 top-0  h-full w-full ' + (isOpen ? 'z-50 bg-black bg-opacity-40 ' : 'invisible')}
-      ></div>
+      <Overlay isOpen={isOpen} onClose={onClose} closeOnBlur={true} />
       <div
         className={
-          'fixed right-0 top-0 z-50  flex h-full w-full flex-col gap-5 justify-self-end overflow-auto bg-background-primary transition-transform duration-500 sm:w-[320px] ' +
+          'fixed right-0 top-0 z-40  flex h-full w-full flex-col gap-5 justify-self-end overflow-auto bg-background-primary transition-transform duration-500 sm:w-[360px] ' +
           (isOpen ? 'translate-x-0' : 'translate-x-full')
         }
-        ref={ref}
       >
-        <div className='flex items-center justify-between  px-5 pt-5'>
-          <Logo className='w-20' />
-          <Button onClick={onClose} shape='icon' state='transparent' size='small'>
-            <PiX />
-          </Button>
+        <div className='flex items-center justify-between gap-3 px-5 pt-5'>
+          {user && <LoggedUser user={user} />}
+          <div className='ml-auto flex gap-2'>
+            {user && (
+              <Button onClick={logout} shape='icon'>
+                <FiLogOut />
+              </Button>
+            )}
+            <Button onClick={onClose} shape='icon'>
+              <PiX />
+            </Button>
+          </div>
         </div>
-        <Links />
-        <SocialMedia color='text-text-primary' />
+
+        <ul className='flex flex-1 flex-col items-center justify-center gap-6'>
+          {[
+            { label: 'home', path: '/' },
+            { label: 'offers', path: '/offers' },
+            { label: 'about', path: '#about' },
+            ...(user?.role === 'user' ? [{ label: 'Applications', path: '/applications' }] : []),
+            ...(user && user?.role !== 'user' ? [{ label: 'Dashboard', path: '/app' }] : []),
+          ].map(({ label, path }) => (
+            <li
+              key={label}
+              className='text-2xl font-semibold hover:scale-110 capitalize text-text-primary transition-all duration-300 hover:text-text-secondary sm:text-xl'
+            >
+              <NavLink to={path}>{label}</NavLink>
+            </li>
+          ))}
+
+          {!user && (
+            <ul className='mt-4 flex flex-col items-center gap-2 border-t-2 border-border pt-6'>
+              {[
+                { label: 'Log In', path: '/login' },
+                { label: 'Create Account', path: '/register' },
+              ].map(({ label, path }) => (
+                <li key={label} className='font-medium text-text-secondary'>
+                  <NavLink to={path}>{label}</NavLink>
+                </li>
+              ))}
+            </ul>
+          )}
+        </ul>
+
+        <div className='mx-auto grid grid-cols-2 w-fit items-center justify-center gap-2 p-3'>
+          <ThemeSwitcher size='small' layout='long' />
+          <LanguageSwitcher size='small' layout='long' />
+        </div>
+
+        <SocialMedia />
       </div>
     </>
-  );
-}
-
-// Links
-function Links() {
-  return (
-    <ul className=' border-t border-border'>
-      {[
-        { label: 'home', path: '/' },
-        { label: 'offers', path: '/offers' },
-        { label: 'about', path: '#about' },
-      ].map((route) => (
-        <Link key={route.label} route={route} />
-      ))}
-    </ul>
-  );
-}
-function Link({ route }) {
-  const { t } = useTranslation();
-  const [isExpanded, setIsExpanded] = useState(false);
-  return (
-    <li key={route.label}>
-      <div className='flex  items-center justify-between border-b border-border py-3 pl-5 font-semibold text-text-primary transition-colors duration-300 hover:text-text-tertiary'>
-        <L to={route.path}>{t(`header.navbar.${route.label}`)}</L>
-        {route.nested && (
-          <button className='border-l border-border px-4' onClick={() => setIsExpanded(!isExpanded)}>
-            <FaChevronDown className={`text-sm transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`} />
-          </button>
-        )}
-      </div>
-      {route.nested && <DropDown routes={route.nested} isExpanded={isExpanded} />}
-    </li>
-  );
-}
-function DropDown({ routes, isExpanded }) {
-  return (
-    <ul
-      className='overflow-hidden bg-background-primary transition-[height]  duration-500'
-      style={{
-        height: isExpanded ? `${routes.length * 49}px` : '0px',
-      }}
-    >
-      {routes.map((route) => (
-        <li
-          key={route.label}
-          className='border-b border-border px-10 py-3 font-semibold text-text-secondary transition-colors duration-300 hover:text-text-tertiary '
-        >
-          <L to={route.path}>{route.label}</L>
-        </li>
-      ))}
-    </ul>
   );
 }

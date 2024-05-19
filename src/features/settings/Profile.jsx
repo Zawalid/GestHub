@@ -15,7 +15,7 @@ export default function Profile() {
   const { mutate, isPending } = useUpdateProfile();
 
   const defaultValues = {
-    avatar: user?.avatar ,
+    avatar: user?.avatar,
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
     email: user?.email || '',
@@ -24,9 +24,10 @@ export default function Profile() {
     ...(['intern', 'user'].includes(user?.role) && {
       academicLevel: user?.academicLevel || '',
       establishment: user?.establishment || '',
-      cv: user?.cv || '',
+      cv: user?.cv,
     }),
   };
+
 
   const {
     Form,
@@ -77,7 +78,7 @@ export default function Profile() {
 
                   <File
                     type={'Cv'}
-                    file={getValue('cv')?.file || {}}
+                    file={getValue('cv')?.file}
                     onChange={(file) => setValue('cv', file)}
                     onDelete={() => setValue('cv', null)}
                     onView={() => setIsCvOpen(true)}
@@ -92,6 +93,9 @@ export default function Profile() {
       mutate({ user: dirtyFields, id: user?.profile_id }, { onError: () => reset(() => updateValues(defaultValues)) }),
     gridLayout: true,
   });
+
+  console.log(getValue('cv')?.file);
+
 
   return (
     <ModalFormLayout

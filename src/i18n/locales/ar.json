@@ -31,9 +31,9 @@
     "categories": "الفئات"
   },
   "form": {
-    "accepteTerms": "أوافق على الشروط والأحكام وسياسة الخصوصية",
+    "acceptTerms": "أوافق على الشروط والأحكام وسياسة الخصوصية",
     "dontHaveAccount": "ليس لديك حساب؟",
-    "alraedyHaveAccount": "لديك حساب؟",
+    "alreadyHaveAccount": "لديك حساب؟",
     "register": "إنشاء حساب",
     "login": "تسجيل الدخول",
     "search": "بحث",

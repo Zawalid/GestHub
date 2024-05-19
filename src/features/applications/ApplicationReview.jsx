@@ -114,7 +114,7 @@ export default function ApplicationReview() {
     }
     return (
       <>
-        <div className='mb-5 flex items-center justify-between pt-5 md:pt-0'>
+        <div className='mb-5 flex text-white items-center justify-between pt-5 md:pt-0'>
           <div className={`flex w-fit items-center gap-2 rounded-lg px-3 py-1 ${currentStatus?.color}`}>
             {currentStatus?.icon}
             <h3 className='text-sm font-medium'>{currentStatus?.status}</h3>
@@ -187,7 +187,7 @@ export default function ApplicationReview() {
   return (
     <div className='flex items-center gap-3 rounded-lg  bg-background-secondary px-3 py-1'>
       <div className='relative h-12 w-12'>
-        <img src={`/images/.pdf.png`} alt='add' />
+        <img src={`/images/pdf.png`} alt='add' />
       </div>
       <div className='flex-1 space-y-0.5'>
         <h4 className='flex items-center gap-2 text-sm font-medium text-text-primary'>{type}</h4>

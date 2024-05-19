@@ -132,12 +132,12 @@ export default function ApplicationsList() {
       selectedOptions={{
         actions: [
           ...[
+            { text: 'Reject', onClick: rejectMultiple },
             {
               text: 'Approve',
               color: 'green',
               onClick: approveMultiple,
             },
-            { text: 'Reject', onClick: rejectMultiple },
           ].map((el) => ({
             ...el,
             onClick: (ids, onClose, setIsOperating) => {

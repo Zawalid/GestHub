@@ -9,13 +9,13 @@ import { BiHome } from 'react-icons/bi';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 export function AuthLayout() {
-  const { isLoading, isAuthenticated } = useUser();
+  const { isLoading, user } = useUser();
   const [parent] = useAutoAnimate({ duration: 300 });
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated && !isLoading) navigate('/app');
-  }, [isAuthenticated, isLoading, navigate]);
+    if (user && !isLoading) navigate(user?.role === 'user' ? '/' : '/app');
+  }, [isLoading, user, navigate]);
 
   return (
     <div className='grid h-full w-full grid-cols-1 md:grid-cols-2'>
@@ -24,7 +24,7 @@ export function AuthLayout() {
       </div>
       <div ref={parent} className=' flex h-full w-full flex-col p-2 md:h-screen md:overflow-auto md:p-0 '>
         <div>
-          <div className='  flex w-full justify-between  gap-4 p-2 md:p-3'>
+          <div className='mb-5 flex w-full justify-between  gap-4 p-2 md:p-3'>
             <Button onClick={() => navigate('/')} shape='icon'>
               <BiHome />
             </Button>

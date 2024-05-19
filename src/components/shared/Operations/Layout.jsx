@@ -7,8 +7,8 @@ export function Layout({ className = '' }) {
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       {[
-        { layout: 'grid', icon: <PiListBold className='text-lg' /> },
-        { layout: 'list', icon: <PiGridFourFill className='text-lg' /> },
+        { layout: 'list', icon: <PiListBold className='text-lg' /> },
+        { layout: 'grid', icon: <PiGridFourFill className='text-lg' /> },
       ].map((button) => (
         <Button
           key={button.layout}

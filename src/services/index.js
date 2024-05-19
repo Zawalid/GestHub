@@ -7,7 +7,6 @@ export const axiosFetch = async (resource, method, data) => {
       url: `/api/${resource}`,
       data: data,
       withCredentials: true,
-      withXSRFToken: true,
       headers: { Accept: 'application/json', 'Accept-Path': true },
     });
     return response.data;

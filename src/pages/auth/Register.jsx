@@ -48,7 +48,7 @@ export function Register() {
       },
       {
         name: 'gender',
-        customComponent: <Gender className='col-span-2 ' />,
+        customComponent: <Gender className='md:col-span-2 ' />,
       },
       {
         name: 'establishment',
@@ -73,10 +73,10 @@ export function Register() {
       {
         name: 'accept',
         customComponent: ({ getValue, setValue }) => (
-          <div className='col-span-2 mb-5 mt-10 flex items-center gap-3'>
+          <div className='md:col-span-2 mb-5 mt-10 flex items-center gap-3'>
             <CheckBox checked={getValue('accept')} onChange={(e) => setValue('accept', e.target.checked || null)} />
             <label className='text-sm font-medium text-text-tertiary'>
-              {t('form.accepteTerms')} &nbsp;
+              {t('form.acceptTerms')} &nbsp;
               <a
                 href='https://www.oc.gov.ma/sites/default/files/loi%2031-13/1.%20BO%20Loi%2031.13%20en%20francais.pdf'
                 target='_blank'
@@ -105,7 +105,7 @@ export function Register() {
         {isRegistering ? 'Registering...' : t('form.register')}
       </Button>
       <p className='mt-5 flex items-center justify-center gap-1 border-t border-border py-4 text-center text-text-primary'>
-        {t('form.alraedyHaveAccount')}
+        {t('form.alreadyHaveAccount')}
         <Link to='/login' className='ml-2 cursor-pointer text-sm font-bold text-primary underline '>
           {t('form.login')}
         </Link>

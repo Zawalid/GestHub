@@ -32,9 +32,9 @@
   },
 
   "form": {
-    "accepteTerms": "J'accepte les termes et conditions de la politique de confidentialité",
+    "acceptTerms": "J'accepte les termes et conditions de la politique de confidentialité",
     "dontHaveAccount": "Vous n'avez pas de compte?",
-    "alraedyHaveAccount": "Vous avez déjà un compte?",
+    "alreadyHaveAccount": "Vous avez déjà un compte?",
     "register": "S'inscrire",
     "login": "Se connecter",
     "submit": "Soumettre",

@@ -2,7 +2,7 @@ import { Button, Modal } from '@/components/ui';
 import { useForm } from '@/hooks/useForm';
 import { useUploadFile } from '@/hooks/useUploadFile';
 import { RULES } from '@/utils/constants';
-import { LuUpload,  HiMiniXMark, FiCheck, BsSendFill, IoEyeOutline } from '@/components/ui/Icons';
+import { LuUpload, HiMiniXMark, FiCheck, BsSendFill, IoEyeOutline } from '@/components/ui/Icons';
 import { useUser } from '@/hooks/useUser';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useOffer } from '../offers/useOffers';
@@ -193,7 +193,7 @@ function ApplicationForm({ onApply, onClose, onSuccess }) {
   );
 }
 
-export function File({ type, file: { name, size }, onChange,  disabled, options = {}, onView }) {
+export function File({ type, file: { name, size } = {}, onChange, disabled, options = {}, onView }) {
   const { openFilePicker } = useUploadFile({
     onChange,
     options: {
@@ -211,13 +211,13 @@ export function File({ type, file: { name, size }, onChange,  disabled, options 
         {['pdf', 'docx', 'doc'].map((fileType) => (
           <img
             key={fileType}
-            src={`/images/.${fileType}.png`}
+            src={`/images/${fileType}.png`}
             alt={fileType}
             className={`absolute transition-transform duration-500 ${name?.split('.').at(-1) === fileType ? 'scale-100' : 'scale-0'}`}
           />
         ))}
         <img
-          src={`/images/.add.png`}
+          src={`/images/add.png`}
           alt='add'
           className={`absolute transition-transform duration-500 ${name ? 'scale-0' : 'scale-100'}`}
         />
@@ -228,7 +228,7 @@ export function File({ type, file: { name, size }, onChange,  disabled, options 
           {!name && !disabled && <ErrorTooltip message={`${type} is required`} />}
         </h4>
         <span className='text-xs text-text-secondary'>
-          {disabled
+          {name
             ? 'Already Provided'
             : size
               ? size / 1024 / 1024 < 1
@@ -243,8 +243,8 @@ export function File({ type, file: { name, size }, onChange,  disabled, options 
         </Button>
         {onView && (
           <Button shape='icon' size='small' color='secondary' onClick={onView} disabled={!name}>
-          <IoEyeOutline />
-        </Button>
+            <IoEyeOutline />
+          </Button>
         )}
       </div>
     </div>

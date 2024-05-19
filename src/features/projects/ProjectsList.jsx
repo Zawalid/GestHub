@@ -73,7 +73,7 @@ export default function ProjectsList() {
       <div
         className={`h-full gap-5 ${
           layout === 'grid' && !isLoading
-            ? 'grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(310px,1fr))]'
+            ? 'grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] place-content-start sm:grid-cols-[repeat(auto-fill,minmax(310px,1fr))]'
             : 'flex flex-col'
         }`}
         ref={parent}

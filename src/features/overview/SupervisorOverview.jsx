@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 export default function SupervisorOverview() {
   const { projects, isLoading } = useProjects();
   return (
-    <div className='flex h-full flex-col gap-5'>
+    <div className='flex h-full flex-col gap-5 overflow-x-auto'>
       <Stats projects={projects} isLoading={isLoading} />
       <div className='grid flex-1 gap-5 lg:grid-cols-[3fr,2fr]'>
         <TasksAnalytics />

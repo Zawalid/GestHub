@@ -47,6 +47,11 @@
 - [ ] pages creation / update home page
 - [ ] settings
 - [ ] editor for about (TipTap)
+- [ ] invalidate projects when updating tasks
+- [x] loading state of completed internship
+- [ ] users table
+- [ ] favicon
+- [ ] disable tasks update when the project is overdue
 
 
 # Bugs
@@ -58,11 +63,15 @@
  - [x] super admin shouldn't be returned with admins
  - [x] too many requests (user)
  - [ ] Fix the theme bug in App.jsx (re-renders the app)
+ - [x] settings cv
+ - [ ] cv not loading instantly 
+ - [ ] files icons not loading
 
 # Maybe
 - [ ] Multiple accounts login
 - [ ] Infinite scroll (projects/offers/notifications)
 - [ ] Emailing
+- [ ] login sessions
 - [ ] More details about the error
 - [ ] create a component for date range only
 - [ ] Add a custom date picker and  date interval

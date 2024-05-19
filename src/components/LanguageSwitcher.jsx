@@ -1,16 +1,24 @@
 import { Button, DropDown } from './ui';
 import { useTranslation } from 'react-i18next';
-import { IoLanguageOutline } from 'react-icons/io5';
+import { IoChevronDownOutline, IoLanguageOutline } from 'react-icons/io5';
 
-export function LanguageSwitcher({ size }) {
+export function LanguageSwitcher({ size, layout }) {
   const { t, i18n } = useTranslation();
 
   return (
     <DropDown
       toggler={
-        <Button size={size} shape='icon'>
-          <IoLanguageOutline />
-        </Button>
+        layout === 'long' ? (
+          <Button size={size} display='with-icon' color='tertiary'>
+            <IoLanguageOutline />
+            <span className='flex-1 text-start capitalize'>{t(`header.languages.${i18n.language}`)}</span>
+            <IoChevronDownOutline />
+          </Button>
+        ) : (
+          <Button size={size} shape='icon'>
+            <IoLanguageOutline />
+          </Button>
+        )
       }
     >
       {['en', 'fr', 'ar'].map((lang) => (

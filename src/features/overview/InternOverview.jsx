@@ -33,7 +33,7 @@ export default function InternOverview() {
   const { daysLeft, isOverdue } = getTimelineDates(startDate, endDate);
 
   return (
-    <div className='flex h-full flex-col gap-5'>
+    <div className='flex h-full flex-col gap-5 overflow-x-auto'>
       <Stats />
       <div className='grid flex-1 gap-5 lg:grid-cols-[4fr_2fr]'>
         <TasksAnalytics />
@@ -84,41 +84,40 @@ function Stats() {
   );
 }
 
-function CustomDay({ day, startDate, endDate, outsideCurrentMonth, today, ...other }) {
+function CustomDay({ day, startDate, endDate, value, today, ...other }) {
   const isEndDate = day.hasSame(endDate, 'day');
   const isStartDate = day.hasSame(startDate, 'day');
   const isBetween = day > startDate && day < endDate;
+  const isSameAsValue = value && day.hasSame(value, 'day');
+  const isSpecialDay = isEndDate || isStartDate || today;
 
-  const style = isEndDate
-    ? { backgroundColor: '#ef4444', color: 'white' }
-    : isStartDate
-      ? { backgroundColor: '#2563eb', color: 'white' }
-      : isBetween
-        ? { backgroundColor: 'var(--background-secondary)', borderRadius: 0 }
-        : today
-          ? { backgroundColor: 'var(--background-secondary)', color: 'var(--text-primary)' }
-          : { backgroundColor: 'transparent' };
+  const getDayStyle = () => {
+    if (isSpecialDay && isSameAsValue) return { backgroundColor: 'var(--primary)', color: 'white', };
+    if (isStartDate || isEndDate) return { backgroundColor: isStartDate ? '#2563eb' : '#ef4444', color: 'white' };
+    if (isBetween) return { backgroundColor: 'var(--background-secondary)', borderRadius: 0 };
+    return { backgroundColor: 'transparent' };
+  };
+
+  const getToolTipText = () => {
+    if (isStartDate) return 'Start Date';
+    if (isEndDate) return 'End Date';
+    return 'Today';
+  };
+
+  const getClassName = () => {
+    let className = 'flex h-9 w-9';
+    if (isSpecialDay || isSameAsValue) className += ' bg-background-secondary p-1';
+    if (isStartDate) className += ' rounded-l-full';
+    else if (isEndDate) className += ' rounded-r-full';
+    return className;
+  };
 
   return (
-    <ToolTip
-      content={
-        <span className='text-xs text-text-secondary'>
-          {isStartDate ? 'Start Date' : isEndDate ? 'End Date' : 'Today'}
-        </span>
-      }
-      hidden={!isEndDate && !isStartDate && !today}
-    >
-      <div
-        className={`flex h-9 w-9 ${isStartDate || isEndDate ? 'bg-background-secondary p-1' : ''} ${
-          isStartDate ? 'rounded-l-full' : 'rounded-r-full'
-        }`}
-      >
-        <PickersDay
-          {...other}
-          outsideCurrentMonth={outsideCurrentMonth}
-          day={day}
-          style={{ margin: 0, width: '100%', height: '100%', ...style }}
-        />
+    <ToolTip content={<span className='text-xs text-text-secondary'>{getToolTipText()}</span>} hidden={!isSpecialDay}>
+      <div className={getClassName()}>
+        <PickersDay {...other} day={day} style={{ margin: 0, width: '100%', height: '100%',
+        transition : '0.5s background-color',
+        ...getDayStyle() }} />
       </div>
     </ToolTip>
   );
@@ -144,7 +143,7 @@ function Calendar({ startDate, endDate, daysLeft }) {
             views={['day']}
             slots={{ day: CustomDay }}
             slotProps={{
-              day: { startDate: getIsoDate(startDate), endDate: getIsoDate(endDate) },
+              day: { startDate: getIsoDate(startDate), endDate: getIsoDate(endDate), value },
             }}
           />
         </ThemeProvider>
@@ -181,7 +180,7 @@ function Calendar({ startDate, endDate, daysLeft }) {
 
 function InternshipCompleted({ user }) {
   const [current, setCurrent] = useState('congrats');
-  const { attestation, projectLink, rapport } = user || {};
+  const { attestation, projectLink, report } = user || {};
 
   return (
     <>
@@ -197,7 +196,7 @@ function InternshipCompleted({ user }) {
           <Button
             className='w-full'
             disabled={!attestation}
-            onClick={() => setCurrent(projectLink && rapport ? 'attestation' : 'info')}
+            onClick={() => setCurrent(projectLink && report ? 'attestation' : 'info')}
           >
             Get Attestation
           </Button>

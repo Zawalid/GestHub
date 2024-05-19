@@ -2,7 +2,7 @@ import { PRIORITY_COLORS, STATUS_COLORS } from '@/utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { ToolTip } from '@/components/ui/ToolTip';
-import { checkIsOverdue, cn, formatDate,  } from '@/utils/helpers';
+import { checkIsOverdue, cn, formatDate } from '@/utils/helpers';
 import { useInternsByIds } from '../interns/useInterns';
 import Avatar from '@/components/ui/Avatar';
 import { Layer } from '../offers/Offer';
@@ -25,7 +25,7 @@ export default function Project({ project, layout }) {
 
       <PriorityIndicator priority={priority} />
       <div className='flex items-center justify-between'>
-        <Date startDate={startDate} endDate={endDate} />
+        <Date startDate={startDate} endDate={endDate} isOverdue={checkIsOverdue(project, 'project')} />
       </div>
       <div className='space-y-2'>
         <h3 className='line-clamp-2 text-lg font-semibold text-text-primary'>{subject}</h3>
@@ -42,14 +42,17 @@ export default function Project({ project, layout }) {
   );
 }
 
-function Date({ startDate, endDate }) {
+function Date({ startDate, endDate, isOverdue }) {
+  const overdue = 'bg-red-500 text-white';
+  const notOverdue = 'bg-background-secondary text-text-secondary';
+
   return (
     <div className='project-date relative h-6 w-fit text-nowrap'>
-      <div className='side absolute z-[1] bg-background-secondary'>
-        <span className='text-text-secondary '>{formatDate(startDate)}</span>
+      <div className={`side absolute z-[1] ${isOverdue ? overdue : notOverdue}`}>
+        <span>{formatDate(isOverdue ? endDate : startDate)}</span>
       </div>
-      <div className='side -z-[1] overflow-hidden bg-red-500'>
-        <span className='text-white'>{formatDate(endDate)}</span>
+      <div className={`side -z-[1] overflow-hidden  ${isOverdue ? notOverdue : overdue}`}>
+        <span className='text-white'>{formatDate(isOverdue ? startDate : endDate)}</span>
       </div>
     </div>
   );

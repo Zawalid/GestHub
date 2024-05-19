@@ -32,7 +32,7 @@ export function useLogin() {
   const { mutate, isPending, error } = useMutation({
     mutationKey: ['login'],
     mutationFn: ({ email, password }) => login(email, password),
-    onSuccess: (data) => redirect("Logged in successfully. You'll be redirected now.", data?.data?.role),
+    onSuccess: (data) => redirect("Logged in successfully. You'll be redirected now.", data?.role),
     onError: (error) => toast.error(error.message),
   });
 
@@ -82,6 +82,13 @@ export const formatUserData = (data, includeCv, isUser) => {
   };
 };
 
+const getUserCv = (user) => {
+  const cv = getFile(user, 'cv');
+  const extension = cv?.split('.').pop();
+
+  return { file: { name: `${user?.firstName} ${user?.lastName} CV.${extension}` }, src: cv };
+};
+
 export function useUser() {
   const { data, error, isPending } = useQuery({
     queryKey: ['user'],
@@ -95,7 +102,7 @@ export function useUser() {
       ? {
           ...formatUserData(data, true, true),
           ...(data?.role === 'intern' && {
-            cv: getFile(data, 'cv'),
+            cv: getUserCv(data),
             attestation: getFile(data, 'attestation'),
             report: getFile(data, 'report'),
           }),

@@ -23,9 +23,9 @@
     }
   },
   "form": {
-    "accepteTerms": "Accept the terms of information access law",
+    "acceptTerms": "Accept the terms of information access law",
     "dontHaveAccount": "Don't have an account?",
-    "alraedyHaveAccount": "Already have an account?",
+    "alreadyHaveAccount": "Already have an account?",
     "register": "Register",
     "submit": "Submit",
     "login": "Login",

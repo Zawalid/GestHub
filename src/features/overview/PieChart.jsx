@@ -82,7 +82,7 @@ export default function PieChartStats({ data, title, legend, COLORS, className =
   }, [data]);
 
   return (
-    <div className={`flex flex-col items-center gap-2 rounded-lg border border-border p-3 shadow-md ${className}`}>
+    <div className={`flex flex-col min-h-[300px] items-center gap-2 rounded-lg border border-border p-3 shadow-md ${className}`}>
       <h2 className='text-lg font-bold text-text-primary'>{title}</h2>
       <Legend legend={legend} />
       <ResponsiveContainer className={`flex-1 ${isLoading ? 'animate-pulse' : ''}`}>

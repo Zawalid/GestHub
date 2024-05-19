@@ -22,16 +22,17 @@ export function Header() {
   }, [currentPath]);
 
   return (
-    <header className=' bg-background- flex items-center justify-between border-b border-border p-5 shadow-md'>
+    <header className='bg-background- flex items-center justify-between border-b border-border p-5 shadow-md'>
       <Logo className='w-28' />
       <Links />
 
       <div className='flex items-center gap-4'>
-        <ThemeSwitcher />
-        <LanguageSwitcher />
+        <div className='hidden gap-4 lg:flex'>
+          <ThemeSwitcher />
+          <LanguageSwitcher />
+        </div>
         {user?.role === 'user' && <Notifications />}
         <AuthSwitcher />
-
         <Button shape='icon' onClick={() => setIsMobileMenuOpen(true)} className='lg:hidden'>
           <RxHamburgerMenu />
         </Button>

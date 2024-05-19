@@ -34,7 +34,7 @@ const Avatar = forwardRef(({ className = 'h-9 w-9', custom, ...props }, ref) => 
     <img
       ref={ref}
       className={`rounded-full border border-border object-cover text-center text-xs text-text-tertiary ${className}`}
-      src={avatar || getFallback(role, gender)}
+      src={avatar || getFallback(role || 'user', gender)}
       alt='profile image'
       {...props}
     />
