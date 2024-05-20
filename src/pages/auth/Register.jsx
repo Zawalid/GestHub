@@ -6,11 +6,17 @@ import { MdOutlineSchool } from 'react-icons/md';
 import { useRegister, useSettings } from '@/hooks/useUser';
 import { LEVELS, RULES } from '@/utils/constants';
 import { Radio } from '@/components/ui/Radio';
+import { useEffect } from 'react';
+import { changeTitle } from '@/utils/helpers';
 
 export function Register() {
   const { t } = useTranslation();
   const { register, isRegistering } = useRegister();
   const { settings } = useSettings();
+
+  useEffect(() => {
+    changeTitle('Create Account')
+  },[])
 
   const {
     Form,

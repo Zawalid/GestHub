@@ -20,8 +20,10 @@ export const ROUTES = (() => {
     'super-admin': [
       ...generate(['admins', 'supervisors', 'projects', 'interns', 'offers', 'applications']),
       'projects/new',
+      'users',
+      'sessions',
     ],
-    admin: generate(['supervisors', 'projects', 'interns', 'offers', 'applications']),
+    admin: [...generate(['supervisors', 'projects', 'interns', 'offers', 'applications']), 'users'],
     supervisor: generate(['projects', 'interns']),
     intern: generate(['projects']),
     user: routes.applications,

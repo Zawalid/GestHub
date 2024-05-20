@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../hooks';
 import { useLogout } from '@/hooks/useUser';
-import { FiLogOut, FiUserPlus } from 'react-icons/fi';
+import { FiLogOut, FiUserCheck } from 'react-icons/fi';
 import { RxDashboard } from 'react-icons/rx';
 import { LuClipboardList } from 'react-icons/lu';
 import Avatar from './ui/Avatar';
@@ -51,7 +51,7 @@ export function AuthSwitcher() {
             Log In
           </DropDown.Option>
           <DropDown.Option onClick={() => navigate('/register')}>
-            <FiUserPlus />
+            <FiUserCheck />
             Create Account
           </DropDown.Option>
         </>

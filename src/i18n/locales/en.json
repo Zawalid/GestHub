@@ -154,7 +154,9 @@
       "absences": "Absences",
       "offers": "Offers",
       "applications": "Applications",
+      "users": "Users",
       "projects": "Projects",
+      "sessions": "Sessions",
       "settings": "Settings",
       "logout": "Logout"
     }

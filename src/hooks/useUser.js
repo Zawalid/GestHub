@@ -84,7 +84,7 @@ export const formatUserData = (data, includeCv, isUser) => {
 
 const getUserCv = (user) => {
   const cv = getFile(user, 'cv');
-  const extension = cv?.split('.').pop();
+  const extension = cv?.split('.').pop() || 'pdf'
 
   return { file: { name: `${user?.firstName} ${user?.lastName} CV.${extension}` }, src: cv };
 };

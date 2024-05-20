@@ -3,11 +3,17 @@ import { Button } from '../../components/ui';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useLogin, useSettings } from '@/hooks/useUser';
+import { useEffect } from 'react';
+import { changeTitle } from '@/utils/helpers';
 
 export function Login() {
   const { t } = useTranslation();
   const { login, isLogging } = useLogin();
   const {settings} = useSettings()
+
+  useEffect(() => {
+    changeTitle('Log In')
+  },[])
 
   const {
     Form,

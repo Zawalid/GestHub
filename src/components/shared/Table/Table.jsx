@@ -6,13 +6,24 @@ import { CheckBox, Status } from '@/components/ui/';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
 export function Table({ actions, canView }) {
-  const { columns, rows, error, selected, onSelect, isLoading } = useTable();
+  const { columns, rows, error, selected, onSelect, isLoading, query, appliedFiltersNumber } = useTable();
   const table = useRef();
   const [parent] = useAutoAnimate({ duration: 500 });
 
   const checked = rows?.length > 0 && rows?.map((r) => r.profile_id || r.id).every((id) => selected.includes(id));
 
   if (error) return <Status status='error' message={error?.message} />;
+  if (!isLoading && rows?.length === 0 && !query && !appliedFiltersNumber('all')) {
+    return (
+      <div className='absolute grid h-full w-full place-content-center place-items-center gap-5 pt-5'>
+        <img src='/SVG/no-applications.svg' alt='' className='w-[100px]' />
+        <div className='space-y-2 text-center'>
+          <h2 className='font-medium text-text-primary'> No Data Available</h2>
+          <p className='text-sm text-text-secondary'>There are currently no records to display in this table.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className='relative flex-1 overflow-x-auto' ref={table}>

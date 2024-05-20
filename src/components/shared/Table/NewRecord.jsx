@@ -3,7 +3,8 @@ import { Button } from '@/components/ui';
 import { useTable } from '.';
 
 export function NewRecord({ onAdd, component }) {
-  const { showForm,  resourceName, formOptions, formFields, disabled } = useTable();
+  const { showForm, resourceName, formOptions, formFields, disabled,  } = useTable();
+
 
   if (component)
     return component(() =>

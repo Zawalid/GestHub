@@ -74,13 +74,13 @@ export default function Task({ task, onDelete, onEdit, layout, canManipulateTask
 }
 
 function Assignee({ assignee }) {
-  const { firstName, lastName, avatar } = assignee || {};
+  const { firstName, lastName, avatar,gender } = assignee || {};
 
   return typeof assignee !== 'object' ? (
     <span className='text-xs font-medium text-text-secondary'>N/A</span>
   ) : (
     <ToolTip content={<span>{`${firstName} ${lastName}`}</span>}>
-      <Avatar custom={{ avatar }} className='h-7 w-7' alt={`${firstName} ${lastName}`} />
+      <Avatar custom={{ avatar,gender }} className='h-7 w-7' alt={`${firstName} ${lastName}`} />
     </ToolTip>
   );
 }

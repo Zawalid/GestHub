@@ -23,6 +23,9 @@ export function useTask(id) {
 
 // Mutations
 
+const onSuccess = (task, queryClient) =>
+  queryClient.invalidateQueries({ queryKey: ['projects', String(task?.project)] });
+
 export const useAddTask = () =>
   useMutate({
     queryKey: ['tasks', 'add'],
@@ -30,6 +33,7 @@ export const useAddTask = () =>
     loadingMessage: 'Adding task...',
     successMessage: 'Task added successfully',
     errorMessage: 'Failed to add task',
+    onSuccess,
   });
 
 export const useUpdateTask = () =>
@@ -39,6 +43,7 @@ export const useUpdateTask = () =>
     loadingMessage: 'Updating task...',
     successMessage: 'Task updated successfully',
     errorMessage: 'Failed to update task',
+    onSuccess,
   });
 
 export const useDeleteTask = () =>
@@ -48,4 +53,5 @@ export const useDeleteTask = () =>
     loadingMessage: 'Deleting task...',
     successMessage: 'Task deleted successfully',
     errorMessage: 'Failed to delete task',
+    onSuccess,
   });

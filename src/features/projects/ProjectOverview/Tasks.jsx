@@ -11,6 +11,7 @@ import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { createPortal } from 'react-dom';
 import { useUser } from '@/hooks/useUser';
 import { useAddTask, useDeleteTask, useUpdateTask } from '../useTasks';
+import { checkIsOverdue } from '@/utils/helpers';
 
 const getStyle = (style, snapshot) => (snapshot.isDropAnimating ? { ...style, transitionDuration: `0.0001s` } : style);
 
@@ -33,20 +34,11 @@ export default function Tasks() {
   const { mutate: updateTask } = useUpdateTask();
   const { mutate: deleteTask } = useDeleteTask();
 
-  const canManipulateTasks =
-    ['supervisor', 'admin', 'super-admin'].includes(user?.role) ||
-    (user?.role === 'intern' && user?.id === project?.projectManager);
-
-  // const getProjectStatus = (tasks) => {
-  //   const notStarted = tasks.every((task) => task.status === 'To Do');
-  //   const isCompleted = tasks.every((task) => task.status === 'Done');
-  //   const status = notStarted ? 'Not Started' : isCompleted ? 'Completed' : 'In Progress';
-  //   return status;
-  // };
-  // const tasks = Object.values(newGroups).flat();
-  // mutate({ id, data: { ...project, tasks, status: getProjectStatus(tasks) } });
-
-  // Project Methods
+  const isProjectOverdue = checkIsOverdue(project, 'project');
+  const canManipulateTasks = isProjectOverdue
+    ? false
+    : ['supervisor', 'admin', 'super-admin'].includes(user?.role) ||
+      (user?.role === 'intern' && user?.id === project?.projectManager);
 
   const updateGroups = (groupTasks, group) => setGroups({ ...groups, [group]: groupTasks });
 
@@ -94,7 +86,7 @@ export default function Tasks() {
   };
 
   return (
-    <div className='flex-1 overflow-auto pr-2'>
+    <div className={`flex-1 overflow-auto pr-2 ${isProjectOverdue ? 'opacity-50' : ''}`}>
       <DragDropContext onDragEnd={handleDragEnd}>
         <div
           className={` h-full w-full ${

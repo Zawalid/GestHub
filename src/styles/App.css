@@ -125,3 +125,13 @@
     @apply min-h-[200px];
   }
 }
+
+.mobile_header {
+  & > li {
+    @apply opacity-30;
+  }
+
+  &.active > li {
+    @apply scale-110 text-text-secondary opacity-100;
+  }
+}

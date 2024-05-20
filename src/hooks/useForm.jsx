@@ -105,6 +105,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
   // Dirty fields
   const dirtyFields = useMemo(() => {
     const dirty = {};
+    if(!defaultValues) return dirty
     Object.keys(defaultValues).forEach((key) => {
       if (
         (typeof [defaultValues[key]] === 'object' && !objectDeepEquals(values[key], defaultValues[key])) ||
@@ -119,7 +120,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
   const formInputs = useMemo(() => {
     const inputs = {};
     fields
-      .filter((field) => !field.hidden)
+      ?.filter((field) => !field.hidden)
       .forEach((field) => {
         const { name, type, placeholder, label, rules, customComponent, format } = field;
 

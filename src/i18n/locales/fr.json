@@ -160,7 +160,9 @@
       "absences": "Absences",
       "offers": "Offres",
       "applications": "Demandes",
+      "users": "Utilisateurs",
       "projects": "Projects",
+      "sessions": "Sessions",
       "settings": "Paramètres",
       "logout": "Déconnexion"
     }

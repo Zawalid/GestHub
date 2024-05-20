@@ -26,6 +26,8 @@ import {
 
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { useUser } from './hooks/useUser';
+import { Users } from './pages/Users';
+import { Sessions } from './pages/Sessions';
 
 const routesElements = {
   overview: <Overview />,
@@ -41,6 +43,8 @@ const routesElements = {
   'projects/new': <Projects />,
   'projects/:id': <ProjectDetails />,
   'projects/:id/:tab': <ProjectDetails />,
+  users: <Users />,
+  sessions: <Sessions />,
 };
 
 export default function App() {

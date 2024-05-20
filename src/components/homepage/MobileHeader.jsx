@@ -44,12 +44,11 @@ export function MobileHeader({ isOpen, onClose }) {
             ...(user?.role === 'user' ? [{ label: 'Applications', path: '/applications' }] : []),
             ...(user && user?.role !== 'user' ? [{ label: 'Dashboard', path: '/app' }] : []),
           ].map(({ label, path }) => (
-            <li
-              key={label}
-              className='text-2xl font-semibold hover:scale-110 capitalize text-text-primary transition-all duration-300 hover:text-text-secondary sm:text-xl'
-            >
-              <NavLink to={path}>{label}</NavLink>
-            </li>
+            <NavLink key={label} to={path} className=' mobile_header'>
+              <li className=' text-2xl font-semibold capitalize text-text-primary transition-all duration-300 hover:scale-110 hover:text-text-secondary sm:text-xl'>
+                {label}
+              </li>
+            </NavLink>
           ))}
 
           {!user && (
@@ -66,7 +65,7 @@ export function MobileHeader({ isOpen, onClose }) {
           )}
         </ul>
 
-        <div className='mx-auto grid grid-cols-2 w-fit items-center justify-center gap-2 p-3'>
+        <div className='mx-auto grid w-fit grid-cols-2 items-center justify-center gap-2 p-3'>
           <ThemeSwitcher size='small' layout='long' />
           <LanguageSwitcher size='small' layout='long' />
         </div>

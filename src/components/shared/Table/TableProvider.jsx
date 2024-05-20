@@ -88,7 +88,10 @@ export function TableProvider({
   const totalPages = Math.ceil(totalItems / limit);
 
   const appliedFiltersNumber = (filter) => {
+    if (filter === 'all') return Object.values(filters).flat().filter((f) => f.checked).length;
+
     if (!filters[filter]) return;
+
     return Object.values(filters[filter])
       .flat()
       .filter((f) => f.checked).length;
@@ -215,7 +218,7 @@ export function TableProvider({
     // table
     columns,
     rows: displayAllData ? rows : rows?.paginate(page, limit),
-    disabled: isLoading || selected.length > 0 || isOperating,
+    disabled: isLoading || selected.length > 0 || isOperating || data?.length === 0,
     // Selection
     selected,
     isSelecting: selected.length > 0,

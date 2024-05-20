@@ -47,11 +47,13 @@
 - [ ] pages creation / update home page
 - [ ] settings
 - [ ] editor for about (TipTap)
-- [ ] invalidate projects when updating tasks
+- [x] invalidate projects when updating tasks
 - [x] loading state of completed internship
-- [ ] users table
-- [ ] favicon
-- [ ] disable tasks update when the project is overdue
+- [x] users table
+- [x] disable tasks update when the project is overdue
+- [x] gendered avatars in tasks
+- [ ] implement refresh tokens
+- [ ] sessions table
 
 
 # Bugs
@@ -62,10 +64,9 @@
  - [x] starter tasks add
  - [x] super admin shouldn't be returned with admins
  - [x] too many requests (user)
- - [ ] Fix the theme bug in App.jsx (re-renders the app)
  - [x] settings cv
  - [ ] cv not loading instantly 
- - [ ] files icons not loading
+ - [x] files icons not loading
 
 # Maybe
 - [ ] Multiple accounts login
@@ -85,3 +86,4 @@
 - [ ] control charts dates/filter...
 - [ ] complex dates on calendar (tasks due dates/projects deadlines...)
 - [ ] create a can function to handle permissions 
+- [ ] session activities

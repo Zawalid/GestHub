@@ -71,24 +71,33 @@ const renderActiveShape = (props) => {
 
 export default function PieChartStats({ data, title, legend, COLORS, className = '', isLoading }) {
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const isEmpty = data.every((el) => +el.value === 0);
   const loadingData = [
     { name: 'Loading...', value: 20 },
     { name: 'Loading...', value: 55 },
     { name: 'Loading...', value: 25 },
   ];
+  const emptyData = [
+    { name: 'Empty', value: 20 },
+    { name: 'Empty', value: 55 },
+    { name: 'Empty', value: 25 },
+  ];
 
   useEffect(() => {
-    setActiveIndex(data[0].value > 0 ? 0 : data.findIndex((e) => e.value > 0));
+    setActiveIndex(data[0].value >= 0 ? 0 : data.findIndex((e) => e.value > 0));
   }, [data]);
 
   return (
-    <div className={`flex flex-col min-h-[300px] items-center gap-2 rounded-lg border border-border p-3 shadow-md ${className}`}>
+    <div
+      className={`flex min-h-[300px] flex-col items-center gap-2 rounded-lg border border-border p-3 shadow-md ${className}`}
+    >
       <h2 className='text-lg font-bold text-text-primary'>{title}</h2>
       <Legend legend={legend} />
       <ResponsiveContainer className={`flex-1 ${isLoading ? 'animate-pulse' : ''}`}>
         <PieChart>
           <Pie
-            data={isLoading ? loadingData : data}
+            data={isLoading ? loadingData : isEmpty ? emptyData : data}
             cx='50%'
             cy='50%'
             innerRadius={60}
@@ -102,12 +111,12 @@ export default function PieChartStats({ data, title, legend, COLORS, className =
             activeShape={(props) => renderActiveShape({ ...props, isLoading })}
             onMouseEnter={(_, i) => setActiveIndex(i)}
           >
-            {(isLoading ? loadingData : data).map((entry, index) => (
+            {(isLoading ? loadingData : isEmpty ? emptyData : data).map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
                 className='outline-none'
                 stroke='transparent'
-                fill={isLoading ? 'var(--background-secondary)' : COLORS[index]}
+                fill={isLoading || isEmpty ? 'var(--background-secondary)' : COLORS[index]}
               />
             ))}
           </Pie>

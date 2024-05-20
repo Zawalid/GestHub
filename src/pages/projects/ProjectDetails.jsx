@@ -49,5 +49,5 @@ export function ProjectDetails() {
       />
     );
 
-  return <ProjectOverview />;
+  return <ProjectOverview tasksCount={project?.tasks?.length} />;
 }

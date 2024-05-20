@@ -2,18 +2,20 @@ import { useQuery } from '@tanstack/react-query';
 import { getAllProjects, getProject, addProject, updateProject, deleteProject } from '@/services/projectsAPI';
 import { useMutate } from '@/hooks/useMutate';
 import { getProgress } from '@/utils/helpers';
+import { formatUserData } from '@/hooks/useUser';
 
 const getAdditionalProjectData = (project) => {
   if (!project) return null;
 
   const completedTasks = project.tasks.filter((task) => task?.status === 'Done');
-  const progress = getProgress((completedTasks.length / project.tasks.length) * 100)
+  const progress = getProgress((completedTasks.length / project.tasks.length) * 100);
   return {
     ...project,
     tasksNumber: project.tasks.length,
     completedTasks,
     progress,
     teamCount: project.teamMembers.length,
+    tasks: project.tasks.map((task) => ({ ...task, assignee: { ...task.assignee, ...formatUserData(task.assignee) } })),
   };
 };
 
