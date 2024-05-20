@@ -118,14 +118,6 @@ export default function SessionsList() {
           ],
         },
         {
-          key: 'created_at',
-          displayLabel: 'Signed In At',
-          visible: true,
-          type: 'date',
-          format: (val) => formatDate(val, true),
-          filter: getIntervals('created_at', ['present', 'past']),
-        },
-        {
           key: 'status',
           displayLabel: 'Status',
           visible: true,
@@ -143,6 +135,14 @@ export default function SessionsList() {
             { value: 'Offline', checked: false },
             { value: 'Current', checked: false },
           ],
+        },
+        {
+          key: 'created_at',
+          displayLabel: 'Signed In At',
+          visible: true,
+          type: 'date',
+          format: (val) => formatDate(val, true),
+          filter: getIntervals('created_at', ['present', 'past']),
         },
       ]}
       fieldsToSearch={['firstName', 'lastName', 'location']}

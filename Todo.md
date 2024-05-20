@@ -53,7 +53,7 @@
 - [x] disable tasks update when the project is overdue
 - [x] gendered avatars in tasks
 - [ ] implement refresh tokens
-- [ ] sessions table
+- [x] sessions table
 
 
 # Bugs
@@ -67,6 +67,7 @@
  - [x] settings cv
  - [ ] cv not loading instantly 
  - [x] files icons not loading
+ - [ ] avatar
 
 # Maybe
 - [ ] Multiple accounts login

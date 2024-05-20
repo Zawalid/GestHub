@@ -76,7 +76,7 @@ export function TableProvider({
   const [filters, setFilters] = useState({});
   const [limit, setLimit] = useState(PAGE_LIMIT);
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get('search') || '';
+  const query = searchParams.get('search') ;
   const page = Number(searchParams.get('page')) || 1;
   const sortBy = searchParams.get('sort') || 'id';
   const direction = searchParams.get('dir') || 'asc';

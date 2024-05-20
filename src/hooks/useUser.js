@@ -94,7 +94,6 @@ export function useUser() {
     queryKey: ['user'],
     queryFn: getUser,
     retry: 1,
-    staleTime: 1000 * 60 * 2,
   });
 
   return {

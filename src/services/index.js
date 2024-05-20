@@ -1,13 +1,17 @@
 import axios from 'axios';
 
-export const axiosFetch = async (resource, method, data) => {
+export const axiosFetch = async (resource, method, data, headers) => {
   try {
     const response = await axios({
       method: method || 'GET',
       url: `/api/${resource}`,
       data: data,
       withCredentials: true,
-      headers: { Accept: 'application/json', 'Accept-Path': true },
+      headers: {
+        Accept: 'application/json',
+        'Accept-Path': true,
+        ...(headers && headers),
+      },
     });
     return response.data;
   } catch (e) {

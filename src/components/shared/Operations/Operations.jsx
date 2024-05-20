@@ -123,7 +123,7 @@ export function Operations({
   const [filterCondition, setFilterCondition] = useState('OR');
   const [layout, setLayout] = useState(defaultLayout, 'grid');
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get('search') || '';
+  const query = searchParams.get('search') ;
   const sortBy = searchParams.get('sort') || defaultSortBy;
   const direction = searchParams.get('dir') || defaultDirection;
 

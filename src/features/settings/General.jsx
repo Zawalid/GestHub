@@ -9,17 +9,17 @@ export default function General() {
 
   const defaultValues = {
     appLogo: settings?.appLogo,
-    appName: settings?.appName || 'GestHub',
-    companyName: settings?.companyName || 'Your Company',
-    email: settings?.email || 'company@example.com',
-    phone: settings?.phone || '+212 060000000',
-    location: settings?.location || 'Rabat, Morocco',
-    maps: settings?.maps || 'https://www.google.com/maps/embed?',
-    facebook: settings?.facebook || 'https://www.facebook.com',
-    twitter: settings?.twitter || 'https://www.twitter.com',
-    instagram: settings?.instagram || 'https://www.instagram.com',
-    linkedin: settings?.linkedin || 'https://www.linkedin.com',
-    youtube: settings?.youtube || 'https://www.youtube.com',
+    appName: settings?.appName ,
+    companyName: settings?.companyName ,
+    email: settings?.email ,
+    phone: settings?.phone ,
+    location: settings?.location ,
+    maps: settings?.maps ,
+    facebook: settings?.facebook ,
+    twitter: settings?.twitter ,
+    instagram: settings?.instagram ,
+    linkedin: settings?.linkedin ,
+    youtube: settings?.youtube ,
   };
   const {
     Form,
@@ -111,7 +111,7 @@ export default function General() {
         <div>
           <img
             className='h-28 w-28 rounded-lg border border-border object-contain text-center text-xs text-text-tertiary'
-            src={getValue('appLogo')?.src || ''}
+            src={getValue('appLogo')?.src }
           />
           <Button
             type='outline'

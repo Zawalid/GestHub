@@ -16,14 +16,14 @@ export default function Profile() {
 
   const defaultValues = {
     avatar: user?.avatar,
-    firstName: user?.firstName || '',
-    lastName: user?.lastName || '',
-    email: user?.email || '',
-    phone: user?.phone || '',
+    firstName: user?.firstName ,
+    lastName: user?.lastName ,
+    email: user?.email ,
+    phone: user?.phone ,
     // Conditionally : if the user is and intern/user
     ...(['intern', 'user'].includes(user?.role) && {
-      academicLevel: user?.academicLevel || '',
-      establishment: user?.establishment || '',
+      academicLevel: user?.academicLevel ,
+      establishment: user?.establishment ,
       cv: user?.cv,
     }),
   };
