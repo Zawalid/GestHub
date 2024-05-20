@@ -1,11 +1,51 @@
-import {  formatDate, getIntervals } from '@/utils/helpers';
-import { useSessions, useDeleteSession,useDeleteSessions } from './useSessions';
+import { formatDate, getIntervals } from '@/utils/helpers';
+import { useSessions, useDeleteSession, useDeleteSessions, useAbortSession, useAbortSessions } from './useSessions';
 import { TableLayout } from '@/layouts/TableLayout';
+import { useUser } from '@/hooks/useUser';
+import { FiLogOut } from 'react-icons/fi';
+
+// ['Chrome', 'YaBrowser', 'Brave', 'Safari', 'Edge','Firefox','Opera']
+const BROWSERS_IMAGES = [
+  {
+    name: 'Chrome',
+    display: 'Google Chrome',
+    image: 'https://cdnjs.cloudflare.com/ajax/libs/browser-logos/74.0.0/chrome/chrome.png',
+  },
+  {
+    name: 'Firefox',
+    image: 'https://cdnjs.cloudflare.com/ajax/libs/browser-logos/74.0.0/firefox/firefox.png',
+  },
+  {
+    name: 'YaBrowser',
+    display: 'Yandex',
+    image: 'https://cdnjs.cloudflare.com/ajax/libs/browser-logos/74.0.0/yandex/yandex.png',
+  },
+  {
+    name: 'Safari',
+    image: 'https://cdnjs.cloudflare.com/ajax/libs/browser-logos/74.0.0/safari/safari.png',
+  },
+  {
+    name: 'Brave',
+    image: 'https://cdnjs.cloudflare.com/ajax/libs/browser-logos/74.0.0/brave/brave.png',
+  },
+  {
+    name: 'Edge',
+    display: 'Microsoft Edge',
+    image: 'https://cdnjs.cloudflare.com/ajax/libs/browser-logos/74.0.0/edge/edge.png',
+  },
+  {
+    name: 'Opera',
+    image: 'https://cdnjs.cloudflare.com/ajax/libs/browser-logos/74.0.0/opera/opera.png',
+  },
+];
 
 export default function SessionsList() {
+  const { user } = useUser();
   const { sessions, isLoading, error } = useSessions();
   const { mutate: deleteSession } = useDeleteSession();
   const { mutate: deleteSessions } = useDeleteSessions();
+  const { abort } = useAbortSession();
+  const { abort: abortMultiple } = useAbortSessions();
 
   return (
     <TableLayout
@@ -15,23 +55,11 @@ export default function SessionsList() {
       error={error}
       columns={[
         {
-          key: 'id',
-          displayLabel: 'ID',
-          visible: true,
-          type: 'number',
-        },
-        {
           key: 'fullName',
           displayLabel: 'Full Name',
           visible: true,
           type: 'string',
           format: (val, id) => `${sessions?.find((i) => i.id === id)?.gender || 'M'}. ${val}`,
-        },
-        {
-          key: 'email',
-          displayLabel: 'Email',
-          visible: true,
-          type: 'string',
         },
         {
           key: 'location',
@@ -47,18 +75,55 @@ export default function SessionsList() {
         },
         {
           key: 'device',
-          displayLabel: 'User Device',
+          displayLabel: 'Device',
           visible: true,
           type: 'string',
-          format : (val) => val.slice(0,12) + '...'
+        },
+        {
+          key: 'browser',
+          displayLabel: 'Browser',
+          visible: true,
+          type: 'string',
+          format: (val, id, isDownload) => {
+            const browser = BROWSERS_IMAGES.find((b) => val?.toLowerCase().includes(b.name?.toLowerCase()));
+
+            return isDownload ? (
+              browser?.display || browser?.name || 'Unknown'
+            ) : (
+              <div className='flex items-center gap-2'>
+                <img src={browser?.image || '/images/default-browser.png'} alt='browser' className='h-7 w-7' />
+                <span className='text-sm font-medium text-text-primary'>
+                  {browser?.display || browser?.name || 'Unknown'}
+                </span>
+              </div>
+            );
+          },
+          filter: [
+            {
+              value: { value: 'Google Chrome', condition: (el) => el.browser === 'Chrome' },
+              checked: false,
+            },
+            {
+              value: { value: 'Microsoft Edge', condition: (el) => el.browser === 'Edge' },
+              checked: false,
+            },
+            { value: 'Safari', checked: false },
+            { value: 'Brave', checked: false },
+            { value: 'Firefox', checked: false },
+            { value: 'Opera', checked: false },
+            {
+              value: { value: 'Yandex', condition: (el) => el.browser === 'YaBrowser' },
+              checked: false,
+            },
+          ],
         },
         {
           key: 'created_at',
           displayLabel: 'Signed In At',
           visible: true,
           type: 'date',
-          format : (val) => formatDate(val,true),
-          filter: getIntervals('created_at',['present','past']),
+          format: (val) => formatDate(val, true),
+          filter: getIntervals('created_at', ['present', 'past']),
         },
         {
           key: 'status',
@@ -66,7 +131,7 @@ export default function SessionsList() {
           visible: true,
           type: 'string',
           format: (val, id, isDownload) => {
-            const colors = {  Online: 'bg-green-600', Offline: 'bg-red-500' };
+            const colors = { Online: 'bg-green-600', Offline: 'bg-red-500', Current: 'bg-blue-600' };
             return isDownload ? (
               val
             ) : (
@@ -76,6 +141,7 @@ export default function SessionsList() {
           filter: [
             { value: 'Online', checked: false },
             { value: 'Offline', checked: false },
+            { value: 'Current', checked: false },
           ],
         },
       ]}
@@ -86,16 +152,37 @@ export default function SessionsList() {
         pdfFileName: 'Sessions',
       }}
       onDelete={deleteSession}
+      layoutOptions={{
+        displayNewRecord: false,
+        actions: [
+          {
+            text: 'Abort',
+            icon: <FiLogOut />,
+            onClick: (id) => abort(id),
+            hidden: (session) => session?.status !== 'Online',
+          },
+        ],
+      }}
       selectedOptions={{
+        actions: [
+          {
+            text: 'Abort',
+            className: 'bg-orange-700 hover:bg-orange-800 disabled:bg-background-disabled',
+            onClick: (ids, onClose, setIsOperating) => {
+              abortMultiple(ids, { onConfirm: () => setIsOperating(true), onSettled: () => setIsOperating(false) });
+              onClose();
+            },
+            disabledCondition: (ids, data) => data?.some((app) => ids.includes(app.id) && app.status !== 'online'),
+            message: 'This session has already been aborted.',
+          },
+        ],
         deleteOptions: {
           resourceName: 'session',
           onConfirm: (ids, setIsOperating) => deleteSessions(ids, { onSettled: () => setIsOperating(false) }),
         },
       }}
-      layoutOptions={{
-        displayNewRecord: false,
-        actions: [],
-      }}
+      hideAllRowsActions={user?.role !== 'super-admin'}
+      hideRowActions={(row) => row.status === 'Current'}
     />
   );
 }

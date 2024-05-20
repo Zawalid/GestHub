@@ -46,7 +46,7 @@ Array.prototype.customSort = function (sortBy, direction, sortOptions) {
       return direction === 'asc' ? a?.[sortBy] - b?.[sortBy] : b?.[sortBy] - a?.[sortBy];
 
     if (stringFields.includes(sortBy)) {
-      return direction === 'asc' ? a?.[sortBy].localeCompare(b?.[sortBy]) : b?.[sortBy].localeCompare(a?.[sortBy]);
+      return direction === 'asc' ? a?.[sortBy]?.localeCompare(b?.[sortBy]) : b?.[sortBy]?.localeCompare(a?.[sortBy]);
     }
 
     if (dateFields.includes(sortBy)) {

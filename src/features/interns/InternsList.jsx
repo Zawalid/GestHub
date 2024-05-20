@@ -204,7 +204,7 @@ export default function InternsList() {
             onConfirm: (ids, setIsOperating) => deleteInterns(ids, { onSettled: () => setIsOperating(false) }),
           },
         }}
-        hideActions={user?.role === 'supervisor'}
+        hideAllRowsActions={user?.role === 'supervisor'}
       />
       {user?.role !== 'supervisor' && <SelectUsers isOpen={isOpen} onClose={() => setIsOpen(false)} />}
     </>

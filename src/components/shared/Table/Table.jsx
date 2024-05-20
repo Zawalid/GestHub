@@ -5,7 +5,7 @@ import { useTable } from '.';
 import { CheckBox, Status } from '@/components/ui/';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
-export function Table({ actions, canView }) {
+export function Table({ actions, canView, hideRowActions }) {
   const { columns, rows, error, selected, onSelect, isLoading, query, appliedFiltersNumber } = useTable();
   const table = useRef();
   const [parent] = useAutoAnimate({ duration: 500 });
@@ -34,12 +34,17 @@ export function Table({ actions, canView }) {
         <Skeleton table={table} />
         <thead className='sticky top-0 z-10 bg-background-secondary'>
           <tr ref={parent}>
-            {isLoading || !actions || (
+            {/* All Checkbox  visibility*/}
+            {isLoading || !actions || rows?.every((row) => hideRowActions?.(row)) || (
               <Select
                 checked={checked}
-                onChange={() => rows?.forEach((r) => onSelect(r.profile_id || r.id, !checked))}
+                onChange={() =>
+                  rows?.filter((row) => !hideRowActions?.(row)).forEach((r) => onSelect(r.profile_id || r.id, !checked))
+                }
               />
             )}
+            {rows?.every((row) => hideRowActions?.(row)) && <Column hide={true} />}
+
             {columns
               .filter((c) => c.visible)
               .map((column) => (
@@ -55,6 +60,7 @@ export function Table({ actions, canView }) {
               row={row}
               visibleColumns={columns.filter((c) => c.visible)}
               actions={actions}
+              hideRowActions={hideRowActions?.(row)}
               canView={canView}
               selected={selected.includes(row.profile_id || row.id)}
             />
@@ -73,7 +79,7 @@ function Column({ column, hide }) {
   );
 }
 
-function Row({ row, visibleColumns, actions, canView = true, selected }) {
+function Row({ row, visibleColumns, actions, canView = true, selected, hideRowActions }) {
   const { disabled, onSelect, isSelecting } = useTable();
   const navigate = useNavigateWithQuery();
   const [parent] = useAutoAnimate({ duration: 500 });
@@ -82,19 +88,27 @@ function Row({ row, visibleColumns, actions, canView = true, selected }) {
     <tr
       ref={parent}
       className={`transition-colors duration-200 ${selected ? 'bg-background-tertiary' : 'hover:bg-background-disabled'}
-      ${canView || isSelecting ? 'cursor-pointer' : ''}`}
+      ${(canView || isSelecting) && !hideRowActions ? 'cursor-pointer' : ''}`}
       onClick={() => {
-        isSelecting && onSelect(row.profile_id || row.id);
+        isSelecting && !hideRowActions && onSelect(row.profile_id || row.id);
         canView && !disabled && navigate(row.id);
       }}
     >
-      {actions && <Select id={row.profile_id || row.id} />}
+      {/* checkbox visibility*/}
+      {actions && !hideRowActions && <Select id={row.profile_id || row.id} />}
+      {hideRowActions && <Column hide={true} />}
+
       {visibleColumns.map((col) => (
         <td key={col.displayLabel} className={`px-6 ${actions ? 'py-3.5' : 'py-5'}`}>
           {col.format ? col.format(row[col.key], row.id) : row[col.key]}
         </td>
       ))}
-      {actions && <td className='grid place-items-end px-6 py-3.5'>{cloneElement(actions, { row })}</td>}
+
+      {/* Actions visibility */}
+      {actions && !hideRowActions && (
+        <td className='grid place-items-end px-6 py-3.5'>{cloneElement(actions, { row })}</td>
+      )}
+      {hideRowActions && <Column hide={true} />}
     </tr>
   );
 }

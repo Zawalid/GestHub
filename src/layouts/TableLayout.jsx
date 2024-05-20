@@ -12,7 +12,8 @@ export function TableLayout({
   onUpdate,
   onDelete,
   canView,
-  hideActions,
+  hideAllRowsActions,
+  hideRowActions,
   layoutOptions = defaultOptions,
   ...tableProps
 }) {
@@ -42,7 +43,8 @@ export function TableLayout({
         >
           <Table.Table
             canView={canView}
-            actions={hideActions ? null : <Table.Actions onUpdate={onUpdate} onDelete={onDelete} actions={actions} />}
+            hideRowActions={hideRowActions}
+            actions={hideAllRowsActions ? null : <Table.Actions onUpdate={onUpdate} onDelete={onDelete} actions={actions} />}
           />
           {displayTableRecord && <Table.TableRecord />}
           <Table.Pagination />

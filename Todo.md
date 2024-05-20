@@ -87,3 +87,4 @@
 - [ ] complex dates on calendar (tasks due dates/projects deadlines...)
 - [ ] create a can function to handle permissions 
 - [ ] session activities
+- [ ] trash
