@@ -24,9 +24,11 @@ export function ProjectDetails() {
         ? 'Access Denied'
         : project
           ? `${project?.subject} | ${capitalize(tab)}`
-          : 'Project Not Found';
+          : isLoading
+            ? 'Loading...'
+            : 'Project Not Found';
     changeTitle(title);
-  }, [project, tab, user, canAccess]);
+  }, [project, tab, user, canAccess, isLoading]);
 
   if (isLoading) return <Status status='loading' />;
   if (error)

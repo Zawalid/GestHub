@@ -65,9 +65,12 @@
  - [x] super admin shouldn't be returned with admins
  - [x] too many requests (user)
  - [x] settings cv
- - [ ] cv not loading instantly 
  - [x] files icons not loading
- - [ ] avatar
+ - [x] avatar
+ - [x] list view of tasks on mobile
+ - [x] offers overflow on mobile (grid)
+ - [x] sort and order dropdown on mobile
+ - [x] total personnel overflow on mobile
 
 # Maybe
 - [ ] Multiple accounts login

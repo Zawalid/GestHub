@@ -84,7 +84,7 @@ function Indicator({ condition, className }) {
 
 function DateLocation({ publicationDate, duration, city, direction }) {
   return (
-    <div className='flex flex-col justify-between gap-2 xs:flex-row xs:items-center'>
+    <div className='flex flex-wrap justify-between gap-2  items-center'>
       <div className='flex w-fit items-center gap-2 rounded-md bg-background-tertiary px-2 py-1 text-center  font-medium text-text-secondary'>
         <IoCalendarNumberOutline />
         <div className='divide-x divide-text-secondary text-xs'>

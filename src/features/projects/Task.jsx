@@ -4,17 +4,17 @@ import { checkIsOverdue, formatDate } from '@/utils/helpers';
 import { ToolTip } from '@/components/ui/ToolTip';
 import Avatar from '@/components/ui/Avatar';
 
-export default function Task({ task, onDelete, onEdit, layout, canManipulateTasks, isCreatingProject }) {
+export default function Task({ task, onDelete, onEdit, layout,group, canManipulateTasks, isCreatingProject }) {
   const { title, description, dueDate, priority, assignee } = task;
 
   if (layout === 'list')
     return (
-      <div className='grid grid-cols-[auto_repeat(3,100px)] place-items-center items-center gap-5 rounded-md bg-background-secondary p-2'>
-        <div className='flex w-full items-center gap-2'>
-          <span className={`mt-[1px] h-2 w-2 rounded-sm ${'group.color'}`}></span>
-          <h4 className='line-clamp-2 font-semibold text-text-primary'>{task.title || 'Untitled'}</h4>
+      <div className='grid justify-items-end grid-cols-5 place-items-center items-center gap-5 rounded-md bg-background-secondary p-2'>
+        <div className='flex w-full min-w-[250px] col-span-2 items-center gap-2'>
+          <span className={`mt-[1px] h-2 w-2 rounded-sm ${group.color}`}></span>
+          <h4 className='line-clamp-2 text-xs sm:text-sm text-nowrap font-semibold text-text-primary'>{task.title || 'Untitled'}</h4>
         </div>
-        <Assignee assignee={assignee} />
+        <Assignee assignee={assignee} className='ml-auto' />
         <span
           className={`text-center text-xs font-medium ${checkIsOverdue(task, 'task') ? 'text-red-500' : 'text-text-secondary'}`}
         >
@@ -30,7 +30,7 @@ export default function Task({ task, onDelete, onEdit, layout, canManipulateTask
     <div className='relative flex min-h-[144px] flex-col gap-4 rounded-lg border border-border bg-background-secondary p-4 pt-8 shadow-sm transition-all duration-300'>
       <div className='space-y-2.5'>
         <div className='flex items-center justify-between gap-5'>
-          <h4 className='line-clamp-2 font-semibold text-text-primary'>{title || 'Untitled'}</h4>
+          <h4 className='line-clamp-2 text-xs sm:text-base font-semibold text-text-primary'>{title || 'Untitled'}</h4>
           {priority !== 'None' && (
             <span
               className={`absolute right-2 top-2 rounded-md px-2 py-0.5 text-center text-[10px] font-medium text-white ${PRIORITY_COLORS[priority]?.bg}`}

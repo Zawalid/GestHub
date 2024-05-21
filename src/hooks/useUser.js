@@ -108,7 +108,6 @@ export function useUser() {
           // role : 'supervisor'
         }
       : null,
-    isAuthenticated: Boolean(data),
     isLoading: isPending,
     error,
   };

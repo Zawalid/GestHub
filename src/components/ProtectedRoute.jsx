@@ -6,16 +6,16 @@ import { ErrorScreen } from './ui/ErrorScreen';
 
 export function ProtectedRoute({ children }) {
   const navigate = useNavigate();
-  const { isLoading, isAuthenticated, error } = useUser();
+  const { isLoading, user, error } = useUser();
 
 
   // return children;
 
   useEffect(() => {
-    if (!isAuthenticated && !isLoading) navigate('/login', { replace: true });
-  }, [isAuthenticated, isLoading, navigate]);
+    if (!user && !isLoading) navigate('/login', { replace: true });
+  }, [user, isLoading, navigate]);
 
   if (isLoading) return <LoadingScreen />;
   if (error) return <ErrorScreen />;
-  if (isAuthenticated) return children;
+  if (user) return children;
 }

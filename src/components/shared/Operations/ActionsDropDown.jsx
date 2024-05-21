@@ -4,7 +4,7 @@ import { useOperations } from "./useOperations";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const options = {
-  placement: "right-start",
+  placement: "auto-end",
   className: "max-h-[100%]",
   trigger: "click",
   shouldCloseOnClick: false,

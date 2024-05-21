@@ -102,7 +102,7 @@ export default function Tasks() {
               group={{
                 name: group,
                 tasks: groups[group],
-                color: group === 'To Do' ? 'bg-red-500' : group === 'Done' ? 'bg-green-500' : 'bg-blue-500',
+                color: group === 'To Do' ? 'bg-red-500' : group === 'Done' ? 'bg-green-600' : 'bg-blue-500',
               }}
               onAdd={() => setCurrentGroup(group)}
               onEdit={(task) => setCurrentTask(task)}
@@ -158,6 +158,7 @@ export default function Tasks() {
 function TasksGroup({ group, onAdd, onEdit, onDelete, layout, canManipulateTasks }) {
   const [parent] = useAutoAnimate({ duration: 400 });
 
+
   const droppable = () => {
     return (
       <Droppable droppableId={group.name} type='TASK'>
@@ -189,10 +190,12 @@ function TasksGroup({ group, onAdd, onEdit, onDelete, layout, canManipulateTasks
 
   if (layout === 'list')
     return (
-      <div className='flex flex-col gap-3 border-b border-border pb-3'>
-        <div className='grid grid-cols-[auto_repeat(3,100px)] items-center gap-4 border-b border-border'>
-          <div className={`w-fit rounded-t-md p-1 px-4 ${group.color}`}>
-            <h5 className='text-sm font-medium text-white'>{group.name}</h5>
+      <div className='flex flex-col w-max md:w-full gap-3 border-b border-border pb-3'>
+        <div className='grid grid-cols-5 justify-items-end  items-center gap-4 border-b border-border'>
+          <div className='col-span-2 justify-self-start min-w-[250px]'>
+            <div className={`w-fit rounded-t-md p-1 px-4 ${group.color}`}>
+              <h5 className='text-nowrap text-sm font-medium text-white'>{group.name}</h5>
+            </div>
           </div>
           <span className='text-nowrap text-sm font-medium uppercase text-text-secondary'>Assignee</span>
           <span className='text-nowrap text-sm font-medium uppercase text-text-secondary'>Due Date</span>
@@ -260,6 +263,7 @@ function TasksList({ group, onEdit, onDelete, isDragging, layout, canManipulateT
             task={task}
             onEdit={onEdit}
             onDelete={onDelete}
+            group={group}
             layout={layout}
             canManipulateTasks={canManipulateTasks}
           />

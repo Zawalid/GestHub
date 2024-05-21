@@ -102,7 +102,7 @@ function Stats() {
       <div className='col-span-2 flex items-start justify-between rounded-lg border border-border bg-background-secondary p-3 shadow-md'>
         <div className='space-y-3'>
           <h4 className='text-sm font-medium text-text-secondary'>Total Personnel</h4>
-          <div className='flex gap-4'>
+          <div className='flex gap-4 flex-wrap'>
             {[
               { name: 'admins', value: admins?.length, isLoading: isAdminsLoading },
               { name: 'supervisors', value: supervisors?.length, isLoading: isSupervisorsLoading },
@@ -117,9 +117,9 @@ function Stats() {
                 {isLoading ? (
                   <div className='sending'></div>
                 ) : (
-                  <h3 className='font-bold text-text-primary lg:text-xl'>{value}</h3>
+                  <h3 className='font-bold lg:text-xl'>{value}</h3>
                 )}
-                <h5 className='text-xs capitalize text-text-secondary lg:text-sm'>{name}</h5>
+                <h5 className='text-xs capitalize lg:text-sm'>{name}</h5>
               </Button>
             ))}
           </div>
@@ -183,7 +183,7 @@ function CompletedInternships() {
 
   return (
     <>
-      <div className='col-span-2 flex flex-col gap-3'>
+      <div className='min-h-[100px] col-span-2 flex flex-col gap-3'>
         <div className='flex items-center justify-between'>
           <h3 className='font-semibold text-text-primary'>Completed Internship</h3>
           <Button

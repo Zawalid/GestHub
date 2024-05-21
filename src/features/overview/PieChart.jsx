@@ -85,7 +85,7 @@ export default function PieChartStats({ data, title, legend, COLORS, className =
   ];
 
   useEffect(() => {
-    setActiveIndex(data[0].value >= 0 ? 0 : data.findIndex((e) => e.value > 0));
+    setActiveIndex(data[0].value > 0 ? 0 : data.findIndex((e) => e.value > 0));
   }, [data]);
 
   return (
@@ -107,7 +107,7 @@ export default function PieChartStats({ data, title, legend, COLORS, className =
             cornerRadius='30%'
             paddingAngle={5}
             className='text-xs outline-none'
-            activeIndex={activeIndex}
+            activeIndex={activeIndex < 0 ? 0 : activeIndex}
             activeShape={(props) => renderActiveShape({ ...props, isLoading })}
             onMouseEnter={(_, i) => setActiveIndex(i)}
           >
@@ -128,7 +128,7 @@ export default function PieChartStats({ data, title, legend, COLORS, className =
 
 export function Legend({ legend }) {
   return (
-    <div className='flex items-start justify-center gap-3 pt-2'>
+    <div className='flex items-start flex-wrap justify-center gap-3 pt-2'>
       {legend.map((el) => (
         <div key={el.text} className='flex items-center gap-2'>
           <span className={`h-3 w-6 rounded-md ${el.color}`}></span>

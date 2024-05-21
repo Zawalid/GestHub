@@ -20,7 +20,7 @@ export default function Settings({ isOpen, onClose }) {
   }, [isOpen]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} className='sm:flex-row md:h-5/6 md:w-5/6 md:border lg:w-3/4'>
+    <Modal isOpen={isOpen} onClose={onClose} className='sm:flex-row md:h-5/6 md:w-5/6 md:border '>
       <div className='absolute left-0 top-0 z-10 flex w-full justify-between border-b border-border bg-background-primary px-5 py-2 sm:left-[200px] sm:w-[calc(100%-200px)]'>
         <h3 className='text-lg font-bold capitalize text-text-primary sm:text-xl'>{currentTab}</h3>
         <div className='flex gap-2 z-50'>
