@@ -44,6 +44,8 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
     },
   ];
 
+  const deleteAction = actions?.find((a) => a.text === 'Delete');
+
   return (
     <DropDown
       toggler={
@@ -54,28 +56,30 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
       togglerDisabled={isSelecting}
     >
       {(actions || defaultActions)
-        .filter((action) => !action.hidden?.(row))
+        .filter((action) => !action.hidden?.(row) && action.text !== 'Delete')
         .map((action) => (
           <DropDown.Option key={action.text} onClick={() => action.onClick(row.profile_id || row.id)}>
             {action.icon}
             {action.text}
           </DropDown.Option>
         ))}
-
-      <DropDown.Option
-        onClick={() =>
-          openModal({
-            ...confirmOptions,
-            onConfirm: () => {
-              onDelete(row.profile_id || row.id);
-              rows?.length === 1 && onPrevPage();
-            },
-          })
-        }
-      >
-        <IoTrashOutline />
-        Delete
-      </DropDown.Option>
+      {!deleteAction?.hidden?.(row) && (
+        <DropDown.Option
+          onClick={() =>
+            deleteAction?.onClick?.() ||
+            openModal({
+              ...confirmOptions,
+              onConfirm: () => {
+                onDelete(row.profile_id || row.id);
+                rows?.length === 1 && onPrevPage();
+              },
+            })
+          }
+        >
+          {deleteAction?.icon || <IoTrashOutline />}
+          Delete
+        </DropDown.Option>
+      )}
     </DropDown>
   );
 }

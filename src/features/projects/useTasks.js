@@ -16,6 +16,7 @@ export function useTask(id) {
   const { data, error, isPending } = useQuery({
     queryKey: ['task', id],
     queryFn: () => getTask(id),
+    enabled : !!id,
   });
 
   return { task: data, error, isLoading: isPending };

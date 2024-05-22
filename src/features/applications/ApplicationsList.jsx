@@ -132,12 +132,8 @@ export default function ApplicationsList() {
       selectedOptions={{
         actions: [
           ...[
-            { text: 'Reject', onClick: rejectMultiple },
-            {
-              text: 'Approve',
-              color: 'green',
-              onClick: approveMultiple,
-            },
+            { text: 'Approve', onClick: approveMultiple, color: 'green' },
+            { text: 'Reject', onClick: rejectMultiple, color: 'orange' },
           ].map((el) => ({
             ...el,
             onClick: (ids, onClose, setIsOperating) => {
@@ -145,7 +141,10 @@ export default function ApplicationsList() {
               onClose();
             },
             disabledCondition: (ids, data) => data?.some((app) => ids.includes(app.id) && app.status !== 'Pending'),
-            message: 'This application has already been processed.',
+            message: (data) =>
+              data.length === 1
+                ? 'This application has already been processed.'
+                : 'Some of these applications have already been processed.',
           })),
         ],
         deleteOptions: {

@@ -45,6 +45,7 @@ const routesElements = {
   'projects/:id/:tab': <ProjectDetails />,
   users: <Users />,
   sessions: <Sessions />,
+  'sessions/:id': <Sessions />,
 };
 
 export default function App() {

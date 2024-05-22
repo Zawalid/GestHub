@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { AcademicLevel, Gender } from '@/pages/auth/Register';
 import { getFilter, getIntervals } from '@/utils/helpers';
 import { useUser } from '@/hooks/useUser';
+import { renderProjects } from '../supervisors/SupervisorsList';
 
 export default function InternsList() {
   const [isOpen, setIsOpen] = useState(false);
@@ -112,6 +113,7 @@ export default function InternsList() {
               { value: 'Ongoing', checked: false },
             ],
           },
+          { ...renderProjects },
         ]}
         formFields={[
           {

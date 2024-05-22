@@ -32,7 +32,7 @@ export function Login() {
     <div className='relative flex h-full w-full flex-col justify-center gap-3 p-2 md:px-10 lg:px-20  '>
       <h1 className='mb-8 text-2xl font-bold text-text-primary sm:text-3xl'>{t('form.welcome')} {settings?.appName}</h1>
       {Form}
-      <Button className={'my-4 w-full self-end'} disabled={!isValid} onClick={handleSubmit} isLoading={isLogging}>
+      <Button className={'my-4 w-full self-end'} disabled={!isValid || isLogging} onClick={handleSubmit} isLoading={isLogging}>
         {isLogging ? 'Logging In...' : t('form.login')}
       </Button>
 

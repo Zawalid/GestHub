@@ -14,7 +14,7 @@ export default function Applications() {
   return (
     <Modal
       isOpen={location.pathname === '/applications'}
-      className='relative overflow-auto p-5 sm:h-fit md:h-[500px] md:w-[700px] md:border'
+      className='relative overflow-auto p-3 sm:p-5 md:h-[500px] md:w-[700px] md:border'
       onClose={() => navigate('/')}
       closeButton={false}
     >
@@ -41,7 +41,7 @@ export default function Applications() {
         }}
         fieldsToSearch={['offer', 'sector']}
       >
-        <ApplicationsList applications={applications} />
+        <ApplicationsList />
       </Operations>
     </Modal>
   );
@@ -55,7 +55,7 @@ function ApplicationsList() {
     if (isLoading) {
       return (
         <div className='space-y-3 pr-2'>
-          {Array.from({ length: 5 }).map((_, i) => (
+          {Array.from({ length: 4 }).map((_, i) => (
             <Skeleton key={i} />
           ))}
         </div>
@@ -113,7 +113,7 @@ function Application({ application: { id, offer, sector, status, created_at } })
 
   return (
     <button
-      className='flex w-full flex-col items-center  gap-3 rounded-md px-3 py-2 text-center transition-colors duration-200 hover:bg-background-secondary mobile:flex-row mobile:text-start'
+      className='flex w-full flex-col items-center  gap-3 rounded-md px-3 py-2 text-center transition-colors duration-200 hover:bg-background-secondary xs:flex-row xs:text-start'
       onClick={() => navigate(`/applications/${id}`, { state: { source: '/applications' } })}
     >
       <div
@@ -137,14 +137,14 @@ function Application({ application: { id, offer, sector, status, created_at } })
   );
 }
 
-function Skeleton() {
+export function Skeleton({ type = 'application' }) {
   return (
     <div className='flex animate-pulse cursor-auto items-center gap-5 px-3 py-2 hover:bg-transparent'>
       <div className='grid h-12 w-12 rounded-full bg-background-secondary'></div>
       <div className='flex-1 space-y-1.5'>
         <div className='h-2.5 w-40 rounded-lg bg-background-tertiary'></div>
         <div className='h-1 w-24 rounded-lg bg-background-secondary'></div>
-        <div className='h-2 w-12 rounded-lg bg-background-secondary'></div>
+        {type === 'application' && <div className='h-2 w-12 rounded-lg bg-background-secondary'></div>}
       </div>
       <div className='h-3 w-24 rounded-lg bg-background-secondary'></div>
     </div>

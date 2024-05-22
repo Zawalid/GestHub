@@ -2,7 +2,9 @@ import { formatDate, getIntervals } from '@/utils/helpers';
 import { useSessions, useDeleteSession, useDeleteSessions, useAbortSession, useAbortSessions } from './useSessions';
 import { TableLayout } from '@/layouts/TableLayout';
 import { useUser } from '@/hooks/useUser';
-import { FiLogOut } from 'react-icons/fi';
+import { FiActivity, FiLogOut } from 'react-icons/fi';
+import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
+import { TbDeviceDesktop, TbDeviceMobile, TbDeviceTablet } from 'react-icons/tb';
 
 // ['Chrome', 'YaBrowser', 'Brave', 'Safari', 'Edge','Firefox','Opera']
 const BROWSERS_IMAGES = [
@@ -46,6 +48,7 @@ export default function SessionsList() {
   const { mutate: deleteSessions } = useDeleteSessions();
   const { abort } = useAbortSession();
   const { abort: abortMultiple } = useAbortSessions();
+  const navigate = useNavigateWithQuery();
 
   return (
     <TableLayout
@@ -54,13 +57,17 @@ export default function SessionsList() {
       isLoading={isLoading}
       error={error}
       columns={[
-        {
-          key: 'fullName',
-          displayLabel: 'Full Name',
-          visible: true,
-          type: 'string',
-          format: (val, id) => `${sessions?.find((i) => i.id === id)?.gender || 'M'}. ${val}`,
-        },
+        ...(user?.role === 'super-admin'
+          ? [
+              {
+                key: 'fullName',
+                displayLabel: 'Full Name',
+                visible: true,
+                type: 'string',
+                format: (val, id) => `${(sessions || []).find((i) => i.id === id)?.gender || 'M'}. ${val}`,
+              },
+            ]
+          : []),
         {
           key: 'location',
           displayLabel: 'Location',
@@ -78,6 +85,21 @@ export default function SessionsList() {
           displayLabel: 'Device',
           visible: true,
           type: 'string',
+          format: (val, id, isDownload) => {
+            const icons = {
+              Desktop: <TbDeviceDesktop size={20} />,
+              Phone: <TbDeviceMobile size={20} />,
+              Tablet: <TbDeviceTablet size={20} />,
+            };
+            return isDownload ? (
+              val
+            ) : (
+              <div className='flex items-center gap-1.5'>
+                {icons[val]}
+                {val}
+              </div>
+            );
+          },
         },
         {
           key: 'browser',
@@ -131,9 +153,8 @@ export default function SessionsList() {
             );
           },
           filter: [
-            { value: 'Online', checked: false },
+            { value: 'Online', checked: true },
             { value: 'Offline', checked: false },
-            { value: 'Current', checked: false },
           ],
         },
         {
@@ -146,7 +167,6 @@ export default function SessionsList() {
         },
       ]}
       fieldsToSearch={['firstName', 'lastName', 'location']}
-      canView={false}
       downloadOptions={{
         csvFileName: 'Sessions',
         pdfFileName: 'Sessions',
@@ -156,24 +176,37 @@ export default function SessionsList() {
         displayNewRecord: false,
         actions: [
           {
+            text: 'Activities',
+            icon: <FiActivity />,
+            onClick: (id) => user?.role === 'super-admin' && navigate(id),
+          },
+          {
             text: 'Abort',
             icon: <FiLogOut />,
             onClick: (id) => abort(id),
             hidden: (session) => session?.status !== 'Online',
           },
+          {
+            text: 'Delete',
+            hidden: (session) => session?.status !== 'Offline',
+          },
         ],
       }}
+      canView={user?.role === 'super-admin'}
       selectedOptions={{
         actions: [
           {
             text: 'Abort',
-            className: 'bg-orange-700 hover:bg-orange-800 disabled:bg-background-disabled',
+            color: 'orange',
             onClick: (ids, onClose, setIsOperating) => {
               abortMultiple(ids, { onConfirm: () => setIsOperating(true), onSettled: () => setIsOperating(false) });
               onClose();
             },
-            disabledCondition: (ids, data) => data?.some((app) => ids.includes(app.id) && app.status !== 'online'),
-            message: 'This session has already been aborted.',
+            disabledCondition: (ids, data) => data?.some((app) => ids.includes(app.id) && app.status !== 'Online'),
+            message: (data) =>
+              data.length === 1
+                ? 'This session has already been aborted.'
+                : 'Some of these sessions have already been aborted.',
           },
         ],
         deleteOptions: {
@@ -182,7 +215,10 @@ export default function SessionsList() {
         },
       }}
       hideAllRowsActions={user?.role !== 'super-admin'}
-      hideRowActions={(row) => row.status === 'Current'}
+      hideRowActions={(row) => row.isCurrent === 'true'}
+      hiddenActionsContent={(row) =>
+        row.isCurrent === 'true' ? <span className='rounded-lg  bg-blue-600 px-2.5 py-1 text-white'>Current</span> : null
+      }
     />
   );
 }

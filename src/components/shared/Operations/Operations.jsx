@@ -118,19 +118,22 @@ export function Operations({
   filters: initialFilters,
   defaultLayout,
   fieldsToSearch,
+  searchQueryKey = 'search',
+  sortQueryKey = 'sort',
+  directionQueryKey = 'dir',
 }) {
   const [filters, setFilters] = useState(initialFilters || {});
   const [filterCondition, setFilterCondition] = useState('OR');
   const [layout, setLayout] = useState(defaultLayout, 'grid');
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get('search') ;
-  const sortBy = searchParams.get('sort') || defaultSortBy;
-  const direction = searchParams.get('dir') || defaultDirection;
+  const query = searchParams.get(searchQueryKey);
+  const sortBy = searchParams.get(sortQueryKey) || defaultSortBy;
+  const direction = searchParams.get(directionQueryKey) || defaultDirection;
 
   const data = initialData
     ?.search(query, fieldsToSearch)
     .customFilter(filters, filterCondition)
-    .customSort(sortBy, direction, sortOptions)
+    .customSort(sortBy, direction, sortOptions);
 
   const appliedFiltersNumber = Object.values(filters)
     .flat()
@@ -139,31 +142,40 @@ export function Operations({
   // Clean url
   useEffect(() => {
     if (sortBy === defaultSortBy && direction === defaultDirection) {
-      searchParams.delete('sort');
-      searchParams.delete('dir');
+      searchParams.delete(sortQueryKey);
+      searchParams.delete(directionQueryKey);
     }
-    if (!query) searchParams.delete('search');
+    if (!query) searchParams.delete(searchQueryKey);
     setSearchParams(searchParams);
-  }, [direction, searchParams, sortBy, query, setSearchParams, defaultDirection, defaultSortBy]);
+  }, [
+    direction,
+    searchParams,
+    sortBy,
+    query,
+    setSearchParams,
+    defaultDirection,
+    defaultSortBy,
+    searchQueryKey,
+    sortQueryKey,
+    directionQueryKey,
+  ]);
 
   useEffect(() => {
     setFilters(initialFilters || {});
   }, [initialFilters]);
 
-
-
   // Perform operations
 
   const onSearch = (query) => {
-    searchParams.set('search', query);
+    searchParams.set(searchQueryKey, query);
     setSearchParams(searchParams);
   };
   const onSort = (key) => {
-    searchParams.set('sort', key);
+    searchParams.set(sortQueryKey, key);
     setSearchParams(searchParams);
   };
   const onOrder = (direction) => {
-    searchParams.set('dir', direction);
+    searchParams.set(directionQueryKey, direction);
     setSearchParams(searchParams);
   };
   const onFilter = (filter, reset) => {
@@ -177,7 +189,7 @@ export function Operations({
     data,
     isLoading,
     error,
-    disabled : isLoading || error || initialData?.length === 0 ,
+    disabled: isLoading || error || initialData?.length === 0,
     query,
     onSearch,
     sortBy,

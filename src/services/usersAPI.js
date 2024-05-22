@@ -4,7 +4,11 @@ import { axiosFetch } from '.';
 // Users
 export const getAllUsers = async () => await axiosFetch('users');
 
-export const getUser = async () => await axiosFetch('user');
+export const getUser = async () => {
+  const user = await axiosFetch('user');
+  if (user) localStorage.setItem('in', 'true');
+  return user;
+};
 
 export const deleteUser = async (id) => await axiosFetch(`profiles/${id}`, 'DELETE');
 

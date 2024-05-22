@@ -52,8 +52,11 @@
 - [x] users table
 - [x] disable tasks update when the project is overdue
 - [x] gendered avatars in tasks
-- [ ] implement refresh tokens
 - [x] sessions table
+- [ ] change loading spinner
+
+
+---
 
 
 # Bugs
@@ -71,12 +74,20 @@
  - [x] offers overflow on mobile (grid)
  - [x] sort and order dropdown on mobile
  - [x] total personnel overflow on mobile
+ - [ ] avatar success message is instant
+ - [ ] accept users
+ - [ ] projects array status
+ - [ ] application activity deletion missing object
+
+
+---
+
 
 # Maybe
 - [ ] Multiple accounts login
 - [ ] Infinite scroll (projects/offers/notifications)
 - [ ] Emailing
-- [ ] login sessions
+- [x] login sessions
 - [ ] More details about the error
 - [ ] create a component for date range only
 - [ ] Add a custom date picker and  date interval
@@ -92,3 +103,7 @@
 - [ ] create a can function to handle permissions 
 - [ ] session activities
 - [ ] trash
+- [ ] activities table 
+- [ ] blocking users
+- [ ] add a timeline for the activities
+- [ ] persist the table states to local storage (view control/sort...)

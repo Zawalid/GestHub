@@ -51,8 +51,9 @@ export function useInterns() {
 
 export function useInternsByIds(ids) {
   const { data, error, isPending } = useQuery({
-    queryKey: ['interns', ...(ids.length ? ids : ['loading'])],
+    queryKey: ['interns', ...ids],
     queryFn: () => Promise.all(ids.map((id) => getIntern(id))),
+    enabled: !!ids,
   });
 
   const interns = data?.map((intern) => ({ ...intern, ...getAdditionalData(intern) }));
@@ -64,6 +65,7 @@ export function useIntern(id) {
   const { data, error, isPending } = useQuery({
     queryKey: ['interns', id],
     queryFn: () => getIntern(id),
+    enabled: !!id,
   });
 
   const intern = { ...data, ...getAdditionalData(data) };
@@ -150,7 +152,7 @@ export const useSendInfo = () => {
 
   return useMutate({
     queryKey: ['user', 'info'],
-    mutationFn: async ({projectLink, report}) => {
+    mutationFn: async ({ projectLink, report }) => {
       await updateIntern(user?.profile_id, { projectLink });
       await uploadFile(user?.profile_id, report, 'report');
     },

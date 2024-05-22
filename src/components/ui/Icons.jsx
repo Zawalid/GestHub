@@ -18,10 +18,9 @@ export {
   IoSettingsOutline,
   IoFlag,
   IoSchool,
-  IoPeople ,
-  IoLocationOutline ,
+  IoPeople,
+  IoLocationOutline,
   IoFilter,
-  
 } from 'react-icons/io5';
 export {
   PiCheckBold,
@@ -34,7 +33,7 @@ export {
   PiX,
   PiSortAscending,
   PiCrown,
-  PiDevices 
+  PiDevices,
 } from 'react-icons/pi';
 export {
   BsLayoutSidebarInset,
@@ -57,7 +56,7 @@ export {
   MdManageAccounts,
   MdOutlineLocationOn,
   MdOutlineTimelapse,
-  MdOutlinePendingActions 
+  MdOutlinePendingActions,
 } from 'react-icons/md';
 export {
   FaSpinner,
@@ -68,19 +67,21 @@ export {
   FaRegStar,
   FaStar,
   FaRegCircleXmark,
-  FaDiagramProject, 
-  FaCalendarXmark , 
+  FaDiagramProject,
+  FaCalendarXmark,
   FaListCheck,
-  FaFileContract ,
-  FaImagePortrait ,
-  FaGithub, FaGoogleDrive, FaPaste , 
+  FaFileContract,
+  FaImagePortrait,
+  FaGithub,
+  FaGoogleDrive,
+  FaPaste,
 } from 'react-icons/fa6';
-export { LuCalendarX, LuUser, LuUpload,LuClipboardList,LuListTodo,   } from 'react-icons/lu';
-export { LiaUserTieSolid,LiaClipboardListSolid  } from 'react-icons/lia';
-export { FiLogOut, FiSettings, FiPhone, FiCheck,FiUserCheck,FiUserX } from 'react-icons/fi';
+export { LuCalendarX, LuUser, LuUpload, LuClipboardList, LuListTodo, LuPlus } from 'react-icons/lu';
+export { LiaUserTieSolid, LiaClipboardListSolid } from 'react-icons/lia';
+export { FiLogOut, FiSettings, FiPhone, FiCheck, FiUserCheck, FiUserX } from 'react-icons/fi';
 export { RiTeamLine } from 'react-icons/ri';
 export { HiMiniXMark } from 'react-icons/hi2';
 export { RxDashboard, RxViewVertical } from 'react-icons/rx';
-export { TbProgressCheck, TbFileSearch,TbProgress  } from 'react-icons/tb';
-export { GrUserAdmin,GrMapLocation,GrPowerReset  } from "react-icons/gr";
-export { GoLink,GoUnlink  } from "react-icons/go";
+export { TbProgressCheck, TbFileSearch, TbProgress } from 'react-icons/tb';
+export { GrUserAdmin, GrMapLocation, GrPowerReset } from 'react-icons/gr';
+export { GoLink, GoUnlink } from 'react-icons/go';

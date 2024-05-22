@@ -18,6 +18,8 @@ export function useAdmin(id) {
   const { data, error, isPending } = useQuery({
     queryKey: ['admins', id],
     queryFn: () => getAdmin(id),
+    enabled : !!id,
+
   });
 
   return { admin: formatUserData(data), error, isLoading: isPending };

@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, } from '@tanstack/react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import {
@@ -21,6 +21,7 @@ const useRedirect = () => {
   const source = useLocation().state?.source;
 
   return (message, role) => {
+    localStorage.setItem('in', 'true');
     toast.success(message);
     navigate(source ? source : role === 'user' ? '/' : '/app');
   };
@@ -56,7 +57,10 @@ export function useLogout() {
   const { mutate, isPending, error } = useMutation({
     mutationKey: ['logout'],
     mutationFn: logout,
-    onSuccess: () => location.assign('/'),
+    onSuccess: () => {
+      localStorage.removeItem('in');
+      location.assign('/');
+    },
     onError: (error) => toast.error(error.message),
   });
   const { openModal } = useConfirmationModal();
@@ -84,7 +88,7 @@ export const formatUserData = (data, includeCv, isUser) => {
 
 const getUserCv = (user) => {
   const cv = getFile(user, 'cv');
-  const extension = cv?.split('.').pop() || 'pdf'
+  const extension = cv?.split('.').pop() || 'pdf';
 
   return { file: { name: `${user?.firstName} ${user?.lastName} CV.${extension}` }, src: cv };
 };
@@ -93,7 +97,7 @@ export function useUser() {
   const { data, error, isPending } = useQuery({
     queryKey: ['user'],
     queryFn: getUser,
-    retry: 1,
+    enabled: localStorage.getItem('in') === 'true',
   });
 
   return {

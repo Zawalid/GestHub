@@ -51,11 +51,13 @@ export function Filter({ className = '' }) {
           <GrPowerReset />
           Reset Filters
         </DropDown.Option>
+        {Object.keys(filters).length > 1 &&
         <ToolTip content={`Toggle filter condition (currently ${filterCondition})`}>
           <Button shape='icon' onClick={onChangeFilterCondition}>
             {filterCondition === 'OR' ? <GoLink /> : <GoUnlink  />}
           </Button>
         </ToolTip>
+        }
       </div>
     </DropDown>
   );

@@ -25,6 +25,7 @@ export function useSupervisor(id) {
   const { data, error, isPending } = useQuery({
     queryKey: ['supervisors', id],
     queryFn: () => getSupervisor(id),
+    enabled : !!id,
   });
 
   return { supervisor: formatUserData(data), error, isLoading: isPending };

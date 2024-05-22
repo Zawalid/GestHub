@@ -18,8 +18,10 @@ export function useSessions() {
     queryFn: getAllSessions,
   });
 
+  const sessions = data?.toSorted((a) => (a.isCurrent === 'true' ? -1 : 1));
+
   return {
-    sessions: data,
+    sessions,
     error,
     isLoading: isPending,
   };
@@ -28,6 +30,7 @@ export function useSession(id) {
   const { data, error, isPending } = useQuery({
     queryKey: ['sessions', id],
     queryFn: () => getSession(id),
+    enabled: !!id,
   });
 
   return {
@@ -57,7 +60,7 @@ export const useDeleteSessions = () =>
 
 const getAbortionOptions = (isMultiple, number) => {
   const mutation = {
-    queryKey: ['session', 'abort', isMultiple ? 'multiple' : ''],
+    queryKey: ['sessions', 'abort', isMultiple ? 'multiple' : ''],
     mutationFn: isMultiple ? abortSessions : abortSession,
     loadingMessage: `Approving session${isMultiple ? 's' : ''}...`,
     successMessage: `Session${isMultiple ? 's' : ''} aborted successfully`,
@@ -68,7 +71,8 @@ const getAbortionOptions = (isMultiple, number) => {
     message: `Are you sure you want to abort ${isMultiple ? number : 'this'} session${isMultiple ? 's' : ''}?`,
     title: `Abort Session${isMultiple ? 's' : ''}`,
     confirmText: 'Abort',
-buttonClassName: 'bg-orange-700 hover:bg-orange-800',  };
+    color: 'orange',
+  };
   return { mutation, abort };
 };
 

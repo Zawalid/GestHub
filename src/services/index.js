@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 export const axiosFetch = async (resource, method, data, headers) => {
   try {
     const response = await axios({
@@ -15,7 +16,10 @@ export const axiosFetch = async (resource, method, data, headers) => {
     });
     return response.data;
   } catch (e) {
-    console.log(e);
+    if (e?.response?.data?.message === 'Unauthenticated.') {
+      localStorage.removeItem('in');
+      location.assign('/login');
+    }
     if (
       e.request.responseURL.includes('login') ||
       e.request.responseURL.includes('register') ||

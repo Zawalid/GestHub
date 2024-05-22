@@ -123,7 +123,7 @@ const getApprovementOptions = (isMultiple, number) => {
     confirmText: 'Approve',
     icon: <FaRegCircleCheck />,
     iconBg: 'bg-green-600',
-    buttonClassName: 'bg-green-600 hover:bg-green-700',
+    color: 'green',
   };
   return { mutation, approve };
 };
@@ -168,7 +168,8 @@ const getRejectionOptions = (isMultiple, number) => {
     title: `Reject Application${isMultiple ? 's' : ''}`,
     confirmText: 'Reject',
     icon: <FaRegCircleXmark />,
-    iconBg: 'bg-red-600',
+    iconBg: 'bg-orange-600',
+    color: 'orange',
   };
   return { mutation, reject };
 };

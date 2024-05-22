@@ -81,7 +81,7 @@ export default function Sidebar({ openSettings }) {
           {isExpanded ? <BsLayoutSidebarInset /> : <BsLayoutSidebarInsetReverse />}
         </Button>
       </div>
-      <ul className='space-y-1 overflow-auto'>
+      <ul className='space-y-1 overflow-y-auto overflow-x-hidden'>
         {ROUTES[user?.role]
           ?.filter((r) => !r.includes('/'))
           .map((route) => (

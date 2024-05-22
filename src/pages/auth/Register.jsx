@@ -107,7 +107,7 @@ export function Register() {
       </h1>
       {Form}
 
-      <Button className={'w-full'} disabled={!isValid} isLoading={isRegistering} onClick={handleSubmit}>
+      <Button className={'w-full'} disabled={!isValid || isRegistering} isLoading={isRegistering} onClick={handleSubmit}>
         {isRegistering ? 'Registering...' : t('form.register')}
       </Button>
       <p className='mt-5 flex items-center justify-center gap-1 border-t border-border py-4 text-center text-text-primary'>

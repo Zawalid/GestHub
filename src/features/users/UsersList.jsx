@@ -76,7 +76,7 @@ export default function UsersList() {
             return isDownload ? (
               `P : ${values.pending} | A : ${values.approved} | R : ${values.rejected}`
             ) : (
-              <div className='flex gap-2'>
+              <div className='flex gap-0.5 rounded-lg overflow-hidden w-fit'>
                 {[
                   {
                     color: 'bg-orange-500',
@@ -94,7 +94,7 @@ export default function UsersList() {
                     value: values.rejected,
                   },
                 ].map(({ color, icon, value }) => (
-                  <div key={color} className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-white ${color}`}>
+                  <div key={color} className={`flex items-center gap-1 px-2.5 py-1 text-white ${color}`}>
                     {icon}
                     {value}
                   </div>

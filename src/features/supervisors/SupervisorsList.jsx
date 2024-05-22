@@ -8,6 +8,7 @@ import {
 } from './useSupervisors';
 import { TableLayout } from '@/layouts/TableLayout';
 import { Gender } from '@/pages/auth/Register';
+import { TbProgressCheck, FaCalendarXmark, FaRegCircleCheck } from '@/components/ui/Icons';
 
 export default function SupervisorsList() {
   const { supervisors, isLoading, error } = useSupervisors();
@@ -43,6 +44,7 @@ export default function SupervisorsList() {
           visible: true,
           type: 'string',
         },
+        { ...renderProjects },
       ]}
       formFields={[
         {
@@ -106,3 +108,57 @@ export default function SupervisorsList() {
     />
   );
 }
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const renderProjects = {
+  key: 'projects',
+  displayLabel: 'Projects',
+  visible: true,
+  format: (val, id, isDownload) => {
+    const values = {
+      notStarted: val?.filter((p) => p.status === 'Not Started')?.length,
+      inProgress: val?.filter((p) => p.status === 'In Progress')?.length,
+      completed: val?.filter((p) => p.status === 'Completed')?.length,
+      overdue: val?.filter((p) => p.status === 'Overdue')?.length,
+    };
+    return isDownload ? (
+      `P : ${values.pending} | A : ${values.approved} | R : ${values.rejected}`
+    ) : (
+      <div className='flex gap-0.5 rounded-lg overflow-hidden w-fit'>
+        {[
+          {
+            color: 'bg-gray-500',
+            icon: <TbProgressCheck />,
+            value: values.notStarted,
+          },
+          {
+            color: 'bg-blue-500',
+            icon: <TbProgressCheck />,
+            value: values.inProgress,
+          },
+          {
+            color: 'bg-green-600',
+            icon: <FaRegCircleCheck />,
+            value: values.completed,
+          },
+          {
+            color: 'bg-red-500',
+            icon: <FaCalendarXmark />,
+            value: values.overdue,
+          },
+        ].map(({ color, icon, value }) => (
+          <div key={color} className={`flex items-center gap-1 px-2.5 py-1 text-white ${color}`}>
+            {icon}
+            {value}
+          </div>
+        ))}
+      </div>
+    );
+  },
+  fn(a, b, direction) {
+    return direction === 'asc'
+      ? a?.projects.length - b?.projects.length
+      : b?.projects.length - a?.projects.length;
+  },
+  type: 'custom',
+};

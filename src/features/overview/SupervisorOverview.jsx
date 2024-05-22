@@ -14,7 +14,7 @@ export default function SupervisorOverview() {
   return (
     <div className='flex h-full flex-col gap-5 overflow-x-auto'>
       <Stats projects={projects} isLoading={isLoading} />
-      <div className='grid flex-1 gap-5 lg:grid-cols-[3fr,2fr]'>
+      <div className='grid gap-5 lg:grid-cols-[3fr,2fr]'>
         <TasksAnalytics />
         <PieChartStats
           data={[

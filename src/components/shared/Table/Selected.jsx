@@ -45,10 +45,10 @@ export function Selected() {
   return (
     <Modal
       isOpen={isOpen}
-      className={`fixed left-1/2 z-30 h-fit -translate-x-1/2 flex-row items-center justify-between rounded-lg border px-3 mobile:px-5 py-3 shadow-lg transition-[bottom] duration-300 w-[95%] mobile:w-[500px] ${isOpen ? 'bottom-11' : '-bottom-[100px]'}`}
+      className={`fixed left-1/2 z-30 h-fit w-[95%] -translate-x-1/2 flex-row items-center justify-between rounded-lg border px-3 py-3 shadow-lg transition-[bottom] duration-300 mobile:w-[500px] mobile:px-5 ${isOpen ? 'bottom-11' : '-bottom-[100px]'}`}
       hideOverlay={true}
     >
-      <h2 className='text-xs mobile:text-sm text-nowrap font-semibold text-text-secondary '>
+      <h2 className='text-nowrap text-xs font-semibold text-text-secondary mobile:text-sm '>
         <span className='mr-2 rounded-md bg-secondary px-2 py-1 text-white'>{selected.length}</span>
         Row(s) Selected.
       </h2>
@@ -58,13 +58,13 @@ export function Selected() {
         </Button>
         <div className='relative overflow-hidden '>
           <Button className='invisible'>{finalActions.map((a) => a.text).toSorted()[0]}</Button>
-          {finalActions.map(({ text, color, onClick, disabledCondition, message,className }, i) => {
+          {finalActions.map(({ text, color, onClick, disabledCondition, message, className }, i) => {
             const disabled = disabledCondition ? disabledCondition(selected, data) : false;
             return (
               <ToolTip
                 key={text}
                 hidden={!message || !disabled}
-                content={<span className='text-xs text-text-secondary'>{message}</span>}
+                content={<span className='text-xs text-text-secondary'>{message?.(selected)}</span>}
               >
                 <div
                   className='absolute right-0 top-0 w-full transition-all duration-500'

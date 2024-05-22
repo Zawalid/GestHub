@@ -5,12 +5,17 @@ import { useTable } from '.';
 import { CheckBox, Status } from '@/components/ui/';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
-export function Table({ actions, canView, hideRowActions }) {
+export function Table({ actions, canView, hideRowActions, hiddenActionsContent }) {
   const { columns, rows, error, selected, onSelect, isLoading, query, appliedFiltersNumber } = useTable();
   const table = useRef();
   const [parent] = useAutoAnimate({ duration: 500 });
 
-  const checked = rows?.length > 0 && rows?.map((r) => r.profile_id || r.id).every((id) => selected.includes(id));
+  const checked =
+    rows?.length > 0 &&
+    rows
+      ?.filter((row) => !hideRowActions?.(row))
+      .map((r) => r.profile_id || r.id)
+      .every((id) => selected.includes(id));
 
   if (error) return <Status status='error' message={error?.message} />;
   if (!isLoading && rows?.length === 0 && !query && !appliedFiltersNumber('all')) {
@@ -43,7 +48,7 @@ export function Table({ actions, canView, hideRowActions }) {
                 }
               />
             )}
-            {rows?.every((row) => hideRowActions?.(row)) && <Column hide={true} />}
+            {rows?.every((row) => hideRowActions?.(row)) && actions && <Column hide={true} />}
 
             {columns
               .filter((c) => c.visible)
@@ -61,6 +66,7 @@ export function Table({ actions, canView, hideRowActions }) {
               visibleColumns={columns.filter((c) => c.visible)}
               actions={actions}
               hideRowActions={hideRowActions?.(row)}
+              hiddenActionsContent={hiddenActionsContent?.(row)}
               canView={canView}
               selected={selected.includes(row.profile_id || row.id)}
             />
@@ -79,24 +85,35 @@ function Column({ column, hide }) {
   );
 }
 
-function Row({ row, visibleColumns, actions, canView = true, selected, hideRowActions }) {
+function Row({ row, visibleColumns, actions, canView = true, selected, hideRowActions, hiddenActionsContent }) {
   const { disabled, onSelect, isSelecting } = useTable();
   const navigate = useNavigateWithQuery();
   const [parent] = useAutoAnimate({ duration: 500 });
 
+  // Define the class names for the row
+  const rowClassNames = [
+    'transition-colors',
+    'duration-200',
+    selected ? 'bg-background-tertiary' : 'hover:bg-background-disabled',
+    canView || isSelecting ? 'cursor-pointer' : '',
+  ].join(' ');
+
+  // Define the onClick handler for the row
+  const handleRowClick = () => {
+    if (isSelecting && !hideRowActions) {
+      onSelect(row.profile_id || row.id);
+    }
+    if (canView && !disabled) {
+      navigate(row.id);
+    }
+  };
+
   return (
-    <tr
-      ref={parent}
-      className={`transition-colors duration-200 ${selected ? 'bg-background-tertiary' : 'hover:bg-background-disabled'}
-      ${(canView || isSelecting) && !hideRowActions ? 'cursor-pointer' : ''}`}
-      onClick={() => {
-        isSelecting && !hideRowActions && onSelect(row.profile_id || row.id);
-        canView && !disabled && navigate(row.id);
-      }}
-    >
-      {/* checkbox visibility*/}
+    <tr ref={parent} className={rowClassNames} onClick={handleRowClick}>
+      {/* If actions are provided and not hidden, render a Select component */}
       {actions && !hideRowActions && <Select id={row.profile_id || row.id} />}
-      {hideRowActions && <Column hide={true} />}
+      {/* If actions are provided and hidden, render a hidden Column */}
+      {actions && hideRowActions && <Column hide={true} />}
 
       {visibleColumns.map((col) => (
         <td key={col.displayLabel} className={`px-6 ${actions ? 'py-3.5' : 'py-5'}`}>
@@ -104,11 +121,14 @@ function Row({ row, visibleColumns, actions, canView = true, selected, hideRowAc
         </td>
       ))}
 
-      {/* Actions visibility */}
+      {/* If actions are provided and not hidden, render a table data cell with the actions */}
       {actions && !hideRowActions && (
         <td className='grid place-items-end px-6 py-3.5'>{cloneElement(actions, { row })}</td>
       )}
-      {hideRowActions && <Column hide={true} />}
+      {/* If hidden actions content is provided, render a table data cell with the hidden actions content */}
+      {hiddenActionsContent && <td className='grid place-items-end px-6 py-3.5'>{hiddenActionsContent}</td>}
+      {/* If actions are provided and hidden, and no hidden actions content is provided, render a hidden Column */}
+      {actions && hideRowActions && !hiddenActionsContent && <Column hide={true} />}
     </tr>
   );
 }

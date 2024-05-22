@@ -12,7 +12,7 @@ export function ProjectDetails() {
   const { user } = useUser();
   const navigate = useNavigate();
 
-  const canAccess = ['admin', 'super-admin'].includes(user?.role) || user?.projects?.includes(+id);
+  const canAccess = ['admin', 'super-admin'].includes(user?.role) || user?.projects?.map(p => p.id).includes(+id);
 
   useEffect(() => {
     if (!['overview', 'tasks', 'notes'].includes(tab)) navigate(`/app/projects/${id}/overview`, { replace: true });

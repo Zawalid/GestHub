@@ -76,10 +76,10 @@ export function TableProvider({
   const [filters, setFilters] = useState({});
   const [limit, setLimit] = useState(PAGE_LIMIT);
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get('search') ;
+  const query = searchParams.get('search');
   const page = Number(searchParams.get('page')) || 1;
   const sortBy = searchParams.get('sort') || 'id';
-  const direction = searchParams.get('dir') || 'asc';
+  const direction = searchParams.get('dir') || 'desc';
 
   // Variables
   const rows = data?.search(query, fieldsToSearch).customFilter(filters, 'AND').customSort(sortBy, direction, columns);
@@ -88,7 +88,10 @@ export function TableProvider({
   const totalPages = Math.ceil(totalItems / limit);
 
   const appliedFiltersNumber = (filter) => {
-    if (filter === 'all') return Object.values(filters).flat().filter((f) => f.checked).length;
+    if (filter === 'all')
+      return Object.values(filters)
+        .flat()
+        .filter((f) => f.checked).length;
 
     if (!filters[filter]) return;
 
@@ -116,7 +119,7 @@ export function TableProvider({
 
   useEffect(() => {
     if (page === 1) searchParams.delete('page');
-    if (sortBy === 'id' && direction === 'asc') {
+    if (sortBy === 'id' && direction === 'desc') {
       searchParams.delete('sort');
       searchParams.delete('dir');
     }
