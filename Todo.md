@@ -75,9 +75,7 @@
  - [x] sort and order dropdown on mobile
  - [x] total personnel overflow on mobile
  - [ ] avatar success message is instant
- - [ ] accept users
- - [ ] projects array status
- - [ ] application activity deletion missing object
+ - [ ] filters are reset when sorting
 
 
 ---

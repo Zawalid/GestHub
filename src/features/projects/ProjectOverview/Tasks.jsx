@@ -12,6 +12,7 @@ import { createPortal } from 'react-dom';
 import { useUser } from '@/hooks/useUser';
 import { useAddTask, useDeleteTask, useUpdateTask } from '../useTasks';
 import { checkIsOverdue } from '@/utils/helpers';
+import { STATUS_COLORS } from '@/utils/constants';
 
 const getStyle = (style, snapshot) => (snapshot.isDropAnimating ? { ...style, transitionDuration: `0.0001s` } : style);
 
@@ -102,7 +103,7 @@ export default function Tasks() {
               group={{
                 name: group,
                 tasks: groups[group],
-                color: group === 'To Do' ? 'bg-red-500' : group === 'Done' ? 'bg-green-600' : 'bg-blue-500',
+                color: STATUS_COLORS[group]?.bg,
               }}
               onAdd={() => setCurrentGroup(group)}
               onEdit={(task) => setCurrentTask(task)}
@@ -158,7 +159,6 @@ export default function Tasks() {
 function TasksGroup({ group, onAdd, onEdit, onDelete, layout, canManipulateTasks }) {
   const [parent] = useAutoAnimate({ duration: 400 });
 
-
   const droppable = () => {
     return (
       <Droppable droppableId={group.name} type='TASK'>
@@ -190,9 +190,9 @@ function TasksGroup({ group, onAdd, onEdit, onDelete, layout, canManipulateTasks
 
   if (layout === 'list')
     return (
-      <div className='flex flex-col w-max md:w-full gap-3 border-b border-border pb-3'>
-        <div className='grid grid-cols-5 justify-items-end  items-center gap-4 border-b border-border'>
-          <div className='col-span-2 justify-self-start min-w-[250px]'>
+      <div className='flex w-max flex-col gap-3 border-b border-border pb-3 md:w-full'>
+        <div className='grid grid-cols-5 items-center  justify-items-end gap-4 border-b border-border'>
+          <div className='col-span-2 min-w-[250px] justify-self-start'>
             <div className={`w-fit rounded-t-md p-1 px-4 ${group.color}`}>
               <h5 className='text-nowrap text-sm font-medium text-white'>{group.name}</h5>
             </div>

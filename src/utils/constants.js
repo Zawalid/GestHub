@@ -37,6 +37,8 @@ export const STATUS_COLORS = {
   'Not Started': { bg: 'bg-gray-500', text: 'text-gray-500' },
   'In Progress': { bg: 'bg-blue-500', text: 'text-blue-500' },
   Completed: { bg: 'bg-green-600', text: 'text-green-600' },
+  'To Do': { bg: 'bg-red-500', text: 'text-red-500' },
+  'Done': { bg: 'bg-blue-600', text: 'text-blue-600' },
 };
 
 export const PRIORITY_COLORS = {

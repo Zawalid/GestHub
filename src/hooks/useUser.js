@@ -97,6 +97,7 @@ export function useUser() {
   const { data, error, isPending } = useQuery({
     queryKey: ['user'],
     queryFn: getUser,
+    retry : 1,
     enabled: localStorage.getItem('in') === 'true',
   });
 

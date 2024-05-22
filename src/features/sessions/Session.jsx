@@ -13,8 +13,12 @@ import {
   FaRegCircleXmark,
   FaRegCircleCheck,
   LuUpload,
+  LiaUserPlusSolid,
+  LiaUserMinusSolid,
+  LiaUserEditSolid,
 } from '@/components/ui/Icons';
 import { Skeleton } from '../applications/Applications';
+import { STATUS_COLORS } from '@/utils/constants';
 
 export default function Session() {
   const { id } = useParams();
@@ -125,31 +129,58 @@ function ActivitiesList() {
         </div>
         <Operations.Search />
       </div>
-      <div className='relative flex-1 overflow-auto'>{render()}</div>
+      <div className='relative mb-4 flex-1 overflow-auto'>{render()}</div>
     </>
   );
 }
 
-function Activity({ activity: { action, activity, object, created_at } }) {
-  const icons = {
-    Create: { icon: <LuPlus />, color: 'bg-green-600' },
-    Update: { icon: <MdDriveFileRenameOutline />, color: 'bg-blue-500' },
-    Delete: { icon: <IoTrashOutline />, color: 'bg-red-500' },
-    Approve: { icon: <FaRegCircleCheck />, color: 'bg-green-600' },
-    Reject: { icon: <FaRegCircleXmark />, color: 'bg-orange-600' },
-    Upload: { icon: <LuUpload />, color: 'bg-purple-500' },
+const getIcon = (action, model) => {
+  if (model === 'Profile') {
+    return {
+      Create: <LiaUserPlusSolid />,
+      Update: <LiaUserEditSolid />,
+      Delete: <LiaUserMinusSolid />,
+    }[action];
+  }
+  if (model === 'Application') {
+    return {
+      Approve: <FaRegCircleCheck />,
+      Reject: <FaRegCircleXmark />,
+      Delete: <IoTrashOutline />,
+    }[action];
+  }
+  if (model === 'File') return { Upload: <LuUpload /> }[action];
+  return {
+    Create: <LuPlus />,
+    Update: <MdDriveFileRenameOutline />,
+    Delete: <IoTrashOutline />,
+  }[action];
+};
+function Activity({ activity: { action, activity, object, created_at, model } }) {
+  const colors = {
+    Create: 'bg-green-600',
+    Update: 'bg-blue-500',
+    Delete: 'bg-red-500',
+    Approve: 'bg-green-600',
+    Reject: 'bg-orange-600',
+    Upload: 'bg-purple-500',
   };
 
   return (
     <div className='flex w-full flex-col items-center  gap-5 rounded-md px-3 py-2 text-center transition-colors duration-200 hover:bg-background-secondary xs:flex-row xs:text-start'>
-      <div className={`grid h-11 w-11 place-content-center rounded-full text-white sm:text-xl ${icons[action]?.color}`}>
-        {icons[action]?.icon}
+      <div className={`grid h-11 w-11 place-content-center rounded-full text-white sm:text-xl ${colors[action]}`}>
+        {getIcon(action, model)}
       </div>
       <div className='flex-1 space-y-0.5'>
-        <h5 className='text-sm capitalize font-medium text-text-primary'>
-          {activity}
-        </h5>
-        <h6 className='text-xs text-wrap font-semibold text-text-secondary'>{object}</h6>
+        <h5 className='text-sm font-medium capitalize text-text-primary'>{activity}</h5>
+        <h6 className='text-wrap text-xs font-semibold text-text-secondary'>{object?.object || object}</h6>
+        {action === 'Update' && ['Task', 'Project'].includes(model) && object.status && (
+          <span
+            className={`rounded-lg px-2 py-0.5 text-[10px] font-bold text-white ${STATUS_COLORS[object.status]?.bg}`}
+          >
+            {object.status}
+          </span>
+        )}
       </div>
       <span className='rounded-md bg-background-tertiary px-2 py-1 text-xs font-medium text-text-secondary'>
         {formatDate(created_at, true)}

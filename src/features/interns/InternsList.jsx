@@ -97,6 +97,7 @@ export default function InternsList() {
               const colors = {
                 Completed: 'bg-green-600',
                 Upcoming: 'bg-yellow-600',
+                'Starting Tomorrow': 'bg-yellow-600',
                 'Starting Today': 'bg-blue-600',
                 Ongoing: 'bg-orange-600',
               };

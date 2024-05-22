@@ -25,8 +25,10 @@ const getAdditionalData = (data) => {
     : daysToStart > 1
       ? 'Upcoming'
       : daysToStart === 1
-        ? 'Starting Today'
-        : 'Ongoing';
+        ? 'Starting Tomorrow'
+        : daysToStart === 0
+          ? 'Starting Today'
+          : 'Ongoing';
 
   return {
     ...formatUserData(data, true),

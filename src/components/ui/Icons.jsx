@@ -85,3 +85,4 @@ export { RxDashboard, RxViewVertical } from 'react-icons/rx';
 export { TbProgressCheck, TbFileSearch, TbProgress } from 'react-icons/tb';
 export { GrUserAdmin, GrMapLocation, GrPowerReset } from 'react-icons/gr';
 export { GoLink, GoUnlink } from 'react-icons/go';
+export { LiaUserPlusSolid,LiaUserMinusSolid ,LiaUserEditSolid  } from "react-icons/lia";
