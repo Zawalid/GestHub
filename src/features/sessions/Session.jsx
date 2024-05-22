@@ -129,32 +129,21 @@ function ActivitiesList() {
         </div>
         <Operations.Search />
       </div>
-      <div className='relative mb-4 flex-1 overflow-auto'>{render()}</div>
+      <div className='relative mb-4 flex-1 overflow-y-auto overflow-x-hidden'>{render()}</div>
+      <Operations.ShowMore />
     </>
   );
 }
 
 const getIcon = (action, model) => {
   if (model === 'Profile') {
-    return {
-      Create: <LiaUserPlusSolid />,
-      Update: <LiaUserEditSolid />,
-      Delete: <LiaUserMinusSolid />,
-    }[action];
+    return { Create: <LiaUserPlusSolid />, Update: <LiaUserEditSolid />, Delete: <LiaUserMinusSolid /> }[action];
   }
   if (model === 'Application') {
-    return {
-      Approve: <FaRegCircleCheck />,
-      Reject: <FaRegCircleXmark />,
-      Delete: <IoTrashOutline />,
-    }[action];
+    return { Approve: <FaRegCircleCheck />, Reject: <FaRegCircleXmark />, Delete: <IoTrashOutline /> }[action];
   }
-  if (model === 'File') return { Upload: <LuUpload /> }[action];
-  return {
-    Create: <LuPlus />,
-    Update: <MdDriveFileRenameOutline />,
-    Delete: <IoTrashOutline />,
-  }[action];
+  if (model === 'File') return { Upload: <LuUpload />, Delete: <IoTrashOutline /> }[action];
+  return { Create: <LuPlus />, Update: <MdDriveFileRenameOutline />, Delete: <IoTrashOutline /> }[action];
 };
 function Activity({ activity: { action, activity, object, created_at, model } }) {
   const colors = {

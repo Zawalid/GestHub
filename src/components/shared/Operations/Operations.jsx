@@ -6,6 +6,7 @@ import { SortBy } from './SortBy';
 import { ActionsDropDown } from './ActionsDropDown';
 import { Filter } from './Filter';
 import { Layout } from './Layout';
+import { ShowMore } from './ShowMore';
 
 // Array methods
 Array.prototype.customFilter = function (filters, filterCondition) {
@@ -68,6 +69,12 @@ Array.prototype.search = function (query, fieldsToSearch) {
   });
 };
 
+Array.prototype.customPaginate = function (page, limit) {
+  const start = 0
+  const end = page * limit;
+
+  return this.slice(start, end);
+};
 // const constructFilterString = (filters) => {
 //   let filterString = "";
 
@@ -121,6 +128,8 @@ export function Operations({
   searchQueryKey = 'search',
   sortQueryKey = 'sort',
   directionQueryKey = 'dir',
+  showAll = false,
+  limit = 10,
 }) {
   const [filters, setFilters] = useState(initialFilters || {});
   const [filterCondition, setFilterCondition] = useState('OR');
@@ -129,6 +138,7 @@ export function Operations({
   const query = searchParams.get(searchQueryKey);
   const sortBy = searchParams.get(sortQueryKey) || defaultSortBy;
   const direction = searchParams.get(directionQueryKey) || defaultDirection;
+  const page = Number(searchParams.get('p')) || 1;
 
   const data = initialData
     ?.search(query, fieldsToSearch)
@@ -146,6 +156,7 @@ export function Operations({
       searchParams.delete(directionQueryKey);
     }
     if (!query) searchParams.delete(searchQueryKey);
+    if (page === 1) searchParams.delete('page');
     setSearchParams(searchParams);
   }, [
     direction,
@@ -158,6 +169,7 @@ export function Operations({
     searchQueryKey,
     sortQueryKey,
     directionQueryKey,
+    page,
   ]);
 
   useEffect(() => {
@@ -183,10 +195,18 @@ export function Operations({
     setFilters(newFilters);
   };
   const onChangeFilterCondition = () => setFilterCondition((prev) => (prev === 'OR' ? 'AND' : 'OR'));
+
   const onchangeLayout = (layout) => setLayout(layout);
 
+  const onPaginate = (page) => {
+    searchParams.set('page', page);
+    setSearchParams(searchParams);
+  };
+
+  
+
   const context = {
-    data,
+    data: showAll ? data : data?.customPaginate(page, limit),
     isLoading,
     error,
     disabled: isLoading || error || initialData?.length === 0,
@@ -204,6 +224,9 @@ export function Operations({
     onChangeFilterCondition,
     layout,
     onchangeLayout,
+    page,
+    onPaginate,
+    totalPages: Math.ceil(data?.length / limit),
   };
   return <OperationsContext.Provider value={context}>{children}</OperationsContext.Provider>;
 }
@@ -214,3 +237,4 @@ Operations.OrderBy = OrderBy;
 Operations.SortBy = SortBy;
 Operations.Filter = Filter;
 Operations.Layout = Layout;
+Operations.ShowMore = ShowMore;
