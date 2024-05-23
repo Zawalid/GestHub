@@ -26,17 +26,7 @@ const Error = ({ heading, message, size }) => {
   );
 };
 
-const Loading = ({ size = 'default' }) => {
-  const sizes = {
-    default: 'w-16',
-    small: 'w-10',
-  };
-  return (
-    <div
-      className={`flex aspect-square animate-spin  items-center justify-center rounded-full border-t-4 border-primary text-yellow-700 ${sizes[size]}`}
-    ></div>
-  );
-};
+const Loading = () => <div className='loading'></div>;
 
 const Locked = ({ heading, message }) => {
   return (
@@ -66,7 +56,7 @@ export function Status({ status, heading, message, size }) {
   };
 
   return (
-    <div className='absolute top-0 z-[2] left-0 flex h-full w-full flex-col items-center justify-center text-center'>
+    <div className='absolute left-0 top-0 z-[2] flex h-full w-full flex-col items-center justify-center text-center'>
       {statuses[status]}
     </div>
   );

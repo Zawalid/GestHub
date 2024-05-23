@@ -1,7 +1,7 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { cloneElement, useRef } from 'react';
 import { Sort } from './Sort';
-import { useTable } from '.';
+import { useTable } from './useTable';
 import { CheckBox, Status } from '@/components/ui/';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
@@ -49,13 +49,13 @@ export function Table({ actions, canView, hideRowActions, hiddenActionsContent }
               />
             )}
             {rows?.every((row) => hideRowActions?.(row)) && actions && <Column hide={true} />}
-
             {columns
               .filter((c) => c.visible)
               .map((column) => (
                 <Column key={column.displayLabel} column={column} />
               ))}
-            {actions && <Column hide={true} />}
+
+            {(actions || hiddenActionsContent) && <Column hide={true} />}
           </tr>
         </thead>
         <tbody className='h-fit divide-y divide-border text-sm font-medium text-text-primary' ref={parent}>
@@ -159,7 +159,7 @@ function Skeleton({ table }) {
   return (
     <tbody>
       {Array.from({ length }).map((_, i) => (
-        <tr className='animate-pulse' key={i}>
+        <tr className='animate-puls' key={i}>
           {columns
             .filter((c) => c.visible)
             .map(({ displayLabel }) => (

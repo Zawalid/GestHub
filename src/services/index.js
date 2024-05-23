@@ -1,13 +1,21 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
+const axiosInstance = axios.create({ baseURL: '/', withCredentials: true });
+
+axiosInstance.interceptors.request.use((config) => {
+  if ((config.method == 'post' || config.method == 'put' || config.method == 'delete') && !Cookies.get('XSRF-TOKEN')) {
+    return axiosInstance.get('/sanctum/csrf-cookie').then(() => config);
+  }
+  return config;
+}, null);
 
 export const axiosFetch = async (resource, method, data, headers) => {
   try {
-    const response = await axios({
+    const response = await axiosInstance({
       method: method || 'GET',
       url: `/api/${resource}`,
       data: data,
-      withCredentials: true,
       headers: {
         Accept: 'application/json',
         'Accept-Path': true,
@@ -20,20 +28,14 @@ export const axiosFetch = async (resource, method, data, headers) => {
       localStorage.removeItem('in');
       location.assign('/login');
     }
-    if (
-      e.request.responseURL.includes('login') ||
-      e.request.responseURL.includes('register') ||
-      e.request.responseURL.includes('logout') ||
-      e.request.responseURL.includes('password') ||
-      e.request.responseURL.includes('profiles')
-    ) {
+    if (['login', 'register', 'logout', 'password', 'profiles'].some((url) => resource.includes(url))) {
       throw Error(e.response.data.message || 'Something went wrong. Please try again.');
     }
     throw Error(e.response?.status === 404 ? 'Not found' : getAxiosErrorMessage(e.code));
   }
 };
 
-export const getAxiosErrorMessage = (code) => {
+const getAxiosErrorMessage = (code) => {
   switch (code) {
     case 'ERR_NETWORK' || 'ERR_CONNECTION_REFUSED':
       return 'Network error. Please check your internet connection.';

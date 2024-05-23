@@ -61,9 +61,9 @@ export default function Intern() {
         )}
         <div className='absolute left-0 top-0 h-[90px] w-full bg-background-secondary'></div>
         <div className='relative z-10 mt-5 flex items-center gap-5'>
-          <Avatar className='h-24 w-24' custom={{avatar ,gender}} />
-          <div className='flex flex-1 gap-6 items-center justify-between'>
-            <div className=''>
+          <Avatar className='h-24 w-24' custom={{ avatar, gender }} />
+          <div className='flex flex-1 items-center justify-between gap-6'>
+            <div>
               <h3 className='text-xl font-semibold text-text-primary'>{fullName}</h3>
               <p className='text-sm font-medium text-text-secondary'>{specialty || 'Not specified'}</p>
             </div>
@@ -180,12 +180,18 @@ function TimeLine({ startDate, endDate }) {
 
 function Skeleton() {
   return (
-    <div className='flex flex-1 animate-pulse flex-col'>
+    <div className='flex flex-1 animate-puls flex-col'>
       <div className='mt-8 flex items-center gap-3'>
         <div className='h-24 w-24 rounded-full border border-border bg-background-secondary shadow-md'></div>
-        <div className='space-y-2'>
-          <div className='h-3 w-40 rounded-lg bg-background-tertiary'></div>
-          <div className='h-2 w-24 rounded-lg bg-background-secondary'></div>
+        <div className='flex flex-1 items-center justify-between'>
+          <div className='space-y-2'>
+            <div className='h-3 w-40 rounded-lg bg-background-tertiary'></div>
+            <div className='h-2 w-24 rounded-lg bg-background-secondary'></div>
+          </div>
+          <div className='flex gap-2'>
+            <div className='h-6 w-5 rounded-sm bg-background-secondary'></div>
+            <div className='h-6 w-5 rounded-sm bg-background-secondary'></div>
+          </div>
         </div>
       </div>
       <div className='my-7 flex flex-1 justify-between border-t border-border pt-5'>

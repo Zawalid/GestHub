@@ -1,4 +1,4 @@
-import { useTable } from ".";
+import { useTable } from "./useTable";
 import { Button, DropDown } from "../../ui";
 import { PAGE_LIMIT } from "@/utils/constants";
 

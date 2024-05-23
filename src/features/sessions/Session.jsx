@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { FixedSizeList as List } from 'react-window';
 import { useSession } from './useSessions';
 import { Modal, Status } from '@/components/ui';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
@@ -19,6 +20,7 @@ import {
 } from '@/components/ui/Icons';
 import { Skeleton } from '../applications/Applications';
 import { STATUS_COLORS } from '@/utils/constants';
+import useResizeObserver from 'use-resize-observer';
 
 export default function Session() {
   const { id } = useParams();
@@ -70,6 +72,7 @@ export default function Session() {
         searchQueryKey='s'
         sortQueryKey='so'
         directionQueryKey='d'
+        // showAll={true}
       >
         <ActivitiesList />
       </Operations>
@@ -80,6 +83,12 @@ export default function Session() {
 function ActivitiesList() {
   const { data: activities, isLoading, error, query, appliedFiltersNumber } = useOperations();
   const [parent] = useAutoAnimate({ duration: 400 });
+  const { ref, width = 1, height = 1 } = useResizeObserver();
+
+  const Row = ({ index, style }) => {
+    const activity = activities[index];
+    return <Activity key={activity.id} activity={activity} style={{...style,width : '99%'}} />;
+  };
 
   const render = () => {
     if (isLoading) {
@@ -109,11 +118,16 @@ function ActivitiesList() {
       );
     }
     return (
-      <div className='space-y-3 pr-2' ref={parent}>
-        {activities?.map((ac) => (
-          <Activity key={ac.id} activity={ac} />
-        ))}
-      </div>
+      <List
+        height={height}
+        itemCount={activities.length}
+        itemSize={70}
+        width={width}
+        outerRef={parent}
+        className='space-y-3  pr-2'
+      >
+        {Row}
+      </List>
     );
   };
 
@@ -129,8 +143,10 @@ function ActivitiesList() {
         </div>
         <Operations.Search />
       </div>
-      <div className='relative mb-4 flex-1 overflow-y-auto overflow-x-hidden'>{render()}</div>
-      <Operations.ShowMore />
+      <div className='relative mb-4 flex-1 overflow-hidden' ref={ref}>
+        {render()}
+      </div>
+      <Operations.ViewMore />
     </>
   );
 }
@@ -145,7 +161,7 @@ const getIcon = (action, model) => {
   if (model === 'File') return { Upload: <LuUpload />, Delete: <IoTrashOutline /> }[action];
   return { Create: <LuPlus />, Update: <MdDriveFileRenameOutline />, Delete: <IoTrashOutline /> }[action];
 };
-function Activity({ activity: { action, activity, object, created_at, model } }) {
+function Activity({ activity: { action, activity, object, created_at, model }, style }) {
   const colors = {
     Create: 'bg-green-600',
     Update: 'bg-blue-500',
@@ -156,7 +172,10 @@ function Activity({ activity: { action, activity, object, created_at, model } })
   };
 
   return (
-    <div className='flex w-full flex-col items-center  gap-5 rounded-md px-3 py-2 text-center transition-colors duration-200 hover:bg-background-secondary xs:flex-row xs:text-start'>
+    <div
+      className='flex w-full flex-col items-center  gap-5 rounded-md px-3 py-2 text-center transition-colors duration-200 hover:bg-background-secondary xs:flex-row xs:text-start'
+      style={style}
+    >
       <div className={`grid h-11 w-11 place-content-center rounded-full text-white sm:text-xl ${colors[action]}`}>
         {getIcon(action, model)}
       </div>

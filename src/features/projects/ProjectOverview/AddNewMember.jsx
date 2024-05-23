@@ -18,7 +18,7 @@ export default function AddNewMember({ isOpen, onClose }) {
       isOpen={isOpen}
       onClose={onClose}
       className='flex flex-col gap-4 p-5 sm:h-[550px] sm:w-[400px] sm:border'
-      closeOnBlur={false}
+      closeOnBlur={true}
     >
       <h1 className='mb-2 text-lg font-bold text-text-primary'>Add New Member</h1>
       <AllInterns

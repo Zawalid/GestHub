@@ -205,7 +205,7 @@ function Member({ member, project }) {
 
 function MembersSkeleton() {
   return (
-    <div className='grid animate-pulse auto-cols-[250px] grid-flow-col gap-6 overflow-auto pb-2'>
+    <div className='grid animate-puls auto-cols-[250px] grid-flow-col gap-6 overflow-auto pb-2'>
       {Array.from({ length: 3 }).map((_, i) => (
         <div key={i} className='rounded-lg border border-border bg-background-disabled p-5 pt-3'>
           <div className='flex items-center justify-between'>

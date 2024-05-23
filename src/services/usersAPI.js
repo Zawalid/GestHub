@@ -25,7 +25,7 @@ export const login = async (email, password) => {
   const location =
     locationResult.status === 'fulfilled' ? locationResult.value.data : { city: 'Unknown', countryName: 'Unknown' };
 
-  await axiosFetch(
+  return await axiosFetch(
     'login',
     'POST',
     { email, password },

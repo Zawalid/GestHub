@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Table } from './Table';
 import { Search } from './Search';
@@ -10,6 +10,7 @@ import { TableRecord } from './TableRecord';
 import { Actions } from './Actions';
 import { NewRecord } from './NewRecord';
 import { Selected } from './Selected';
+import { TableContext } from './useTable';
 
 Array.prototype.paginate = function (page, limit) {
   const start = (page - 1) * limit;
@@ -17,8 +18,6 @@ Array.prototype.paginate = function (page, limit) {
 
   return this.slice(start, end);
 };
-
-export const TableContext = createContext();
 
 /**
  * TableProvider component.

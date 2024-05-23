@@ -279,7 +279,7 @@ function AddNewTask({ currentGroup, onClose, currentTask, onAdd, onUpdate, teamM
       isOpen={currentGroup || currentTask}
       onClose={onClose}
       className='relative flex flex-col gap-4 p-5 sm:h-fit sm:w-[400px] sm:border'
-      closeOnBlur={false}
+      closeOnBlur={true}
     >
       <div className='flex h-full flex-col'>
         <NewTask

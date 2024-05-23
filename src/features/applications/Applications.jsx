@@ -34,10 +34,13 @@ export default function Applications() {
             { value: 'Pending', checked: false },
             { value: 'Approved', checked: false },
           ],
-          sector: [...new Set(applications?.map((application) => application.sector))].map((s) => ({
-            value: s,
-            checked: false,
-          })),
+          sector: {
+            filters: [...new Set(applications?.map((application) => application.sector))].map((s) => ({
+              value: s,
+              checked: false,
+            })),
+            async: true,
+          },
         }}
         fieldsToSearch={['offer', 'sector']}
       >
@@ -139,7 +142,7 @@ function Application({ application: { id, offer, sector, status, created_at } })
 
 export function Skeleton({ type = 'application' }) {
   return (
-    <div className='flex animate-pulse cursor-auto items-center gap-5 px-3 py-2 hover:bg-transparent'>
+    <div className='animate-puls flex cursor-auto items-center gap-5 px-3 py-2 hover:bg-transparent'>
       <div className='grid h-12 w-12 rounded-full bg-background-secondary'></div>
       <div className='flex-1 space-y-1.5'>
         <div className='h-2.5 w-40 rounded-lg bg-background-tertiary'></div>

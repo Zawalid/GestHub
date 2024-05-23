@@ -1,5 +1,5 @@
 import { SearchInput } from "../../ui";
-import { useTable } from ".";
+import { useTable } from "./useTable";
 
 export function Search() {
   const { query, onSearch, disabled } = useTable();

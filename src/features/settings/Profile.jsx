@@ -81,6 +81,7 @@ export default function Profile() {
                     file={getValue('cv')?.file}
                     onChange={(file) => setValue('cv', file)}
                     onDelete={() => setValue('cv', null)}
+                    disabled={!getValue('cv')?.file}
                     onView={() => setIsCvOpen(true)}
                   />
                 </div>
@@ -94,7 +95,6 @@ export default function Profile() {
     gridLayout: true,
   });
 
-  console.log(getValue('cv')?.file);
 
 
   return (

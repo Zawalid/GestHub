@@ -60,7 +60,7 @@ export default function UsersList() {
           displayLabel: 'Date Joined',
           visible: true,
           type: 'date',
-          filter: getIntervals('created_at',['present','past']),
+          filter: getIntervals('created_at', ['present', 'past']),
         },
         {
           key: 'applications',
@@ -76,7 +76,7 @@ export default function UsersList() {
             return isDownload ? (
               `P : ${values.pending} | A : ${values.approved} | R : ${values.rejected}`
             ) : (
-              <div className='flex gap-0.5 rounded-lg overflow-hidden w-fit'>
+              <div className='flex w-fit gap-0.5 overflow-hidden rounded-lg'>
                 {[
                   {
                     color: 'bg-orange-500',
@@ -111,6 +111,7 @@ export default function UsersList() {
         pdfFileName: 'Users',
       }}
       onDelete={deleteUser}
+     
       selectedOptions={{
         deleteOptions: {
           resourceName: 'user',
@@ -119,7 +120,7 @@ export default function UsersList() {
       }}
       layoutOptions={{
         displayNewRecord: false,
-        actions: [],
+        actions: (def) => [def.delete],
       }}
     />
   );

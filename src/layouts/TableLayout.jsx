@@ -1,4 +1,4 @@
-import { Table } from '@/components/shared/Table';
+import { TableProvider as Table } from '@/components/shared/Table/TableProvider';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 const defaultOptions = {
@@ -15,11 +15,11 @@ export function TableLayout({
   hideAllRowsActions,
   hideRowActions,
   hiddenActionsContent,
-  layoutOptions = defaultOptions,
+  layoutOptions,
   ...tableProps
 }) {
   const [parent] = useAutoAnimate({ duration: 300 });
-  const { displayTableRecord, displayNewRecord, actions } = layoutOptions;
+  const { displayTableRecord, displayNewRecord, actions } = { ...defaultOptions, ...(layoutOptions && layoutOptions) };
 
   return (
     <div className='flex h-full flex-col gap-5 overflow-auto'>

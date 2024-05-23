@@ -1,11 +1,11 @@
-import { useTable } from '.';
+import { useTable } from './useTable';
 import { BsTable, BsListCheck } from 'react-icons/bs';
 import { Button, CheckBox, DropDown } from '../../ui';
 
 export function View() {
   const { columns, onChangeView, data, isLoading } = useTable();
 
-  if (!isLoading && data?.length === 0) return null;
+  if (!isLoading && data?.length === 0) return null; 
 
   return (
     <DropDown

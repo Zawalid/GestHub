@@ -16,9 +16,11 @@ export function Panel({ isOpen, onClose, currentTab, setCurrentTab }) {
         <Tab tabName='profile' icon={<PiUserCircle />} currentTab={currentTab} setCurrentTab={setCurrentTab} />
         <Tab tabName='password' icon={<PiLockKey />} currentTab={currentTab} setCurrentTab={setCurrentTab} />
         {user?.role === 'super-admin' && (
-          <Tab tabName='general' icon={<PiGear />} currentTab={currentTab} setCurrentTab={setCurrentTab} />
+          <>
+            <Tab tabName='general' icon={<PiGear />} currentTab={currentTab} setCurrentTab={setCurrentTab} />
+            <Tab tabName='editor' icon={<PiLockKey />} currentTab={currentTab} setCurrentTab={setCurrentTab} />
+          </>
         )}
-        <Tab tabName='editor' icon={<PiLockKey />} currentTab={currentTab} setCurrentTab={setCurrentTab} />
       </div>
     </>
   );

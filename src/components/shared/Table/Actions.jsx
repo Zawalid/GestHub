@@ -5,7 +5,7 @@ import {
   IoTrashOutline,
   MdDriveFileRenameOutline,
 } from '@/components/ui/Icons';
-import { useTable } from '.';
+import { useTable } from './useTable';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
@@ -14,22 +14,21 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
   const navigate = useNavigateWithQuery();
   const { openModal } = useConfirmationModal();
 
-  const defaultActions = [
-    {
+  const defaultActions = {
+    view: {
       text: 'View',
       icon: <IoEyeOutline />,
       onClick: () => navigate(row.id),
-      hidden: () => ['Supervisor', 'Admin'].includes(resourceName),
     },
-    {
+    edit: {
       text: 'Edit',
       icon: <MdDriveFileRenameOutline />,
-      onClick: () =>
+      onClick: () => {
         showForm({
           fields: formOptions.fields.map((field) =>
             field.name.includes('password') ? { ...field, rules: { ...field.rules, required: false } } : field
           ),
-          defaultValues: row,
+          defaultValues: { ...formOptions.defaultValues, ...row },
           onSubmit: (data) => onUpdate({ id: row.profile_id, data }),
           isOpen: true,
           submitButtonText: 'Save Changes',
@@ -40,11 +39,30 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
             </>
           ),
           type: 'update',
-        }),
+        });
+      },
     },
-  ];
+    delete: {
+      text: 'Delete',
+      icon: <IoTrashOutline />,
+      onClick: () => {
+        openModal({
+          ...confirmOptions,
+          onConfirm: () => {
+            onDelete(row.profile_id || row.id);
+            rows?.length === 1 && onPrevPage();
+          },
+        });
+      },
+    },
+  };
 
-  const deleteAction = actions?.find((a) => a.text === 'Delete');
+  const getActions = () => {
+    if (typeof actions === 'function') return actions(defaultActions);
+    if (Array.isArray(actions)) return actions;
+    if (actions === 'defaultActions') return Object.values(defaultActions);
+    return [];
+  };
 
   return (
     <DropDown
@@ -55,31 +73,14 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
       }
       togglerDisabled={isSelecting}
     >
-      {(actions || defaultActions)
-        .filter((action) => !action.hidden?.(row) && action.text !== 'Delete')
-        .map((action) => (
-          <DropDown.Option key={action.text} onClick={() => action.onClick(row.profile_id || row.id)}>
-            {action.icon}
-            {action.text}
-          </DropDown.Option>
-        ))}
-      {!deleteAction?.hidden?.(row) && (
-        <DropDown.Option
-          onClick={() =>
-            deleteAction?.onClick?.() ||
-            openModal({
-              ...confirmOptions,
-              onConfirm: () => {
-                onDelete(row.profile_id || row.id);
-                rows?.length === 1 && onPrevPage();
-              },
-            })
-          }
-        >
-          {deleteAction?.icon || <IoTrashOutline />}
-          Delete
+      {getActions()
+      .filter(action => !action.hidden?.(row))
+      .map((action) => (
+        <DropDown.Option key={action.text} onClick={() => action.onClick(row)}>
+          {action.icon}
+          {action.text}
         </DropDown.Option>
-      )}
+      ))}
     </DropDown>
   );
 }

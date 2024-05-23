@@ -99,6 +99,8 @@ export default function SupervisorsList() {
       onAdd={addSupervisor}
       onUpdate={updateSupervisor}
       onDelete={deleteSupervisor}
+     
+      layoutOptions={{ actions: (def) => [def.edit, def.delete] }}
       selectedOptions={{
         deleteOptions: {
           resourceName: 'supervisor',
@@ -124,7 +126,7 @@ export const renderProjects = {
     return isDownload ? (
       `P : ${values.pending} | A : ${values.approved} | R : ${values.rejected}`
     ) : (
-      <div className='flex gap-0.5 rounded-lg overflow-hidden w-fit'>
+      <div className='flex w-fit gap-0.5 overflow-hidden rounded-lg'>
         {[
           {
             color: 'bg-gray-500',
@@ -156,9 +158,7 @@ export const renderProjects = {
     );
   },
   fn(a, b, direction) {
-    return direction === 'asc'
-      ? a?.projects.length - b?.projects.length
-      : b?.projects.length - a?.projects.length;
+    return direction === 'asc' ? a?.projects.length - b?.projects.length : b?.projects.length - a?.projects.length;
   },
   type: 'custom',
 };

@@ -1,4 +1,4 @@
-import { useMutation, useQuery, } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import {
@@ -33,7 +33,8 @@ export function useLogin() {
   const { mutate, isPending, error } = useMutation({
     mutationKey: ['login'],
     mutationFn: ({ email, password }) => login(email, password),
-    onSuccess: (data) => redirect("Logged in successfully. You'll be redirected now.", data?.role),
+    onSuccess: (data) => 
+      redirect("Logged in successfully. You'll be redirected now.", data?.role),
     onError: (error) => toast.error(error.message),
   });
 
@@ -90,15 +91,15 @@ const getUserCv = (user) => {
   const cv = getFile(user, 'cv');
   const extension = cv?.split('.').pop() || 'pdf';
 
-  return { file: { name: `${user?.firstName} ${user?.lastName} CV.${extension}` }, src: cv };
+  return cv ? { file: { name: `${user?.firstName} ${user?.lastName} CV.${extension}` }, src: cv } : null;
 };
 
-export function useUser() {
+export function useUser(reason) {
   const { data, error, isPending } = useQuery({
     queryKey: ['user'],
     queryFn: getUser,
-    retry : 1,
-    enabled: localStorage.getItem('in') === 'true',
+    retry: 1,
+    enabled: localStorage.getItem('in') === 'true' || reason === 'detect',
   });
 
   return {

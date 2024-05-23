@@ -54,6 +54,9 @@
 - [x] gendered avatars in tasks
 - [x] sessions table
 - [ ] change loading spinner
+- [ ] better footer (credit)
+- [ ] return animate-puls(e)
+- [ ] notifications pagination
 
 
 ---

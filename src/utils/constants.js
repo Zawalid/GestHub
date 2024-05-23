@@ -25,7 +25,7 @@ export const ROUTES = (() => {
       'sessions/:id',
     ],
     admin: generate(['supervisors', 'projects', 'interns', 'offers', 'applications', 'users', 'sessions']),
-    supervisor: generate(['projects', 'interns', 'sessions']),
+    supervisor: generate(['projects',  'sessions']),
     intern: generate(['projects', 'sessions']),
     user: routes.applications,
   };
@@ -38,7 +38,7 @@ export const STATUS_COLORS = {
   'In Progress': { bg: 'bg-blue-500', text: 'text-blue-500' },
   Completed: { bg: 'bg-green-600', text: 'text-green-600' },
   'To Do': { bg: 'bg-red-500', text: 'text-red-500' },
-  'Done': { bg: 'bg-blue-600', text: 'text-blue-600' },
+  'Done': { bg: 'bg-green-600', text: 'text-green-600' },
 };
 
 export const PRIORITY_COLORS = {

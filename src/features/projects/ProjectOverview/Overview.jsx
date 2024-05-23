@@ -94,7 +94,7 @@ function EditProject({ isOpen, onClose, project }) {
       isOpen={isOpen}
       onClose={onClose}
       className='relative flex flex-col gap-6 overflow-auto p-5 sm:h-fit sm:w-[400px] sm:border md:max-h-[90%]'
-      closeOnBlur={false}
+      closeOnBlur={true}
     >
       <BasicInfo
         state={{ subject, description, startDate, endDate, priority, supervisor }}

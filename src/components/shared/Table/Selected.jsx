@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa6';
 import { Button, Modal, ToolTip } from '@/components/ui';
-import { useTable } from '.';
+import { useTable } from './useTable';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { capitalize } from '@/utils/helpers';
 
@@ -57,7 +57,9 @@ export function Selected() {
           Cancel
         </Button>
         <div className='relative overflow-hidden '>
-          <Button className='invisible'>{finalActions.map((a) => a.text).toSorted()[0]}</Button>
+          <Button className='invisible'>
+            {finalActions.map((a) => a.text).toSorted((a, b) => b.length - a.length)[0]}
+          </Button>
           {finalActions.map(({ text, color, onClick, disabledCondition, message, className }, i) => {
             const disabled = disabledCondition ? disabledCondition(selected, data) : false;
             return (

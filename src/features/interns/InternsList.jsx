@@ -7,17 +7,20 @@ import {
   useAcceptUsers,
   useAcceptedUsers,
   useDeleteInterns,
+  useGenerateAttestation,
+  useGenerateAttestations,
 } from './useInterns';
 import { TableLayout } from '@/layouts/TableLayout';
 import { Button, DropDown, Modal } from '@/components/ui';
-import { FaPlus, LuUser } from '@/components/ui/Icons';
-import { Table, useTable } from '@/components/shared/Table/';
+import { FaFileContract, FaPlus, LuUser } from '@/components/ui/Icons';
+import { TableProvider as Table } from '@/components/shared/Table/TableProvider';
 import { AllInterns } from '../projects/NewProject/TeamMembers';
 import { useState } from 'react';
 import { AcademicLevel, Gender } from '@/pages/auth/Register';
 import { getFilter, getIntervals } from '@/utils/helpers';
 import { useUser } from '@/hooks/useUser';
 import { renderProjects } from '../supervisors/SupervisorsList';
+import { useTable } from '@/components/shared/Table/useTable';
 
 export default function InternsList() {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,6 +29,8 @@ export default function InternsList() {
   const { mutate: updateIntern } = useUpdateIntern();
   const { mutate: deleteIntern } = useDeleteIntern();
   const { mutate: deleteInterns } = useDeleteInterns();
+  const { mutate: generateAttestation } = useGenerateAttestation();
+  const { mutate: generateAttestations } = useGenerateAttestations();
 
   return (
     <>
@@ -96,10 +101,10 @@ export default function InternsList() {
             format: (val, id, isDownload) => {
               const colors = {
                 Completed: 'bg-green-600',
-                Upcoming: 'bg-yellow-600',
+                Upcoming: 'bg-blue-600',
                 'Starting Tomorrow': 'bg-yellow-600',
-                'Starting Today': 'bg-blue-600',
-                Ongoing: 'bg-orange-600',
+                'Starting Today': 'bg-orange-600',
+                Ongoing: 'bg-teal-600',
               };
               return isDownload ? (
                 val
@@ -200,8 +205,41 @@ export default function InternsList() {
         layoutOptions={{
           displayNewRecord: user?.role !== 'supervisor' ? <NewIntern setIsOpen={setIsOpen} /> : null,
           displayTableRecord: true,
+          actions: (defaultActions) => [
+            defaultActions.view,
+            defaultActions.edit,
+            {
+              text: 'Generate',
+              icon: <FaFileContract />,
+              onClick: (intern) => generateAttestation(intern.id),
+              hidden: (intern) => intern.attestation,
+            },
+            defaultActions.delete,
+          ],
         }}
         selectedOptions={{
+          actions: [
+            {
+              text: 'Generate',
+              color: 'secondary',
+              onClick: (ids, onClose, setIsOperating) => {
+                generateAttestations(
+                  ids.map((id) => interns?.find((intern) => intern.profile_id === id)?.id),
+                  {
+                    onConfirm: () => setIsOperating(true),
+                    onSettled: () => setIsOperating(false),
+                  }
+                );
+                onClose();
+              },
+              disabledCondition: (ids, data) =>
+                data?.some((intern) => ids.includes(intern.profile_id) && intern.attestation),
+              message: (data) =>
+                data.length === 1
+                  ? 'This intern has already received an attestation.'
+                  : 'Some of these interns have already received attestations.',
+            },
+          ],
           deleteOptions: {
             resourceName: 'intern',
             onConfirm: (ids, setIsOperating) => deleteInterns(ids, { onSettled: () => setIsOperating(false) }),
@@ -253,13 +291,12 @@ function SelectUsers({ isOpen, onClose }) {
   const { mutate } = useAcceptUsers();
 
   const close = () => (onClose(), setInterns([]));
-
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
       className='flex flex-col gap-4 p-5 sm:h-[550px] sm:w-[400px] sm:border'
-      closeOnBlur={false}
+      closeOnBlur={true}
     >
       <h1 className='mb-2 text-lg font-bold text-text-primary'>Select Users for Internship</h1>
       <AllInterns

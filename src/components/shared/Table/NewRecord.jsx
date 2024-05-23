@@ -1,6 +1,6 @@
 import { FaPlus } from 'react-icons/fa6';
 import { Button } from '@/components/ui';
-import { useTable } from '.';
+import { useTable } from './useTable';
 
 export function NewRecord({ onAdd, component }) {
   const { showForm, resourceName, formOptions, formFields, disabled,  } = useTable();

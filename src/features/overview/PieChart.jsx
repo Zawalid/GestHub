@@ -94,7 +94,7 @@ export default function PieChartStats({ data, title, legend, COLORS, className =
     >
       <h2 className='text-lg font-bold text-text-primary'>{title}</h2>
       <Legend legend={legend} />
-      <ResponsiveContainer className={`flex-1 ${isLoading ? 'animate-pulse' : ''}`}>
+      <ResponsiveContainer className={`flex-1 ${isLoading ? 'animate-puls' : ''}`}>
         <PieChart>
           <Pie
             data={isLoading ? loadingData : isEmpty ? emptyData : data}

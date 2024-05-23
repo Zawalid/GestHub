@@ -1,6 +1,6 @@
 export default function ProjectsSkeleton({layout}) {
   return (
-    <div  className={`gap-5 animate-pulse w-full ${
+    <div  className={`gap-5 animate-puls w-full ${
         layout === "grid"
           ? "grid grid-cols-[repeat(auto-fill,minmax(310px,1fr))]"
           : "flex flex-col"

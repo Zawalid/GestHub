@@ -36,8 +36,9 @@ export default function NewApplication({ isOpen, onClose }) {
     <Modal
       isOpen={isOpen}
       className='min-h-[500px] overflow-auto p-5 md:h-fit md:w-[750px] md:border'
-      closeOnBlur={false}
-    >
+      closeOnBlur={true}
+      onClose={onClose}
+      >
       {render()}
     </Modal>
   );

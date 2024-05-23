@@ -6,7 +6,7 @@ import { ErrorScreen } from './ui/ErrorScreen';
 
 export function ProtectedRoute({ children }) {
   const navigate = useNavigate();
-  const { isLoading, user, error } = useUser();
+  const { isLoading, user, error } = useUser('detect');
 
 
   // return children;

@@ -151,7 +151,7 @@ function CompletedInternships() {
       return Array.from({ length: 2 }).map((_, i) => (
         <div
           key={i}
-          className='flex animate-pulse items-center justify-between gap-5 rounded-lg border border-border px-3 py-1.5'
+          className='flex animate-puls items-center justify-between gap-5 rounded-lg border border-border px-3 py-1.5'
         >
           <div className='h-9 w-9 rounded-full border border-border bg-background-tertiary'></div>
           <div className='flex-1 space-y-2'>
@@ -218,7 +218,7 @@ function GenerateAttestation({ isOpen, onClose, completedInternships }) {
       isOpen={isOpen}
       onClose={onClose}
       className='flex flex-col gap-4 p-5 sm:h-[550px] sm:w-[400px] sm:border'
-      closeOnBlur={false}
+      closeOnBlur={true}
     >
       <h1 className='mb-2 text-lg font-bold text-text-primary'>Generate Attestations</h1>
       <AllInterns

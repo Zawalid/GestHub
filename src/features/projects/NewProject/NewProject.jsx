@@ -106,7 +106,7 @@ export default function NewProject() {
       onClose={onClose}
       className='gap-6 p-5 md:h-[515px] md:w-4/5 md:border lg:w-3/5'
       closeButton={true}
-      closeOnBlur={false}
+      closeOnBlur={true}
     >
       <Steps steps={steps} currentStep={currentStep} />
       <div className='h-full overflow-y-auto overflow-x-hidden' ref={parent}>

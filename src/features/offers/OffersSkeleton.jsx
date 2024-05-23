@@ -1,7 +1,7 @@
 export default function OffersSkeleton({ layout }) {
   return (
     <div
-      className={`pr-2 w-full animate-pulse gap-5 ${
+      className={`pr-2 w-full animate-puls gap-5 ${
         layout === 'grid' ? 'grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))]' : 'flex flex-col'
       }`}
     >
@@ -44,7 +44,7 @@ function Offer() {
 
 export function OfferSkeleton() {
   return (
-    <div className='mb-5 w-full animate-pulse overflow-auto'>
+    <div className='mb-5 w-full animate-puls overflow-auto'>
       <div className='mb-3 h-3 w-60 rounded-lg bg-background-tertiary'></div>
       <div className='space-y-1.5'>
         <div className='h-2 rounded-lg bg-background-secondary'></div>

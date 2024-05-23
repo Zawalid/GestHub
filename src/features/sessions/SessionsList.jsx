@@ -100,6 +100,11 @@ export default function SessionsList() {
               </div>
             );
           },
+          filter: [
+            { value: 'Desktop', checked: false },
+            { value: 'Tablet', checked: false },
+            { value: 'Phone', checked: false },
+          ],
         },
         {
           key: 'browser',
@@ -174,20 +179,20 @@ export default function SessionsList() {
       onDelete={deleteSession}
       layoutOptions={{
         displayNewRecord: false,
-        actions: [
+        actions: (def) => [
           {
             text: 'Activities',
             icon: <FiActivity />,
-            onClick: (id) => user?.role === 'super-admin' && navigate(id),
+            onClick: (session) => user?.role === 'super-admin' && navigate(session.id),
           },
           {
             text: 'Abort',
             icon: <FiLogOut />,
-            onClick: (id) => abort(id),
+            onClick: (session) => abort(session.id),
             hidden: (session) => session?.status !== 'Online',
           },
           {
-            text: 'Delete',
+            ...def.delete,
             hidden: (session) => session?.status !== 'Offline',
           },
         ],
@@ -217,7 +222,9 @@ export default function SessionsList() {
       hideAllRowsActions={user?.role !== 'super-admin'}
       hideRowActions={(row) => row.isCurrent === 'true'}
       hiddenActionsContent={(row) =>
-        row.isCurrent === 'true' ? <span className='rounded-lg  bg-blue-600 px-2.5 py-1 text-white'>Current</span> : null
+        row.isCurrent === 'true' ? (
+          <span className='rounded-lg  bg-blue-600 px-2.5 py-1 text-white'>Current</span>
+        ) : null
       }
     />
   );

@@ -109,24 +109,25 @@ export default function ApplicationsList() {
       layoutOptions={{
         displayNewRecord: false,
         displayTableRecord: false,
-        actions: [
+        actions: (def) => [
           {
             text: 'Review',
             icon: <TbFileSearch />,
-            onClick: (id) => navigate(`/app/applications/${id}`, { state: { source: '/app/applications' } }),
+            onClick: (app) => navigate(`/app/applications/${app.id}`, { state: { source: '/app/applications' } }),
           },
           {
             text: 'Approve',
             icon: <FaRegCircleCheck />,
-            onClick: (id) => approve(id),
+            onClick: (app) => approve(app.id),
             hidden: (application) => application?.status !== 'Pending',
           },
           {
             text: 'Reject',
             icon: <FaRegCircleXmark />,
-            onClick: (id) => reject(id),
+            onClick: (app) => reject(app.id),
             hidden: (application) => application?.status !== 'Pending',
           },
+          def.delete,
         ],
       }}
       selectedOptions={{

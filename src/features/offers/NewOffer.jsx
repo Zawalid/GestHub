@@ -15,7 +15,8 @@ export default function NewOffer() {
     <Modal
       isOpen={location.pathname === '/app/offers/new'}
       className='p-5 md:h-[515px] md:w-4/5 md:border lg:w-3/5'
-      closeOnBlur={false}
+      closeOnBlur={true}
+      onClose={() => navigate('/app/offers')}
     >
       <h1 className='mb-5 text-2xl font-bold text-text-primary'>New Offer</h1>
       <OfferForm

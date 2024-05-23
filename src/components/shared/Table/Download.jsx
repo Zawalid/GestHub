@@ -3,7 +3,7 @@ import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { MdDownload, PiFilePdf, PiFileCsv, IoChevronForwardOutline } from '../../ui/Icons';
 import { Button, DropDown } from '../../ui';
-import { useTable } from '.';
+import { useTable } from './useTable';
 
 const exportAsCsv = (data, config, page) => {
   const filename = page ? `${config.filename}-page-${page}` : config.filename;

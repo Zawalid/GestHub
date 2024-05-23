@@ -76,11 +76,15 @@
   width: calc(100% - 32px);
 }
 
-.tippy-box[data-theme~='custom'] { 
+.tippy-box[data-theme~='custom'] {
   @apply max-w-[450px] p-2 !important;
 }
 .tippy-box[data-theme~='bubbleMenu'] {
-  @apply bg-background-disabled p-2 
+  @apply bg-background-disabled p-2;
+}
+
+.tippy-box.notifications {
+  max-width: 100% !important;
 }
 
 .tippy-content {

@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Search } from './Search';
 import { OrderBy } from './OrderBy';
@@ -6,7 +6,8 @@ import { SortBy } from './SortBy';
 import { ActionsDropDown } from './ActionsDropDown';
 import { Filter } from './Filter';
 import { Layout } from './Layout';
-import { ShowMore } from './ShowMore';
+import { ViewMore } from './ViewMore';
+import { OperationsContext } from './useOperations';
 
 // Array methods
 Array.prototype.customFilter = function (filters, filterCondition) {
@@ -15,7 +16,7 @@ Array.prototype.customFilter = function (filters, filterCondition) {
   const conditions = Object.keys(filters)
     .map((key) => ({
       field: key,
-      value: filters[key].filter((v) => v.checked).map((v) => v.value),
+      value: (filters[key].filters || filters[key]).filter((v) => v.checked).map((v) => v.value),
     }))
     .filter((c) => c.value.length);
 
@@ -70,7 +71,7 @@ Array.prototype.search = function (query, fieldsToSearch) {
 };
 
 Array.prototype.customPaginate = function (page, limit) {
-  const start = 0
+  const start = 0;
   const end = page * limit;
 
   return this.slice(start, end);
@@ -92,8 +93,6 @@ Array.prototype.customPaginate = function (page, limit) {
 
 //   return filterString;
 // };
-
-export const OperationsContext = createContext();
 
 /**
  * Operations component.
@@ -156,7 +155,7 @@ export function Operations({
       searchParams.delete(directionQueryKey);
     }
     if (!query) searchParams.delete(searchQueryKey);
-    if (page === 1) searchParams.delete('page');
+    if (page === 1) searchParams.delete('p');
     setSearchParams(searchParams);
   }, [
     direction,
@@ -172,9 +171,6 @@ export function Operations({
     page,
   ]);
 
-  useEffect(() => {
-    setFilters(initialFilters || {});
-  }, [initialFilters]);
 
   // Perform operations
 
@@ -199,11 +195,9 @@ export function Operations({
   const onchangeLayout = (layout) => setLayout(layout);
 
   const onPaginate = (page) => {
-    searchParams.set('page', page);
+    searchParams.set('p', page);
     setSearchParams(searchParams);
   };
-
-  
 
   const context = {
     data: showAll ? data : data?.customPaginate(page, limit),
@@ -217,6 +211,7 @@ export function Operations({
     onSort,
     direction,
     onOrder,
+    initialFilters,
     filters,
     filterCondition,
     appliedFiltersNumber,
@@ -237,4 +232,4 @@ Operations.OrderBy = OrderBy;
 Operations.SortBy = SortBy;
 Operations.Filter = Filter;
 Operations.Layout = Layout;
-Operations.ShowMore = ShowMore;
+Operations.ViewMore = ViewMore;

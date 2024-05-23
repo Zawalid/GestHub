@@ -19,7 +19,7 @@ export default function Notifications() {
       ?.map((d) => ({
         id: d.id,
         icon: <FaRegCircleCheck />,
-        title: 'Your internship application has been accepted',
+        title: 'Your application has been accepted',
         subtitle: d.offer,
         time: getRelativeTime(d.updated_at),
         isRead: d.isRead,
@@ -87,7 +87,7 @@ export default function Notifications() {
         </Button>
       }
       options={{
-        className: 'w-[350px] max-h-max overflow-auto h-[400px]',
+        className: 'notifications w-full mobile:w-[400px] max-h-max overflow-auto h-[400px]',
         shouldCloseOnClick: false,
       }}
       setIsOpen={setIsOpen}
@@ -111,7 +111,7 @@ export default function Notifications() {
 
 function Skeleton() {
   return (
-    <DropDown.Option className='animate-pulse cursor-auto hover:bg-transparent'>
+    <DropDown.Option className='animate-puls cursor-auto hover:bg-transparent'>
       <div className='grid h-11 w-11 rounded-full bg-background-secondary'></div>
       <div className='flex-1 space-y-1.5'>
         <div className='h-2 rounded-lg bg-background-tertiary'></div>
