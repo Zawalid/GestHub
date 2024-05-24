@@ -53,5 +53,5 @@ export const uploadFile = async (id, file, type) => {
   const formData = new FormData();
   formData.append(type, file);
   formData.append('type', type);
-  await axiosFetch(`files/${id}`, 'POST', formData);
+ return await axiosFetch(`files/${id}`, 'POST', formData);
 };

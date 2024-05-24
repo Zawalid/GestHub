@@ -8,29 +8,24 @@ import { Filter } from './Filter';
 import { Layout } from './Layout';
 import { ViewMore } from './ViewMore';
 import { OperationsContext } from './useOperations';
+import { getIsoDate } from '@/utils/helpers';
 
 // Array methods
 Array.prototype.customFilter = function (filters, filterCondition) {
   if (!filters) return this;
 
-  const conditions = Object.keys(filters)
-    .map((key) => ({
-      field: key,
-      value: (filters[key].filters || filters[key]).filter((v) => v.checked).map((v) => v.value),
+  const conditions = Object.entries(filters)
+    .map(([field, filter]) => ({
+      field,
+      value: (filter.filters || filter).filter(({ checked }) => checked).map(({ value }) => value),
     }))
-    .filter((c) => c.value.length);
+    .filter(({ value }) => value.length);
 
   if (!conditions.length) return this;
 
   return this.filter((el) => {
-    const conditionFn = (c) => {
-      let condition = false;
-      c.value.forEach((v) => {
-        if (v.condition) return (condition = c.value.map((v) => v.condition(el)).some((v) => v));
-        condition = c.value.includes(el[c.field]);
-      });
-      return condition;
-    };
+    const conditionFn = (c) =>
+      c.value.some((val) => (val.condition ? val.condition(el) : c.value.includes(el[c.field])));
     return filterCondition === 'AND' ? conditions.every(conditionFn) : conditions.some(conditionFn);
   });
 };
@@ -53,8 +48,8 @@ Array.prototype.customSort = function (sortBy, direction, sortOptions) {
 
     if (dateFields.includes(sortBy)) {
       return direction === 'asc'
-        ? new Date(a?.[sortBy]) - new Date(b?.[sortBy])
-        : new Date(b?.[sortBy]) - new Date(a?.[sortBy]);
+        ? getIsoDate(a?.[sortBy]) - getIsoDate(b?.[sortBy])
+        : getIsoDate(b?.[sortBy]) - getIsoDate(a?.[sortBy]);
     }
 
     if (customFields.includes(sortBy)) return sortOptions.find((c) => c.key === sortBy)?.fn(a, b, direction);
@@ -71,10 +66,10 @@ Array.prototype.search = function (query, fieldsToSearch) {
 };
 
 Array.prototype.customPaginate = function (page, limit) {
-  const start = 0;
+  // const start = (page - 1) * limit;
   const end = page * limit;
 
-  return this.slice(start, end);
+  return this.slice(0, end);
 };
 // const constructFilterString = (filters) => {
 //   let filterString = "";
@@ -171,6 +166,9 @@ export function Operations({
     page,
   ]);
 
+  // useEffect(() => {
+  //   setFilters(initialFilters);
+  // }, [initialFilters]);
 
   // Perform operations
 
@@ -222,6 +220,7 @@ export function Operations({
     page,
     onPaginate,
     totalPages: Math.ceil(data?.length / limit),
+    limit,
   };
   return <OperationsContext.Provider value={context}>{children}</OperationsContext.Provider>;
 }

@@ -86,6 +86,7 @@ export const useAbortSession = () => {
   return { ...abortion, abort };
 };
 
+
 export const useAbortSessions = () => {
   const { openModal } = useConfirmationModal();
   const abortion = useMutate(getAbortionOptions(true).mutation);
@@ -101,3 +102,4 @@ export const useAbortSessions = () => {
 
   return { ...abortion, abort };
 };
+

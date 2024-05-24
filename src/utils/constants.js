@@ -47,7 +47,7 @@ export const PRIORITY_COLORS = {
   High: { bg: 'bg-red-500', text: 'text-red-500' },
 };
 
-export const LEVELS = ['Bac+1', 'Bac+2', 'Bac+3', 'Master', 'Doctorate'];
+export const LEVELS = ['Bac+1', 'Bac+2', 'Bac+3','Bac+4', 'Bac+5', 'Master', 'Doctorate'];
 
 export const RULES = {
   email: {

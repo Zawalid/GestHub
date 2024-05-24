@@ -1,11 +1,9 @@
 import { useParams } from 'react-router-dom';
-import { FixedSizeList as List } from 'react-window';
 import { useSession } from './useSessions';
 import { Modal, Status } from '@/components/ui';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 import { Operations } from '@/components/shared/Operations/Operations';
 import { useOperations } from '@/components/shared/Operations/useOperations';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { formatDate } from '@/utils/helpers';
 import {
   IoTrashOutline,
@@ -20,7 +18,7 @@ import {
 } from '@/components/ui/Icons';
 import { Skeleton } from '../applications/Applications';
 import { STATUS_COLORS } from '@/utils/constants';
-import useResizeObserver from 'use-resize-observer';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 export default function Session() {
   const { id } = useParams();
@@ -38,7 +36,7 @@ export default function Session() {
         <h1 className='mobile::text-xl flex items-center gap-2 text-lg font-bold text-text-primary'>
           Activities
           {isLoading || (
-            <span className='rounded-lg border border-border bg-background-tertiary px-2 py-0.5 text-sm text-text-primary'>
+            <span className='count text-xs'>
               {session?.activities?.length}
             </span>
           )}
@@ -55,7 +53,7 @@ export default function Session() {
         data={session?.activities}
         isLoading={isLoading}
         error={error}
-        sortOptions={[{ key: 'created_at', display: 'Activity Date', action: 'date' }]}
+        sortOptions={[{ key: 'created_at', display: 'Activity Date', type: 'date' }]}
         defaultSortBy='created_at'
         defaultDirection='desc'
         filters={{
@@ -72,7 +70,6 @@ export default function Session() {
         searchQueryKey='s'
         sortQueryKey='so'
         directionQueryKey='d'
-        // showAll={true}
       >
         <ActivitiesList />
       </Operations>
@@ -83,22 +80,10 @@ export default function Session() {
 function ActivitiesList() {
   const { data: activities, isLoading, error, query, appliedFiltersNumber } = useOperations();
   const [parent] = useAutoAnimate({ duration: 400 });
-  const { ref, width = 1, height = 1 } = useResizeObserver();
-
-  const Row = ({ index, style }) => {
-    const activity = activities[index];
-    return <Activity key={activity.id} activity={activity} style={{...style,width : '99%'}} />;
-  };
 
   const render = () => {
     if (isLoading) {
-      return (
-        <div className='space-y-3 pr-2'>
-          {Array.from({ length: 4 }).map((_, i) => (
-            <Skeleton key={i} type='session' />
-          ))}
-        </div>
-      );
+      return Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} type='session' />);
     }
     if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
     if (activities?.length === 0 && !query && !appliedFiltersNumber) {
@@ -118,16 +103,12 @@ function ActivitiesList() {
       );
     }
     return (
-      <List
-        height={height}
-        itemCount={activities.length}
-        itemSize={70}
-        width={width}
-        outerRef={parent}
-        className='space-y-3  pr-2'
-      >
-        {Row}
-      </List>
+      <>
+        {activities?.map((activity) => (
+          <Activity key={activity.id} activity={activity} />
+        ))}
+        <Operations.ViewMore />
+      </>
     );
   };
 
@@ -136,17 +117,16 @@ function ActivitiesList() {
       <div className='mb-4 flex items-center justify-between gap-5'>
         <div className='flex items-center gap-2'>
           <Operations.DropDown>
-            <Operations.SortBy />
+            {/* <Operations.SortBy /> */}
             <Operations.OrderBy />
           </Operations.DropDown>
           <Operations.Filter />
         </div>
         <Operations.Search />
       </div>
-      <div className='relative mb-4 flex-1 overflow-hidden' ref={ref}>
+      <div className='relative flex-1 space-y-3 overflow-y-auto overflow-x-hidden pr-2' ref={parent}>
         {render()}
       </div>
-      <Operations.ViewMore />
     </>
   );
 }

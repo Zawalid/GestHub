@@ -53,10 +53,9 @@
 - [x] disable tasks update when the project is overdue
 - [x] gendered avatars in tasks
 - [x] sessions table
-- [ ] change loading spinner
+- [x] change loading spinner
 - [ ] better footer (credit)
 - [ ] return animate-puls(e)
-- [ ] notifications pagination
 
 
 ---
@@ -77,8 +76,8 @@
  - [x] offers overflow on mobile (grid)
  - [x] sort and order dropdown on mobile
  - [x] total personnel overflow on mobile
- - [ ] avatar success message is instant
- - [ ] filters are reset when sorting
+ - [x] filters are reset when sorting
+ - [ ] navigate with filters
 
 
 ---
@@ -86,7 +85,6 @@
 
 # Maybe
 - [ ] Multiple accounts login
-- [ ] Infinite scroll (projects/offers/notifications)
 - [ ] Emailing
 - [x] login sessions
 - [ ] More details about the error

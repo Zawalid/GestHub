@@ -39,6 +39,7 @@ export function Projects() {
             checked: state?.filter === 'Overdue',
           },
         ],
+
         priority: [
           { value: 'Low', checked: false },
           { value: 'Medium', checked: false },

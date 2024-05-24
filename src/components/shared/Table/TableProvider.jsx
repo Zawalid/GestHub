@@ -72,7 +72,16 @@ export function TableProvider({
     actions: defaultSelectedOptions?.actions || [],
     deleteOptions: defaultSelectedOptions?.deleteOptions,
   });
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState(() => {
+    return (
+      tableColumns
+        .filter((col) => col.filter)
+        .reduce((acc, col) => {
+          acc[col.key] = col.filter;
+          return acc;
+        }, {}) || {}
+    );
+  });
   const [limit, setLimit] = useState(PAGE_LIMIT);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('search');
@@ -126,19 +135,7 @@ export function TableProvider({
     setSearchParams(searchParams);
   }, [direction, page, searchParams, sortBy, query, setSearchParams]);
 
-  useEffect(() => {
-    setColumns(tableColumns);
-  }, [tableColumns]);
-
-  useEffect(() => {
-    const filters = tableColumns
-      .filter((col) => col.filter)
-      .reduce((acc, col) => {
-        acc[col.key] = col.filter;
-        return acc;
-      }, {});
-    setFilters(filters);
-  }, [tableColumns]);
+  
 
   // Handlers
 
@@ -218,6 +215,7 @@ export function TableProvider({
     isLoading,
     error,
     // table
+    tableColumns,
     columns,
     rows: displayAllData ? rows : rows?.paginate(page, limit),
     disabled: isLoading || selected.length > 0 || isOperating || data?.length === 0,

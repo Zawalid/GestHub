@@ -1,5 +1,5 @@
 {
-  "name": "newGestHub",
+  "name": "gesthub",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -41,13 +41,11 @@
     "react-i18next": "^14.1.0",
     "react-icons": "^5.0.1",
     "react-router-dom": "^6.22.3",
-    "react-window": "^1.8.10",
     "recharts": "^2.12.6",
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.2.2",
     "tailwind-variants": "^0.2.1",
-    "use-file-picker": "^2.1.1",
-    "use-resize-observer": "^9.1.0"
+    "use-file-picker": "^2.1.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

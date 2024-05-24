@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const toggleChecked = (filter, value) =>
-  filter.map((f) => (f.value === value ? { ...f, checked: !f.checked } : f));
+  (filter.filters || filter).map((f) => (f.value === value ? { ...f, checked: !f.checked } : f));
 
 export function Filter({ className = '' }) {
   const {
@@ -22,8 +22,13 @@ export function Filter({ className = '' }) {
 
   // Update the async filters
   useEffect(() => {
+    console.log(initialFilters);
     Object.keys(filters).map((key) => {
-      if (initialFilters[key].async && initialFilters[key].filters?.length > 0 && filters[key].filters?.length === 0) {
+      if (
+        initialFilters[key].async &&
+        initialFilters[key].filters?.length > 0 &&
+        filters[key].filters?.length < initialFilters[key].filters?.length
+      ) {
         onFilter({ [key]: initialFilters[key].filters });
       }
     });
@@ -47,7 +52,7 @@ export function Filter({ className = '' }) {
         </Button>
       }
       options={{
-        className: 'min-w-[180px] max-h-[300px] overflow-y-auto',
+        className: 'min-w-[180px] max-h-[325px] overflow-y-auto',
         shouldCloseOnClick: false,
       }}
       togglerClassName={`relative w-28 justify-between ${className}`}

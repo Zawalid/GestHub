@@ -1,10 +1,8 @@
 import { createContext, useEffect, useState } from 'react';
 
-const getSystemTheme = () => (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-
 const getTheme = () => {
   const theme = window.localStorage.getItem('theme');
-  return theme ? theme : getSystemTheme();
+  return ['undefined', 'null'].includes(theme) || !theme ? 'dark' : theme;
 };
 
 export const ThemeContext = createContext();
@@ -12,18 +10,17 @@ export const ThemeContext = createContext();
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(getTheme);
 
-  const changeTheme = (newTheme) => {
+  const changeTheme = (newTheme,firstTime) => {
+    if(theme === newTheme && !firstTime) return 
+    
     setTheme(newTheme);
     window.localStorage.setItem('theme', newTheme);
-
-    const theme = newTheme === 'system' ? getSystemTheme() : newTheme;
-
-    document.documentElement.className = `${theme} theme-transition`;
+    document.documentElement.className = `${newTheme} theme-transition`;
     setTimeout(() => document.documentElement.classList.remove('theme-transition'), 400);
   };
 
   useEffect(() => {
-    changeTheme(getTheme());
+    changeTheme(getTheme(),true);
   }, []);
 
   return <ThemeContext.Provider value={{ theme, changeTheme }}>{children}</ThemeContext.Provider>;

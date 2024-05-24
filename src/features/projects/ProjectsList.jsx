@@ -15,7 +15,6 @@ export default function ProjectsList() {
   const [parent] = useAutoAnimate({ duration: 500 });
   const navigate = useNavigate();
 
-
   const isAdmin = ['admin', 'super-admin'].includes(user?.role);
 
   const onAdd = () => navigate('/app/projects/new');
@@ -53,6 +52,7 @@ export default function ProjectsList() {
         {projects?.map((project) => (
           <Project key={project.id} project={project} layout={layout} />
         ))}
+        <Operations.ViewMore className='col-span-full' color='tertiary' />
       </>
     );
   };

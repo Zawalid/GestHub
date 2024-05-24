@@ -56,13 +56,7 @@ function ApplicationsList() {
 
   const render = () => {
     if (isLoading) {
-      return (
-        <div className='space-y-3 pr-2'>
-          {Array.from({ length: 4 }).map((_, i) => (
-            <Skeleton key={i} />
-          ))}
-        </div>
-      );
+      return Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} />);
     }
     if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
     if (applications?.length === 0 && !query && !appliedFiltersNumber) {
@@ -86,11 +80,12 @@ function ApplicationsList() {
       );
     }
     return (
-      <div className='space-y-3 pr-2' ref={parent}>
+      <>
         {applications?.map((d) => (
           <Application key={d.id} application={d} />
         ))}
-      </div>
+        <Operations.ViewMore />
+      </>
     );
   };
 
@@ -106,7 +101,9 @@ function ApplicationsList() {
         </div>
         <Operations.Search />
       </div>
-      <div className='relative flex-1 overflow-auto'>{render()}</div>
+      <div className='relative flex-1 space-y-3 overflow-y-auto overflow-x-hidden pr-2' ref={parent}>
+        {render()}
+      </div>{' '}
     </>
   );
 }

@@ -6,7 +6,6 @@ import { FiActivity, FiLogOut } from 'react-icons/fi';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 import { TbDeviceDesktop, TbDeviceMobile, TbDeviceTablet } from 'react-icons/tb';
 
-// ['Chrome', 'YaBrowser', 'Brave', 'Safari', 'Edge','Firefox','Opera']
 const BROWSERS_IMAGES = [
   {
     name: 'Chrome',

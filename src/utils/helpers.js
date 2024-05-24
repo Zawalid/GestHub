@@ -203,8 +203,10 @@ export const getFile = (data, type) => {
 export const isAlreadyApplied = (user, offer_id) => user?.applications?.find((d) => d.offer_id === +offer_id);
 
 // Filter
-export const getFilter = (data, key, checked) =>
-  [...new Set(data?.map((el) => el[key]))].map((f) => ({ value: f, checked: f === checked }));
+export const getFilter = (data, key, checked) => ({
+  filters: [...new Set(data?.map((el) => el[key]))].map((f) => ({ value: f, checked: f === checked })),
+  async: true,
+});
 
 export const getIntervals = (key, returned = ['past', 'present', 'future'], excluded = []) => {
   return intervals

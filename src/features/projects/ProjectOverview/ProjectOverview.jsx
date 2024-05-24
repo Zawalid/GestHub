@@ -9,7 +9,7 @@ const tabs = {
     class: 'left-[98px] w-[40px]',
     element: <Tasks />,
     count: (count) => (
-      <span className='rounded-lg border border-border bg-background-tertiary px-2 py-0.5 text-sm text-text-primary'>
+      <span className='count text-xs'>
         {count}
       </span>
     ),
