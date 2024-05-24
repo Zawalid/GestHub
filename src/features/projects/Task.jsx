@@ -1,18 +1,29 @@
-import { BsCalendar4Event, IoTrashOutline, MdDriveFileRenameOutline } from '@/components/ui/Icons';
+import { BsCalendar4Event, FaRegClone, IoTrashOutline, MdDriveFileRenameOutline } from '@/components/ui/Icons';
 import { PRIORITY_COLORS } from '@/utils/constants';
 import { checkIsOverdue, formatDate } from '@/utils/helpers';
 import { ToolTip } from '@/components/ui/ToolTip';
 import Avatar from '@/components/ui/Avatar';
 
-export default function Task({ task, onDelete, onEdit, layout,group, canManipulateTasks, isCreatingProject }) {
-  const { title, description, dueDate, priority, assignee } = task;
+export default function Task({
+  task,
+  onDelete,
+  onEdit,
+  onClone,
+  layout,
+  group,
+  canManipulateTasks,
+  isCreatingProject,
+}) {
+  const { title, description, dueDate, priority, assignee, status, project } = task;
 
   if (layout === 'list')
     return (
-      <div className='grid justify-items-end grid-cols-5 place-items-center items-center gap-5 rounded-md bg-background-secondary p-2'>
-        <div className='flex w-full min-w-[250px] col-span-2 items-center gap-2'>
+      <div className='grid grid-cols-5 place-items-center items-center justify-items-end gap-5 rounded-md bg-background-secondary p-2'>
+        <div className='col-span-2 flex w-full min-w-[250px] items-center gap-2'>
           <span className={`mt-[1px] h-2 w-2 rounded-sm ${group.color}`}></span>
-          <h4 className='line-clamp-2 text-xs sm:text-sm text-nowrap font-semibold text-text-primary'>{task.title || 'Untitled'}</h4>
+          <h4 className='line-clamp-2 text-nowrap text-xs font-semibold text-text-primary sm:text-sm'>
+            {task.title || 'Untitled'}
+          </h4>
         </div>
         <Assignee assignee={assignee} className='ml-auto' />
         <span
@@ -30,7 +41,7 @@ export default function Task({ task, onDelete, onEdit, layout,group, canManipula
     <div className='relative flex min-h-[144px] flex-col gap-4 rounded-lg border border-border bg-background-secondary p-4 pt-8 shadow-sm transition-all duration-300'>
       <div className='space-y-2.5'>
         <div className='flex items-center justify-between gap-5'>
-          <h4 className='line-clamp-2 text-xs sm:text-base font-semibold text-text-primary'>{title || 'Untitled'}</h4>
+          <h4 className='line-clamp-2 text-xs font-semibold text-text-primary sm:text-base'>{title || 'Untitled'}</h4>
           {priority !== 'None' && (
             <span
               className={`absolute right-2 top-2 rounded-md px-2 py-0.5 text-center text-[10px] font-medium text-white ${PRIORITY_COLORS[priority]?.bg}`}
@@ -58,6 +69,20 @@ export default function Task({ task, onDelete, onEdit, layout,group, canManipula
           {[
             { icon: <MdDriveFileRenameOutline />, onClick: onEdit },
             { icon: <IoTrashOutline />, onClick: onDelete },
+            {
+              icon: <FaRegClone size={14} />,
+              onClick: () =>
+                onClone({
+                  title,
+                  description,
+                  dueDate,
+                  priority,
+                  status,
+                  intern_id: assignee?.id || null,
+                  project_id: project,
+                  assignee
+                }),
+            },
           ].map((b, i) => (
             <button
               className='px-2 py-1 text-text-primary transition-colors duration-300 hover:bg-background-primary'
@@ -74,13 +99,13 @@ export default function Task({ task, onDelete, onEdit, layout,group, canManipula
 }
 
 function Assignee({ assignee }) {
-  const { firstName, lastName, avatar,gender } = assignee || {};
+  const { firstName, lastName, avatar, gender } = assignee || {};
 
   return typeof assignee !== 'object' ? (
     <span className='text-xs font-medium text-text-secondary'>N/A</span>
   ) : (
     <ToolTip content={<span>{`${firstName} ${lastName}`}</span>}>
-      <Avatar custom={{ avatar,gender }} className='h-7 w-7' alt={`${firstName} ${lastName}`} />
+      <Avatar custom={{ avatar, gender }} className='h-7 w-7' alt={`${firstName} ${lastName}`} />
     </ToolTip>
   );
 }

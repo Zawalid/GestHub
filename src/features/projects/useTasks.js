@@ -16,7 +16,7 @@ export function useTask(id) {
   const { data, error, isPending } = useQuery({
     queryKey: ['task', id],
     queryFn: () => getTask(id),
-    enabled : !!id,
+    enabled: !!id,
   });
 
   return { task: data, error, isLoading: isPending };
@@ -25,7 +25,7 @@ export function useTask(id) {
 // Mutations
 
 const onSuccess = (task, queryClient) =>
-  queryClient.invalidateQueries({ queryKey: ['projects', String(task?.project)] });
+  queryClient.invalidateQueries({ queryKey: ['projects'] });
 
 export const useAddTask = () =>
   useMutate({
@@ -36,6 +36,8 @@ export const useAddTask = () =>
     errorMessage: 'Failed to add task',
     onSuccess,
   });
+
+
 
 export const useUpdateTask = () =>
   useMutate({

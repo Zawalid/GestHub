@@ -7,8 +7,8 @@ export function Logo({ to = '/', className }) {
   if (to)
     return (
       <Link to={to} className={className}>
-        <img src={settings?.appLogo?.src || '/SVG/logo.svg'} alt='Logo' className='h-8' />
+        <img src={settings?.appLogo?.src } alt='Logo' className='h-8' />
       </Link>
     );
-  return <img src='/SVG/logo.svg' alt='Logo' className={className} />;
+  return <img src={settings?.appLogo?.src } alt='Logo' className={className} />;
 }

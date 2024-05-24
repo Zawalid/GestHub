@@ -6,10 +6,8 @@ import {
   FaUnderline,
   FaCode,
   FaHeading,
-  FaParagraph,
   FaListUl,
   FaListOl,
-  FaQuoteRight,
   FaAlignLeft,
   FaAlignCenter,
   FaAlignRight,
@@ -24,7 +22,7 @@ const render = (buttons, size) => {
     if (custom) return cloneElement(custom, { key: i });
     return (
       <ToolTip key={toolTip} content={toolTip}>
-        <Button onClick={onClick} disabled={disabled} state={active ? 'active' : ''} shape='icon' size={size}>
+        <Button onClick={onClick} disabled={disabled} state={active ? 'active' : ''} shape='icon' size={size} className=''>
           {icon}
         </Button>
       </ToolTip>
@@ -110,9 +108,9 @@ const Headings = ({ editor, size }) => {
               .run()
           }
         >
-          <span className='items- flex'>
+          <span className='items-baseline flex'>
             <FaHeading size={14} />
-            <span className='text-[10px] font-bold'>{i + 1}</span>
+            <span className='text-xs font-bold'>{i + 1}</span>
           </span>
         </DropDown.Option>
       ))}
@@ -153,13 +151,6 @@ export default function Menubar({ editor, size }) {
       icon: <FaUnderline />,
     },
     {
-      toolTip: 'Code',
-      onClick: () => editor.chain().focus().toggleCode().run(),
-      disabled: !editor.can().chain().focus().toggleCode().run(),
-      active: editor.isActive('code'),
-      icon: <FaCode />,
-    },
-    {
       custom: <AddLink editor={editor} size={size} />,
     },
     {
@@ -173,12 +164,6 @@ export default function Menubar({ editor, size }) {
       custom: <Headings editor={editor} size={size} />,
     },
     {
-      toolTip: 'Paragraph',
-      onClick: () => editor.chain().focus().setParagraph().run(),
-      active: editor.isActive('paragraph'),
-      icon: <FaParagraph />,
-    },
-    {
       toolTip: 'Bullets',
       onClick: () => editor.chain().focus().toggleBulletList().run(),
       active: editor.isActive('bulletList'),
@@ -189,12 +174,6 @@ export default function Menubar({ editor, size }) {
       onClick: () => editor.chain().focus().toggleOrderedList().run(),
       active: editor.isActive('orderedList'),
       icon: <FaListOl />,
-    },
-    {
-      toolTip: 'Blockquote',
-      onClick: () => editor.chain().focus().toggleBlockquote().run(),
-      active: editor.isActive('blockquote'),
-      icon: <FaQuoteRight />,
     },
     {
       toolTip: 'Horizontal Rule',
@@ -220,15 +199,15 @@ export default function Menubar({ editor, size }) {
       icon: <FaAlignRight />,
     },
     {
-      toolTip: 'Clear Content',
-      onClick: () => editor.commands.clearContent(),
-      icon: <FaTextSlash />,
-    },
-    {
       custom: (
         <div className='flex flex-1 justify-end gap-2'>
           {render(
             [
+              {
+                toolTip: 'Clear Content',
+                onClick: () => editor.commands.clearContent(),
+                icon: <FaTextSlash />,
+              },
               {
                 toolTip: 'Undo',
                 onClick: () => editor.chain().undo().run(),
@@ -250,7 +229,7 @@ export default function Menubar({ editor, size }) {
   ];
 
   return (
-    <div className='flex w-full flex-wrap gap-2 border-b border-border p-2 transition-[inset] duration-300'>
+    <div className='flex w-full overflow-auto gap-2 border-b border-border p-2 transition-[inset] duration-300'>
       {render(buttons, size)}
     </div>
   );

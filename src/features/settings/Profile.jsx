@@ -8,6 +8,7 @@ import { FileView } from '@/components/ui/FileView';
 import { useUploadFile } from '@/hooks/useUploadFile';
 import Avatar from '@/components/ui/Avatar';
 import { Button } from '@/components/ui';
+import { HiMiniXMark } from 'react-icons/hi2';
 
 export default function Profile() {
   const [isCvOpen, setIsCvOpen] = useState(false);
@@ -16,18 +17,17 @@ export default function Profile() {
 
   const defaultValues = {
     avatar: user?.avatar,
-    firstName: user?.firstName ,
-    lastName: user?.lastName ,
-    email: user?.email ,
-    phone: user?.phone ,
+    firstName: user?.firstName,
+    lastName: user?.lastName,
+    email: user?.email,
+    phone: user?.phone,
     // Conditionally : if the user is and intern/user
     ...(['intern', 'user'].includes(user?.role) && {
-      academicLevel: user?.academicLevel ,
-      establishment: user?.establishment ,
+      academicLevel: user?.academicLevel,
+      establishment: user?.establishment,
       cv: user?.cv,
     }),
   };
-
 
   const {
     Form,
@@ -95,8 +95,6 @@ export default function Profile() {
     gridLayout: true,
   });
 
-
-
   return (
     <ModalFormLayout
       submitButton={{
@@ -128,27 +126,28 @@ function ProfileAvatar({ avatar, onChange, disabled, role }) {
 
   return (
     <div className='grid grid-cols-[7rem_auto] items-center gap-5'>
-      <Avatar className='h-28 w-28' custom={{ avatar: avatar?.src, role }} alt={name} />
+      <div className='relative'>
+        <Avatar className='h-28 w-28' custom={{ avatar: avatar?.src, role }} />
+        <Button
+          shape='icon'
+          color='red'
+          size='small'
+          className={`absolute -right-1 top-1 rounded-full text-base shadow-md transition-transform duration-300 ${disabled || !avatar?.src ? 'scale-0' : 'scale-100'}`}
+          // disabled={disabled}
+          onClick={() => onChange({ src: null, file: null })}
+        >
+          <HiMiniXMark />
+        </Button>
+      </div>
       <div>
-        <div className='flex w-fit flex-wrap gap-x-5 gap-y-2'>
-          <Button
-            type='outline'
-            className='min-w-[132px] flex-1 disabled:text-text-disabled disabled:hover:bg-background-disabled md:min-w-max'
-            disabled={disabled}
-            onClick={openFilePicker}
-          >
-            Change Avatar
-          </Button>
-          <Button
-            color='red'
-            className='min-w-[132px] flex-1 md:min-w-max'
-            disabled={disabled || !avatar?.src}
-            onClick={() => onChange({ src: null, file: null })}
-          >
-            Remove Avatar
-          </Button>
-        </div>
-
+        <Button
+          type='outline'
+          className='disabled:text-text-disabled disabled:hover:bg-background-disabled'
+          disabled={disabled}
+          onClick={openFilePicker}
+        >
+          Upload Avatar
+        </Button>
         <p className='mb-1 mt-3 text-xs text-text-tertiary'>At least 80x80 px recommended.</p>
         <p className='text-xs text-text-tertiary'>
           {options.accept.map((type) => type.replace('.', '').toUpperCase()).join(', ')} are allowed (Max size of 5MB)

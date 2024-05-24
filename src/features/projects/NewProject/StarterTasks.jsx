@@ -80,7 +80,7 @@ function TasksList({ tasks, setTasks, setCurrentTask, setCurrentTab, display }) 
                 setCurrentTab('add');
               }}
               onDelete={(task) => setTasks((prev) => prev.filter((t) => t.id !== task.id))}
-              onUpdate={(task) => setTasks((prev) => prev.map((t) => (t.id === task.id ? task : t)))}
+              onClone={(task) => setTasks((prev) => [...prev, { id: getIncrementedID(tasks), ...task }])}
               isCreatingProject={true}
             />
           </div>
@@ -227,12 +227,12 @@ export function UsersDropDown({ users, name, value, setValue, defaultVal }) {
         }}
       >
         {users?.map((user) => {
-          const { id, firstName, lastName, email, avatar,gender } = user;
+          const { id, firstName, lastName, email, avatar, gender } = user;
           return (
             <DropDown.Option
               size='small'
               key={id}
-              onClick={() => setValue({ id, firstName, lastName, email, avatar,gender })}
+              onClick={() => setValue({ id, firstName, lastName, email, avatar, gender })}
               isCurrent={user === value}
             >
               <Intern intern={user} />

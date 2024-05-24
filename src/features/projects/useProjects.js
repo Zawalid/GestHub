@@ -15,7 +15,10 @@ const getAdditionalProjectData = (project) => {
     completedTasks,
     progress,
     teamCount: project.teamMembers.length,
-    tasks: project.tasks.map((task) => ({ ...task, assignee: { ...task.assignee, ...formatUserData(task.assignee) } })),
+    tasks: project.tasks.map((task) => ({
+      ...task,
+      assignee: task.assignee === 'None' ? 'None' : { ...task.assignee, ...formatUserData(task.assignee) },
+    })),
   };
 };
 

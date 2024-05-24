@@ -8,6 +8,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Summary } from './Summary';
 import { useAddProject } from '../useProjects';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { filterObject } from '@/utils/helpers';
 
 const steps = [
   {
@@ -84,7 +85,7 @@ export default function NewProject() {
 
   const createProject = () => {
     const project = {
-      ...projectData['Basic Info'],
+      ...filterObject(projectData['Basic Info'],['supervisor'],'exclude'),
       status: 'Not Started',
       tasks: projectData['Starter Tasks'],
       teamMembers: projectData['Team Members'].map((t) => t.id),

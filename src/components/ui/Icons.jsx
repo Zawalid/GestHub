@@ -75,6 +75,7 @@ export {
   FaGithub,
   FaGoogleDrive,
   FaPaste,
+  FaRegClone 
 } from 'react-icons/fa6';
 export { LuCalendarX, LuUser, LuUpload, LuClipboardList, LuListTodo, LuPlus } from 'react-icons/lu';
 export { LiaUserTieSolid, LiaClipboardListSolid } from 'react-icons/lia';

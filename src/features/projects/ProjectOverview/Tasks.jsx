@@ -90,9 +90,9 @@ export default function Tasks() {
     <div className={`flex-1 overflow-auto pr-2 ${isProjectOverdue ? 'opacity-50' : ''}`}>
       <DragDropContext onDragEnd={handleDragEnd}>
         <div
-          className={` h-full w-full ${
+          className={`h-full w-full ${
             layout === 'board'
-              ? 'grid  grid-cols-[repeat(3,100%)] gap-5 mobile:grid-cols-[repeat(3,minmax(300px,1fr))] '
+              ? 'grid grid-cols-[repeat(3,100%)] gap-5 mobile:grid-cols-[repeat(3,minmax(300px,1fr))] '
               : 'flex flex-col gap-8'
           }`}
           ref={parent}
@@ -108,6 +108,7 @@ export default function Tasks() {
               onAdd={() => setCurrentGroup(group)}
               onEdit={(task) => setCurrentTask(task)}
               onDelete={onDeleteTask}
+              onClone={onAddTask}
               layout={layout}
               canManipulateTasks={canManipulateTasks}
             />
@@ -156,7 +157,7 @@ export default function Tasks() {
   );
 }
 
-function TasksGroup({ group, onAdd, onEdit, onDelete, layout, canManipulateTasks }) {
+function TasksGroup({ group, onAdd, onEdit, onDelete, onClone, layout, canManipulateTasks }) {
   const [parent] = useAutoAnimate({ duration: 400 });
 
   const droppable = () => {
@@ -177,6 +178,7 @@ function TasksGroup({ group, onAdd, onEdit, onDelete, layout, canManipulateTasks
               group={group}
               onEdit={onEdit}
               onDelete={onDelete}
+              onClone={onClone}
               isDragging={snapshot.isDraggingOver}
               layout={layout}
               canManipulateTasks={canManipulateTasks}
@@ -227,7 +229,7 @@ function TasksGroup({ group, onAdd, onEdit, onDelete, layout, canManipulateTasks
   );
 }
 
-function TasksList({ group, onEdit, onDelete, isDragging, layout, canManipulateTasks }) {
+function TasksList({ group, onEdit, onDelete, onClone, isDragging, layout, canManipulateTasks }) {
   const { user } = useUser();
 
   if (!group.tasks.length && !isDragging) {
@@ -263,6 +265,7 @@ function TasksList({ group, onEdit, onDelete, isDragging, layout, canManipulateT
             task={task}
             onEdit={onEdit}
             onDelete={onDelete}
+            onClone={onClone}
             group={group}
             layout={layout}
             canManipulateTasks={canManipulateTasks}
