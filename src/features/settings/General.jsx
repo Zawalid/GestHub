@@ -10,12 +10,12 @@ export default function General() {
 
   const defaultValues = {
     appLogo: settings?.appLogo,
-    appName: settings?.appName || 'App Name',
-    companyName: settings?.companyName || 'Company Name',
-    email: settings?.email || 'exemple@gmail.com',
-    phone: settings?.phone || '0611223344',
-    location: settings?.location || 'Your Location',
-    maps: settings?.maps || 'https://www.google.com/maps/embed?',
+    appName: settings?.appName,
+    companyName: settings?.companyName,
+    email: settings?.email,
+    phone: settings?.phone,
+    location: settings?.location,
+    maps: settings?.maps,
     facebook: settings?.facebook,
     twitter: settings?.twitter,
     instagram: settings?.instagram,
@@ -62,10 +62,11 @@ export default function General() {
           },
         },
       },
-      ...socials.map((s) => ({
+      ...socials.map((s, i) => ({
         name: s.name.toLocaleLowerCase(),
         label: s.name,
         placeholder: s.href,
+        ...(i === socials.length - 1 && { parentClassName: 'xs:col-span-2' }),
         rules: {
           pattern: {
             value: new RegExp(`^((http|https):\\/\\/)?(www\\.)?${s.name.toLocaleLowerCase()}\\.com/.*$`),
@@ -86,7 +87,6 @@ export default function General() {
     onSubmit: (data) => {
       const formData = new FormData();
       for (const el in data) {
-        console.log(data[el]);
         formData.append(el, el === 'appLogo' ? data[el].file : data[el] || '');
       }
       mutate(formData);
@@ -110,8 +110,8 @@ export default function General() {
     >
       <div className='space-y-5'>
         <h3 className='mb-3 font-bold text-text-secondary'>Basic Info</h3>
-        <div className='flex flex-col mobile:flex-row items-center gap-5'>
-          <div className='space-y-2 w-fit'>
+        <div className='flex flex-col items-center gap-5 mobile:flex-row'>
+          <div className='w-fit space-y-2'>
             <div className='group relative overflow-hidden rounded-lg'>
               <button
                 className='left 0 absolute top-0 grid h-full w-full place-content-center bg-background-secondary opacity-0 transition-opacity duration-300 group-hover:opacity-80 '
@@ -125,7 +125,7 @@ export default function General() {
               />
             </div>
           </div>
-          <div className='grid w-full xs:grid-cols-2 gap-5'>
+          <div className='grid w-full gap-5 xs:grid-cols-2'>
             {formInputs['appName']}
             {formInputs['companyName']}
             {formInputs['email']}
@@ -135,7 +135,7 @@ export default function General() {
       </div>
       <div>
         <h3 className='mb-3 font-bold text-text-secondary'>Location</h3>
-        <div className='grid sm:grid-cols-2 items-center gap-5'>
+        <div className='grid items-center gap-5 sm:grid-cols-2'>
           <div className='space-y-3'>
             {formInputs['location']}
             {formInputs['maps']}
@@ -162,7 +162,7 @@ export default function General() {
       </div>
       <div>
         <h3 className='mb-3 font-bold text-text-secondary'>Social Media</h3>
-        <div className='grid xs:grid-cols-2 items-center gap-x-5 gap-y-3'>
+        <div className='grid items-center gap-x-5 gap-y-3 xs:grid-cols-2'>
           {socials?.map((s) => formInputs[s.name.toLocaleLowerCase()])}
         </div>
       </div>

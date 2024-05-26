@@ -50,7 +50,7 @@ function Links() {
       {[
         { label: 'home', path: '/' },
         { label: 'offers', path: '/offers' },
-        { label: 'about', path: '#about' },
+        { label: 'about', path: '/about' },
       ].map((route) => (
         <NavLink key={route.label} to={route.path} className='group'>
           <li className='relative flex items-center gap-3 text-sm text-text-secondary transition-all duration-300 hover:font-semibold hover:text-text-primary group-[.active]:font-semibold group-[.active]:text-text-primary '>

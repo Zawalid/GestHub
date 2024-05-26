@@ -91,6 +91,14 @@
   @apply h-full p-0 !important;
 }
 
+.tippy-content {
+  ul,
+  ol {
+    @apply m-0 p-2 !important;
+    list-style: none !important;
+  }
+}
+
 /* Tooltip arrow */
 .tippy-box[data-theme~='custom'][data-placement^='top'] > .tippy-arrow::before {
   @apply border-t-background-secondary;

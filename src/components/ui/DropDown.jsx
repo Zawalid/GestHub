@@ -60,7 +60,7 @@ export function DropDown({
 
   return (
     <Tippy
-      content={<ul className='grid gap-1 p-2'>{children}</ul>}
+      content={<ul className='grid gap-1 '>{children}</ul>}
       className={cn(
         'dropdown rounded-md border border-border bg-background-primary p-0 shadow-md',
         defaultOptions.className,

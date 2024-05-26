@@ -7,20 +7,20 @@ import { useUser } from '@/hooks/useUser';
 import Profile from './Profile';
 import Password from './Password';
 import General from './General';
-import Editor from '@/components/shared/Editor/Editor';
+import About from './About';
 
 export default function Settings({ isOpen, onClose }) {
-  const [currentTab, setCurrentTab] = useState('editor');
+  const [currentTab, setCurrentTab] = useState('about');
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [key, setKey] = useState();
 
   useEffect(() => {
-    setCurrentTab('editor');
+    setCurrentTab('about');
     setKey(Math.random());
   }, [isOpen]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} className='sm:flex-row lg:h-5/6 lg:w-5/6 md:border '>
+    <Modal isOpen={isOpen} onClose={onClose} className='sm:flex-row md:border lg:h-5/6 lg:w-5/6 '>
       <div className='absolute left-0 top-0 z-10 flex w-full justify-between border-b border-border bg-background-primary px-5 py-2 sm:left-[200px] sm:w-[calc(100%-200px)]'>
         <h3 className='text-lg font-bold capitalize text-text-primary sm:text-xl'>{currentTab}</h3>
         <div className='z-50 flex gap-2'>
@@ -53,11 +53,7 @@ function Content({ currentTab }) {
     password: <Password />,
     ...(user?.role === 'super-admin' && {
       general: <General />,
-      editor: (
-        <div className='flex-1 overflow-auto'>
-          <Editor />
-        </div>
-      ),
+      about: <About />,
     }),
   };
 

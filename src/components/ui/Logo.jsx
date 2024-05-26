@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 export function Logo({ to = '/', className }) {
   const { settings } = useSettings();
 
+  if(!settings?.appLogo?.src) return
+
   if (to)
     return (
       <Link to={to} className={className}>

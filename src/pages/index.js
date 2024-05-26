@@ -11,3 +11,6 @@ export { NotFound } from './NotFound';
 export { HomePage } from './HomePage';
 export { Login } from './auth/Login';
 export { Register } from './auth/Register';
+export { About } from './About';
+export { Users } from './Users';
+export { Sessions } from './Sessions';

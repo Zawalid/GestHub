@@ -33,8 +33,7 @@ export function useLogin() {
   const { mutate, isPending, error } = useMutation({
     mutationKey: ['login'],
     mutationFn: ({ email, password }) => login(email, password),
-    onSuccess: (data) => 
-      redirect("Logged in successfully. You'll be redirected now.", data?.role),
+    onSuccess: (data) => redirect("Logged in successfully. You'll be redirected now.", data?.role),
     onError: (error) => toast.error(error.message),
   });
 
@@ -120,14 +119,29 @@ export function useUser(reason) {
 }
 
 export function useSettings() {
-  const { data, error, isPending } = useQuery({
+  const { data, error, isPending, isFetching } = useQuery({
     queryKey: ['settings'],
     queryFn: getSettings,
     retry: 1,
   });
 
+  const settings = data ? { ...data, appLogo: { src: getFile(data, 'appLogo') || '/SVG/logo.svg', file: null } } : null;
+
+  if (settings) localStorage.setItem('settings', JSON.stringify(settings));
+
+  if (isFetching && !settings) {
+    const localSettings = localStorage.getItem('settings');
+    if (localSettings) {
+      return {
+        settings: JSON.parse(localSettings),
+        isLoading: false,
+        error,
+      };
+    }
+  }
+
   return {
-    settings: data ? { ...data, appLogo: { src: getFile(data, 'appLogo') || '/SVG/logo.svg', file: null } } : null,
+    settings,
     isLoading: isPending,
     error,
   };

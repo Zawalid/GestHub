@@ -64,7 +64,9 @@ export function ErrorTooltip({ message }) {
       placement='top'
       className=' rounded-lg bg-red-500 p-2 text-xs font-semibold text-white'
     >
-      <span className={`cursor-pointer text-lg text-red-500 transition-transform duration-300 ${message ? 'scale-100' : 'scale-0'}`}>
+      <span
+        className={`cursor-pointer text-lg text-red-500 transition-transform duration-300 ${message ? 'scale-100' : 'scale-0'}`}
+      >
         <MdError />
       </span>
     </Tippy>
@@ -91,6 +93,7 @@ function Icon({ icon, className = '' }) {
  * @param {React.ReactNode} [props.children] - The children nodes of the InputField.
  * @param {string} [props.type] - The type of the input field. This can be 'text', 'password', 'email', etc.
  * @param {string} [props.className] - Additional CSS classes to apply to the input field.
+ * @param {string} [props.parentClassName] - Additional CSS classes to apply to the input field parent element
  * @param {string} [props.name] - The name of the input field.
  * @param {string} [props.errorMessage] - The error message to display.
  * @param {string} [props.label] - The label for the input field.
@@ -103,13 +106,25 @@ function Icon({ icon, className = '' }) {
  */
 export const InputField = forwardRef(
   (
-    { children, type, className, name, errorMessage, label, showIcon = true, iconClassName, customIcon, ...props },
+    {
+      children,
+      type,
+      className,
+      parentClassName = '',
+      name,
+      errorMessage,
+      label,
+      showIcon = true,
+      iconClassName,
+      customIcon,
+      ...props
+    },
     ref
   ) => {
     const icon = showIcon && (icons[name] || icons[type]);
 
     return (
-      <div className='space-y-1.5'>
+      <div className={`space-y-1.5 ${parentClassName}`}>
         <Label label={label} message={errorMessage} />
         <div
           className={cn(

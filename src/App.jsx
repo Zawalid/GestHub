@@ -22,12 +22,13 @@ import {
   Register,
   HomePageOffers,
   Admins,
+  Users,
+  Sessions,
+  About,
 } from './pages';
 
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { useUser } from './hooks/useUser';
-import { Users } from './pages/Users';
-import { Sessions } from './pages/Sessions';
 
 const routesElements = {
   overview: <Overview />,
@@ -74,6 +75,7 @@ export default function App() {
               <Route path='offers' element={<HomePageOffers />}>
                 <Route path=':id' element={<HomePageOffers />} />
               </Route>
+              <Route path='about' element={<About />} />
             </Route>
             {/* App */}
             {user?.role !== 'user' && (

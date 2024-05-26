@@ -2,7 +2,7 @@
 import { InputField } from '@/components/ui';
 import { PasswordInput } from '@/components/ui/PasswordInput';
 import { RULES } from '@/utils/constants';
-import { objectDeepEquals } from '@/utils/helpers';
+import { filterObject, objectDeepEquals } from '@/utils/helpers';
 import { cloneElement, isValidElement, useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -128,6 +128,7 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
           <Custom Component={customComponent} {...{ field, setValue, getValue }} />
         ) : (
           <Input
+            key={name}
             placeholder={placeholder || label}
             value={format?.(values?.[name]) || values?.[name] || ''}
             onChange={(e) => {
@@ -250,8 +251,15 @@ export function useForm({ fields, defaultValues: def, gridLayout, onSubmit, subm
   };
 }
 
-const Input = ({ type, name, ...props }) =>
-  type === 'password' ? <PasswordInput {...props} /> : <InputField {...props} name={name} type={type} />;
+const Input = ({ type, name, ...props }) => {
+  const filteredProps = filterObject(props, ['format', 'rules'], 'exclude');
+  
+  return type === 'password' ? (
+    <PasswordInput {...filteredProps} />
+  ) : (
+    <InputField {...filteredProps} name={name} type={type} />
+  );
+};
 
 const Custom = ({ Component, ...props }) =>
   isValidElement(Component) ? cloneElement(Component, props) : Component(props);

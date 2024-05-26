@@ -1,6 +1,6 @@
 import { DropDown } from './ui';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { Link,  } from 'react-router-dom';
 import { useUser } from '../hooks';
 import { useLogout } from '@/hooks/useUser';
 import { FiLogOut, FiUserCheck } from 'react-icons/fi';
@@ -11,7 +11,6 @@ import Avatar from './ui/Avatar';
 export function AuthSwitcher() {
   const { t } = useTranslation();
   const { logout } = useLogout();
-  const navigate = useNavigate();
   const { user } = useUser();
 
   return (
@@ -29,15 +28,19 @@ export function AuthSwitcher() {
           </DropDown.Title>
           <DropDown.Divider />
           {user?.role === 'user' ? (
-            <DropDown.Option onClick={() => navigate('/applications')}>
-              <LuClipboardList />
-              My Applications
-            </DropDown.Option>
+            <Link to='/applications'>
+              <DropDown.Option>
+                <LuClipboardList />
+                My Applications
+              </DropDown.Option>
+            </Link>
           ) : (
-            <DropDown.Option onClick={() => navigate('/app')}>
-              <RxDashboard />
-              {t(`header.auth.dashboard`)}
-            </DropDown.Option>
+            <Link to='/app'>
+              <DropDown.Option>
+                <RxDashboard />
+                {t(`header.auth.dashboard`)}
+              </DropDown.Option>
+            </Link>
           )}
           <DropDown.Option onClick={logout}>
             <FiLogOut />
@@ -46,14 +49,18 @@ export function AuthSwitcher() {
         </>
       ) : (
         <>
-          <DropDown.Option onClick={() => navigate('/login')}>
-            <FiLogOut />
-            Log In
-          </DropDown.Option>
-          <DropDown.Option onClick={() => navigate('/register')}>
-            <FiUserCheck />
-            Create Account
-          </DropDown.Option>
+          <Link to='/login'>
+            <DropDown.Option>
+              <FiLogOut />
+              Log In
+            </DropDown.Option>
+          </Link>
+          <Link to='/register'>
+            <DropDown.Option>
+              <FiUserCheck />
+              Create Account
+            </DropDown.Option>
+          </Link>
         </>
       )}
     </DropDown>

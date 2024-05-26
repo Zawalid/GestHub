@@ -2,6 +2,7 @@ import { cloneElement } from 'react';
 import { PiGear, PiLockKey, PiUserCircle } from 'react-icons/pi';
 import { Overlay } from '../../components/ui/Modal';
 import { useUser } from '@/hooks/useUser';
+import { LuInfo } from 'react-icons/lu';
 
 export function Panel({ isOpen, onClose, currentTab, setCurrentTab }) {
   const { user } = useUser();
@@ -18,7 +19,7 @@ export function Panel({ isOpen, onClose, currentTab, setCurrentTab }) {
         {user?.role === 'super-admin' && (
           <>
             <Tab tabName='general' icon={<PiGear />} currentTab={currentTab} setCurrentTab={setCurrentTab} />
-            <Tab tabName='editor' icon={<PiLockKey />} currentTab={currentTab} setCurrentTab={setCurrentTab} />
+            <Tab tabName='about' icon={<LuInfo  />} currentTab={currentTab} setCurrentTab={setCurrentTab} />
           </>
         )}
       </div>

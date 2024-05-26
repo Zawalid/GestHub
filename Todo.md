@@ -46,7 +46,7 @@
 - [ ] Add translations to all the content
 - [ ] pages creation / update home page
 - [ ] settings
-- [ ] editor for about (TipTap)
+- [x] editor for about (TipTap)
 - [x] invalidate projects when updating tasks
 - [x] loading state of completed internship
 - [x] users table

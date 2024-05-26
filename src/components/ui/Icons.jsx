@@ -21,6 +21,9 @@ export {
   IoPeople,
   IoLocationOutline,
   IoFilter,
+  IoLocationSharp,
+  IoMail ,
+  IoMapOutline 
 } from 'react-icons/io5';
 export {
   PiCheckBold,
@@ -44,6 +47,7 @@ export {
   BsFillInfoCircleFill,
   BsSendFill,
   BsClipboard2Check,
+  BsTelephoneFill
 } from 'react-icons/bs';
 export {
   MdDriveFileRenameOutline,
@@ -77,7 +81,7 @@ export {
   FaPaste,
   FaRegClone 
 } from 'react-icons/fa6';
-export { LuCalendarX, LuUser, LuUpload, LuClipboardList, LuListTodo, LuPlus } from 'react-icons/lu';
+export { LuCalendarX, LuUser, LuUpload, LuClipboardList, LuListTodo, LuPlus, } from 'react-icons/lu';
 export { LiaUserTieSolid, LiaClipboardListSolid } from 'react-icons/lia';
 export { FiLogOut, FiSettings, FiPhone, FiCheck, FiUserCheck, FiUserX } from 'react-icons/fi';
 export { RiTeamLine } from 'react-icons/ri';

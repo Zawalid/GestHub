@@ -4,7 +4,7 @@ import { cn } from '../../utils/helpers';
 import { tv } from 'tailwind-variants';
 
 const button = tv({
-  base: 'transition-colors duration-300 flex font-medium',
+  base: 'transition-colors flex-shrink-0 duration-300 flex font-medium',
   variants: {
     color: {
       primary: 'bg-primary text-white hover:bg-primary-hover',

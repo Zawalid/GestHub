@@ -6,7 +6,8 @@
   }
 }
 
-.tiptap {
+.tiptap,
+.about {
   /* > * + * {
     @apply mt-3;
   } */
@@ -19,29 +20,28 @@
     @apply text-sm font-light text-text-tertiary;
     content: attr(data-placeholder);
   }
-  h1:not(.m-0),
-  h2:not(.m-0),
-  h3:not(.m-0),
-  h4:not(.m-0),
-  h5:not(.m-0),
-  h6:not(.m-0) {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-size: revert;
     margin: revert;
     font-weight: revert;
   }
-  .ProseMirror {
-    ul,
-    ol {
-      @apply m-[revert] px-5 py-0;
-      list-style: revert;
-    }
-    a {
-      color: #007bff;
-      text-decoration: none;
-      cursor: pointer;
-      &:hover {
-        text-decoration: underline;
-      }
+
+  ul,
+  ol {
+    @apply m-[revert] px-5 py-0;
+    list-style: revert;
+  }
+  a {
+    color: #007bff;
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
     }
   }
 

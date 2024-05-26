@@ -1,4 +1,3 @@
-import About from '@/components/homepage/About';
 import Hero from '@/components/homepage/Hero';
 import { renderOffersList } from '@/features/offers/OffersList';
 import { useVisibleOffers } from '@/features/offers/useOffers';
@@ -24,7 +23,6 @@ export function HomePage() {
     <>
       <Hero />
       <LatestOffers />
-      <About />
       {user?.role === 'user' && (
         <>
           <Applications />

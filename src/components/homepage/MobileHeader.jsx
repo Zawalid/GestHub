@@ -40,7 +40,7 @@ export function MobileHeader({ isOpen, onClose }) {
           {[
             { label: 'home', path: '/' },
             { label: 'offers', path: '/offers' },
-            { label: 'about', path: '#about' },
+            { label: 'about', path: '/about' },
             ...(user?.role === 'user' ? [{ label: 'Applications', path: '/applications' }] : []),
             ...(user && user?.role !== 'user' ? [{ label: 'Dashboard', path: '/app' }] : []),
           ].map(({ label, path }) => (
