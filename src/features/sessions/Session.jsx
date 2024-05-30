@@ -103,12 +103,12 @@ function ActivitiesList() {
       );
     }
     return (
-      <>
+      <div className='space-y-3 h-full' ref={parent}>
         {activities?.map((activity) => (
           <Activity key={activity.id} activity={activity} />
         ))}
         <Operations.ViewMore />
-      </>
+      </div>
     );
   };
 
@@ -117,14 +117,13 @@ function ActivitiesList() {
       <div className='mb-4 flex items-center justify-between gap-5'>
         <div className='flex items-center gap-2'>
           <Operations.DropDown>
-            {/* <Operations.SortBy /> */}
             <Operations.OrderBy />
           </Operations.DropDown>
           <Operations.Filter />
         </div>
         <Operations.Search />
       </div>
-      <div className='relative flex-1 space-y-3 overflow-y-auto overflow-x-hidden pr-2' ref={parent}>
+      <div className='relative flex-1 space-y-3 scroll overflow-y-auto overflow-x-hidden pr-2' >
         {render()}
       </div>
     </>

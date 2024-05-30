@@ -126,9 +126,9 @@ export default function PieChartStats({ data, title, legend, COLORS, className =
   );
 }
 
-export function Legend({ legend }) {
+export function Legend({ legend,className='' }) {
   return (
-    <div className='flex items-start flex-wrap justify-center gap-3 pt-2'>
+    <div className={`flex items-start flex-wrap justify-center gap-3 pt-2 ${className}`}>
       {legend.map((el) => (
         <div key={el.text} className='flex items-center gap-2'>
           <span className={`h-3 w-6 rounded-md ${el.color}`}></span>

@@ -1,6 +1,7 @@
-import { createContext, useCallback, useState } from 'react';
+import {  useCallback, useState } from 'react';
 import { PiWarningFill } from 'react-icons/pi';
 import { Modal, Button } from '@/components/ui';
+import { ModalContext } from '@/hooks/useConfirmationModal';
 
 const DEFAULT_OPTIONS = {
   message: '',
@@ -10,7 +11,6 @@ const DEFAULT_OPTIONS = {
   iconBg: '',
   buttonClassName: '',
 };
-export const ModalContext = createContext();
 
 export function ConfirmationModalProvider({ children }) {
   const [isModalOpen, setIsModalOpen] = useState(false);

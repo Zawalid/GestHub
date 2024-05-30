@@ -1,5 +1,6 @@
-import { useContext } from 'react';
-import { ModalContext } from '@/context/ConfirmationModal';
+import { createContext, useContext } from 'react';
+
+export const ModalContext = createContext();
 
 export function useConfirmationModal() {
   const context = useContext(ModalContext);

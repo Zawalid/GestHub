@@ -34,7 +34,7 @@ export function useLogin() {
   const { mutate, isPending, error } = useMutation({
     mutationKey: ['login'],
     mutationFn: ({ email, password }) => login(email, password),
-    onSuccess: (data) => redirect("Logged in successfully. You'll be redirected now.", data?.role),
+    onSuccess: (data) => redirect("Logged in successfully. You'll be redirected now.", data?.role || data?.data?.role),
     onError: (error) => toast.error(error.message),
   });
 
@@ -47,7 +47,8 @@ export function useRegister() {
   const { mutate, isPending, error } = useMutation({
     mutationKey: ['register'],
     mutationFn: (user) => register(user),
-    onSuccess: (data) => redirect("Registered in successfully. You'll be redirected now.", data?.role),
+    onSuccess: (data) =>
+      redirect("Registered in successfully. You'll be redirected now.", data?.role || data?.data?.role),
     onError: (error) => toast.error(error.message),
   });
 

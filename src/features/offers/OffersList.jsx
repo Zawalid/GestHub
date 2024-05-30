@@ -18,6 +18,9 @@ export const renderOffersList = ({ offers, isLoading, error, layout, query, appl
       {offers?.map((offer) => (
         <Offer key={offer.id} offer={offer} layout={layout} />
       ))}
+      <div className='col-span-full'>
+        <Operations.ViewMore color='tertiary' />
+      </div>
     </>
   );
 };
@@ -41,7 +44,7 @@ export default function OffersList({ hideFilter, onHomePage }) {
       </div>
 
       <div
-        className={`flex-1 gap-5 overflow-auto p-1 pr-2 ${
+        className={`scroll flex-1 gap-5 overflow-auto p-1 pr-2 ${
           layout === 'grid' && !isLoading
             ? 'grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] place-content-start sm:grid-cols-[repeat(auto-fill,minmax(350px,1fr))]'
             : 'flex flex-col'

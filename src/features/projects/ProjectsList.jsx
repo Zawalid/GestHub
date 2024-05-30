@@ -52,13 +52,15 @@ export default function ProjectsList() {
         {projects?.map((project) => (
           <Project key={project.id} project={project} layout={layout} />
         ))}
-        <Operations.ViewMore className='col-span-full' color='tertiary' />
+        <div className='col-span-full'>
+          <Operations.ViewMore color='tertiary' />
+        </div>
       </>
     );
   };
 
   return (
-    <div className='flex flex-1 flex-col gap-5'>
+    <div className='flex flex-1 flex-col overflow-hidden gap-5'>
       <div className='flex items-center justify-between gap-3'>
         <div className='flex items-center gap-3'>
           <Operations.DropDown>
@@ -71,7 +73,7 @@ export default function ProjectsList() {
       </div>
 
       <div
-        className={`h-full gap-5 ${
+        className={`scroll flex-1 gap-4 overflow-auto p-1 pr-2 ${
           layout === 'grid' && !isLoading
             ? 'grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] place-content-start sm:grid-cols-[repeat(auto-fill,minmax(310px,1fr))]'
             : 'flex flex-col'

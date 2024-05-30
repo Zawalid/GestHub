@@ -81,8 +81,9 @@ export {
   FaRegClone,
   FaChevronLeft,
   FaChevronRight,
+  FaRegCalendarCheck 
 } from 'react-icons/fa6';
-export { LuCalendarX, LuUser, LuUpload, LuClipboardList, LuListTodo, LuPlus } from 'react-icons/lu';
+export { LuCalendarX, LuUser, LuUpload, LuClipboardList, LuListTodo, LuPlus,LuTimerReset  } from 'react-icons/lu';
 export { LiaUserTieSolid, LiaClipboardListSolid } from 'react-icons/lia';
 export { FiLogOut, FiSettings, FiPhone, FiCheck, FiUserCheck, FiUserX } from 'react-icons/fi';
 export { RiTeamLine } from 'react-icons/ri';

@@ -80,12 +80,12 @@ function ApplicationsList() {
       );
     }
     return (
-      <>
+      <div className='space-y-3'  ref={parent}>
         {applications?.map((d) => (
           <Application key={d.id} application={d} />
         ))}
         <Operations.ViewMore />
-      </>
+      </div>
     );
   };
 
@@ -101,9 +101,9 @@ function ApplicationsList() {
         </div>
         <Operations.Search />
       </div>
-      <div className='relative flex-1 space-y-3 overflow-y-auto overflow-x-hidden pr-2' ref={parent}>
+      <div className='relative flex-1 space-y-3 scroll overflow-y-auto overflow-x-hidden pr-2'>
         {render()}
-      </div>{' '}
+      </div>
     </>
   );
 }

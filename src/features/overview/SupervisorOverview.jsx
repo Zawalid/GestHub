@@ -134,6 +134,7 @@ export function TasksAnalytics() {
           { text: 'Overdue', color: 'bg-red-500' },
           { text: 'Due', color: 'bg-yellow-500' },
         ]}
+        className='items-end'
       />
     </div>
   );

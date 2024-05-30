@@ -1,30 +1,28 @@
-import { IoNotificationsOutline } from 'react-icons/io5';
+import { IoTrashOutline, IoNotificationsOutline } from 'react-icons/io5';
 import { Button, DropDown } from '@/components/ui';
-import { useNavigate } from 'react-router-dom';
-import { useMarkAllNotificationsAsRead, useMarkNotificationAsRead, useNotifications } from './useNotifications';
+import {
+  useDeleteNotification,
+  useMarkAllNotificationsAsRead,
+  useMarkNotificationAsRead,
+  useNotifications,
+} from './useNotifications';
+import {
+  FaDiagramProject,
+  FaCalendarXmark,
+  FaRegCircleCheck,
+  LuListTodo,
+  FaRegCalendarCheck,
+  LuTimerReset,
+} from '@/components/ui/Icons';
+import { useState } from 'react';
 
 export function Notifications() {
   const { notifications, unreadNotifications, isLoading } = useNotifications();
-  const { mutate: markAsRead } = useMarkNotificationAsRead();
-  const { mutate: markAllAsRead } = useMarkAllNotificationsAsRead();
-  const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  const { mutate } = useMarkAllNotificationsAsRead();
 
-  // const notifications = useMemo(() => {
-  //   return applications
-  //     ?.filter((d) => d.status === 'Approved')
-  //     .toSorted((a, b) => new Date(b?.updated_at) - new Date(a?.updated_at))
-  //     ?.map((d) => ({
-  //       id: d.id,
-  //       icon: <FaRegCircleCheck />,
-  //       title: 'Your application has been accepted',
-  //       subtitle: d.offer,
-  //       time: getRelativeTime(d.updated_at),
-  //       isRead: d.isRead,
-  //     }));
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [applications, isOpen]);
-
-  // const unreadNotifications = notifications?.filter((n) => !n.isRead).map((n) => n.id);
+  const limit = 10;
+  const totalPages = Math.ceil(notifications?.length / limit);
 
   const render = () => {
     if (isLoading) {
@@ -41,29 +39,23 @@ export function Notifications() {
         </div>
       );
     }
-    return notifications?.map((notification, index) => {
-      const { id, title, subtitle, time, icon } = notification;
-
-      return (
-        <DropDown.Option
-          key={index}
-          className={unreadNotifications?.includes(id) ? 'bg-background-secondary' : 'hover:bg-background-disabled'}
-          onClick={() => {
-            unreadNotifications?.includes(id) && markAsRead(id);
-            navigate(`/applications/${id}`, { state: { source: window.location.pathname } });
-          }}
-        >
-          <div className='grid h-11 w-11 place-content-center rounded-full bg-green-600 text-white sm:text-xl'>
-            {icon}
-          </div>
-          <div className='flex-1 space-y-0.5'>
-            <h5 className='text-text-primary'>{title}</h5>
-            <h6 className='text-xs text-text-secondary'>{subtitle}</h6>
-            <p className='text-xs font-normal text-text-tertiary'>{time}</p>
-          </div>
-        </DropDown.Option>
-      );
-    });
+    return (
+      <>
+        {notifications?.slice(0, page * limit).map((notification, index) => (
+          <Notification key={index} notification={notification} unreadNotifications={unreadNotifications} />
+        ))}
+        {totalPages > 1 && (
+          <Button
+            color='tertiary'
+            size='small'
+            onClick={() => (page === totalPages ? setPage(1) : setPage(page + 1))}
+            className='mx-auto mt-3'
+          >
+            {page === totalPages ? 'View Less' : 'View More'}
+          </Button>
+        )}
+      </>
+    );
   };
 
   return (
@@ -91,7 +83,7 @@ export function Notifications() {
         <button
           className='text-xs font-medium text-text-secondary transition-colors duration-300 hover:text-text-tertiary disabled:text-text-disabled'
           disabled={notifications?.every((n) => n.isRead)}
-          onClick={markAllAsRead}
+          onClick={mutate}
         >
           Mark all as read
         </button>
@@ -99,6 +91,49 @@ export function Notifications() {
       <DropDown.Divider className='mb-2' />
       {render()}
     </DropDown>
+  );
+}
+
+const icons = {
+  newProject: { icon: <FaDiagramProject />, color: 'bg-orange-500' },
+  overdueProject: { icon: <FaCalendarXmark />, color: 'bg-red-500' },
+  completedProject: { icon: <FaRegCircleCheck />, color: 'bg-blue-500' },
+  newTask: { icon: <LuListTodo />, color: 'bg-yellow-500' },
+  overdueTask: { icon: <FaCalendarXmark />, color: 'bg-red-500' },
+  acceptedApplication: { icon: <FaRegCircleCheck />, color: 'bg-green-600' },
+  endingInternship: { icon: <LuTimerReset />, color: 'bg-teal-500' },
+  completedInternship: { icon: <FaRegCalendarCheck />, color: 'bg-purple-500' },
+};
+
+function Notification({ notification, unreadNotifications }) {
+  const { id, title, subtitle, time, icon } = notification;
+  const { mutate: markAsRead } = useMarkNotificationAsRead();
+  const { mutate } = useDeleteNotification();
+
+  return (
+    <DropDown.Option
+      className={unreadNotifications?.includes(id) ? 'bg-background-secondary' : 'hover:bg-background-disabled'}
+      onClick={() => {
+        unreadNotifications?.includes(id) && markAsRead(id);
+        // navigate(`/applications/${id}`, { state: { source: window.location.pathname } });
+      }}
+    >
+      <div className={`grid h-11 w-11 place-content-center rounded-full text-white sm:text-xl ${icons[icon]?.color}`}>
+        {icons[icon]?.icon}
+      </div>
+      <div className='flex-1 space-y-1'>
+        <div className='flex justify-between gap-2'>
+          <div className='space-y-0.5'>
+            <h5 className='text-text-primary'>{title}</h5>
+            {subtitle && <h6 className='text-xs text-text-secondary'>{subtitle}</h6>}
+          </div>
+          <Button shape='icon' size='small' onClick={() => mutate(id)}>
+            <IoTrashOutline />
+          </Button>
+        </div>
+        <p className='text-xs font-normal text-text-tertiary'>{time}</p>
+      </div>
+    </DropDown.Option>
   );
 }
 

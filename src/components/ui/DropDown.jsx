@@ -5,10 +5,13 @@ import { IoChevronDownOutline } from './Icons';
 import { cn } from '../../utils/helpers';
 
 const defaultOptions = {
+  theme: 'light',
   className: 'max-h-[200px]',
   placement: 'bottom-end',
   trigger: 'click',
   shouldCloseOnClick: true,
+  interactive: true,
+  arrow: false,
 };
 /**
  * DropDown component.
@@ -66,10 +69,10 @@ export function DropDown({
         defaultOptions.className,
         options?.className
       )}
-      theme='light'
+      theme={options?.theme || defaultOptions.theme}
       trigger={options?.trigger || defaultOptions.trigger}
-      interactive={true}
-      arrow={false}
+      interactive={options?.interactive || defaultOptions?.interactive}
+      arrow={options?.arrow || defaultOptions?.arrow}
       placement={options?.placement || defaultOptions.placement}
       onShow={(instance) => {
         setIsOpen?.(true);
@@ -99,7 +102,7 @@ function Option({ children, onClick, className = '', isDeleteButton, size = '', 
         disabled && 'disabled'
       )}
       onClick={(e) => {
-        e.stopPropagation();
+        // e.stopPropagation();
         disabled || onClick?.();
       }}
       id={id}

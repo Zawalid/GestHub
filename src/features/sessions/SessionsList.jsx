@@ -171,6 +171,8 @@ export default function SessionsList() {
         },
       ]}
       fieldsToSearch={['firstName', 'lastName', 'location']}
+      defaultSortBy='created_at'
+      defaultDirection='desc'
       downloadOptions={{
         csvFileName: 'Sessions',
         pdfFileName: 'Sessions',

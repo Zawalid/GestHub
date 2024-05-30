@@ -66,9 +66,7 @@ Array.prototype.search = function (query, fieldsToSearch) {
 };
 
 Array.prototype.customPaginate = function (page, limit) {
-  // const start = (page - 1) * limit;
   const end = page * limit;
-
   return this.slice(0, end);
 };
 // const constructFilterString = (filters) => {

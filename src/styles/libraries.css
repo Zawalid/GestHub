@@ -84,7 +84,7 @@
 }
 
 .tippy-box.notifications {
-  @apply min-w-[300px] max-w-full !important;
+  @apply min-w-[300px] sm:min-w-[420px] max-w-full !important;
 }
 
 .tippy-content {

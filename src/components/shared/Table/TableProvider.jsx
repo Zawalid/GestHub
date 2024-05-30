@@ -50,6 +50,8 @@ export function TableProvider({
   selectedOptions: defaultSelectedOptions,
   formDefaults,
   fieldsToSearch,
+  defaultSortBy = 'id',
+  defaultDirection = 'desc',
   downloadOptions,
   displayAllData,
 }) {
@@ -86,8 +88,8 @@ export function TableProvider({
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('search');
   const page = Number(searchParams.get('page')) || 1;
-  const sortBy = searchParams.get('sort') || 'id';
-  const direction = searchParams.get('dir') || 'desc';
+  const sortBy = searchParams.get('sort') || defaultSortBy;
+  const direction = searchParams.get('dir') || defaultDirection;
 
   // Variables
   const rows = data?.search(query, fieldsToSearch).customFilter(filters, 'AND').customSort(sortBy, direction, columns);
@@ -127,15 +129,13 @@ export function TableProvider({
 
   useEffect(() => {
     if (page === 1) searchParams.delete('page');
-    if (sortBy === 'id' && direction === 'desc') {
+    if (sortBy === defaultSortBy && direction === defaultDirection) {
       searchParams.delete('sort');
       searchParams.delete('dir');
     }
     if (!query) searchParams.delete('search');
     setSearchParams(searchParams);
-  }, [direction, page, searchParams, sortBy, query, setSearchParams]);
-
-  
+  }, [direction, page, searchParams, sortBy, query, setSearchParams, defaultSortBy, defaultDirection]);
 
   // Handlers
 

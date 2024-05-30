@@ -109,7 +109,11 @@ function Row({ row, visibleColumns, actions, canView = true, selected, hideRowAc
   };
 
   return (
-    <tr ref={parent} className={rowClassNames} onClick={handleRowClick}>
+    <tr
+      ref={parent}
+      className={rowClassNames}
+      onClick={handleRowClick}
+    >
       {/* If actions are provided and not hidden, render a Select component */}
       {actions && !hideRowActions && <Select id={row.profile_id || row.id} />}
       {/* If actions are provided and hidden, render a hidden Column */}
@@ -129,6 +133,7 @@ function Row({ row, visibleColumns, actions, canView = true, selected, hideRowAc
       {hiddenActionsContent && <td className='grid place-items-end px-6 py-3.5'>{hiddenActionsContent}</td>}
       {/* If actions are provided and hidden, and no hidden actions content is provided, render a hidden Column */}
       {actions && hideRowActions && !hiddenActionsContent && <Column hide={true} />}
+     
     </tr>
   );
 }

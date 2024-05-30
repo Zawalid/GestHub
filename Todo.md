@@ -44,7 +44,7 @@
 - [ ] Remove error message from error screen
 - [ ] Disable react devtools
 - [ ] Add translations to all the content
-- [ ] pages creation / update home page
+- [ ] update home page
 - [x] settings
 - [x] editor for about (TipTap)
 - [x] invalidate projects when updating tasks
@@ -54,10 +54,9 @@
 - [x] gendered avatars in tasks
 - [x] sessions table
 - [x] change loading spinner
-- [ ] better footer (credit)
+- [x] better footer (credit)
 - [ ] return animate-puls(e)
-- [ ] view more ui
-- [ ] swipe notification to delete it
+- [x] view more ui
 
 
 ---

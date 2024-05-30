@@ -1,6 +1,6 @@
 import { DropDown } from './ui';
 import { useTranslation } from 'react-i18next';
-import { Link,  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useUser } from '../hooks';
 import { useLogout } from '@/hooks/useUser';
 import { FiLogOut, FiUserCheck } from 'react-icons/fi';
