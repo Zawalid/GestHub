@@ -9,11 +9,11 @@ import { changeTitle } from '@/utils/helpers';
 export function Login() {
   const { t } = useTranslation();
   const { login, isLogging } = useLogin();
-  const {settings} = useSettings()
+  const { settings } = useSettings();
 
   useEffect(() => {
-    changeTitle('Log In')
-  },[])
+    changeTitle('Log In');
+  }, []);
 
   const {
     Form,
@@ -22,7 +22,7 @@ export function Login() {
     defaultValues: { email: '', password: '' },
     fields: [
       { name: 'email', type: 'email', label: t('form.email.label') },
-      { name: 'password', type: 'password', label: t('form.password.label'),rules : {pattern : null} },
+      { name: 'password', type: 'password', label: t('form.password.label'), rules: { pattern: null } },
     ],
     onSubmit: login,
     submitOnEnter: true,
@@ -30,9 +30,16 @@ export function Login() {
 
   return (
     <div className='relative flex h-full w-full flex-col justify-center gap-3 p-2 md:px-10 lg:px-20  '>
-      <h1 className='mb-8 text-2xl font-bold text-text-primary sm:text-3xl'>{t('form.welcome')} {settings?.appName}</h1>
+      <h1 className='mb-8 text-2xl font-bold text-text-primary sm:text-3xl'>
+        {t('form.welcome')} {settings?.appName}
+      </h1>
       {Form}
-      <Button className={'my-4 w-full self-end'} disabled={!isValid || isLogging} onClick={handleSubmit} isLoading={isLogging}>
+      <Button
+        className={'my-4 w-full self-end'}
+        disabled={!isValid}
+        onClick={() => !isLogging && handleSubmit()}
+        isLoading={isLogging}
+      >
         {isLogging ? 'Logging In...' : t('form.login')}
       </Button>
 

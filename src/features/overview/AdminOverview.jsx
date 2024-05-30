@@ -254,7 +254,7 @@ function OffersAnalytics() {
 
   const latestOffers = offers
     ?.filter((offer) => offer.applications?.length > 0)
-    .toSorted((a, b) => new Date(b?.publicationDate) - new Date(a?.publicationDate))
+    .toSorted((a, b) => new Date(b?.updated_at) - new Date(a?.updated_at))
     .slice(0, 7);
 
   const data = latestOffers?.map((offer) => {

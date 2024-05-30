@@ -15,8 +15,8 @@ export function Register() {
   const { settings } = useSettings();
 
   useEffect(() => {
-    changeTitle('Create Account')
-  },[])
+    changeTitle('Create Account');
+  }, []);
 
   const {
     Form,
@@ -79,7 +79,7 @@ export function Register() {
       {
         name: 'accept',
         customComponent: ({ getValue, setValue }) => (
-          <div className='md:col-span-2 mb-5 mt-10 flex items-center gap-3'>
+          <div className='mb-5 mt-10 flex items-center gap-3 md:col-span-2'>
             <CheckBox checked={getValue('accept')} onChange={(e) => setValue('accept', e.target.checked || null)} />
             <label className='text-sm font-medium text-text-tertiary'>
               {t('form.acceptTerms')} &nbsp;
@@ -107,7 +107,12 @@ export function Register() {
       </h1>
       {Form}
 
-      <Button className={'w-full'} disabled={!isValid || isRegistering} isLoading={isRegistering} onClick={handleSubmit}>
+      <Button
+        className={'w-full'}
+        disabled={!isValid}
+        isLoading={isRegistering}
+        onClick={() => !isRegistering && handleSubmit()}
+      >
         {isRegistering ? 'Registering...' : t('form.register')}
       </Button>
       <p className='mt-5 flex items-center justify-center gap-1 border-t border-border py-4 text-center text-text-primary'>

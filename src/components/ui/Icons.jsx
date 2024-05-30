@@ -22,7 +22,7 @@ export {
   IoLocationOutline,
   IoFilter,
   IoLocationSharp,
-  IoMail ,
+  IoMail,
 } from 'react-icons/io5';
 export {
   PiCheckBold,
@@ -46,7 +46,7 @@ export {
   BsFillInfoCircleFill,
   BsSendFill,
   BsClipboard2Check,
-  BsTelephoneFill
+  BsTelephoneFill,
 } from 'react-icons/bs';
 export {
   MdDriveFileRenameOutline,
@@ -78,9 +78,11 @@ export {
   FaGithub,
   FaGoogleDrive,
   FaPaste,
-  FaRegClone 
+  FaRegClone,
+  FaChevronLeft,
+  FaChevronRight,
 } from 'react-icons/fa6';
-export { LuCalendarX, LuUser, LuUpload, LuClipboardList, LuListTodo, LuPlus, } from 'react-icons/lu';
+export { LuCalendarX, LuUser, LuUpload, LuClipboardList, LuListTodo, LuPlus } from 'react-icons/lu';
 export { LiaUserTieSolid, LiaClipboardListSolid } from 'react-icons/lia';
 export { FiLogOut, FiSettings, FiPhone, FiCheck, FiUserCheck, FiUserX } from 'react-icons/fi';
 export { RiTeamLine } from 'react-icons/ri';
@@ -89,4 +91,4 @@ export { RxDashboard, RxViewVertical } from 'react-icons/rx';
 export { TbProgressCheck, TbFileSearch, TbProgress } from 'react-icons/tb';
 export { GrUserAdmin, GrMapLocation, GrPowerReset } from 'react-icons/gr';
 export { GoLink, GoUnlink } from 'react-icons/go';
-export { LiaUserPlusSolid,LiaUserMinusSolid ,LiaUserEditSolid  } from "react-icons/lia";
+export { LiaUserPlusSolid, LiaUserMinusSolid, LiaUserEditSolid } from 'react-icons/lia';

@@ -1,13 +1,22 @@
-import { DateTime } from 'luxon';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Rectangle } from 'recharts';
-import { FaCalendarXmark, FaDiagramProject, FaRegCircleCheck, IoPeople } from '@/components/ui/Icons';
+import { DateTime } from 'luxon';
+import {
+  FaCalendarXmark,
+  FaDiagramProject,
+  FaRegCircleCheck,
+  IoPeople,
+  FaChevronLeft,
+  FaChevronRight,
+  BsCalendar4Event,
+} from '@/components/ui/Icons';
 import { useProjects } from '@/features/projects/useProjects';
 import { checkIsOverdue, getIsoDate } from '@/utils/helpers';
 import { useTasks } from '@/features/projects/useTasks';
 import PieChartStats, { Legend, createCustomTooltip } from '@/features/overview/PieChart';
-import { Status } from '@/components/ui';
+import { Button, Status } from '@/components/ui';
 import { Stat } from './Stat';
-import { useNavigate } from 'react-router-dom';
 
 export default function SupervisorOverview() {
   const { projects, isLoading } = useProjects();
@@ -39,20 +48,28 @@ export default function SupervisorOverview() {
 export function TasksAnalytics() {
   const { tasks, isLoading } = useTasks();
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const [weekOffset, setWeekOffset] = useState(0);
+  const startOfWeek = DateTime.local().startOf('week').plus({ weeks: weekOffset });
 
   const data = days.map((day, i) => {
-    const tasksOnDay = tasks?.filter((task) => getIsoDate(task.created_at).weekday === i + 1);
+    const currentDay = startOfWeek.plus({ days: i });
+
+    const tasksOnDay = tasks?.filter((task) => getIsoDate(task.created_at).toISODate() === currentDay.toISODate());
     const completedTasksOnDay = tasks?.filter(
-      (task) => task.status === 'Done' && getIsoDate(task.updated_at).weekday === i + 1
+      (task) => task.status === 'Done' && getIsoDate(task.updated_at).toISODate() === currentDay.toISODate()
     );
-    const overdueTasks = tasks?.filter((t) => checkIsOverdue(t, 'task') && getIsoDate(t.dueDate).weekday === i + 1);
+    const overdueTasks = tasks?.filter(
+      (t) => checkIsOverdue(t, 'task') && getIsoDate(t.dueDate).toISODate() === currentDay.toISODate()
+    );
+    const dueTasks = tasks?.filter((t) => DateTime.fromISO(t.dueDate).toISODate() === currentDay.toISODate());
 
     return {
-      name: day.slice(0, 3),
+      name: DateTime.local().weekdayLong === day ? 'Today' : day.slice(0, 3),
       fullName: day,
       Added: tasksOnDay?.length,
       Completed: completedTasksOnDay?.length,
       Overdue: overdueTasks?.length,
+      Due: dueTasks?.length,
     };
   });
 
@@ -67,19 +84,29 @@ export function TasksAnalytics() {
     { key: 'Added', intro: 'Added' },
     { key: 'Completed', intro: 'Completed' },
     { key: 'Overdue', intro: 'Overdue' },
+    { key: 'Due', intro: 'Due' },
   ]);
 
   return (
-    <div className='relative min-h-[400px] grid gap-5 rounded-lg border border-border bg-background-secondary p-3'>
-      <div className='flex self-start justify-between flex-col items-center gap-2 sm:flex-row'>
+    <div className='relative grid min-h-[400px] rounded-lg border border-border bg-background-secondary p-3'>
+      <div className='mb-5 flex flex-col items-center justify-between gap-2 self-start sm:flex-row'>
         <h2 className='text-lg font-bold text-text-primary'>Weekly Tasks Progress</h2>
-        <Legend
-          legend={[
-            { text: 'Added', color: 'bg-blue-500' },
-            { text: 'Completed', color: 'bg-green-500' },
-            { text: 'Overdue', color: 'bg-red-500' },
-          ]}
-        />
+        <div className='flex items-center justify-between gap-4'>
+          <span className='text-xs font-medium text-text-secondary'>
+            {startOfWeek.toFormat('MM/dd/yyyy')} - {startOfWeek.plus({ days: 6 }).toFormat('MM/dd/yyyy')}
+          </span>
+          <div className='flex items-center gap-0.5'>
+            <Button shape='icon' size='small' onClick={() => setWeekOffset((w) => w - 1)}>
+              <FaChevronLeft />
+            </Button>
+            <Button shape='icon' size='small' disabled={weekOffset === 0} onClick={() => setWeekOffset(0)}>
+              <BsCalendar4Event />
+            </Button>
+            <Button shape='icon' size='small' onClick={() => setWeekOffset((w) => w + 1)}>
+              <FaChevronRight />
+            </Button>
+          </div>
+        </div>
       </div>
       {isLoading ? (
         <Status status='loading' />
@@ -96,9 +123,18 @@ export function TasksAnalytics() {
             <Bar dataKey='Added' fill='#3b82f6' legendType='circle' />
             <Bar dataKey='Completed' fill='#16a34a' legendType='circle' />
             <Bar dataKey='Overdue' fill='#ef4444' legendType='circle' />
+            <Bar dataKey='Due' fill='#f59e0b' legendType='circle' /> {/* New Bar component for "Due" statistic */}
           </BarChart>
         </ResponsiveContainer>
       )}
+      <Legend
+        legend={[
+          { text: 'Added', color: 'bg-blue-500' },
+          { text: 'Completed', color: 'bg-green-500' },
+          { text: 'Overdue', color: 'bg-red-500' },
+          { text: 'Due', color: 'bg-yellow-500' },
+        ]}
+      />
     </div>
   );
 }

@@ -36,7 +36,7 @@ function ContactForm() {
   const { mutate, isPending } = useContactUs();
   const {
     Form,
-    options: { handleSubmit },
+    options: { isValid, handleSubmit },
   } = useForm({
     defaultValues: {
       fullName: '',
@@ -84,7 +84,7 @@ function ContactForm() {
         </p>
       </div>
       {Form}
-      <Button color='secondary' isLoading={isPending} disabled={isPending} onClick={handleSubmit}>
+      <Button color='secondary' isLoading={isPending} disabled={!isValid} onClick={() => !isPending && handleSubmit()}>
         {isPending ? 'Sending' : 'Send'}
       </Button>
     </div>

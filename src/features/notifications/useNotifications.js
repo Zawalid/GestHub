@@ -9,7 +9,7 @@ export function useNotifications() {
   const { data, error, isPending } = useQuery({
     queryKey: ['notifications'],
     queryFn: getNotifications,
-    refetchInterval: 5000,
+    // refetchInterval: 5000,
   });
 
   const notifications = data?.notifications || [];

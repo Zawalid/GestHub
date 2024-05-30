@@ -117,15 +117,15 @@ export const checkDateInIntervals = (date, dateInterval) => {
   return Interval.fromDateTimes(interval.start, interval.end).contains(getIsoDate(date));
 };
 export const getTimelineDates = (startDate, endDate) => {
-  const today = DateTime.fromISO(DateTime.now().toISO());
-  const start = DateTime.fromISO(startDate);
-  const end = DateTime.fromISO(endDate);
+const today = DateTime.fromISO(DateTime.now().toISO()).startOf('day');
+const start = DateTime.fromISO(startDate).startOf('day');
+const end = DateTime.fromISO(endDate).startOf('day');
 
-  const currentDay = Math.ceil(today.diff(start, 'days').toObject().days);
-  const duration = Math.ceil(end.diff(start, 'days').toObject().days);
-  const daysLeft = Math.floor(end.diff(today, 'days').toObject().days);
-  const daysToStart = Math.ceil(start.diff(today, 'days').toObject().days);
-  const isOverdue = daysLeft <= 0;
+const currentDay = Math.ceil(today.diff(start, 'days').toObject().days);
+const duration = Math.ceil(end.diff(start, 'days').toObject().days);
+const daysLeft = Math.floor(end.diff(today, 'days').toObject().days);
+const daysToStart = Math.ceil(start.diff(today, 'days').toObject().days);
+const isOverdue = daysLeft < 0;
 
   return { currentDay, duration, daysLeft, daysToStart, isOverdue };
 };
