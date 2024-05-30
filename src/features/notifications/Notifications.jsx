@@ -99,14 +99,17 @@ const icons = {
   overdueProject: { icon: <FaCalendarXmark />, color: 'bg-red-500' },
   completedProject: { icon: <FaRegCircleCheck />, color: 'bg-blue-500' },
   newTask: { icon: <LuListTodo />, color: 'bg-yellow-500' },
+  completedTask: { icon: <FaRegCircleCheck />, color: 'bg-blue-500' },
   overdueTask: { icon: <FaCalendarXmark />, color: 'bg-red-500' },
   acceptedApplication: { icon: <FaRegCircleCheck />, color: 'bg-green-600' },
   endingInternship: { icon: <LuTimerReset />, color: 'bg-teal-500' },
   completedInternship: { icon: <FaRegCalendarCheck />, color: 'bg-purple-500' },
 };
 
+
+
 function Notification({ notification, unreadNotifications }) {
-  const { id, title, subtitle, time, icon } = notification;
+  const { id, activity, object, time, action } = notification;
   const { mutate: markAsRead } = useMarkNotificationAsRead();
   const { mutate } = useDeleteNotification();
 
@@ -118,14 +121,14 @@ function Notification({ notification, unreadNotifications }) {
         // navigate(`/applications/${id}`, { state: { source: window.location.pathname } });
       }}
     >
-      <div className={`grid h-11 w-11 place-content-center rounded-full text-white sm:text-xl ${icons[icon]?.color}`}>
-        {icons[icon]?.icon}
+      <div className={`grid h-11 w-11 place-content-center rounded-full text-white sm:text-xl ${icons[action]?.color}`}>
+        {icons[action]?.icon}
       </div>
       <div className='flex-1 space-y-1'>
         <div className='flex justify-between gap-2'>
           <div className='space-y-0.5'>
-            <h5 className='text-text-primary'>{title}</h5>
-            {subtitle && <h6 className='text-xs text-text-secondary'>{subtitle}</h6>}
+            <h5 className='text-text-primary'>{activity}</h5>
+            {object && <h6 className='text-xs text-text-secondary'>{object}</h6>}
           </div>
           <Button shape='icon' size='small' onClick={() => mutate(id)}>
             <IoTrashOutline />

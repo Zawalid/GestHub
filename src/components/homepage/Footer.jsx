@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <div className='px-3 w-full border-t border-border py-4'>
+    <div className='px-3 mt-auto w-full border-t border-border py-4'>
       <p className='text-center text-xs font-light text-text-primary'>
         &copy; {new Date().getFullYear()} | Developed by{' '}
         <a

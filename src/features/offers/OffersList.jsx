@@ -13,16 +13,7 @@ export const renderOffersList = ({ offers, isLoading, error, layout, query, appl
   if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
   if (offers?.length === 0 && (query || appliedFiltersNumber))
     return <Status status='noResults' heading='No offers found' message='Try changing your search query or filters' />;
-  return (
-    <>
-      {offers?.map((offer) => (
-        <Offer key={offer.id} offer={offer} layout={layout} />
-      ))}
-      <div className='col-span-full'>
-        <Operations.ViewMore color='tertiary' />
-      </div>
-    </>
-  );
+  return offers?.map((offer) => <Offer key={offer.id} offer={offer} layout={layout} />);
 };
 
 export default function OffersList({ hideFilter, onHomePage }) {
@@ -55,6 +46,9 @@ export default function OffersList({ hideFilter, onHomePage }) {
           <New type='Offer' layout={layout} onAdd={() => navigate('/app/offers/new')} />
         )}
         {renderOffersList({ offers, isLoading, error, layout, appliedFiltersNumber, query })}
+        <div className='col-span-full'>
+          <Operations.ViewMore color='tertiary' />
+        </div>
       </div>
     </div>
   );

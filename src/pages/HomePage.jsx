@@ -22,13 +22,13 @@ export function HomePage() {
   return (
     <>
       <Hero />
-      <LatestOffers />
+      {/* <LatestOffers />
       {user?.role === 'user' && (
         <>
           <Applications />
           <ApplicationReview />
         </>
-      )}
+      )} */}
     </>
   );
 }

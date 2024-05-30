@@ -101,10 +101,8 @@ function Option({ children, onClick, className = '', isDeleteButton, size = '', 
         className,
         disabled && 'disabled'
       )}
-      onClick={(e) => {
-        // e.stopPropagation();
-        disabled || onClick?.();
-      }}
+      onClick={() => disabled || onClick?.()
+      }
       id={id}
     >
       {children}
