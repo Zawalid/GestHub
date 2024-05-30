@@ -111,7 +111,7 @@ function Stats() {
               <Button
                 key={name}
                 display='with-icon'
-                className='bg-background-tertiary'
+                className='bg-background-tertiary text-text-primary hover:text-white'
                 onClick={() => navigate(`/app/${name}`)}
               >
                 {isLoading ? (

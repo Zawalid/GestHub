@@ -25,6 +25,7 @@ import {
   Users,
   Sessions,
   About,
+  Contact,
 } from './pages';
 
 import { ProtectedRoute } from './components/ProtectedRoute';
@@ -75,6 +76,7 @@ export default function App() {
               <Route path='offers' element={<HomePageOffers />}>
                 <Route path=':id' element={<HomePageOffers />} />
               </Route>
+              <Route path='contact' element={<Contact />} />
               <Route path='about' element={<About />} />
             </Route>
             {/* App */}

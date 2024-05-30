@@ -34,21 +34,25 @@ export default function General() {
       {
         name: 'companyName',
         label: 'Company Name',
+        rules: { required: false },
       },
       {
         name: 'email',
         type: 'email',
         label: 'Email Address',
+        rules: { required: false },
       },
       {
         name: 'phone',
         label: 'Phone Number',
         type: 'phone',
+        rules: { required: false },
       },
       {
         name: 'location',
         label: 'Location ',
         type: 'location',
+        rules: { required: false },
       },
       {
         name: 'maps',
@@ -60,6 +64,7 @@ export default function General() {
             value: new RegExp('^\\s*(https://www\\.google\\.com/maps/embed\\?).*\\s*$', 'i'),
             message: 'Invalid URL. Please enter a valid Google Maps embed link.',
           },
+          required: false,
         },
       },
       ...socials.map((s, i) => ({
@@ -142,7 +147,7 @@ export default function General() {
           </div>
 
           <div className='relative rounded-lg border border-border p-3'>
-            {errors?.['maps'] && (
+            {(errors?.['maps'] || !getValue('maps') )&& (
               <div className='absolute left-0 top-0 grid h-full w-full place-content-center place-items-center gap-1.5 bg-background-secondary'>
                 <GrMapLocation className='text-2xl' />
                 <p className='text-xs font-medium text-text-tertiary'>Invalid maps link. Please check and try again.</p>

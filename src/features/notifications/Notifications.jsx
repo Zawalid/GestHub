@@ -1,38 +1,30 @@
 import { IoNotificationsOutline } from 'react-icons/io5';
-import { Button, DropDown } from '../ui';
-import { FaRegCircleCheck } from 'react-icons/fa6';
-import { useApplications, useMarkAsRead } from '@/features/applications/useApplications';
+import { Button, DropDown } from '@/components/ui';
 import { useNavigate } from 'react-router-dom';
-import { getRelativeTime } from '@/utils/helpers';
-import { useMemo, useState } from 'react';
+import { useMarkAllNotificationsAsRead, useMarkNotificationAsRead, useNotifications } from './useNotifications';
 
-export default function Notifications() {
-  const [isOpen, setIsOpen] = useState();
-  const { applications, isLoading } = useApplications({ refetchInterval: 5000 });
-  const { mutate } = useMarkAsRead();
+export function Notifications() {
+  const { notifications, unreadNotifications, isLoading } = useNotifications();
+  const { mutate: markAsRead } = useMarkNotificationAsRead();
+  const { mutate: markAllAsRead } = useMarkAllNotificationsAsRead();
   const navigate = useNavigate();
 
-  const notifications = useMemo(() => {
-    return applications
-      ?.filter((d) => d.status === 'Approved')
-      .toSorted((a, b) => new Date(b?.updated_at) - new Date(a?.updated_at))
-      ?.map((d) => ({
-        id: d.id,
-        icon: <FaRegCircleCheck />,
-        title: 'Your application has been accepted',
-        subtitle: d.offer,
-        time: getRelativeTime(d.updated_at),
-        isRead: d.isRead,
-      }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [applications, isOpen]);
+  // const notifications = useMemo(() => {
+  //   return applications
+  //     ?.filter((d) => d.status === 'Approved')
+  //     .toSorted((a, b) => new Date(b?.updated_at) - new Date(a?.updated_at))
+  //     ?.map((d) => ({
+  //       id: d.id,
+  //       icon: <FaRegCircleCheck />,
+  //       title: 'Your application has been accepted',
+  //       subtitle: d.offer,
+  //       time: getRelativeTime(d.updated_at),
+  //       isRead: d.isRead,
+  //     }));
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [applications, isOpen]);
 
-  const unreadNotifications = notifications?.filter((n) => !n.isRead).map((n) => n.id);
-
-  const unread = (id) => {
-    if (!unreadNotifications?.includes(id)) return;
-    mutate(id);
-  };
+  // const unreadNotifications = notifications?.filter((n) => !n.isRead).map((n) => n.id);
 
   const render = () => {
     if (isLoading) {
@@ -49,27 +41,29 @@ export default function Notifications() {
         </div>
       );
     }
-    return notifications?.map((notification, index) => (
-      <DropDown.Option
-        key={index}
-        className={
-          unreadNotifications?.includes(notification.id) ? 'bg-background-secondary' : 'hover:bg-background-disabled'
-        }
-        onClick={() => {
-          unread(notification.id);
-          navigate(`/applications/${notification.id}`, { state: { source: window.location.pathname } });
-        }}
-      >
-        <div className='grid h-11 w-11 place-content-center rounded-full bg-green-600 text-white sm:text-xl'>
-          {notification.icon}
-        </div>
-        <div className='flex-1 space-y-0.5'>
-          <h5 className='text-text-primary'>{notification.title}</h5>
-          <h6 className='text-xs text-text-secondary'>{notification.subtitle}</h6>
-          <p className='text-xs font-normal text-text-tertiary'>{notification.time}</p>
-        </div>
-      </DropDown.Option>
-    ));
+    return notifications?.map((notification, index) => {
+      const { id, title, subtitle, time, icon } = notification;
+
+      return (
+        <DropDown.Option
+          key={index}
+          className={unreadNotifications?.includes(id) ? 'bg-background-secondary' : 'hover:bg-background-disabled'}
+          onClick={() => {
+            unreadNotifications?.includes(id) && markAsRead(id);
+            navigate(`/applications/${id}`, { state: { source: window.location.pathname } });
+          }}
+        >
+          <div className='grid h-11 w-11 place-content-center rounded-full bg-green-600 text-white sm:text-xl'>
+            {icon}
+          </div>
+          <div className='flex-1 space-y-0.5'>
+            <h5 className='text-text-primary'>{title}</h5>
+            <h6 className='text-xs text-text-secondary'>{subtitle}</h6>
+            <p className='text-xs font-normal text-text-tertiary'>{time}</p>
+          </div>
+        </DropDown.Option>
+      );
+    });
   };
 
   return (
@@ -90,7 +84,6 @@ export default function Notifications() {
         className: 'notifications w-full mobile:w-[400px] max-h-max overflow-auto h-[400px]',
         shouldCloseOnClick: false,
       }}
-      setIsOpen={setIsOpen}
       togglerClassName='relative'
     >
       <DropDown.Title className='z-10 flex items-center justify-between py-2'>
@@ -98,7 +91,7 @@ export default function Notifications() {
         <button
           className='text-xs font-medium text-text-secondary transition-colors duration-300 hover:text-text-tertiary disabled:text-text-disabled'
           disabled={notifications?.every((n) => n.isRead)}
-          onClick={() => unreadNotifications?.forEach(({ id }) => unread(id))}
+          onClick={markAllAsRead}
         >
           Mark all as read
         </button>

@@ -8,6 +8,7 @@ import { Button } from '../ui';
 import { Overlay } from '../ui/Modal';
 import { SocialMedia } from '../ui/SocialMedia';
 import { useLogout, useUser } from '@/hooks/useUser';
+import { HOMEPAGE_ROUTES } from '@/utils/constants';
 
 export function MobileHeader({ isOpen, onClose }) {
   const { user } = useUser();
@@ -38,9 +39,7 @@ export function MobileHeader({ isOpen, onClose }) {
 
         <ul className='flex flex-1 flex-col items-center justify-center gap-6'>
           {[
-            { label: 'home', path: '/' },
-            { label: 'offers', path: '/offers' },
-            { label: 'about', path: '/about' },
+            ...HOMEPAGE_ROUTES,
             ...(user?.role === 'user' ? [{ label: 'Applications', path: '/applications' }] : []),
             ...(user && user?.role !== 'user' ? [{ label: 'Dashboard', path: '/app' }] : []),
           ].map(({ label, path }) => (
@@ -70,7 +69,7 @@ export function MobileHeader({ isOpen, onClose }) {
           <LanguageSwitcher size='small' layout='long' />
         </div>
 
-        <SocialMedia />
+        <SocialMedia className='mt-auto py-3' />
       </div>
     </>
   );

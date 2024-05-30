@@ -14,3 +14,4 @@ export { Register } from './auth/Register';
 export { About } from './About';
 export { Users } from './Users';
 export { Sessions } from './Sessions';
+export { Contact } from './Contact';

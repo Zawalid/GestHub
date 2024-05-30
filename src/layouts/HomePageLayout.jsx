@@ -1,7 +1,7 @@
 import { Header } from '@/components/homepage/Header';
 import { Outlet } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { SocialMedia } from '@/components/ui/SocialMedia';
+import { Footer } from '@/components/homepage/Footer';
 
 export function HomePageLayout() {
   const [parent] = useAutoAnimate({ duration: 300 });
@@ -10,7 +10,7 @@ export function HomePageLayout() {
     <div ref={parent} className='flex h-full w-full flex-col overflow-auto'>
       <Header />
       <Outlet />
-      <SocialMedia />
+      <Footer />
     </div>
   );
 }

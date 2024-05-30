@@ -1,7 +1,8 @@
+import Avatar from './ui/Avatar';
+import { useUser } from '@/hooks/useUser';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { ThemeSwitcher } from './ThemeSwitcher';
-import { useUser } from '@/hooks/useUser';
-import Avatar from './ui/Avatar';
+import { Notifications } from '../features/notifications/Notifications';
 
 export default function AppBar() {
   return (
@@ -10,6 +11,7 @@ export default function AppBar() {
       <div className='flex gap-3'>
         <ThemeSwitcher />
         <LanguageSwitcher />
+        <Notifications />
       </div>
     </div>
   );

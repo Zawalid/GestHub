@@ -34,13 +34,13 @@ export function HomePageOffers() {
   };
 
   return (
-    <div className='flex max-h-[150dvh]  flex-col gap-6 p-3 md:p-5'>
+    <div className='flex flex-col gap-6 p-3 md:p-5'>
       <Operations {...getProps()}>
         <div className='flex flex-col justify-between gap-3 mobile:flex-row mobile:items-center'>
           <h1 className='text-3xl font-bold text-text-primary'>{t('offers.internshipOffers')}</h1>
           <Operations.Search />
         </div>
-        <div className='flex h-screen flex-col'>
+        <div className='flex min-h-screen flex-col'>
           <OffersList hideFilter={false} onHomePage={true} />
         </div>
       </Operations>

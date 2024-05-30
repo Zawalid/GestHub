@@ -18,4 +18,3 @@ export const rejectApplication = async (id) => await axiosFetch(`applications/${
 
 export const rejectApplications = async (ids) => await axiosFetch(`multiple/applications/reject`, 'POST', { ids });
 
-export const markAsRead = async (id) => await axiosFetch(`applications/${id}/read`, 'PUT');

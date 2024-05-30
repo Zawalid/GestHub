@@ -5,12 +5,11 @@ import { MobileHeader } from './MobileHeader';
 import { AuthSwitcher } from '../AuthSwitcher';
 import { ThemeSwitcher } from '../ThemeSwitcher';
 import { LanguageSwitcher } from '../LanguageSwitcher';
-import { Button } from '../ui';
-import { Logo } from '../ui/Logo';
-import { FaChevronDown } from 'react-icons/fa6';
+import { Button, Logo } from '../ui';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import Notifications from './Notifications';
+import { Notifications } from '@/features/notifications/Notifications';
 import { useUser } from '@/hooks/useUser';
+import { HOMEPAGE_ROUTES } from '@/utils/constants';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -47,15 +46,10 @@ function Links() {
   const { t } = useTranslation();
   return (
     <ul className='hidden gap-8 lg:flex lg:flex-1 lg:justify-center '>
-      {[
-        { label: 'home', path: '/' },
-        { label: 'offers', path: '/offers' },
-        { label: 'about', path: '/about' },
-      ].map((route) => (
+      {HOMEPAGE_ROUTES.map((route) => (
         <NavLink key={route.label} to={route.path} className='group'>
           <li className='relative flex items-center gap-3 text-sm text-text-secondary transition-all duration-300 hover:font-semibold hover:text-text-primary group-[.active]:font-semibold group-[.active]:text-text-primary '>
             <span>{t(`header.navbar.${route.label}`)}</span>
-            {route.nested && <FaChevronDown />}
           </li>
         </NavLink>
       ))}

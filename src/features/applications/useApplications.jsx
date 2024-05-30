@@ -6,7 +6,6 @@ import {
   deleteApplication,
   approveApplication,
   rejectApplication,
-  markAsRead,
   deleteApplications,
   approveApplications,
   rejectApplications,
@@ -50,11 +49,10 @@ const getApplicationData = (application) => {
   };
 };
 
-export function useApplications({ refetchInterval } = {}) {
+export function useApplications() {
   const { data, error, isPending } = useQuery({
     queryKey: ['applications'],
     queryFn: getAllApplications,
-    refetchInterval,
   });
 
   const applications = Array.isArray(data) ? data.map((application) => getApplicationData(application)) : [];
@@ -84,9 +82,6 @@ export const useAddApplication = ({ showToast } = {}) =>
     queryKey: ['applications', 'add'],
     mutationFn: addApplication,
     showToast,
-    loadingMessage: null,
-    successMessage: null,
-    errorMessage: null,
   });
 
 export const useDeleteApplication = () =>
@@ -198,12 +193,3 @@ export const useRejectApplications = () => {
   return { ...rejection, reject };
 };
 
-//
-export const useMarkAsRead = () =>
-  useMutate({
-    queryKey: ['applications', 'read'],
-    mutationFn: markAsRead,
-    loadingMessage: null,
-    successMessage: null,
-    errorMessage: null,
-  });

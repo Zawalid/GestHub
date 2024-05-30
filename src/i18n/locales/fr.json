@@ -2,8 +2,9 @@
   "header": {
     "navbar": {
       "home": "Principale",
-      "offers": "Offers",
-      "About": "à propos"
+      "offers": "Offres",
+      "contact": "Contact",
+      "about": "À propos"
     },
     "auth": {
       "login": "S'autentifier",

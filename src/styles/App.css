@@ -138,3 +138,8 @@
 .count {
   @apply rounded-lg border border-border bg-background-secondary px-2 py-1 text-text-primary;
 }
+
+.vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}

@@ -3,6 +3,7 @@
     "navbar": {
       "home": "Home",
       "offers": "Offers",
+      "contact": "Contact",
       "about": "About Us"
     },
     "auth": {

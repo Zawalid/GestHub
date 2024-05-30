@@ -10,12 +10,12 @@ import General from './General';
 import About from './About';
 
 export default function Settings({ isOpen, onClose }) {
-  const [currentTab, setCurrentTab] = useState('about');
+  const [currentTab, setCurrentTab] = useState('profile');
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [key, setKey] = useState();
 
   useEffect(() => {
-    setCurrentTab('about');
+    setCurrentTab('profile');
     setKey(Math.random());
   }, [isOpen]);
 

@@ -36,7 +36,7 @@ export default function About() {
         <Button disabled={!isChanged} color='tertiary' onClick={handleCancel}>
           Cancel
         </Button>
-        <Button disabled={!isChanged} onClick={() => mutate({ ...settings,aboutDescription: about })}>
+        <Button disabled={!isChanged} onClick={() => mutate({ aboutDescription: about })}>
           Save Changes
         </Button>
       </div>

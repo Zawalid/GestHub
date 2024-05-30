@@ -23,7 +23,6 @@ export {
   IoFilter,
   IoLocationSharp,
   IoMail ,
-  IoMapOutline 
 } from 'react-icons/io5';
 export {
   PiCheckBold,

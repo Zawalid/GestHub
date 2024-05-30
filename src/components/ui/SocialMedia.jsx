@@ -1,9 +1,9 @@
+/* eslint-disable react-refresh/only-export-components */
 import { GrYoutube, GrInstagram, GrTwitter, GrLinkedin, GrFacebookOption } from 'react-icons/gr';
 import { Button } from './Button';
 import { useState } from 'react';
 import { useSettings } from '@/hooks/useUser';
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const socials = [
   {
     href: 'https://www.facebook.com',
@@ -36,19 +36,22 @@ export const socials = [
     name: 'Youtube',
   },
 ];
-export function SocialMedia() {
+
+export const isSet = (settings) => socials.map((s) => s.name.toLocaleLowerCase()).some((s) => settings?.[s]);
+
+export function SocialMedia({ className = '', size }) {
   const [hovered, setHovered] = useState(null);
   const { settings } = useSettings();
 
-  if (!socials.map((s) => s.name.toLocaleLowerCase()).some((s) => settings?.[s])) return null;
+  if (!isSet(settings)) return null;
 
   return (
-    <footer className='relative mt-auto flex items-center justify-center gap-6  border-t  border-border px-5 py-2 shadow-md '>
+    <div className={`relative flex items-center justify-center gap-3 shadow-md ${className}`}>
       {socials
         .filter((s) => settings?.[s.name.toLocaleLowerCase()])
         .map((s, index) => {
           const url = settings?.[s.name.toLocaleLowerCase()];
-          const href = url.startsWith('http://') || url.startsWith('https://') ? url : 'http://' + url;
+          const href = url?.startsWith('http://') || url?.startsWith('https://') ? url : 'http://' + url;
 
           return (
             <a
@@ -63,12 +66,13 @@ export function SocialMedia() {
                 shape='icon'
                 className={`rounded-full text-text-primary group-hover:text-white`}
                 style={{ backgroundColor: hovered === index ? s.color : 'transparent' }}
+                size={size}
               >
                 {s.icon}
               </Button>
             </a>
           );
         })}
-    </footer>
+    </div>
   );
 }

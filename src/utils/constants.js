@@ -25,11 +25,18 @@ export const ROUTES = (() => {
       'sessions/:id',
     ],
     admin: generate(['supervisors', 'projects', 'interns', 'offers', 'applications', 'users', 'sessions']),
-    supervisor: generate(['projects',  'sessions']),
+    supervisor: generate(['projects', 'sessions']),
     intern: generate(['projects', 'sessions']),
     user: routes.applications,
   };
 })();
+
+export const HOMEPAGE_ROUTES = [
+  { label: 'home', path: '/' },
+  { label: 'offers', path: '/offers' },
+  { label: 'contact', path: '/contact' },
+  { label: 'about', path: '/about' },
+];
 
 export const PAGE_LIMIT = 10;
 
@@ -38,7 +45,7 @@ export const STATUS_COLORS = {
   'In Progress': { bg: 'bg-blue-500', text: 'text-blue-500' },
   Completed: { bg: 'bg-green-600', text: 'text-green-600' },
   'To Do': { bg: 'bg-red-500', text: 'text-red-500' },
-  'Done': { bg: 'bg-green-600', text: 'text-green-600' },
+  Done: { bg: 'bg-green-600', text: 'text-green-600' },
 };
 
 export const PRIORITY_COLORS = {
@@ -47,7 +54,7 @@ export const PRIORITY_COLORS = {
   High: { bg: 'bg-red-500', text: 'text-red-500' },
 };
 
-export const LEVELS = ['Bac+1', 'Bac+2', 'Bac+3','Bac+4', 'Bac+5', 'Master', 'Doctorate'];
+export const LEVELS = ['Bac+1', 'Bac+2', 'Bac+3', 'Bac+4', 'Bac+5', 'Master', 'Doctorate'];
 
 export const RULES = {
   email: {

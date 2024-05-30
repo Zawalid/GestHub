@@ -11,6 +11,7 @@ import {
   getSettings,
   updateSettings,
   uploadFile,
+  contact,
 } from '@/services/usersAPI';
 import { useMutate } from './useMutate';
 import { filterObject, getFile } from '@/utils/helpers';
@@ -179,5 +180,15 @@ export function useUpdateSettings() {
     loadingMessage: 'Updating settings...',
     successMessage: 'Settings updated successfully',
     errorMessage: 'Failed to update settings',
+  });
+}
+
+export function useContactUs() {
+  return useMutate({
+    queryKey: ['contact'],
+    mutationFn: contact,
+    loadingMessage: 'Sending message...',
+    successMessage: 'Message sent successfully',
+    errorMessage: 'Failed to send message',
   });
 }

@@ -84,7 +84,7 @@
 }
 
 .tippy-box.notifications {
-  max-width: 100% !important;
+  @apply min-w-[300px] max-w-full !important;
 }
 
 .tippy-content {
