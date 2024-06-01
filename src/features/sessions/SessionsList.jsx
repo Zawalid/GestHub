@@ -144,23 +144,33 @@ export default function SessionsList() {
           ],
         },
         {
-          key: 'status',
-          displayLabel: 'Status',
+          key: 'activities',
+          displayLabel: 'Activities',
           visible: true,
-          type: 'string',
-          format: (val, id, isDownload) => {
-            const colors = { Online: 'bg-green-600', Offline: 'bg-red-500', Current: 'bg-blue-600' };
-            return isDownload ? (
-              val
-            ) : (
-              <span className={`rounded-lg  px-2.5 py-1 text-white ${colors[val]}`}>{val}</span>
-            );
+          format : (val) =>  `${val.length} Activites`,
+          fn(a, b, direction) {
+            return direction === 'asc' ? a?.activities.length - b?.activities.length : b?.activities.length - a?.activities.length;
           },
-          filter: [
-            { value: 'Online', checked: true },
-            { value: 'Offline', checked: false },
-          ],
+          type: 'custom',
         },
+        // {
+        //   key: 'status',
+        //   displayLabel: 'Status',
+        //   visible: true,
+        //   type: 'string',
+        //   format: (val, id, isDownload) => {
+        //     const colors = { Online: 'bg-green-600', Offline: 'bg-red-500', Current: 'bg-blue-600' };
+        //     return isDownload ? (
+        //       val
+        //     ) : (
+        //       <span className={`rounded-lg  px-2.5 py-1 text-white ${colors[val]}`}>{val}</span>
+        //     );
+        //   },
+        //   filter: [
+        //     { value: 'Online', checked: true },
+        //     { value: 'Offline', checked: false },
+        //   ],
+        // },
         {
           key: 'created_at',
           displayLabel: 'Signed In At',

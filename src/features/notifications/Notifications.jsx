@@ -104,6 +104,8 @@ const icons = {
   acceptedApplication: { icon: <FaRegCircleCheck />, color: 'bg-green-600' },
   endingInternship: { icon: <LuTimerReset />, color: 'bg-teal-500' },
   completedInternship: { icon: <FaRegCalendarCheck />, color: 'bg-purple-500' },
+  newIntern : null,
+  newFile : null
 };
 
 

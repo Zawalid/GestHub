@@ -4,6 +4,6 @@ export const getNotifications = async () => await axiosFetch('notifications');
 
 export const deleteNotification = async (id) => await axiosFetch(`notifications/${id}`, 'DELETE');
 
-export const markAsRead = async (id) => await axiosFetch(`notifications/${id}/read`, 'POST');
+export const markAsRead = async (id) => await axiosFetch(`notifications/${id}/read`, 'PUT');
 
-export const markAllAsRead = async () => await axiosFetch('notifications/read', 'POST');
+export const markAllAsRead = async () => await axiosFetch('multiple/notifications/read', 'POST');

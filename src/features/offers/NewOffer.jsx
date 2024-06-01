@@ -6,10 +6,12 @@ import { useForm } from '@/hooks/index';
 import { ModalFormLayout } from '@/layouts/ModalFormLayout';
 import { useAddOffer, useOffers } from './useOffers';
 import { PiCheckBold, HiMiniXMark } from '@/components/ui/Icons';
+import { useSettings } from '@/hooks/useUser';
 
 export default function NewOffer() {
   const navigate = useNavigate();
   const { mutate } = useAddOffer();
+  const { settings } = useSettings();
 
   return (
     <Modal
@@ -25,7 +27,7 @@ export default function NewOffer() {
           description: '',
           duration: 3,
           city: 'Rabat',
-          direction: 'DSI',
+          company: settings?.companyName || '',
           sector: 'IT',
           type: 'Hybrid',
           experience: 'Beginner',
@@ -48,7 +50,7 @@ export default function NewOffer() {
 
 export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
   const {
-    options: { isUpdated,  formInputs, getValue, setValue, handleSubmit, reset, updateValues },
+    options: { isUpdated, formInputs, getValue, setValue, handleSubmit, reset, updateValues },
   } = useForm({
     defaultValues,
     fields: [
@@ -82,9 +84,9 @@ export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
         placeholder: 'Enter city...',
       },
       {
-        name: 'direction',
-        label: 'Direction',
-        placeholder: 'Enter direction',
+        name: 'company',
+        label: 'Company',
+        placeholder: 'Enter company',
       },
       {
         name: 'sector',
@@ -112,7 +114,7 @@ export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
 
   useEffect(() => {
     updateValues(defaultValues);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultValues]);
 
   return (
@@ -148,7 +150,7 @@ export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
         </div>
         <div className='flex flex-col gap-5 mobile:flex-1'>
           {formInputs['city']}
-          {formInputs['direction']}
+          {formInputs['company']}
           {formInputs['duration']}
           <div className='flex flex-col gap-2'>
             <label className='text-sm font-medium text-text-tertiary'>Experience</label>
@@ -198,7 +200,11 @@ function Sector({ getValue, setValue }) {
             <span>{getValue('sector')}</span>
           </DropDown.Toggler>
         }
-        options={{ className: 'overflow-auto max-h-[300px] w-[230px]', shouldCloseOnClick: false,placement : 'auto-end' }}
+        options={{
+          className: 'overflow-auto max-h-[300px] w-[230px]',
+          shouldCloseOnClick: false,
+          placement: 'auto-end',
+        }}
       >
         <DropDown.Title>New Sector</DropDown.Title>
         <div className='mb-2 flex items-center gap-1'>

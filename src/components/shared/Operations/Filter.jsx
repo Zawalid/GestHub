@@ -22,7 +22,7 @@ export function Filter({ className = '' }) {
 
   // Update the async filters
   useEffect(() => {
-    console.log(initialFilters);
+    // console.log(initialFilters);
     Object.keys(filters).map((key) => {
       if (
         initialFilters[key].async &&

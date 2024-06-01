@@ -20,7 +20,6 @@ import {
   ProjectDetails,
   Login,
   Register,
-  HomePageOffers,
   Admins,
   Users,
   Sessions,
@@ -68,14 +67,14 @@ export default function App() {
             {/* HomePage */}
             <Route path='/' element={<HomePageLayout />}>
               <Route index element={<HomePage />} />
+              <Route path='/:id' element={<HomePage />} />
+
               {user?.role === 'user' && (
                 <Route path='applications' element={<HomePage />}>
                   <Route path=':id' element={<HomePage />} />
                 </Route>
               )}
-              <Route path='offers' element={<HomePageOffers />}>
-                <Route path=':id' element={<HomePageOffers />} />
-              </Route>
+
               <Route path='contact' element={<Contact />} />
               <Route path='about' element={<About />} />
             </Route>

@@ -124,7 +124,7 @@ export function Operations({
   limit = 10,
 }) {
   const [filters, setFilters] = useState(initialFilters || {});
-  const [filterCondition, setFilterCondition] = useState('OR');
+  const [filterCondition, setFilterCondition] = useState('AND');
   const [layout, setLayout] = useState(defaultLayout, 'grid');
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get(searchQueryKey);
@@ -164,9 +164,9 @@ export function Operations({
     page,
   ]);
 
-  // useEffect(() => {
-  //   setFilters(initialFilters);
-  // }, [initialFilters]);
+  useEffect(() => {
+    setFilters(initialFilters);
+  }, [initialFilters]);
 
   // Perform operations
 

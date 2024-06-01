@@ -35,12 +35,12 @@ function Socials() {
 function ContactForm() {
   const { mutate, isPending } = useContactUs();
   const {
-    Form,
-    options: { isValid, handleSubmit },
+    options: { formInputs, isValid, handleSubmit },
   } = useForm({
     defaultValues: {
       fullName: '',
       email: '',
+      subject: '',
       message: '',
     },
     fields: [
@@ -52,6 +52,10 @@ function ContactForm() {
         name: 'email',
         type: 'email',
         label: 'Email Address',
+      },
+      {
+        name: 'subject',
+        label: 'Subject',
       },
       {
         name: 'message',
@@ -83,7 +87,14 @@ function ContactForm() {
           Feel free to contact us any time. We&apos;ll get back to you as soon as we can!
         </p>
       </div>
-      {Form}
+     <div className='space-y-2'>
+       <div className='grid xs:grid-cols-2 gap-2'>
+         {formInputs['fullName']}
+         {formInputs['email']}
+       </div>
+       {formInputs['subject']}
+       {formInputs['message']}
+     </div>
       <Button color='secondary' isLoading={isPending} disabled={!isValid} onClick={() => !isPending && handleSubmit()}>
         {isPending ? 'Sending' : 'Send'}
       </Button>

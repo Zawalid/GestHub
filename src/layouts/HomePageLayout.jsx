@@ -7,7 +7,7 @@ export function HomePageLayout() {
   const [parent] = useAutoAnimate({ duration: 300 });
 
   return (
-    <div ref={parent} className='flex h-full w-full flex-col overflow-auto'>
+    <div ref={parent} className='flex h-full w-full no_scrollbar flex-col overflow-auto'>
       <Header />
       <Outlet />
       <Footer />

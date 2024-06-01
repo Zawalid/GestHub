@@ -12,27 +12,22 @@ export function useOffers() {
 
   const offers = data?.map((offer) => ({ ...offer, skills: getSkills(offer) }));
 
-return {
+  return {
     offers,
     error,
     isLoading: isPending,
   };
 }
 
-export function useVisibleOffers(latest) {
+export function useVisibleOffers() {
   const { data, error, isPending } = useQuery({ queryKey: ['offers/visible'], queryFn: getAllVisibleOffers });
   const [favorites, setFavorites] = useLocalStorageState('favorites', []);
   const queryClient = useQueryClient();
 
-  const getOffers = () => {
-   const offers = Array.isArray(data) ? data.map((offer) =>
-  favorites.includes(String(offer.id)) ? { ...offer, isFavorite: true } : offer
-) : [];
-
-    return latest
-      ? offers?.sort((a, b) => (a.status === b.status ? 0 : a.status === 'Urgent' ? -1 : 1)).slice(0, 5)
-      : offers;
-  };
+  const getOffers = () =>
+    Array.isArray(data)
+      ? data.map((offer) => (favorites.includes(String(offer.id)) ? { ...offer, isFavorite: true } : offer))
+      : [];
 
   const onToggleFavorite = (id) => {
     setFavorites((prev) => (prev.includes(id) ? prev.filter((fav) => fav !== id) : [...prev, id]));
@@ -42,6 +37,7 @@ export function useVisibleOffers(latest) {
   };
 
   const offers = getOffers()?.map((offer) => ({ ...offer, skills: getSkills(offer) }));
+  
 
   return {
     offers,

@@ -33,7 +33,6 @@ export const ROUTES = (() => {
 
 export const HOMEPAGE_ROUTES = [
   { label: 'home', path: '/' },
-  { label: 'offers', path: '/offers' },
   { label: 'contact', path: '/contact' },
   { label: 'about', path: '/about' },
 ];

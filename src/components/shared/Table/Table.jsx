@@ -164,12 +164,12 @@ function Skeleton({ table }) {
   return (
     <tbody>
       {Array.from({ length }).map((_, i) => (
-        <tr className='animate-puls' key={i}>
+        <tr className='animate-puls group' key={i}>
           {columns
             .filter((c) => c.visible)
             .map(({ displayLabel }) => (
               <td key={displayLabel}>
-                <div className='rounded-md bg-background-secondary px-6 py-4'></div>
+                <div className='rounded-md group-first:first:mt-0.5 bg-background-secondary px-6 py-4'></div>
               </td>
             ))}
           <td>

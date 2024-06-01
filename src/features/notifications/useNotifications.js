@@ -8,7 +8,7 @@ export function useNotifications() {
   const { data, error, isPending } = useQuery({
     queryKey: ['notifications'],
     queryFn: getNotifications,
-    refetchInterval: 10000,
+    // refetchInterval: 10000,
   });
 
   const notifications = data

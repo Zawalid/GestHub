@@ -28,14 +28,14 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
   const { offer, isLoading, error } = useOffer(id);
   const { mutate } = useUpdateOffer();
   const { t } = useTranslation();
-  const { title, description, duration, city, publicationDate, direction, sector, type, experience, status, skills } =
+  const { title, description, duration, city, publicationDate, company, sector, type, experience, status, skills } =
     offer || {};
 
   useEffect(() => {
-    changeTitle(title ? `Offers | ${title}` : 'Offers');
+    changeTitle(title ? title : 'Offers');
   }, [title]);
 
-  const close = () => navigate(onHomePage ? '/offers' : '/app/offers');
+  const close = () => navigate(onHomePage ? '/' : '/app/offers');
 
   const render = () => {
     if (isLoading) return <OfferSkeleton />;
@@ -82,9 +82,9 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
               <h3 className='text-lg font-medium text-text-primary'>Offer Details</h3>
               <div className='grid gap-3 sm:grid-cols-2'>
                 <div className='flex items-center gap-3'>
-                  <label className='text-sm font-medium text-text-tertiary'>Direction :</label>
+                  <label className='text-sm font-medium text-text-tertiary'>Company :</label>
                   <span className='w-fit rounded-md bg-background-secondary px-2 py-1 text-center text-xs font-medium text-text-secondary'>
-                    {direction}
+                    {company}
                   </span>
                 </div>
                 <div className='flex items-center gap-3'>
@@ -149,11 +149,7 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
   };
 
   return (
-    <Modal
-      isOpen={location.pathname.includes('/offers') && id && id !== 'new'}
-      className='p-5 sm:h-fit sm:min-h-[400px] sm:w-[650px] sm:border'
-      onClose={close}
-    >
+    <Modal isOpen={id && id !== 'new'} className='p-5 sm:h-fit sm:min-h-[400px] sm:w-[650px] sm:border' onClose={close}>
       <div className='z-10 flex justify-end gap-2'>
         {!isEditing && !onHomePage && (
           <>

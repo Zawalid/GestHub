@@ -19,7 +19,7 @@ export default function Offer({ offer, layout }) {
     skills,
     publicationDate,
     duration,
-    direction,
+    company,
     city,
     visibility,
     status,
@@ -31,7 +31,7 @@ export default function Offer({ offer, layout }) {
   return (
     <div
       className={`group relative flex w-full cursor-pointer flex-col gap-3 rounded-lg  border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95 ${status === 'Urgent' ? 'rounded-tl-none' : ''} ${isFavorite ? 'rounded-tr-none' : ''} ${layout === 'list' ? 'h-fit' : ''}`}
-      onClick={() => navigate(`/${window.location.pathname.includes('/app') ? 'app/' : ''}offers/${id}`)}
+      onClick={() => navigate(`/${window.location.pathname.includes('/app') ? 'app/' : ''}${id}`)}
     >
       <Indicator condition={status === 'Urgent'} className='-left-[1.5px] bg-red-500' />
       <Indicator condition={isFavorite && (user?.role === 'user' || !user)} className='-right-[1.5px] bg-yellow-500' />
@@ -39,7 +39,7 @@ export default function Offer({ offer, layout }) {
       <Layer condition={visibility === 'Hidden'} icon={<IoEyeOffOutline />} />
       <Layer condition={isAlreadyApplied(user, id)} icon={<BsClipboard2Check />} />
 
-      <DateLocation {...{ publicationDate, duration, direction, city }} />
+      <DateLocation {...{ publicationDate, duration, company, city }} />
 
       <div>
         <span className='text-xs font-medium text-secondary'>{sector}</span>
@@ -82,7 +82,7 @@ function Indicator({ condition, className }) {
   );
 }
 
-function DateLocation({ publicationDate, duration, city, direction }) {
+function DateLocation({ publicationDate, duration, city, company }) {
   return (
     <div className='flex flex-wrap justify-between gap-2  items-center'>
       <div className='flex w-fit items-center gap-2 rounded-md bg-background-tertiary px-2 py-1 text-center  font-medium text-text-secondary'>
@@ -97,7 +97,7 @@ function DateLocation({ publicationDate, duration, city, direction }) {
       <div className='flex w-fit items-center gap-2 rounded-md bg-background-tertiary px-2 py-1 text-center  font-medium text-text-secondary'>
         <MdOutlineLocationOn />
         <div className='divide-x divide-text-secondary text-xs'>
-          <span className='mr-1.5'>{direction}</span>
+          <span className='mr-1.5'>{company}</span>
           <span className='pl-1.5'>{city}</span>
         </div>
       </div>
@@ -108,7 +108,7 @@ function DateLocation({ publicationDate, duration, city, direction }) {
 function Skills({ skills }) {
   if (!skills || !skills.length)
     return (
-      <span className='w-fit rounded-md border border-border px-2 py-1 text-center text-xs font-medium text-text-secondary'>
+      <span className='w-fit rounded-md border border-border px-2 py-1 text-center text-[10px] font-medium text-text-secondary'>
         No skills required
       </span>
     );
@@ -117,7 +117,7 @@ function Skills({ skills }) {
       {skills.slice(0, 3).map((skill) => (
         <span
           key={skill}
-          className='rounded-md border border-border px-2 py-1 text-center text-xs font-medium text-text-secondary'
+          className='rounded-md border border-border px-2 py-1 text-center text-[10px] font-medium text-text-secondary'
         >
           {skill}
         </span>

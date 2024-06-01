@@ -8,10 +8,12 @@ import { LanguageSwitcher } from '../LanguageSwitcher';
 import { Button, Logo } from '../ui';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { Notifications } from '@/features/notifications/Notifications';
+import { useUser } from '@/hooks/useUser';
 import { HOMEPAGE_ROUTES } from '@/utils/constants';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user } = useUser();
   const currentPath = useHref().split('/')[1];
 
   useEffect(() => {
@@ -19,7 +21,7 @@ export function Header() {
   }, [currentPath]);
 
   return (
-    <header className='bg-background- flex items-center justify-between border-b border-border p-5 shadow-md'>
+    <header className='bg-background-disabled flex items-center justify-between border-b border-border p-5'>
       <Logo className='w-28' />
       <Links />
 
@@ -28,7 +30,7 @@ export function Header() {
           <ThemeSwitcher />
           <LanguageSwitcher />
         </div>
-        <Notifications />
+        {user && <Notifications />}
         <AuthSwitcher />
         <Button shape='icon' onClick={() => setIsMobileMenuOpen(true)} className='lg:hidden'>
           <RxHamburgerMenu />
