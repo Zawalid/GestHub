@@ -7,19 +7,20 @@ import OffersSkeleton from './OffersSkeleton';
 import { New } from '../projects/ProjectsList';
 import { useNavigate } from 'react-router-dom';
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const renderOffersList = ({ offers, isLoading, error, layout, query, appliedFiltersNumber }) => {
-  if (isLoading) return <OffersSkeleton layout={layout} />;
-  if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
-  if (offers?.length === 0 && (query || appliedFiltersNumber))
-    return <Status status='noResults' heading='No offers found' message='Try changing your search query or filters' />;
-  return offers?.map((offer) => <Offer key={offer.id} offer={offer} layout={layout} />);
-};
-
-export default function OffersList({ hideFilter, onHomePage }) {
+export default function OffersList({ filter, onHomePage }) {
   const { data: offers, isLoading, error, layout, appliedFiltersNumber, query } = useOperations();
   const [parent] = useAutoAnimate({ duration: 500 });
   const navigate = useNavigate();
+
+  const render = () => {
+    if (isLoading) return <OffersSkeleton layout={layout} />;
+    if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
+    if (offers?.length === 0 && (query || appliedFiltersNumber('all')))
+      return (
+        <Status status='noResults' heading='No offers found' message='Try changing your search query or filters' />
+      );
+    return offers?.map((offer) => <Offer key={offer.id} offer={offer} layout={layout} />);
+  };
 
   return (
     <div className='flex flex-1 flex-col gap-5 overflow-hidden'>
@@ -29,7 +30,7 @@ export default function OffersList({ hideFilter, onHomePage }) {
             <Operations.SortBy />
             <Operations.OrderBy />
           </Operations.DropDown>
-          <Operations.Filter className={hideFilter && 'md:hidden'} />
+          {filter || <Operations.Filter />}
         </div>
         <Operations.Layout />
       </div>
@@ -42,10 +43,10 @@ export default function OffersList({ hideFilter, onHomePage }) {
         }`}
         ref={parent}
       >
-        {!appliedFiltersNumber && !query && !onHomePage && !error && !isLoading && (
+        {!appliedFiltersNumber('all') && !query && !onHomePage && !error && !isLoading && (
           <New type='Offer' layout={layout} onAdd={() => navigate('/app/offers/new')} />
         )}
-        {renderOffersList({ offers, isLoading, error, layout, appliedFiltersNumber, query })}
+        {render()}
         <div className='col-span-full'>
           <Operations.ViewMore color='tertiary' />
         </div>

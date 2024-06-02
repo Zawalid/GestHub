@@ -151,7 +151,7 @@ function CompletedInternships() {
       return Array.from({ length: 2 }).map((_, i) => (
         <div
           key={i}
-          className='flex animate-puls items-center justify-between gap-5 rounded-lg border border-border px-3 py-1.5'
+          className='flex animate-pulse items-center justify-between gap-5 rounded-lg border border-border px-3 py-1.5'
         >
           <div className='h-9 w-9 rounded-full border border-border bg-background-tertiary'></div>
           <div className='flex-1 space-y-2'>

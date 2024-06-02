@@ -21,7 +21,7 @@ export function Header() {
   }, [currentPath]);
 
   return (
-    <header className='bg-background-disabled flex items-center justify-between border-b border-border p-5'>
+    <header className='flex items-center justify-between border-b border-border p-5'>
       <Logo className='w-28' />
       <Links />
 

@@ -114,7 +114,7 @@ function ContactInfo() {
       </div>
 
       {isLoading && (
-        <div className='animate-puls mx-5 mb-5 grid flex-1 place-content-center rounded-lg bg-background-tertiary text-4xl text-text-tertiary'>
+        <div className='animate-pulse mx-5 mb-5 grid flex-1 place-content-center rounded-lg bg-background-tertiary text-4xl text-text-tertiary'>
           <GrMapLocation />
         </div>
       )}
@@ -140,7 +140,7 @@ const Info = ({ isLoading, value, label, icon }) => {
 
   if (isLoading)
     return (
-      <div className='animate-puls flex items-center gap-4 border-b border-border px-4 py-2'>
+      <div className='animate-pulse flex items-center gap-4 border-b border-border px-4 py-2'>
         <div className='h-10 w-10 rounded-full bg-background-tertiary'></div>
         <div className='flex-1 space-y-1.5'>
           <div className='h-2.5 w-20 bg-background-tertiary'></div>

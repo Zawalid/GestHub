@@ -13,7 +13,7 @@ export function About() {
   return (
     <div className='about w-full space-y-3 px-5 py-8'>
       {isLoading && (
-        <div className='animate-puls space-y-4 p-3'>
+        <div className='animate-pulse space-y-4 p-3'>
           <div className='mx-auto mb-8 h-5 w-1/2 rounded-lg bg-background-tertiary'></div>
           <div className='space-y-2'>
             <div className='h-3 w-3/4 rounded bg-background-tertiary'></div>

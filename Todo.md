@@ -55,10 +55,9 @@
 - [x] sessions table
 - [x] change loading spinner
 - [x] better footer (credit)
-- [ ] return animate-puls(e) / shape animation
 - [x] view more ui
 - [ ] server pagination
-- [ ] dashboard stats api
+- [ ] dashboard stats api (remove team members)
 - [ ] sectors and cities apis 
 - [ ] offline based on browser
 - [ ] notifications icon
@@ -85,7 +84,7 @@
  - [x] sort and order dropdown on mobile
  - [x] total personnel overflow on mobile
  - [x] filters are reset when sorting
- - [ ] navigate with filters
+ - [ ] navigate with filters/sort with filters/homepage filters
  - [ ] table action click propagation
 
 

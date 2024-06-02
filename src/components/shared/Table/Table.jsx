@@ -164,7 +164,7 @@ function Skeleton({ table }) {
   return (
     <tbody>
       {Array.from({ length }).map((_, i) => (
-        <tr className='animate-puls group' key={i}>
+        <tr className='animate-pulse group' key={i}>
           {columns
             .filter((c) => c.visible)
             .map(({ displayLabel }) => (

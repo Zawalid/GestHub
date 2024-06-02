@@ -24,6 +24,7 @@ export default function ApplicationsList() {
   const navigate = useNavigateWithQuery();
   const state = useNavigateState();
 
+
   return (
     <TableLayout
       data={applications}

@@ -37,7 +37,7 @@ export const getOffersProps = (offers, isLoading, error) => ({
       type: 'custom',
     },
   ],
-  defaultSortBy: 'publicationDate',
+  defaultSortBy: 'created_at',
   defaultDirection: 'desc',
   filters: {
     experience: [

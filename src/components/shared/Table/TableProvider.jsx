@@ -11,6 +11,7 @@ import { Actions } from './Actions';
 import { NewRecord } from './NewRecord';
 import { Selected } from './Selected';
 import { TableContext } from './useTable';
+import { getAppliedFiltersNumber, onFilter } from '../Operations/Operations';
 
 Array.prototype.paginate = function (page, limit) {
   const start = (page - 1) * limit;
@@ -74,16 +75,7 @@ export function TableProvider({
     actions: defaultSelectedOptions?.actions || [],
     deleteOptions: defaultSelectedOptions?.deleteOptions,
   });
-  const [filters, setFilters] = useState(() => {
-    return (
-      tableColumns
-        .filter((col) => col.filter)
-        .reduce((acc, col) => {
-          acc[col.key] = col.filter;
-          return acc;
-        }, {}) || {}
-    );
-  });
+  const [filters, setFilters] = useState({});
   const [limit, setLimit] = useState(PAGE_LIMIT);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('search');
@@ -96,19 +88,6 @@ export function TableProvider({
 
   const totalItems = rows?.length;
   const totalPages = Math.ceil(totalItems / limit);
-
-  const appliedFiltersNumber = (filter) => {
-    if (filter === 'all')
-      return Object.values(filters)
-        .flat()
-        .filter((f) => f.checked).length;
-
-    if (!filters[filter]) return;
-
-    return Object.values(filters[filter])
-      .flat()
-      .filter((f) => f.checked).length;
-  };
 
   const excludedFields = columns.filter((c) => !c.visible).map((c) => c.displayLabel);
 
@@ -137,6 +116,18 @@ export function TableProvider({
     setSearchParams(searchParams);
   }, [direction, page, searchParams, sortBy, query, setSearchParams, defaultSortBy, defaultDirection]);
 
+  useEffect(() => {
+    setColumns(tableColumns);
+    setFilters(
+      tableColumns
+        .filter((col) => col.filter)
+        .reduce((acc, col) => {
+          acc[col.key] = col.filter;
+          return acc;
+        }, {}) || {}
+    );
+  }, [tableColumns]);
+
   // Handlers
 
   const onSearch = (query) => {
@@ -144,8 +135,6 @@ export function TableProvider({
     searchParams.delete('page');
     setSearchParams(searchParams);
   };
-
-  const onFilter = (filter) => setFilters({ ...filters, ...filter });
 
   const onNextPage = () => {
     if (page === totalPages) return;
@@ -231,8 +220,8 @@ export function TableProvider({
     onSearch,
     // filter
     filters,
-    appliedFiltersNumber,
-    onFilter,
+    appliedFiltersNumber: getAppliedFiltersNumber(filters),
+    onFilter: onFilter(filters, setFilters),
     // pagination
     totalItems,
     totalPages,

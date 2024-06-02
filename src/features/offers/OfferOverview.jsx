@@ -175,7 +175,7 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
           {(user?.role === 'user' || !user) && (
             <Button
               disabled={isLoading || error || isAlreadyApplied(user, id)}
-              onClick={() => (user ? onApply() : navigate('/login', { state: { source: `/offers/${id}` } }))}
+              onClick={() => (user ? onApply() : navigate('/login', { state: { source: `/${id}` } }))}
             >
               {isAlreadyApplied(user, id) ? t('offers.alreadyApplied') : t('offers.apply')}
             </Button>

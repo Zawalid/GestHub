@@ -22,7 +22,7 @@ export default function ProjectsList() {
   const render = () => {
     if (isLoading) return <ProjectsSkeleton layout={layout} />;
     if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
-    if (projects.length === 0 && !query && !appliedFiltersNumber) {
+    if (projects.length === 0 && !query && !appliedFiltersNumber('all')) {
       const heading = isAdmin
         ? 'It appears there are currently no projects available'
         : 'It appears you are not currently included in any projects';
@@ -42,13 +42,13 @@ export default function ProjectsList() {
         </div>
       );
     }
-    if (projects.length === 0 && (query || appliedFiltersNumber))
+    if (projects.length === 0 && (query || appliedFiltersNumber('all')))
       return (
         <Status status='noResults' heading='No projects found' message='Try changing your search query or filters' />
       );
     return (
       <>
-        {!appliedFiltersNumber && !query && isAdmin && <New type='Project' layout={layout} onAdd={onAdd} />}
+        {!appliedFiltersNumber('all') && !query && isAdmin && <New type='Project' layout={layout} onAdd={onAdd} />}
         {projects?.map((project) => (
           <Project key={project.id} project={project} layout={layout} />
         ))}
@@ -62,7 +62,7 @@ export default function ProjectsList() {
   return (
     <div className='flex flex-1 flex-col overflow-hidden gap-5'>
       <div className='flex items-center justify-between gap-3'>
-        <div className='flex items-center gap-3'>
+        <div className='flex items-center gap-3 pt-2'>
           <Operations.DropDown>
             <Operations.SortBy />
             <Operations.OrderBy />

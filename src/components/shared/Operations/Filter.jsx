@@ -2,15 +2,9 @@ import { IoFilter, GoLink, GoUnlink, GrPowerReset } from '@/components/ui/Icons'
 import { Button, CheckBox, DropDown, ToolTip } from '@/components/ui';
 import { useOperations } from './useOperations';
 import { useTranslation } from 'react-i18next';
-import { useEffect } from 'react';
-
-// eslint-disable-next-line react-refresh/only-export-components
-export const toggleChecked = (filter, value) =>
-  (filter.filters || filter).map((f) => (f.value === value ? { ...f, checked: !f.checked } : f));
 
 export function Filter({ className = '' }) {
   const {
-    initialFilters,
     filters,
     onFilter,
     filterCondition,
@@ -20,19 +14,6 @@ export function Filter({ className = '' }) {
   } = useOperations();
   const { t } = useTranslation();
 
-  // Update the async filters
-  useEffect(() => {
-    // console.log(initialFilters);
-    Object.keys(filters).map((key) => {
-      if (
-        initialFilters[key].async &&
-        initialFilters[key].filters?.length > 0 &&
-        filters[key].filters?.length < initialFilters[key].filters?.length
-      ) {
-        onFilter({ [key]: initialFilters[key].filters });
-      }
-    });
-  }, [filters, initialFilters, onFilter]);
 
   if (!filters) return null;
 
@@ -44,10 +25,10 @@ export function Filter({ className = '' }) {
           <IoFilter />
           <span
             className={`absolute -right-2 -top-2 h-5 w-5 rounded-full bg-primary text-center text-xs font-bold leading-5 text-white transition-transform duration-300 ${
-              appliedFiltersNumber > 0 ? 'scale-100' : 'scale-0'
+              appliedFiltersNumber('all') > 0 ? 'scale-100' : 'scale-0'
             }`}
           >
-            {appliedFiltersNumber}
+            {appliedFiltersNumber('all')}
           </span>
         </Button>
       }
@@ -61,10 +42,10 @@ export function Filter({ className = '' }) {
       {Object.keys(filters).map((key) => (
         <div key={key} className='space-y-1'>
           <DropDown.Title className='capitalize'>{key}</DropDown.Title>
-          {(filters[key].filters || filters[key]).map(({ value, checked }) => (
+          {(filters[key]).map(({ value, checked }) => (
             <DropDown.Option key={value?.value || value} className='justify-between capitalize'>
               {value?.value || value}
-              <CheckBox checked={checked} onChange={() => onFilter({ [key]: toggleChecked(filters[key], value) })} />
+              <CheckBox checked={checked} onChange={() => onFilter(key, value)} />
             </DropDown.Option>
           ))}
 
@@ -72,7 +53,7 @@ export function Filter({ className = '' }) {
         </div>
       ))}
       <div className='flex items-center gap-1.5'>
-        <DropDown.Option key='reset' onClick={() => onFilter(null, true)} disabled={appliedFiltersNumber === 0}>
+        <DropDown.Option key='reset' onClick={() => onFilter(null, null, true)} disabled={appliedFiltersNumber('all') === 0}>
           <GrPowerReset />
           Reset Filters
         </DropDown.Option>

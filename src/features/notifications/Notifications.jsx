@@ -144,7 +144,7 @@ function Notification({ notification, unreadNotifications }) {
 
 function Skeleton() {
   return (
-    <DropDown.Option className='animate-puls cursor-auto hover:bg-transparent'>
+    <DropDown.Option className='animate-pulse cursor-auto hover:bg-transparent'>
       <div className='grid h-11 w-11 rounded-full bg-background-secondary'></div>
       <div className='flex-1 space-y-1.5'>
         <div className='h-2 rounded-lg bg-background-tertiary'></div>

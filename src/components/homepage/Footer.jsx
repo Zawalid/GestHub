@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer className='mt-auto w-full border-t border-border bg-background-disabled px-3 py-4'>
+    <footer className='mt-auto w-full border-t border-border px-3 py-4'>
       <p className='text-center text-xs font-light text-text-primary'>
         &copy; {new Date().getFullYear()} | Developed by{' '}
         <a

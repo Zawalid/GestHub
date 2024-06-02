@@ -180,7 +180,7 @@ function TimeLine({ startDate, endDate }) {
 
 function Skeleton() {
   return (
-    <div className='flex flex-1 animate-puls flex-col'>
+    <div className='flex flex-1 animate-pulse flex-col'>
       <div className='mt-8 flex items-center gap-3'>
         <div className='h-24 w-24 rounded-full border border-border bg-background-secondary shadow-md'></div>
         <div className='flex flex-1 items-center justify-between'>

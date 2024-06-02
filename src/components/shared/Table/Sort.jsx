@@ -1,9 +1,6 @@
 import { IoArrowUpOutline, IoArrowDownOutline, FaSort } from '@/components/ui/Icons';
-
 import { Button, CheckBox, DropDown } from '@/components/ui';
 import { useTable } from './useTable';
-import { toggleChecked } from '../Operations/Filter';
-import { useEffect } from 'react';
 
 const icons = {
   asc: <IoArrowUpOutline />,
@@ -11,24 +8,8 @@ const icons = {
 };
 
 export function Sort({ column }) {
-  const { sortBy, direction, onSort, onFilter, filters, appliedFiltersNumber, tableColumns } = useTable();
+  const { sortBy, direction, onSort, onFilter, filters, appliedFiltersNumber } = useTable();
   const sort = (dir) => onSort(column.key, dir);
-
-  useEffect(() => {
-    const newFilters = tableColumns
-      .filter((col) => col.filter)
-      .reduce((acc, col) => {
-        acc[col.key] = col.filter;
-        return acc;
-      }, {});
-
-
-    Object.keys(filters).map((key) => {
-      if (newFilters[key].async && newFilters[key].filters?.length > 0 && filters[key].filters?.length === 0) {
-        onFilter({ [key]: newFilters[key].filters });
-      }
-    });
-  }, [filters, onFilter, tableColumns]);
 
   if (column.filter)
     return (
@@ -66,13 +47,10 @@ export function Sort({ column }) {
           Desc
         </DropDown.Option>
         <DropDown.Divider />
-        {(filters[column.key].filters || filters[column.key])?.map(({ value, checked }) => (
+        {filters[column.key]?.map(({ value, checked }) => (
           <DropDown.Option key={value?.value || value} className='justify-between capitalize'>
             {value?.value || value}
-            <CheckBox
-              checked={checked}
-              onChange={() => onFilter({ [column.key]: toggleChecked(filters[column.key], value) })}
-            />
+            <CheckBox checked={checked} onChange={() => onFilter(column.key, value)} />
           </DropDown.Option>
         ))}
       </DropDown>

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Search } from './Search';
@@ -17,7 +18,7 @@ Array.prototype.customFilter = function (filters, filterCondition) {
   const conditions = Object.entries(filters)
     .map(([field, filter]) => ({
       field,
-      value: (filter.filters || filter).filter(({ checked }) => checked).map(({ value }) => value),
+      value: (filter).filter(({ checked }) => checked).map(({ value }) => value),
     }))
     .filter(({ value }) => value.length);
 
@@ -69,6 +70,29 @@ Array.prototype.customPaginate = function (page, limit) {
   const end = page * limit;
   return this.slice(0, end);
 };
+
+export const getAppliedFiltersNumber = (filters) => (filter) => {
+  if (filter === 'all')
+    return Object.values(filters)
+      .flat()
+      .filter((f) => f.checked).length;
+
+  if (!filters[filter]) return;
+
+  return Object.values(filters[filter])
+    .flat()
+    .filter((f) => f.checked).length;
+};
+
+export const onFilter = (filters, setFilters, initialFilters) => (key, value, reset) => {
+  if (reset) return setFilters(initialFilters);
+
+  const filter = (filters[key]).map((f) =>
+    f.value === value ? { ...f, checked: !f.checked } : f
+  );
+  setFilters({ ...filters, [key]: filter });
+};
+
 // const constructFilterString = (filters) => {
 //   let filterString = "";
 
@@ -137,10 +161,6 @@ export function Operations({
     .customFilter(filters, filterCondition)
     .customSort(sortBy, direction, sortOptions);
 
-  const appliedFiltersNumber = Object.values(filters)
-    .flat()
-    .filter((f) => f.checked).length;
-
   // Clean url
   useEffect(() => {
     if (sortBy === defaultSortBy && direction === defaultDirection) {
@@ -182,10 +202,7 @@ export function Operations({
     searchParams.set(directionQueryKey, direction);
     setSearchParams(searchParams);
   };
-  const onFilter = (filter, reset) => {
-    const newFilters = reset ? initialFilters : { ...filters, ...filter };
-    setFilters(newFilters);
-  };
+
   const onChangeFilterCondition = () => setFilterCondition((prev) => (prev === 'OR' ? 'AND' : 'OR'));
 
   const onchangeLayout = (layout) => setLayout(layout);
@@ -210,8 +227,8 @@ export function Operations({
     initialFilters,
     filters,
     filterCondition,
-    appliedFiltersNumber,
-    onFilter,
+    appliedFiltersNumber: getAppliedFiltersNumber(filters),
+    onFilter: onFilter(filters, setFilters, initialFilters),
     onChangeFilterCondition,
     layout,
     onchangeLayout,

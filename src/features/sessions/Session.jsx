@@ -86,7 +86,7 @@ function ActivitiesList() {
       return Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} type='session' />);
     }
     if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
-    if (activities?.length === 0 && !query && !appliedFiltersNumber) {
+    if (activities?.length === 0 && !query && !appliedFiltersNumber('all')) {
       return (
         <div className='absolute grid h-full w-full place-content-center place-items-center gap-5'>
           <img src='/SVG/no-applications.svg' alt='' className='w-[140px]' />
@@ -97,7 +97,7 @@ function ActivitiesList() {
         </div>
       );
     }
-    if (activities?.length === 0 && (query || appliedFiltersNumber)) {
+    if (activities?.length === 0 && (query || appliedFiltersNumber('all'))) {
       return (
         <Status status='noResults' heading='No activities found' message='Try changing your search query or filters' />
       );

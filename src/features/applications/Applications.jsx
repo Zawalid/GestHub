@@ -34,13 +34,10 @@ export default function Applications() {
             { value: 'Pending', checked: false },
             { value: 'Approved', checked: false },
           ],
-          sector: {
-            filters: [...new Set(applications?.map((application) => application.sector))].map((s) => ({
-              value: s,
-              checked: false,
-            })),
-            async: true,
-          },
+          sector: [...new Set(applications?.map((application) => application.sector))].map((s) => ({
+            value: s,
+            checked: false,
+          })),
         }}
         fieldsToSearch={['offer', 'sector']}
       >
@@ -59,7 +56,7 @@ function ApplicationsList() {
       return Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} />);
     }
     if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
-    if (applications?.length === 0 && !query && !appliedFiltersNumber) {
+    if (applications?.length === 0 && !query && !appliedFiltersNumber('all')) {
       return (
         <div className='absolute grid h-full w-full place-content-center place-items-center gap-5'>
           <img src='/SVG/no-applications.svg' alt='' className='w-[140px]' />
@@ -70,7 +67,7 @@ function ApplicationsList() {
         </div>
       );
     }
-    if (applications?.length === 0 && (query || appliedFiltersNumber)) {
+    if (applications?.length === 0 && (query || appliedFiltersNumber('all'))) {
       return (
         <Status
           status='noResults'
@@ -80,7 +77,7 @@ function ApplicationsList() {
       );
     }
     return (
-      <div className='space-y-3'  ref={parent}>
+      <div className='space-y-3' ref={parent}>
         {applications?.map((d) => (
           <Application key={d.id} application={d} />
         ))}
@@ -101,9 +98,7 @@ function ApplicationsList() {
         </div>
         <Operations.Search />
       </div>
-      <div className='relative flex-1 space-y-3 scroll overflow-y-auto overflow-x-hidden pr-2'>
-        {render()}
-      </div>
+      <div className='scroll relative flex-1 space-y-3 overflow-y-auto overflow-x-hidden pr-2'>{render()}</div>
     </>
   );
 }
@@ -139,7 +134,7 @@ function Application({ application: { id, offer, sector, status, created_at } })
 
 export function Skeleton({ type = 'application' }) {
   return (
-    <div className='animate-puls flex cursor-auto items-center gap-5 px-3 py-2 hover:bg-transparent'>
+    <div className='animate-pulse flex cursor-auto items-center gap-5 px-3 py-2 hover:bg-transparent'>
       <div className='grid h-12 w-12 rounded-full bg-background-secondary'></div>
       <div className='flex-1 space-y-1.5'>
         <div className='h-2.5 w-40 rounded-lg bg-background-tertiary'></div>
