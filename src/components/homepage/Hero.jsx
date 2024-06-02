@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { IoBriefcaseOutline, IoChevronDownOutline, IoLocationOutline, IoSearchOutline } from '@/components/ui/Icons';
 import { useOperations } from '../shared/Operations/useOperations';
 import { Button, DropDown } from '../ui';
-import { useVisibleOffers } from '@/features/offers/useOffers';
+import { useCities, useSectors } from '@/features/offers/useOffers';
 
 export default function Hero() {
   const { t } = useTranslation();
@@ -36,9 +36,9 @@ function Search({ query }) {
 
   return (
     <div className='flex flex-col gap-3 rounded-xl bg-background-primary p-2 shadow-md sm:gap-5 sm:p-4 md:flex-row md:items-center md:self-center'>
-      <FilterDropDown icon={<IoBriefcaseOutline />} value={sector} setValue={setSector} field='sector' />
+      <FilterDropDown icon={<IoBriefcaseOutline />} value={sector} setValue={setSector} type='sectors' />
       <span className='hidden h-1/2 w-0.5 bg-border md:block'></span>
-      <FilterDropDown icon={<IoLocationOutline />} value={city} setValue={setCity} field='city' />
+      <FilterDropDown icon={<IoLocationOutline />} value={city} setValue={setCity} type='cities' />
       <span className='hidden h-1/2 w-0.5 bg-border md:block'></span>
 
       <div className='flex items-center gap-2 p-3'>
@@ -80,13 +80,12 @@ function Search({ query }) {
   );
 }
 
-function FilterDropDown({ icon, value, setValue, field }) {
-  const { offers } = useVisibleOffers();
+function FilterDropDown({ icon, value, setValue, type }) {
+  const { sectors } = useSectors();
+  const { cities } = useCities();
   const [query, setQuery] = useState('');
 
-  const results = [...new Set(offers?.map((offer) => offer[field]))].filter((e) =>
-    e.toLowerCase().includes(query.toLowerCase())
-  );
+  const results = { sectors, cities }[type]?.filter((e) => e.toLowerCase().includes(query.toLowerCase()));
 
   return (
     <div className='flex items-center gap-2 text-text-tertiary'>

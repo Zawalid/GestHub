@@ -6,30 +6,31 @@ import {
   FaCalendarXmark,
   FaDiagramProject,
   FaRegCircleCheck,
-  IoPeople,
+  LuClipboardList,
   FaChevronLeft,
   FaChevronRight,
   BsCalendar4Event,
+  TbProgressCheck,
+  MdOutlineNotStarted,
 } from '@/components/ui/Icons';
-import { useProjects } from '@/features/projects/useProjects';
 import { checkIsOverdue, getIsoDate } from '@/utils/helpers';
-import { useTasks } from '@/features/projects/useTasks';
 import PieChartStats, { Legend, createCustomTooltip } from '@/features/overview/PieChart';
 import { Button, Status } from '@/components/ui';
 import { Stat } from './Stat';
+import { useStats } from './useStats';
 
 export default function SupervisorOverview() {
-  const { projects, isLoading } = useProjects();
+  const { stats, isLoading } = useStats();
   return (
     <div className='flex h-full flex-col gap-5 overflow-x-auto'>
-      <Stats projects={projects} isLoading={isLoading} />
+      <Stats />
       <div className='grid gap-5 lg:grid-cols-[3fr,2fr]'>
         <TasksAnalytics />
         <PieChartStats
           data={[
-            { name: 'Completed', value: projects?.filter((p) => p.status === 'Completed').length },
-            { name: 'In-progress', value: projects?.filter((p) => p.status === 'In Progress').length },
-            { name: 'Not Started', value: projects?.filter((p) => p.status === 'Not Started').length },
+            { name: 'Completed', value: stats?.projects?.completedProjects },
+            { name: 'In Progress', value: stats?.projects?.inProgressProjects },
+            { name: 'Not Started', value: stats?.projects?.notStartedProjects },
           ]}
           title='Projects Status'
           legend={[
@@ -46,7 +47,7 @@ export default function SupervisorOverview() {
 }
 
 export function TasksAnalytics() {
-  const { tasks, isLoading } = useTasks();
+  const { stats, isLoading } = useStats();
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   const [weekOffset, setWeekOffset] = useState(0);
   const startOfWeek = DateTime.local().startOf('week').plus({ weeks: weekOffset });
@@ -54,14 +55,16 @@ export function TasksAnalytics() {
   const data = days.map((day, i) => {
     const currentDay = startOfWeek.plus({ days: i });
 
-    const tasksOnDay = tasks?.filter((task) => getIsoDate(task.created_at).toISODate() === currentDay.toISODate());
-    const completedTasksOnDay = tasks?.filter(
+    const tasksOnDay = stats?.tasks.tasks?.filter(
+      (task) => getIsoDate(task.created_at).toISODate() === currentDay.toISODate()
+    );
+    const completedTasksOnDay = stats?.tasks.tasks?.filter(
       (task) => task.status === 'Done' && getIsoDate(task.updated_at).toISODate() === currentDay.toISODate()
     );
-    const overdueTasks = tasks?.filter(
+    const overdueTasks = stats?.tasks.tasks?.filter(
       (t) => checkIsOverdue(t, 'task') && getIsoDate(t.dueDate).toISODate() === currentDay.toISODate()
     );
-    const dueTasks = tasks?.filter((t) => DateTime.fromISO(t.dueDate).toISODate() === currentDay.toISODate());
+    const dueTasks = stats?.tasks.tasks?.filter((t) => DateTime.fromISO(t.dueDate).toISODate() === currentDay.toISODate());
 
     return {
       name: DateTime.local().weekdayLong === day ? 'Today' : day.slice(0, 3),
@@ -111,8 +114,8 @@ export function TasksAnalytics() {
       {isLoading ? (
         <Status status='loading' />
       ) : (
-        <ResponsiveContainer width='100%' height='100%'>
-          <BarChart data={data} className=''>
+        <ResponsiveContainer width='100%' height='100%' >
+          <BarChart data={data} >
             <XAxis dataKey='name' className='text-xs font-medium' />
             <YAxis width={30} domain={[0, 'dataMax']} allowDecimals={false} />{' '}
             <Tooltip
@@ -123,7 +126,7 @@ export function TasksAnalytics() {
             <Bar dataKey='Added' fill='#3b82f6' legendType='circle' />
             <Bar dataKey='Completed' fill='#16a34a' legendType='circle' />
             <Bar dataKey='Overdue' fill='#ef4444' legendType='circle' />
-            <Bar dataKey='Due' fill='#f59e0b' legendType='circle' /> {/* New Bar component for "Due" statistic */}
+            <Bar dataKey='Due' fill='#f59e0b' legendType='circle' /> 
           </BarChart>
         </ResponsiveContainer>
       )}
@@ -140,20 +143,21 @@ export function TasksAnalytics() {
   );
 }
 
-function Stats({ projects, isLoading }) {
+function Stats() {
+  const { stats, isLoading } = useStats();
   const navigate = useNavigate();
 
-  const stats = [
+  const statistics = [
     {
       label: { value: 'Total Projects' },
-      value: { value: projects?.length },
+      value: { value: stats?.projects?.totalProjects },
       icon: { icon: <FaDiagramProject /> },
       className: 'bg-orange-400 dark:bg-orange-500',
       onClick: () => navigate('/app/projects'),
     },
     {
       label: { value: 'Completed Projects' },
-      value: { value: projects?.filter((p) => p.status === 'Completed').length },
+      value: { value: stats?.projects?.completedProjects },
       icon: { icon: <FaRegCircleCheck /> },
       className: 'bg-green-500 dark:bg-green-600',
       onClick: () => navigate('/app/projects', { state: { filter: 'Completed' } }),
@@ -161,28 +165,56 @@ function Stats({ projects, isLoading }) {
     {
       label: { value: 'Overdue Projects' },
       value: {
-        value: projects?.filter((p) => checkIsOverdue(p, 'project')).length,
+        value: stats?.projects?.overdueProjects,
       },
       icon: { icon: <FaCalendarXmark /> },
       className: 'bg-red-400 dark:bg-red-500',
       onClick: () => navigate('/app/projects', { state: { filter: 'Overdue' } }),
     },
-    {
-      label: { value: 'Team Members', color: 'text-text-secondary' },
-      value: {
-        value: [...new Set(projects?.map((p) => p.teamMembers).flat())].length,
-        color: 'text-text-primary',
-      },
-      icon: { icon: <IoPeople />, className: 'bg-background-tertiary' },
-      className: 'border border-border bg-background-secondary',
-    },
   ];
 
   return (
     <div className='flex flex-col gap-5 mobile:grid mobile:grid-cols-2 md:grid-cols-4'>
-      {stats.map((stat, index) => (
+      {statistics.map((stat, index) => (
         <Stat key={index} isLoading={isLoading} {...stat} />
       ))}
+      <div className='space-y-3 rounded-lg border border-border bg-background-secondary p-3 shadow-md'>
+        <div className='flex items-start justify-between'>
+          <h4 className='text-sm font-medium text-text-secondary'>Total Tasks</h4>
+          <div className='rounded-lg bg-background-tertiary p-2 text-xl'>
+            <LuClipboardList />
+          </div>
+        </div>
+        <div className='flex flex-wrap xl:flex-nowrap w-fit gap-0.5 overflow-hidden rounded-lg'>
+          {[
+            {
+              color: 'bg-gray-500',
+              icon: <MdOutlineNotStarted />,
+              value: stats?.tasks?.toDoTasks ,
+            },
+            {
+              color: 'bg-blue-500',
+              icon: <TbProgressCheck />,
+              value: stats?.tasks?.inProgressTasks ,
+            },
+            {
+              color: 'bg-green-600',
+              icon: <FaRegCircleCheck />,
+              value: stats?.tasks?.completedTasks ,
+            },
+            {
+              color: 'bg-red-500',
+              icon: <FaCalendarXmark />,
+              value: stats?.tasks?.overdueTasks ,
+            },
+          ].map(({ color, icon, value }) => (
+            <div key={color} className={`flex items-center gap-1 px-2.5 py-1 text-white ${color}`}>
+              {icon}
+              {value}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

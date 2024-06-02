@@ -4,7 +4,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Button, CheckBox, DropDown, InputField, Modal } from '@/components/ui';
 import { useForm } from '@/hooks/index';
 import { ModalFormLayout } from '@/layouts/ModalFormLayout';
-import { useAddOffer, useOffers } from './useOffers';
+import { useAddOffer, useCities,  useSectors } from './useOffers';
 import { PiCheckBold, HiMiniXMark } from '@/components/ui/Icons';
 import { useSettings } from '@/hooks/useUser';
 
@@ -79,9 +79,7 @@ export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
       },
       {
         name: 'city',
-        label: 'City',
-        type: 'city',
-        placeholder: 'Enter city...',
+        hidden: true,
       },
       {
         name: 'company',
@@ -130,7 +128,7 @@ export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
         <div className='flex flex-col gap-5 mobile:flex-1'>
           {formInputs['title']}
           {formInputs['description']}
-          <Sector getValue={getValue} setValue={setValue} />
+          <Dropdown type='sector' getValue={getValue} setValue={setValue} />
           <div className='flex flex-col gap-1.5'>
             <label className='text-sm font-medium text-text-tertiary'>Type</label>
             <DropDown
@@ -149,7 +147,7 @@ export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
           </div>
         </div>
         <div className='flex flex-col gap-5 mobile:flex-1'>
-          {formInputs['city']}
+          <Dropdown type='city' getValue={getValue} setValue={setValue} />
           {formInputs['company']}
           {formInputs['duration']}
           <div className='flex flex-col gap-2'>
@@ -187,17 +185,18 @@ export function OfferForm({ defaultValues, onSubmit, onClose, type }) {
   );
 }
 
-function Sector({ getValue, setValue }) {
-  const [newSector, setNewSector] = useState('');
-  const { offers } = useOffers();
+function Dropdown({ type, getValue, setValue }) {
+  const [newValue, setNewValue] = useState('');
+  const { sectors } = useSectors();
+  const { cities } = useCities();
 
   return (
     <div className='flex flex-col gap-1.5'>
-      <label className='text-sm font-medium text-text-tertiary'>Sector</label>
+      <label className='text-sm font-medium capitalize text-text-tertiary'>{type}</label>
       <DropDown
         toggler={
           <DropDown.Toggler>
-            <span>{getValue('sector')}</span>
+            <span>{getValue(type)}</span>
           </DropDown.Toggler>
         }
         options={{
@@ -206,24 +205,28 @@ function Sector({ getValue, setValue }) {
           placement: 'auto-end',
         }}
       >
-        <DropDown.Title>New Sector</DropDown.Title>
+        <DropDown.Title className='capitalize'>New {type}</DropDown.Title>
         <div className='mb-2 flex items-center gap-1'>
-          <InputField placeholder='Enter sector...' value={newSector} onChange={(e) => setNewSector(e.target.value)} />
+          <InputField
+            placeholder={`Enter new ${type}...`}
+            value={newValue}
+            onChange={(e) => setNewValue(e.target.value)}
+          />
           <Button
             shape='icon'
             className='h-full w-7 rounded-md border border-border'
-            disabled={!newSector}
+            disabled={!newValue}
             onClick={() => {
-              setValue('sector', newSector);
-              setNewSector('');
+              setValue(type, newValue);
+              setNewValue('');
             }}
           >
             <PiCheckBold />
           </Button>
         </div>
-        <DropDown.Title>Previous Sectors</DropDown.Title>
-        {[...new Set(offers?.map((offer) => offer.sector))].map((e) => (
-          <DropDown.Option key={e} onClick={() => setValue('sector', e)} isCurrent={e === getValue('sector')}>
+        <DropDown.Title className='capitalize'>Previous {type}s</DropDown.Title>
+        {{ sector: sectors, city: cities }[type]?.map((e) => (
+          <DropDown.Option key={e} onClick={() => setValue(type, e)} isCurrent={e === getValue('sector')}>
             {e}
           </DropDown.Option>
         ))}

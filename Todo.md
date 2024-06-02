@@ -57,8 +57,8 @@
 - [x] better footer (credit)
 - [x] view more ui
 - [ ] server pagination
-- [ ] dashboard stats api (remove team members)
-- [ ] sectors and cities apis 
+- [x] dashboard stats api (remove team members)
+- [x] sectors and cities apis 
 - [ ] offline based on browser
 - [ ] notifications icon
 - [ ] team page

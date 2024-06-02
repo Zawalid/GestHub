@@ -33,10 +33,10 @@ export function Projects() {
         status: [
           { value: 'Not Started', checked: false },
           { value: 'In Progress', checked: false },
-          { value: 'Completed', checked: state?.filter === 'Completed' },
+          { value: 'Completed', checked: projects?.length && state?.filter === 'Completed' },
           {
             value: { value: 'Overdue', condition: (el) => checkIsOverdue(el, 'project') },
-            checked: state?.filter === 'Overdue',
+            checked: projects?.length && state?.filter === 'Overdue',
           },
         ],
 

@@ -5,11 +5,11 @@ import { AllInterns, Intern } from '../projects/NewProject/TeamMembers';
 import { IoPeople, LuClipboardList, MdOutlinePendingActions } from '@/components/ui/Icons';
 import { Button, Modal, Status } from '@/components/ui';
 import { getTimelineDates } from '@/utils/helpers';
-import { useGenerateAttestation, useGenerateAttestations } from '../interns/useInterns';
-import { useAdmins, useApplications, useOffers, useSupervisors, useInterns } from '@/hooks/index';
+import { useGenerateAttestation, useGenerateAttestations, useInterns } from '../interns/useInterns';
 import { useNavigate } from 'react-router-dom';
 import { Stat } from './Stat';
 import SupervisorOverview from './SupervisorOverview';
+import { useStats } from './useStats';
 
 export default function AdminOverview() {
   const [current, setCurrent] = useState('offers');
@@ -53,23 +53,20 @@ export default function AdminOverview() {
 }
 
 function Stats() {
-  const { applications, isLoading: isApplicationsLoading } = useApplications();
-  const { interns, isLoading: isInternsLoading } = useInterns();
-  const { supervisors, isLoading: isSupervisorsLoading } = useSupervisors();
-  const { admins, isLoading: isAdminsLoading } = useAdmins();
+  const { stats, isLoading } = useStats();
   const navigate = useNavigate();
 
-  const stats = [
+  const statistics = [
     {
       label: { value: 'Total Applications' },
-      value: { value: applications?.length },
+      value: { value: stats?.applications.totalApplications },
       icon: { icon: <LuClipboardList /> },
       className: 'bg-primary',
       onClick: () => navigate('/app/applications'),
     },
     {
       label: { value: 'Pending Applications' },
-      value: { value: applications?.filter((p) => p.status === 'Pending').length },
+      value: { value: stats?.applications.pendingApplications },
       icon: { icon: <MdOutlinePendingActions /> },
       className: 'bg-orange-500 dark:bg-orange-600',
       onClick: () => navigate('/app/applications', { state: { filter: 'Pending' } }),
@@ -78,15 +75,15 @@ function Stats() {
 
   return (
     <div className='flex flex-col gap-5 mobile:grid mobile:grid-cols-2 md:grid-cols-4 md:grid-rows-[repeat(3,auto)]'>
-      {stats.map((stat, index) => (
-        <Stat key={index} isLoading={isApplicationsLoading} {...stat} />
+      {statistics.map((stat, index) => (
+        <Stat key={index} isLoading={isLoading} {...stat} />
       ))}
 
       <PieChartStats
         data={[
-          { name: 'Pending', value: applications?.filter((p) => p.status === 'Pending').length },
-          { name: 'Approved', value: applications?.filter((p) => p.status === 'Approved').length },
-          { name: 'Rejected', value: applications?.filter((p) => p.status === 'Rejected').length },
+          { name: 'Pending', value: stats?.applications.pendingApplications },
+          { name: 'Approved', value: stats?.applications.approvedApplications },
+          { name: 'Rejected', value: stats?.applications.rejectedApplications },
         ]}
         title='Applications Status'
         legend={[
@@ -96,17 +93,17 @@ function Stats() {
         ]}
         COLORS={['#f97316', '#16a34a', '#ef4444']}
         className='col-span-2 row-span-3 min-h-[350px]'
-        isLoading={isApplicationsLoading}
+        isLoading={isLoading}
       />
 
       <div className='col-span-2 flex items-start justify-between rounded-lg border border-border bg-background-secondary p-3 shadow-md'>
         <div className='space-y-3'>
           <h4 className='text-sm font-medium text-text-secondary'>Total Personnel</h4>
-          <div className='flex gap-4 flex-wrap'>
+          <div className='flex flex-wrap gap-4'>
             {[
-              { name: 'admins', value: admins?.length, isLoading: isAdminsLoading },
-              { name: 'supervisors', value: supervisors?.length, isLoading: isSupervisorsLoading },
-              { name: 'interns', value: interns?.length, isLoading: isInternsLoading },
+              { name: 'admins', value: stats?.personnel.admins, isLoading: isLoading },
+              { name: 'supervisors', value: stats?.personnel.supervisors, isLoading: isLoading },
+              { name: 'interns', value: stats?.personnel.interns, isLoading: isLoading },
             ].map(({ name, value, isLoading }) => (
               <Button
                 key={name}
@@ -114,11 +111,7 @@ function Stats() {
                 className='bg-background-tertiary text-text-primary hover:text-white'
                 onClick={() => navigate(`/app/${name}`)}
               >
-                {isLoading ? (
-                  <div className='sending'></div>
-                ) : (
-                  <h3 className='font-bold lg:text-xl'>{value}</h3>
-                )}
+                {isLoading ? <div className='sending'></div> : <h3 className='font-bold lg:text-xl'>{value}</h3>}
                 <h5 className='text-xs capitalize lg:text-sm'>{name}</h5>
               </Button>
             ))}
@@ -183,7 +176,7 @@ function CompletedInternships() {
 
   return (
     <>
-      <div className='min-h-[100px] col-span-2 flex flex-col gap-3'>
+      <div className='col-span-2 flex min-h-[100px] flex-col gap-3'>
         <div className='flex items-center justify-between'>
           <h3 className='font-semibold text-text-primary'>Completed Internship</h3>
           <Button
@@ -247,25 +240,17 @@ function GenerateAttestation({ isOpen, onClose, completedInternships }) {
 }
 
 function OffersAnalytics() {
-  const { offers, isLoading } = useOffers();
+  const { stats, isLoading } = useStats();
   const navigate = useNavigate();
 
   const onClick = (data) => navigate('/app/applications', { state: { filter: data.fullName } });
 
-  const latestOffers = offers
-    ?.filter((offer) => offer.applications?.length > 0)
-    .toSorted((a, b) => new Date(b?.updated_at) - new Date(a?.updated_at))
-    .slice(0, 7);
-
-  const data = latestOffers?.map((offer) => {
-    const rejected = offer?.applications.filter((application) => application.status === 'Rejected');
-    const approved = offer?.applications.filter((application) => application.status === 'Approved');
+  const data = stats?.offers.latestOffers?.map((offer) => {
     return {
-      id: offer?.id,
-      name: `${offer?.title.slice(0, 8)}${offer?.title.slice(8).length ? '...' : ''}`,
-      fullName: offer?.title,
-      Approved: approved?.length,
-      Rejected: rejected?.length,
+      name: `${offer?.name.slice(0, 8)}${offer?.name.slice(8).length ? '...' : ''}`,
+      fullName: offer?.name,
+      Approved: offer?.applications.approved,
+      Rejected: offer?.applications.rejected,
     };
   });
 

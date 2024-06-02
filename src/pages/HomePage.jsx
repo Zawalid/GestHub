@@ -1,5 +1,5 @@
-import { useVisibleOffers } from '@/features/offers/useOffers';
-import { useEffect,  } from 'react';
+import { useCities, useSectors, useVisibleOffers } from '@/features/offers/useOffers';
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Operations } from '../components/shared/Operations/Operations';
 import { getOffersProps } from '@/pages/Offers';
@@ -14,6 +14,8 @@ import Hero from '@/components/homepage/Hero';
 export function HomePage() {
   const { settings } = useSettings();
   const { user } = useUser();
+  const { sectors } = useSectors();
+  const { cities } = useCities();
   const { offers, isLoading, error } = useVisibleOffers();
   const [searchParams] = useSearchParams();
 
@@ -26,11 +28,11 @@ export function HomePage() {
       <Operations
         {...getOffersProps(offers, isLoading, error)}
         filters={{
-          sector: [...new Set(offers?.map((offer) => offer.sector))].map((s) => ({
+          sector: sectors?.map((s) => ({
             value: s,
             checked: searchParams.get('sector') === s,
           })),
-          city: [...new Set(offers?.map((offer) => offer.city))].map((s) => ({
+          city: cities?.map((s) => ({
             value: s,
             checked: searchParams.get('city') === s,
           })),

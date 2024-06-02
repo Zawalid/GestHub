@@ -8,7 +8,7 @@ import {
 } from './useSupervisors';
 import { TableLayout } from '@/layouts/TableLayout';
 import { Gender } from '@/pages/auth/Register';
-import { TbProgressCheck, FaCalendarXmark, FaRegCircleCheck } from '@/components/ui/Icons';
+import { TbProgressCheck, FaCalendarXmark, FaRegCircleCheck, MdOutlineNotStarted } from '@/components/ui/Icons';
 
 export default function SupervisorsList() {
   const { supervisors, isLoading, error } = useSupervisors();
@@ -130,7 +130,7 @@ export const renderProjects = {
         {[
           {
             color: 'bg-gray-500',
-            icon: <TbProgressCheck />,
+            icon: <MdOutlineNotStarted />,
             value: values.notStarted,
           },
           {

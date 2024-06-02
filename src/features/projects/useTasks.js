@@ -1,31 +1,9 @@
 import { useMutate } from '@/hooks/useMutate';
-import { addTask, deleteTask, getAllTasks, getTask, updateTask } from '@/services/tasksAPI';
-import { useQuery } from '@tanstack/react-query';
-
-// Queries
-export function useTasks() {
-  const { data, error, isPending } = useQuery({
-    queryKey: ['tasks'],
-    queryFn: getAllTasks,
-  });
-
-  return { tasks: data, error, isLoading: isPending };
-}
-
-export function useTask(id) {
-  const { data, error, isPending } = useQuery({
-    queryKey: ['task', id],
-    queryFn: () => getTask(id),
-    enabled: !!id,
-  });
-
-  return { task: data, error, isLoading: isPending };
-}
+import { addTask, deleteTask, updateTask } from '@/services/tasksAPI';
 
 // Mutations
 
-const onSuccess = (task, queryClient) =>
-  queryClient.invalidateQueries({ queryKey: ['projects'] });
+const onSuccess = (task, queryClient) => queryClient.invalidateQueries({ queryKey: ['projects'] });
 
 export const useAddTask = () =>
   useMutate({
@@ -36,8 +14,6 @@ export const useAddTask = () =>
     errorMessage: 'Failed to add task',
     onSuccess,
   });
-
-
 
 export const useUpdateTask = () =>
   useMutate({

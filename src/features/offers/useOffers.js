@@ -1,5 +1,14 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getAllOffers, getOffer, addOffer, updateOffer, deleteOffer, getAllVisibleOffers } from '@/services/offersAPI';
+import {
+  getAllOffers,
+  getOffer,
+  addOffer,
+  updateOffer,
+  deleteOffer,
+  getAllVisibleOffers,
+  getSectors,
+  getCities,
+} from '@/services/offersAPI';
 import { useMutate } from '@/hooks/useMutate';
 import { useLocalStorageState } from '@/hooks/useLocalStorageState';
 
@@ -37,7 +46,6 @@ export function useVisibleOffers() {
   };
 
   const offers = getOffers()?.map((offer) => ({ ...offer, skills: getSkills(offer) }));
-  
 
   return {
     offers,
@@ -48,18 +56,24 @@ export function useVisibleOffers() {
   };
 }
 
-export const useOffer = (id) => {
+export function useOffer(id) {
   const { data, error, isPending } = useQuery({
     queryKey: ['offers', id],
     queryFn: () => getOffer(id),
   });
 
-  return {
-    offer: { ...data, skills: getSkills(data) },
-    error,
-    isLoading: isPending,
-  };
-};
+  return { offer: { ...data, skills: getSkills(data) }, error, isLoading: isPending };
+}
+
+export function useSectors() {
+  const { data, error, isPending } = useQuery({ queryKey: ['sectors'], queryFn: getSectors });
+  return { sectors: data, error, isLoading: isPending };
+}
+
+export function useCities() {
+  const { data, error, isPending } = useQuery({ queryKey: ['cities'], queryFn: getCities });
+  return { cities: data, error, isLoading: isPending };
+}
 
 // Mutations
 

@@ -13,9 +13,7 @@ import {
   FaGithub,
   FaGoogleDrive,
 } from '@/components/ui/Icons';
-import { checkIsOverdue, getIsoDate, getTimelineDates } from '@/utils/helpers';
-import { useTasks } from '../projects/useTasks';
-import { useProjects } from '../projects/useProjects';
+import { getIsoDate, getTimelineDates } from '@/utils/helpers';
 import { TasksAnalytics } from './SupervisorOverview';
 import { Stat } from './Stat';
 import { useUser } from '@/hooks/useUser';
@@ -26,6 +24,7 @@ import { useForm } from '@/hooks/index';
 import { File } from '../applications/NewApplication';
 import { ErrorTooltip } from '@/components/ui/InputField';
 import { useSendInfo } from '../interns/useInterns';
+import { useStats } from './useStats';
 
 export default function InternOverview() {
   const { user } = useUser();
@@ -44,40 +43,37 @@ export default function InternOverview() {
 }
 
 function Stats() {
-  const { tasks, isLoading } = useTasks();
-  const { projects } = useProjects();
+  const { stats, isLoading } = useStats();
 
-  const stats = [
+  const statistics = [
     {
       label: { value: 'Active Projects' },
-      value: { value: projects?.length },
+      value: { value: stats?.projects?.totalProjects },
       icon: { icon: <FaDiagramProject /> },
       className: 'bg-primary',
     },
     {
       label: { value: 'Assigned Tasks' },
-      value: { value: tasks?.length },
+      value: { value: stats?.tasks?.totalTasks },
       icon: { icon: <LuClipboardList /> },
       className: 'bg-blue-500 dark:bg-blue-600',
     },
     {
       label: { value: 'Completed Tasks' },
-      value: { value: tasks?.filter((p) => p.status === 'Done').length },
+      value: { value: stats?.tasks?.completedTasks },
       icon: { icon: <FaListCheck /> },
       className: 'bg-green-500 dark:bg-green-600',
     },
     {
       label: { value: 'Overdue Tasks' },
-      value: {
-        value: tasks?.filter((t) => checkIsOverdue(t, 'task')).length,
-      },
+      value: { value: stats?.tasks?.overdueTasks },
       icon: { icon: <FaCalendarXmark /> },
       className: 'bg-red-400 dark:bg-red-500',
     },
   ];
   return (
     <div className='flex flex-col gap-5 mobile:grid mobile:grid-cols-2 md:grid-cols-4'>
-      {stats.map((stat, index) => (
+      {statistics.map((stat, index) => (
         <Stat key={index} isLoading={isLoading} {...stat} />
       ))}
     </div>
@@ -92,7 +88,7 @@ function CustomDay({ day, startDate, endDate, value, today, ...other }) {
   const isSpecialDay = isEndDate || isStartDate || today;
 
   const getDayStyle = () => {
-    if (isSpecialDay && isSameAsValue) return { backgroundColor: 'var(--primary)', color: 'white', };
+    if (isSpecialDay && isSameAsValue) return { backgroundColor: 'var(--primary)', color: 'white' };
     if (isStartDate || isEndDate) return { backgroundColor: isStartDate ? '#2563eb' : '#ef4444', color: 'white' };
     if (isBetween) return { backgroundColor: 'var(--background-secondary)', borderRadius: 0 };
     return { backgroundColor: 'transparent' };
@@ -115,9 +111,11 @@ function CustomDay({ day, startDate, endDate, value, today, ...other }) {
   return (
     <ToolTip content={<span className='text-xs text-text-secondary'>{getToolTipText()}</span>} hidden={!isSpecialDay}>
       <div className={getClassName()}>
-        <PickersDay {...other} day={day} style={{ margin: 0, width: '100%', height: '100%',
-        transition : '0.5s background-color',
-        ...getDayStyle() }} />
+        <PickersDay
+          {...other}
+          day={day}
+          style={{ margin: 0, width: '100%', height: '100%', transition: '0.5s background-color', ...getDayStyle() }}
+        />
       </div>
     </ToolTip>
   );

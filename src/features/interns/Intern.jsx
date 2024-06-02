@@ -126,7 +126,7 @@ export default function Intern() {
             </div>
             <div className='flex-1 text-end'>
               <h4 className='text-xs font-medium text-white/80'>Tasks Assigned</h4>
-              <h5 className='font-bold text-white'>{tasks?.length}</h5>
+              <h5 className='font-bold text-white'>{tasks || 0}</h5>
             </div>
           </div>
           <div className='flex items-center gap-3 rounded-lg bg-green-600 p-2'>

@@ -22,7 +22,7 @@ export const axiosFetch = async (resource, method, data, headers) => {
         ...(headers && headers),
       },
     });
-    return response.data;
+    return response.data?.data || response.data;
   } catch (e) {
     if (e?.response?.data?.message === 'Unauthenticated.') {
       localStorage.removeItem('in');

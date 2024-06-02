@@ -131,7 +131,7 @@ export function useSettings() {
 
   if (settings) localStorage.setItem('settings', JSON.stringify(settings));
 
-  if (isFetching && !settings) {
+  if (isFetching || !settings) {
     const localSettings = localStorage.getItem('settings');
     if (localSettings) {
       return {
