@@ -24,20 +24,22 @@ export function TableLayout({
   return (
     <div className='flex h-full flex-col gap-5 overflow-auto'>
       <Table {...tableProps}>
-        <div className='flex flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center'>
-          <div className='flex items-center justify-between gap-3 sm:justify-normal '>
-            <Table.Search />
-            <Table.View />
+        {(!tableProps.isLoading && tableProps.data?.length === 0) || (
+          <div className='flex flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center'>
+            <div className='flex items-center justify-between gap-3 sm:justify-normal '>
+              <Table.Search />
+              <Table.View />
+            </div>
+            <div className='flex items-center justify-between gap-3'>
+              <Table.Download />
+              {typeof displayNewRecord === 'boolean' && displayNewRecord ? (
+                <Table.NewRecord onAdd={onAdd} />
+              ) : (
+                displayNewRecord
+              )}
+            </div>
           </div>
-          <div className='flex items-center justify-between gap-3'>
-            <Table.Download />
-            {typeof displayNewRecord === 'boolean' && displayNewRecord ? (
-              <Table.NewRecord onAdd={onAdd} />
-            ) : (
-              displayNewRecord
-            )}
-          </div>
-        </div>
+        )}
         <div
           className='relative flex flex-1 flex-col overflow-hidden rounded-lg border border-border shadow-md'
           ref={parent}

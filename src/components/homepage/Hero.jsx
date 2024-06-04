@@ -81,11 +81,23 @@ function Search({ query }) {
 }
 
 function FilterDropDown({ icon, value, setValue, type }) {
-  const { sectors } = useSectors();
-  const { cities } = useCities();
+  const { sectors, isLoading: isSectorsLoading } = useSectors();
+  const { cities, isLoading: isCitiesLoading } = useCities();
   const [query, setQuery] = useState('');
 
   const results = { sectors, cities }[type]?.filter((e) => e.toLowerCase().includes(query.toLowerCase()));
+
+  const render = () => {
+    if ({ sectors: isSectorsLoading, cities: isCitiesLoading }[type]) {
+      return <p className='mt-10 text-center font-medium text-text-tertiary'>Loading...</p>;
+    }
+    if (!results?.length) return <p className='mt-10 text-center font-medium text-text-tertiary'>No results found</p>;
+    return results?.map((e) => (
+      <DropDown.Option key={e} onClick={() => setValue(e)} isCurrent={e === value}>
+        {e}
+      </DropDown.Option>
+    ));
+  };
 
   return (
     <div className='flex items-center gap-2 text-text-tertiary'>
@@ -105,12 +117,7 @@ function FilterDropDown({ icon, value, setValue, type }) {
         }}
       >
         <DropDown.SearchBar query={query} onChange={setQuery} placeholder='Search...' />
-        {results?.map((e) => (
-          <DropDown.Option key={e} onClick={() => setValue(e)} isCurrent={e === value}>
-            {e}
-          </DropDown.Option>
-        ))}
-        {results?.length === 0 && <p className='mt-10 text-center font-medium text-text-tertiary'>No results found</p>}
+         {render()}
       </DropDown>
     </div>
   );

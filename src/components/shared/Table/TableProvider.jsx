@@ -11,7 +11,7 @@ import { Actions } from './Actions';
 import { NewRecord } from './NewRecord';
 import { Selected } from './Selected';
 import { TableContext } from './useTable';
-import { getAppliedFiltersNumber, onFilter } from '../Operations/Operations';
+import { getAppliedFiltersNumber, getIsDisabled, onFilter } from '../Operations/Operations';
 
 Array.prototype.paginate = function (page, limit) {
   const start = (page - 1) * limit;
@@ -76,10 +76,10 @@ export function TableProvider({
     deleteOptions: defaultSelectedOptions?.deleteOptions,
   });
   const [filters, setFilters] = useState({});
-  const [limit, setLimit] = useState(PAGE_LIMIT);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('search');
   const page = Number(searchParams.get('page')) || 1;
+  const limit = Number(searchParams.get('limit')) || PAGE_LIMIT;
   const sortBy = searchParams.get('sort') || defaultSortBy;
   const direction = searchParams.get('dir') || defaultDirection;
 
@@ -88,6 +88,7 @@ export function TableProvider({
 
   const totalItems = rows?.length;
   const totalPages = Math.ceil(totalItems / limit);
+  const appliedFiltersNumber = getAppliedFiltersNumber(filters);
 
   const excludedFields = columns.filter((c) => !c.visible).map((c) => c.displayLabel);
 
@@ -136,19 +137,15 @@ export function TableProvider({
     setSearchParams(searchParams);
   };
 
-  const onNextPage = () => {
-    if (page === totalPages) return;
-    searchParams.set('page', page + 1);
+  const onPaginate = (page) => {
+    searchParams.set('page', page);
     setSearchParams(searchParams);
   };
 
-  const onPrevPage = () => {
-    if (page === 1) return;
-    searchParams.set('page', page - 1);
+  const onChangeLimit = (limit) => {
+    searchParams.set('limit', limit);
     setSearchParams(searchParams);
   };
-
-  const onChangeLimit = (limit) => setLimit(limit);
 
   const onChangeView = (column, showAll) => {
     if (showAll) return setColumns(columns.map((c) => ({ ...c, visible: true })));
@@ -207,7 +204,10 @@ export function TableProvider({
     tableColumns,
     columns,
     rows: displayAllData ? rows : rows?.paginate(page, limit),
-    disabled: isLoading || selected.length > 0 || isOperating || data?.length === 0,
+    disabled:
+      getIsDisabled({ isLoading, error, initialData: data, query, page, totalPages, appliedFiltersNumber }) ||
+      selected.length > 0 ||
+      isOperating,
     // Selection
     selected,
     isSelecting: selected.length > 0,
@@ -220,7 +220,7 @@ export function TableProvider({
     onSearch,
     // filter
     filters,
-    appliedFiltersNumber: getAppliedFiltersNumber(filters),
+    appliedFiltersNumber,
     onFilter: onFilter(filters, setFilters),
     // pagination
     totalItems,
@@ -228,8 +228,7 @@ export function TableProvider({
     page,
     limit,
     onChangeLimit,
-    onNextPage,
-    onPrevPage,
+    onPaginate,
     // view
     onChangeView,
     // sort

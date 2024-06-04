@@ -7,9 +7,11 @@ import { SortBy } from './SortBy';
 import { ActionsDropDown } from './ActionsDropDown';
 import { Filter } from './Filter';
 import { Layout } from './Layout';
-import { ViewMore } from './ViewMore';
+import { Pagination } from './Pagination';
 import { OperationsContext } from './useOperations';
 import { getIsoDate } from '@/utils/helpers';
+import { PAGE_LIMIT } from '@/utils/constants';
+import { Status } from '@/components/ui';
 
 // Array methods
 Array.prototype.customFilter = function (filters, filterCondition) {
@@ -18,7 +20,7 @@ Array.prototype.customFilter = function (filters, filterCondition) {
   const conditions = Object.entries(filters)
     .map(([field, filter]) => ({
       field,
-      value: (filter).filter(({ checked }) => checked).map(({ value }) => value),
+      value: filter.filter(({ checked }) => checked).map(({ value }) => value),
     }))
     .filter(({ value }) => value.length);
 
@@ -66,11 +68,6 @@ Array.prototype.search = function (query, fieldsToSearch) {
   });
 };
 
-Array.prototype.customPaginate = function (page, limit) {
-  const end = page * limit;
-  return this.slice(0, end);
-};
-
 export const getAppliedFiltersNumber = (filters) => (filter) => {
   if (filter === 'all')
     return Object.values(filters)
@@ -87,12 +84,34 @@ export const getAppliedFiltersNumber = (filters) => (filter) => {
 export const onFilter = (filters, setFilters, initialFilters) => (key, value, reset) => {
   if (reset) return setFilters(initialFilters);
 
-  const filter = (filters[key]).map((f) =>
-    f.value === value ? { ...f, checked: !f.checked } : f
-  );
+  const filter = filters[key].map((f) => (f.value === value ? { ...f, checked: !f.checked } : f));
   setFilters({ ...filters, [key]: filter });
 };
 
+export const renderData = ({
+  isLoading,
+  error,
+  appliedFiltersNumber,
+  query,
+  page,
+  totalPages,
+  render,
+  skeleton,
+  data,
+}) => {
+  if (isLoading) return skeleton;
+  if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
+  if (page > totalPages && !query && !appliedFiltersNumber('all')) return <Status status='pageNotFound' />;
+  if (data?.length === 0 && (query || appliedFiltersNumber('all')))
+    return <Status status='noResults' heading='No offers found' message='Try changing your search query or filters' />;
+  return render();
+};
+
+export const getIsDisabled = ({ isLoading, error, initialData, query, page, totalPages, appliedFiltersNumber }) => {
+  return (
+    isLoading || error || initialData?.length === 0 || (page > totalPages && !query && !appliedFiltersNumber('all'))
+  );
+};
 // const constructFilterString = (filters) => {
 //   let filterString = "";
 
@@ -127,6 +146,11 @@ export const onFilter = (filters, setFilters, initialFilters) => (key, value, re
  * @param {Object} props.filters - The initial filters for the Operations component.
  * @param {string} props.defaultLayout - The default layout for the Operations component.
  * @param {Array} props.fieldsToSearch - The fields to search the data in.
+ * @param {string} paginationKey - The key used for pagination. Default is 'page'.
+ * @param {string} searchQueryKey - The key used for search queries. Default is 'search'.
+ * @param {string} sortQueryKey - The key used for sorting queries. Default is 'sort'.
+ * @param {string} directionQueryKey - The key used for direction queries. Default is 'dir'.
+ * @param {boolean} showAll - Flag to indicate if all items should be shown. Default is false.
  *
  * @returns {React.ElementType} Returns a OperationsContext.Provider component with the Operations component.
  */
@@ -141,11 +165,12 @@ export function Operations({
   filters: initialFilters,
   defaultLayout,
   fieldsToSearch,
+  paginationKey = 'page',
+  limitKey = 'limit',
   searchQueryKey = 'search',
   sortQueryKey = 'sort',
   directionQueryKey = 'dir',
   showAll = false,
-  limit = 10,
 }) {
   const [filters, setFilters] = useState(initialFilters || {});
   const [filterCondition, setFilterCondition] = useState('AND');
@@ -154,12 +179,17 @@ export function Operations({
   const query = searchParams.get(searchQueryKey);
   const sortBy = searchParams.get(sortQueryKey) || defaultSortBy;
   const direction = searchParams.get(directionQueryKey) || defaultDirection;
-  const page = Number(searchParams.get('p')) || 1;
+  const page = Number(searchParams.get(paginationKey)) || 1;
+  const limit = Number(searchParams.get(limitKey)) || PAGE_LIMIT;
 
   const data = initialData
     ?.search(query, fieldsToSearch)
     .customFilter(filters, filterCondition)
     .customSort(sortBy, direction, sortOptions);
+
+  const totalItems = data?.length;
+  const totalPages = Math.ceil(totalItems / limit);
+  const appliedFiltersNumber = getAppliedFiltersNumber(filters);
 
   // Clean url
   useEffect(() => {
@@ -168,20 +198,21 @@ export function Operations({
       searchParams.delete(directionQueryKey);
     }
     if (!query) searchParams.delete(searchQueryKey);
-    if (page === 1) searchParams.delete('p');
+    if (page === 1) searchParams.delete(paginationKey);
     setSearchParams(searchParams);
   }, [
     direction,
     searchParams,
     sortBy,
     query,
+    page,
     setSearchParams,
     defaultDirection,
     defaultSortBy,
+    paginationKey,
     searchQueryKey,
     sortQueryKey,
     directionQueryKey,
-    page,
   ]);
 
   useEffect(() => {
@@ -208,15 +239,21 @@ export function Operations({
   const onchangeLayout = (layout) => setLayout(layout);
 
   const onPaginate = (page) => {
-    searchParams.set('p', page);
+    searchParams.set(paginationKey, page);
+    setSearchParams(searchParams);
+  };
+
+  const onChangeLimit = (limit) => {
+    searchParams.set(limitKey, limit);
     setSearchParams(searchParams);
   };
 
   const context = {
-    data: showAll ? data : data?.customPaginate(page, limit),
+    initialData,
+    data: showAll ? data : data?.paginate(page, limit),
     isLoading,
     error,
-    disabled: isLoading || error || initialData?.length === 0,
+    disabled: getIsDisabled({ isLoading, error, initialData, query, page, totalPages, appliedFiltersNumber }),
     query,
     onSearch,
     sortBy,
@@ -227,15 +264,17 @@ export function Operations({
     initialFilters,
     filters,
     filterCondition,
-    appliedFiltersNumber: getAppliedFiltersNumber(filters),
+    appliedFiltersNumber,
     onFilter: onFilter(filters, setFilters, initialFilters),
     onChangeFilterCondition,
     layout,
     onchangeLayout,
     page,
-    onPaginate,
-    totalPages: Math.ceil(data?.length / limit),
+    totalPages,
+    totalItems,
     limit,
+    onChangeLimit,
+    onPaginate,
   };
   return <OperationsContext.Provider value={context}>{children}</OperationsContext.Provider>;
 }
@@ -246,4 +285,4 @@ Operations.OrderBy = OrderBy;
 Operations.SortBy = SortBy;
 Operations.Filter = Filter;
 Operations.Layout = Layout;
-Operations.ViewMore = ViewMore;
+Operations.Pagination = Pagination;

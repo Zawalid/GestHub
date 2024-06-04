@@ -76,7 +76,10 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
       {getActions()
       .filter(action => !action.hidden?.(row))
       .map((action) => (
-        <DropDown.Option key={action.text} onClick={() => action.onClick(row)}>
+        <DropDown.Option key={action.text}  onClick={(e) => {
+          e.stopPropagation();
+          action.onClick(row);
+        }}>
           {action.icon}
           {action.text}
         </DropDown.Option>

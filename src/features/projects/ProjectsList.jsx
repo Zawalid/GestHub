@@ -1,16 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { FaPlus } from 'react-icons/fa6';
-import { Operations } from '@/components/shared/Operations/Operations';
+import { Operations, renderData } from '@/components/shared/Operations/Operations';
 import { useOperations } from '@/components/shared/Operations/useOperations';
 import { Button } from '@/components/ui';
-import { Status } from '@/components/ui/Status';
 import ProjectsSkeleton from './ProjectsSkeleton';
 import Project from './Project';
 import { useUser } from '@/hooks/useUser';
 
 export default function ProjectsList() {
-  const { data: projects, isLoading, error, layout, appliedFiltersNumber, query } = useOperations();
+  const { data: projects, isLoading, error, layout, appliedFiltersNumber, query, page, totalPages } = useOperations();
   const { user } = useUser();
   const [parent] = useAutoAnimate({ duration: 500 });
   const navigate = useNavigate();
@@ -20,9 +19,7 @@ export default function ProjectsList() {
   const onAdd = () => navigate('/app/projects/new');
 
   const render = () => {
-    if (isLoading) return <ProjectsSkeleton layout={layout} />;
-    if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
-    if (projects.length === 0 && !query && !appliedFiltersNumber('all')) {
+    if (projects?.length === 0 && !query && !appliedFiltersNumber('all') && page <= totalPages) {
       const heading = isAdmin
         ? 'It appears there are currently no projects available'
         : 'It appears you are not currently included in any projects';
@@ -42,25 +39,28 @@ export default function ProjectsList() {
         </div>
       );
     }
-    if (projects.length === 0 && (query || appliedFiltersNumber('all')))
-      return (
-        <Status status='noResults' heading='No projects found' message='Try changing your search query or filters' />
-      );
-    return (
-      <>
-        {!appliedFiltersNumber('all') && !query && isAdmin && <New type='Project' layout={layout} onAdd={onAdd} />}
-        {projects?.map((project) => (
-          <Project key={project.id} project={project} layout={layout} />
-        ))}
-        <div className='col-span-full'>
-          <Operations.ViewMore color='tertiary' />
-        </div>
-      </>
-    );
+    return renderData({
+      isLoading,
+      error,
+      page,
+      query,
+      appliedFiltersNumber,
+      totalPages,
+      data: projects,
+      skeleton: <ProjectsSkeleton layout={layout} />,
+      render: () => (
+        <>
+          {!appliedFiltersNumber('all') && !query && isAdmin && <New type='Project' layout={layout} onAdd={onAdd} />}
+          {projects?.map((project) => (
+            <Project key={project.id} project={project} layout={layout} />
+          ))}
+        </>
+      ),
+    });
   };
 
   return (
-    <div className='flex flex-1 flex-col overflow-hidden gap-5'>
+    <div className='flex flex-1 flex-col gap-5 overflow-hidden'>
       <div className='flex items-center justify-between gap-3'>
         <div className='flex items-center gap-3 pt-2'>
           <Operations.DropDown>
@@ -73,15 +73,16 @@ export default function ProjectsList() {
       </div>
 
       <div
-        className={`scroll flex-1 gap-4 overflow-auto p-1 pr-2 ${
+        className={`scroll relative flex-1 gap-4 overflow-auto p-1 pr-2 ${
           layout === 'grid' && !isLoading
-            ? 'grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] place-content-start sm:grid-cols-[repeat(auto-fill,minmax(310px,1fr))]'
+            ? 'grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] place-content-start sm:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]'
             : 'flex flex-col'
         }`}
         ref={parent}
       >
         {render()}
       </div>
+      <Operations.Pagination name='projects' />
     </div>
   );
 }

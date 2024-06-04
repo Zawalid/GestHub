@@ -3,9 +3,9 @@ import { BsTable, BsListCheck } from 'react-icons/bs';
 import { Button, CheckBox, DropDown } from '../../ui';
 
 export function View() {
-  const { columns, onChangeView, data, isLoading } = useTable();
+  const { columns, onChangeView, data, isLoading, disabled } = useTable();
 
-  if (!isLoading && data?.length === 0) return null; 
+  if (!isLoading && data?.length === 0) return null;
 
   return (
     <DropDown
@@ -15,6 +15,7 @@ export function View() {
         </Button>
       }
       options={{ className: 'max-h-[300px] overflow-auto', shouldCloseOnClick: false }}
+      togglerDisabled={disabled}
     >
       <DropDown.Option
         onClick={() => onChangeView(null, true)}

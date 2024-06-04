@@ -8,8 +8,8 @@ import { useSettings, useUser } from '@/hooks/useUser';
 import Applications from '@/features/applications/Applications';
 import ApplicationReview from '@/features/applications/ApplicationReview';
 import OfferOverview from '@/features/offers/OfferOverview';
-import Offers from '@/components/homepage/Offers';
 import Hero from '@/components/homepage/Hero';
+import OffersList from '@/features/offers/OffersList';
 
 export function HomePage() {
   const { settings } = useSettings();
@@ -28,14 +28,16 @@ export function HomePage() {
       <Operations
         {...getOffersProps(offers, isLoading, error)}
         filters={{
-          sector: sectors?.map((s) => ({
-            value: s,
-            checked: searchParams.get('sector') === s,
-          })),
-          city: cities?.map((s) => ({
-            value: s,
-            checked: searchParams.get('city') === s,
-          })),
+          sector:
+            sectors?.map((s) => ({
+              value: s,
+              checked: searchParams.get('sector') === s,
+            })) || [],
+          city:
+            cities?.map((s) => ({
+              value: s,
+              checked: searchParams.get('city') === s,
+            })) || [],
           experience: [
             { value: 'Expert', checked: false },
             { value: 'Intermediate', checked: false },
@@ -54,7 +56,10 @@ export function HomePage() {
         }}
       >
         <Hero />
-        <Offers />
+        <div className='flex h-screen flex-shrink-0 gap-6 overflow-hidden p-5 sm:p-8' id='offers'>
+          <Operations.Filter isInDropDown={true} className='hidden min-w-[285px] lg:flex' />
+          <OffersList filter={<Operations.Filter />} onHomePage={true} />
+        </div>
       </Operations>
       <OfferOverview onHomePage={true} />
 

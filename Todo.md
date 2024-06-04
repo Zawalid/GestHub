@@ -63,6 +63,7 @@
 - [ ] notifications icon
 - [ ] team page
 - [ ] emails table
+- [ ] numbers animation
 
 
 ---
@@ -85,7 +86,7 @@
  - [x] total personnel overflow on mobile
  - [x] filters are reset when sorting
  - [ ] navigate with filters/sort with filters/homepage filters
- - [ ] table action click propagation
+ - [x] table action click propagation
 
 
 ---

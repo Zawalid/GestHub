@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useSession } from './useSessions';
-import { Modal, Status } from '@/components/ui';
+import { Modal } from '@/components/ui';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 import { Operations } from '@/components/shared/Operations/Operations';
 import { useOperations } from '@/components/shared/Operations/useOperations';
@@ -16,7 +16,7 @@ import {
   LiaUserMinusSolid,
   LiaUserEditSolid,
 } from '@/components/ui/Icons';
-import { Skeleton } from '../applications/Applications';
+import { render } from '../applications/Applications';
 import { STATUS_COLORS } from '@/utils/constants';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 
@@ -35,11 +35,7 @@ export default function Session() {
       <div className='mb-5 flex items-center justify-between gap-3 pt-7 md:pt-0'>
         <h1 className='mobile::text-xl flex items-center gap-2 text-lg font-bold text-text-primary'>
           Activities
-          {isLoading || (
-            <span className='count text-xs'>
-              {session?.activities?.length}
-            </span>
-          )}
+          {isLoading || <span className='count text-xs'>{session?.activities?.length}</span>}
         </h1>
         {isLoading || (
           <span
@@ -69,6 +65,8 @@ export default function Session() {
         fieldsToSearch={['activity', 'object']}
         searchQueryKey='s'
         sortQueryKey='so'
+        paginationKey='p'
+        limitKey='p'
         directionQueryKey='d'
       >
         <ActivitiesList />
@@ -78,39 +76,8 @@ export default function Session() {
 }
 
 function ActivitiesList() {
-  const { data: activities, isLoading, error, query, appliedFiltersNumber } = useOperations();
+  const { data: activities, isLoading, error, query, appliedFiltersNumber, page, totalPages } = useOperations();
   const [parent] = useAutoAnimate({ duration: 400 });
-
-  const render = () => {
-    if (isLoading) {
-      return Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} type='session' />);
-    }
-    if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
-    if (activities?.length === 0 && !query && !appliedFiltersNumber('all')) {
-      return (
-        <div className='absolute grid h-full w-full place-content-center place-items-center gap-5'>
-          <img src='/SVG/no-applications.svg' alt='' className='w-[140px]' />
-          <div className='space-y-2 text-center'>
-            <h2 className='font-medium text-text-primary'>This sessions has no activities yet</h2>
-            <p className='text-sm text-text-secondary'>Activities will be displayed here once they are available.</p>
-          </div>
-        </div>
-      );
-    }
-    if (activities?.length === 0 && (query || appliedFiltersNumber('all'))) {
-      return (
-        <Status status='noResults' heading='No activities found' message='Try changing your search query or filters' />
-      );
-    }
-    return (
-      <div className='space-y-3 h-full' ref={parent}>
-        {activities?.map((activity) => (
-          <Activity key={activity.id} activity={activity} />
-        ))}
-        <Operations.ViewMore />
-      </div>
-    );
-  };
 
   return (
     <>
@@ -123,9 +90,23 @@ function ActivitiesList() {
         </div>
         <Operations.Search />
       </div>
-      <div className='relative flex-1 space-y-3 scroll overflow-y-auto overflow-x-hidden pr-2' >
-        {render()}
+      <div className='scroll relative flex-1 space-y-3 overflow-y-auto overflow-x-hidden pr-2' ref={parent}>
+        {render({
+          isLoading,
+          error,
+          appliedFiltersNumber,
+          data: activities,
+          page,
+          totalPages,
+          query,
+          message: {
+            heading: 'This sessions has no activities yet',
+            message: 'Activities will be displayed here once they are available.',
+          },
+          render: () => activities?.map((activity) => <Activity key={activity.id} activity={activity} />),
+        })}
       </div>
+      <Operations.Pagination onlyButtons={true} />
     </>
   );
 }
@@ -142,8 +123,8 @@ const getIcon = (action, model) => {
 };
 function Activity({ activity: { action, activity, object, created_at, model }, style }) {
   const colors = {
-    Create: 'bg-green-600',
-    Update: 'bg-blue-500',
+    Create: 'bg-blue-500',
+    Update: 'bg-yellow-500',
     Delete: 'bg-red-500',
     Approve: 'bg-green-600',
     Reject: 'bg-orange-600',

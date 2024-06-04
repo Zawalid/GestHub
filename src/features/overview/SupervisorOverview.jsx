@@ -185,7 +185,7 @@ function Stats() {
             <LuClipboardList />
           </div>
         </div>
-        <div className='flex flex-wrap xl:flex-nowrap w-fit gap-0.5 overflow-hidden rounded-lg'>
+        <div className='flex flex-wrap  w-fit gap-0.5 overflow-hidden rounded-lg'>
           {[
             {
               color: 'bg-gray-500',

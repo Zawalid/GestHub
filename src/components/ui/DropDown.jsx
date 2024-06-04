@@ -63,7 +63,7 @@ export function DropDown({
 
   return (
     <Tippy
-      content={<ul className='grid gap-1 '>{children}</ul>}
+      content={<ul className='grid gap-1'>{children}</ul>}
       className={cn(
         'dropdown rounded-md border border-border bg-background-primary p-0 shadow-md',
         defaultOptions.className,
@@ -101,7 +101,7 @@ function Option({ children, onClick, className = '', isDeleteButton, size = '', 
         className,
         disabled && 'disabled'
       )}
-      onClick={() => disabled || onClick?.()
+      onClick={(e) => disabled || onClick?.(e)
       }
       id={id}
     >

@@ -2,7 +2,7 @@ export default function ProjectsSkeleton({layout}) {
   return (
     <div  className={`gap-5 animate-pulse w-full ${
         layout === "grid"
-          ? "grid grid-cols-[repeat(auto-fill,minmax(310px,1fr))]"
+          ? "grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))]"
           : "flex flex-col"
       }`}>
       {Array.from({ length: 6 }).map((_, i) => (

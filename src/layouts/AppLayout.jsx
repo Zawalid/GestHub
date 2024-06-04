@@ -25,7 +25,7 @@ function Main() {
 
   return (
     <main
-      className='flex flex-col flex-1 gap-5 overflow-y-auto overflow-x-hidden rounded-xl bg-background-primary p-3 sm:rounded-2xl sm:p-5'
+      className='flex flex-1 flex-col gap-5 overflow-y-auto overflow-x-hidden rounded-xl bg-background-primary p-3 sm:rounded-2xl sm:px-5'
       ref={parent}
     >
       <Outlet />

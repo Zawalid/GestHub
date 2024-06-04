@@ -45,6 +45,18 @@ const Locked = ({ heading, message }) => {
   );
 };
 
+const PageNotFound = () => {
+  return (
+    <div className='absolute grid h-full w-full place-content-center place-items-center gap-5 pt-5'>
+      <img src='/SVG/no-applications.svg' alt='' className='w-[100px]' />
+      <div className='space-y-2 text-center'>
+        <h2 className='font-medium text-text-primary'> Page Not Found</h2>
+        <p className='text-sm text-text-secondary'>The page you&apos;re trying to access doesn&apos;t exist.</p>
+      </div>
+    </div>
+  );
+};
+
 export function Status({ status, heading, message, size }) {
   const props = { heading, message, size };
 
@@ -53,6 +65,7 @@ export function Status({ status, heading, message, size }) {
     error: <Error {...props} />,
     loading: <Loading size={size} />,
     locked: <Locked {...props} />,
+    pageNotFound: <PageNotFound />,
   };
 
   return (
