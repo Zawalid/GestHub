@@ -58,7 +58,7 @@ export function HomePage() {
         <Hero />
         <div className='flex h-screen flex-shrink-0 gap-6 overflow-hidden p-5 sm:p-8' id='offers'>
           <Operations.Filter isInDropDown={true} className='hidden min-w-[285px] lg:flex' />
-          <OffersList filter={<Operations.Filter />} onHomePage={true} />
+          <OffersList filter={<Operations.Filter togglerClassName='lg:hidden' />} onHomePage={true} />
         </div>
       </Operations>
       <OfferOverview onHomePage={true} />

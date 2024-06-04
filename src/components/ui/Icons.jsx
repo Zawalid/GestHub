@@ -20,7 +20,6 @@ export {
   IoSchool,
   IoPeople,
   IoLocationOutline,
-  IoFilter,
   IoLocationSharp,
   IoMail,
 } from 'react-icons/io5';
@@ -89,7 +88,7 @@ export { FiLogOut, FiSettings, FiPhone, FiCheck, FiUserCheck, FiUserX } from 're
 export { RiTeamLine } from 'react-icons/ri';
 export { HiMiniXMark } from 'react-icons/hi2';
 export { RxDashboard, RxViewVertical } from 'react-icons/rx';
-export { TbProgressCheck, TbFileSearch, TbProgress,TbLayoutNavbarExpandFilled,TbLayoutBottombarExpandFilled   } from 'react-icons/tb';
+export { TbProgressCheck, TbFileSearch, TbProgress,TbLayoutNavbarExpandFilled,TbLayoutBottombarExpandFilled,TbFilter    } from 'react-icons/tb';
 export { GrUserAdmin, GrMapLocation, GrPowerReset } from 'react-icons/gr';
 export { GoLink, GoUnlink } from 'react-icons/go';
 export { LiaUserPlusSolid, LiaUserMinusSolid, LiaUserEditSolid } from 'react-icons/lia';

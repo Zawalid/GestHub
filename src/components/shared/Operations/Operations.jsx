@@ -2,9 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Search } from './Search';
-import { OrderBy } from './OrderBy';
-import { SortBy } from './SortBy';
-import { ActionsDropDown } from './ActionsDropDown';
+import { Sort } from './Sort';
 import { Filter } from './Filter';
 import { Layout } from './Layout';
 import { Pagination } from './Pagination';
@@ -280,9 +278,7 @@ export function Operations({
 }
 
 Operations.Search = Search;
-Operations.DropDown = ActionsDropDown;
-Operations.OrderBy = OrderBy;
-Operations.SortBy = SortBy;
+Operations.Sort = Sort;
 Operations.Filter = Filter;
 Operations.Layout = Layout;
 Operations.Pagination = Pagination;

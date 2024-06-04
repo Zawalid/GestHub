@@ -83,9 +83,7 @@ function ActivitiesList() {
     <>
       <div className='mb-4 flex items-center justify-between gap-5'>
         <div className='flex items-center gap-2'>
-          <Operations.DropDown>
-            <Operations.OrderBy />
-          </Operations.DropDown>
+          <Operations.Sort />
           <Operations.Filter />
         </div>
         <Operations.Search />

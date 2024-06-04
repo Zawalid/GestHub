@@ -131,6 +131,7 @@ function CompletedInternships() {
   const { interns, isLoading, error } = useInterns();
   const [isOpen, setIsOpen] = useState(false);
   const { mutate } = useGenerateAttestation();
+  const navigate = useNavigate();
 
   const completedInternships = interns
     ?.filter((intern) => {
@@ -163,11 +164,19 @@ function CompletedInternships() {
     }
     return completedInternships?.slice(0, 2).map((intern) => (
       <div
-        key={Intern.id}
-        className='flex items-center justify-between gap-5 rounded-lg border border-border px-3 py-1.5'
+        key={intern.id}
+        className='flex cursor-pointer items-center justify-between gap-5 rounded-lg border border-border px-3 py-1.5 transition-colors duration-300 hover:bg-background-secondary'
+        onClick={() => navigate(`/app/interns/${intern.id}`)}
       >
         <Intern intern={intern} />
-        <Button color='tertiary' size='small' onClick={() => mutate(intern.id)}>
+        <Button
+          color='tertiary'
+          size='small'
+          onClick={(e) => {
+            e.stopPropagation();
+            mutate(intern.id);
+          }}
+        >
           Generate
         </Button>
       </div>

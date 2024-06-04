@@ -15,10 +15,7 @@ export default function OffersList({ filter, onHomePage }) {
     <div className='flex flex-1 flex-col gap-5 overflow-hidden'>
       <div className='flex items-center justify-between gap-3'>
         <div className='flex items-center gap-3 pt-2'>
-          <Operations.DropDown>
-            <Operations.SortBy />
-            <Operations.OrderBy />
-          </Operations.DropDown>
+          <Operations.Sort />
           {filter || <Operations.Filter />}
         </div>
         <Operations.Layout />
