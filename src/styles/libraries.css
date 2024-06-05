@@ -41,8 +41,11 @@
   margin-right: 15px;
 }
 
-.sonner-toast [data-content] {
-  color: var(--text-primary);
+.sonner-toast [data-content] [data-title] {
+  @apply text-text-primary;
+}
+.sonner-toast [data-content] [data-description] {
+  @apply text-xs text-text-secondary;
 }
 
 .sonner-toast [data-close-button] {
@@ -84,7 +87,7 @@
 }
 
 .tippy-box.notifications {
-  @apply min-w-[300px] sm:min-w-[420px] max-w-full !important;
+  @apply min-w-[300px] max-w-full sm:min-w-[420px] !important;
 }
 
 .tippy-content {

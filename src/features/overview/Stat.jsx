@@ -18,3 +18,4 @@ export function Stat({ isLoading, value, label, icon, onClick, className }) {
     </div>
   );
 }
+

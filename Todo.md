@@ -56,15 +56,13 @@
 - [x] change loading spinner
 - [x] better footer (credit)
 - [x] view more ui
-- [ ] server pagination
 - [x] dashboard stats api (remove team members)
 - [x] sectors and cities apis 
 - [ ] offline based on browser
-- [ ] notifications icon
+- [x] notifications icon
 - [ ] team page
 - [ ] emails table
-- [ ] numbers animation
-
+- [ ] find a way to create a link based on the notification
 
 ---
 
@@ -87,6 +85,7 @@
  - [x] filters are reset when sorting
  - [ ] navigate with filters/sort with filters/homepage filters
  - [x] table action click propagation
+ - [ ] disable delete buttons after clicking
 
 
 ---
@@ -115,3 +114,4 @@
 - [ ] blocking users
 - [ ] add a timeline for the activities
 - [ ] persist the table states to local storage (view control/sort...)
+- [ ] Make it PWA

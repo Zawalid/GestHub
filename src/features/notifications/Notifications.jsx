@@ -1,25 +1,20 @@
 import { IoTrashOutline, IoNotificationsOutline } from 'react-icons/io5';
 import { Button, DropDown } from '@/components/ui';
 import {
+  getIcons,
   useDeleteNotification,
   useMarkAllNotificationsAsRead,
   useMarkNotificationAsRead,
   useNotifications,
 } from './useNotifications';
-import {
-  FaDiagramProject,
-  FaCalendarXmark,
-  FaRegCircleCheck,
-  LuListTodo,
-  FaRegCalendarCheck,
-  LuTimerReset,
-} from '@/components/ui/Icons';
 import { useState } from 'react';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 export function Notifications() {
   const { notifications, unreadNotifications, isLoading } = useNotifications();
   const [page, setPage] = useState(1);
   const { mutate } = useMarkAllNotificationsAsRead();
+  const [parent] = useAutoAnimate();
 
   const limit = 10;
   const totalPages = Math.ceil(notifications?.length / limit);
@@ -39,23 +34,9 @@ export function Notifications() {
         </div>
       );
     }
-    return (
-      <>
-        {notifications?.slice(0, page * limit).map((notification, index) => (
-          <Notification key={index} notification={notification} unreadNotifications={unreadNotifications} />
-        ))}
-        {totalPages > 1 && (
-          <Button
-            color='tertiary'
-            size='small'
-            onClick={() => (page === totalPages ? setPage(1) : setPage(page + 1))}
-            className='mx-auto mt-3'
-          >
-            {page === totalPages ? 'View Less' : 'View More'}
-          </Button>
-        )}
-      </>
-    );
+    return notifications
+      ?.slice(0, page * limit)
+      .map((notification, index) => <Notification key={index} notification={notification} />);
   };
 
   return (
@@ -82,57 +63,63 @@ export function Notifications() {
         <span className='text-base font-semibold'>Notifications</span>
         <button
           className='text-xs font-medium text-text-secondary transition-colors duration-300 hover:text-text-tertiary disabled:text-text-disabled'
-          disabled={notifications?.every((n) => n.isRead)}
+          disabled={notifications?.every((n) => n.isRead === 'true')}
           onClick={mutate}
         >
           Mark all as read
         </button>
       </DropDown.Title>
-      <DropDown.Divider className='mb-2' />
-      {render()}
+      <DropDown.Divider />
+      <div className='space-y-1' ref={parent}>
+        {render()}
+      </div>
+      {totalPages > 1 && (
+        <Button
+          color='tertiary'
+          size='small'
+          onClick={() => (page === totalPages ? setPage(1) : setPage(page + 1))}
+          className='mt-1.5 w-full'
+        >
+          {page === totalPages ? 'View Less' : 'View More'}
+        </Button>
+      )}
     </DropDown>
   );
 }
 
-const icons = {
-  newProject: { icon: <FaDiagramProject />, color: 'bg-orange-500' },
-  overdueProject: { icon: <FaCalendarXmark />, color: 'bg-red-500' },
-  completedProject: { icon: <FaRegCircleCheck />, color: 'bg-blue-500' },
-  newTask: { icon: <LuListTodo />, color: 'bg-yellow-500' },
-  completedTask: { icon: <FaRegCircleCheck />, color: 'bg-blue-500' },
-  overdueTask: { icon: <FaCalendarXmark />, color: 'bg-red-500' },
-  acceptedApplication: { icon: <FaRegCircleCheck />, color: 'bg-green-600' },
-  endingInternship: { icon: <LuTimerReset />, color: 'bg-teal-500' },
-  completedInternship: { icon: <FaRegCalendarCheck />, color: 'bg-purple-500' },
-  newIntern : null,
-  newFile : null
-};
-
-
-
-function Notification({ notification, unreadNotifications }) {
-  const { id, activity, object, time, action } = notification;
+function Notification({ notification }) {
+  const { id, activity, object, time, isRead } = notification;
   const { mutate: markAsRead } = useMarkNotificationAsRead();
-  const { mutate } = useDeleteNotification();
+  const { mutate, isPending } = useDeleteNotification();
 
   return (
     <DropDown.Option
-      className={unreadNotifications?.includes(id) ? 'bg-background-secondary' : 'hover:bg-background-disabled'}
+      className={isRead === 'false' ? 'bg-background-secondary' : 'hover:bg-background-disabled'}
       onClick={() => {
-        unreadNotifications?.includes(id) && markAsRead(id);
+        isRead === 'false' && markAsRead(id);
         // navigate(`/applications/${id}`, { state: { source: window.location.pathname } });
       }}
     >
-      <div className={`grid h-11 w-11 place-content-center rounded-full text-white sm:text-xl ${icons[action]?.color}`}>
-        {icons[action]?.icon}
+      <div
+        className={`grid h-11 w-11 place-content-center rounded-full text-white sm:text-xl ${getIcons(notification)?.color}`}
+      >
+        {getIcons(notification)?.icon}
       </div>
       <div className='flex-1 space-y-1'>
         <div className='flex justify-between gap-2'>
           <div className='space-y-0.5'>
-            <h5 className='text-text-primary'>{activity}</h5>
+            <h5 className='text-xs font-bold text-text-primary'>{activity}</h5>
             {object && <h6 className='text-xs text-text-secondary'>{object}</h6>}
           </div>
-          <Button shape='icon' size='small' onClick={() => mutate(id)}>
+          <Button
+            shape='icon'
+            size='small'
+            onClick={(e) => {
+              e.stopPropagation();
+              if (!isPending) mutate(id);
+            }}
+            disabled={isPending}
+          >
             <IoTrashOutline />
           </Button>
         </div>

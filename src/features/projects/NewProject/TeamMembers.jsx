@@ -10,9 +10,10 @@ import Avatar from '@/components/ui/Avatar';
 export const getSearchedInterns = (interns, query) => {
   return interns
     ?.filter((intern) => intern.fullName.trim().toLowerCase().includes(query.trim().toLowerCase()))
-    .sort((a, b) => a.firstName.localeCompare(b.firstName));
+    .sort((a, b) => a.firstName.localeCompare(b.firstName))
 };
 export const renderInternsStatus = (isLoading, error, searchedInterns, render, query) => {
+  console.log(searchedInterns)
   if (isLoading) return <Status status='loading' />;
   if (error) return <Status status='error' heading={error?.message} size='small' />;
   if (searchedInterns?.length === 0 && query) return <Status status='noResults' size='small' />;

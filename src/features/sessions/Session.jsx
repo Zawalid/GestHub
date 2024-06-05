@@ -37,13 +37,13 @@ export default function Session() {
           Activities
           {isLoading || <span className='count text-xs'>{session?.activities?.length}</span>}
         </h1>
-        {isLoading || (
+        {/* {isLoading || (
           <span
             className={`rounded-lg bg-background-secondary px-2.5 py-1 text-sm text-white ${session?.isCurrent === 'true' ? 'bg-blue-500' : session?.status === 'Online' ? 'bg-green-600' : 'bg-red-500'}`}
           >
             {session?.isCurrent === 'true' ? 'Current' : session?.status}
           </span>
-        )}
+        )} */}
       </div>
       <Operations
         data={session?.activities}

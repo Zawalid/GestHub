@@ -13,6 +13,8 @@ import './styles/index.css';
 
 const queryClient = new QueryClient();
 
+
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <ThemeProvider>
     <ErrorBoundary
@@ -30,7 +32,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={false} />
           <ConfirmationModalProvider>
-              <App />
+            <App />
           </ConfirmationModalProvider>
         </QueryClientProvider>
       </I18nextProvider>

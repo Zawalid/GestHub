@@ -80,7 +80,8 @@ export {
   FaRegClone,
   FaChevronLeft,
   FaChevronRight,
-  FaRegCalendarCheck 
+  FaRegCalendarCheck ,
+  FaBell
 } from 'react-icons/fa6';
 export { LuCalendarX, LuUser, LuUpload, LuClipboardList, LuListTodo, LuPlus,LuTimerReset  } from 'react-icons/lu';
 export { LiaUserTieSolid, LiaClipboardListSolid } from 'react-icons/lia';

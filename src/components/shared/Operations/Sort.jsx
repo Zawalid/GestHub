@@ -48,7 +48,7 @@ export function Sort() {
           ],
         },
       ].map(({ type, onClick, options }) => (
-        <>
+        <div key={type}>
           <Button
             display='with-icon'
             type='transparent'
@@ -79,7 +79,7 @@ export function Sort() {
             ))}
           </div>
           <D.Divider className='last:hidden' />
-        </>
+        </div>
       ))}
     </D>
   );

@@ -5,7 +5,7 @@ export default function ProjectsSkeleton({layout}) {
           ? "grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))]"
           : "flex flex-col"
       }`}>
-      {Array.from({ length: 6 }).map((_, i) => (
+      {Array.from({ length: 10 }).map((_, i) => (
         <Project key={i} />
       ))}
     </div>
