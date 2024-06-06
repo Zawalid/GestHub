@@ -1,8 +1,8 @@
-import { Button, Modal } from '@/components/ui';
+import { Button, Modal, Status } from '@/components/ui';
 import { useForm } from '@/hooks/useForm';
 import { useUploadFile } from '@/hooks/useUploadFile';
 import { RULES } from '@/utils/constants';
-import { LuUpload, HiMiniXMark, FiCheck, BsSendFill, IoEyeOutline } from '@/components/ui/Icons';
+import { LuUpload, IoEyeOutline } from '@/components/ui/Icons';
 import { useUser } from '@/hooks/useUser';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useOffer } from '../offers/useOffers';
@@ -15,9 +15,24 @@ export default function NewApplication({ isOpen, onClose }) {
   const navigate = useNavigate();
 
   const render = () => {
-    if (isPending) return <SendingApplication />;
-    if (isSuccess) return <ApplicationSent />;
-    if (error) return <ApplicationError onRetry={reset} />;
+    if (isPending) {
+      return (
+        <Status status='sending' heading='Sending Application' message='Please wait while we process your request.' />
+      );
+    }
+    if (isSuccess) {
+      return <Status status='sent' heading='Application Sent' message='Your application was sent successfully.' />;
+    }
+    if (error) {
+      return (
+        <Status
+          status='errorSending'
+          heading='Failed To Send Application'
+          message='An error occurred while sending your application.'
+          onRetry={reset}
+        />
+      );
+    }
     return (
       <ApplicationForm
         onApply={mutate}
@@ -26,7 +41,7 @@ export default function NewApplication({ isOpen, onClose }) {
           onClose();
           resetForm();
           setTimeout(reset, 1000);
-          navigate('/offers');
+          navigate('/');
         }}
       />
     );
@@ -38,7 +53,7 @@ export default function NewApplication({ isOpen, onClose }) {
       className='min-h-[500px] overflow-auto p-5 md:h-fit md:w-[750px] md:border'
       closeOnBlur={true}
       onClose={onClose}
-      >
+    >
       {render()}
     </Modal>
   );
@@ -248,46 +263,6 @@ export function File({ type, file: { name, size } = {}, onChange, disabled, opti
           </Button>
         )}
       </div>
-    </div>
-  );
-}
-
-function SendingApplication() {
-  return (
-    <div className='grid flex-1 place-content-center place-items-center text-center'>
-      <div className='mb-3 grid h-14 w-14 place-content-center rounded-full bg-blue-500 shadow-md'>
-        <BsSendFill className='text-2xl text-white' />
-      </div>
-      <div className='mb-1 flex items-baseline gap-1'>
-        <h2 className='text-lg font-bold text-text-primary sm:text-xl'>Sending Application</h2>
-        <div className='sending'></div>
-      </div>
-      <p className='text-sm font-medium text-text-secondary'>Please wait while we process your request.</p>
-    </div>
-  );
-}
-function ApplicationSent() {
-  return (
-    <div className='grid flex-1 place-content-center place-items-center text-center'>
-      <div className='mb-3 grid h-14 w-14 place-content-center rounded-full bg-green-500 shadow-md'>
-        <FiCheck className='text-3xl text-white' />
-      </div>
-      <h2 className='mb-1 text-lg font-bold text-text-primary sm:text-xl'>Application Sent</h2>
-      <p className='text-sm font-medium text-text-secondary'>Your application was sent successfully.</p>
-    </div>
-  );
-}
-function ApplicationError({ onRetry }) {
-  return (
-    <div className='grid flex-1 place-content-center place-items-center text-center'>
-      <div className='grid h-14 w-14 place-content-center rounded-full bg-red-500 shadow-md'>
-        <HiMiniXMark className='text-3xl text-white' />
-      </div>
-      <div className='my-3'>
-        <h2 className='mb-1 text-lg font-bold text-text-primary sm:text-xl'>Failed To Send Application</h2>
-        <p className='text-sm font-medium text-text-secondary'>An error occurred while sending your application</p>
-      </div>
-      <Button onClick={onRetry}>Try Again</Button>
     </div>
   );
 }

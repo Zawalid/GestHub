@@ -1,11 +1,12 @@
 import { IoMail, BsTelephoneFill, IoLocationSharp, GrMapLocation } from '@/components/ui/Icons';
 import { useSettings } from '@/hooks/useUser';
 import { useForm } from '../hooks';
-import { Button } from '@/components/ui';
+import { Button, Status } from '@/components/ui';
 import { SocialMedia, isSet } from '@/components/ui/SocialMedia';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { useContactUs } from '@/features/emails/useEmails';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 export function Contact() {
   return (
@@ -34,9 +35,10 @@ function Socials() {
 }
 
 function ContactForm() {
-  const { mutate, isPending } = useContactUs();
+  const { mutate, isPending, error, isSuccess, reset } = useContactUs();
+  const [parent] = useAutoAnimate({duration : 500});
   const {
-    options: { formInputs, isValid, handleSubmit, reset },
+    options: { formInputs, isValid, handleSubmit },
   } = useForm({
     defaultValues: {
       fullName: '',
@@ -75,43 +77,65 @@ function ContactForm() {
         },
       },
     ],
-    onSubmit: (data) => {
-      mutate(data);
-      reset();
-    },
+    onSubmit: mutate,
   });
 
-  return (
-    <div className='flex flex-col gap-5'>
-      <div className='space-y-3'>
-        <h1 className='w-fit border-b-4 border-primary pb-1 text-2xl font-bold text-text-primary sm:text-3xl'>
-          Contact Us
-        </h1>
-        <p className='text-wrap text-sm font-medium text-text-secondary'>
-          Feel free to contact us any time. We&apos;ll get back to you as soon as we can!
-        </p>
-      </div>
-      <div className='space-y-2'>
-        <div className='grid gap-2 xs:grid-cols-2'>
-          {formInputs['fullName']}
-          {formInputs['email']}
+  const render = () => {
+    if (isPending) {
+      return <Status status='sending' heading='Sending Message' message='Please wait while we process your request.' />;
+    }
+    if (isSuccess) {
+      return <Status status='sent' heading='Message Sent' message='Your message was sent successfully.' />;
+    }
+    if (error) {
+      return (
+        <Status
+          status='errorSending'
+          heading='Failed To Send Message'
+          message='An error occurred while sending your message.'
+          onRetry={reset}
+        />
+      );
+    }
+    return (
+      <>
+        <div className='space-y-3'>
+          <h1 className='w-fit border-b-4 border-primary pb-1 text-2xl font-bold text-text-primary sm:text-3xl'>
+            Contact Us
+          </h1>
+          <p className='text-wrap text-sm font-medium text-text-secondary'>
+            Feel free to contact us any time. We&apos;ll get back to you as soon as we can!
+          </p>
         </div>
-        {formInputs['subject']}
-        {formInputs['message']}
-      </div>
-      <Button color='secondary' isLoading={isPending} disabled={!isValid} onClick={() => !isPending && handleSubmit()}>
-        {isPending ? 'Sending' : 'Send'}
-      </Button>
-    </div>
-  );
+        <div className='space-y-2'>
+          <div className='grid gap-2 xs:grid-cols-2'>
+            {formInputs['fullName']}
+            {formInputs['email']}
+          </div>
+          {formInputs['subject']}
+          {formInputs['message']}
+        </div>
+        <Button
+          color='secondary'
+          isLoading={isPending}
+          disabled={!isValid}
+          onClick={() => !isPending && handleSubmit(null, true)}
+        >
+          {isPending ? 'Sending' : 'Send'}
+        </Button>
+      </>
+    );
+  };
+
+  return <div className='relative flex flex-col gap-5' ref={parent}>{render()}</div>;
 }
 
 function ContactInfo() {
   const { settings, isLoading } = useSettings();
 
   return (
-    <div className='flex flex-1 flex-col gap-5 rounded-lg relative border border-border bg-background-secondary'>
-      <img src="/SVG/contact.svg" alt="" className='absolute w-3/4 top-1/2 left-1/2 -translate-x-1/2 -translate-' />
+    <div className='relative flex flex-1 flex-col gap-5 rounded-lg border border-border bg-background-secondary'>
+      <img src='/SVG/contact.svg' alt='' className='-translate- absolute left-1/2 top-1/2 w-3/4 -translate-x-1/2' />
       <div>
         <Info label='about.phone' isLoading={isLoading} value={settings?.phone} icon={<BsTelephoneFill />} />
         <Info label='about.email' isLoading={isLoading} value={settings?.email} icon={<IoMail />} />

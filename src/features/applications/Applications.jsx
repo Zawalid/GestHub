@@ -50,7 +50,7 @@ export default function Applications() {
 }
 
 function ApplicationsList() {
-  const { data: applications, isLoading, error, query, appliedFiltersNumber, page, totalPages } = useOperations();
+  const { data: applications, initialData,isLoading, error, query, appliedFiltersNumber, page, totalPages } = useOperations();
   const [parent] = useAutoAnimate({ duration: 400 });
 
   return (
@@ -68,6 +68,7 @@ function ApplicationsList() {
           error,
           appliedFiltersNumber,
           data: applications,
+          initialData,
           page,
           totalPages,
           query,
@@ -124,11 +125,10 @@ function Application({ application: { id, offer, sector, status, created_at } })
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const render = ({ isLoading, error, appliedFiltersNumber, query, page, totalPages, render, message, data }) => {
+export const render = ({ isLoading, error, appliedFiltersNumber, query, page, totalPages, render, message, data,initialData }) => {
   if (isLoading) return Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} />);
   if (error) return <Status status='error' heading={error.message} message='Please try again later' />;
-  if (page > totalPages && !query && !appliedFiltersNumber('all')) return <Status status='pageNotFound' />;
-  if (data.length === 0 && !query && !appliedFiltersNumber('all')) {
+  if (initialData.length === 0 && !query && !appliedFiltersNumber('all')) {
     return (
       <div className='absolute grid h-full w-full place-content-center place-items-center gap-5'>
         <img src='/SVG/no-applications.svg' alt='' className='w-[140px]' />
@@ -139,6 +139,7 @@ export const render = ({ isLoading, error, appliedFiltersNumber, query, page, to
       </div>
     );
   }
+  if (page > totalPages && !query && !appliedFiltersNumber('all')) return <Status status='pageNotFound' />;
   if (data.length === 0 && (query || appliedFiltersNumber('all'))) {
     return (
       <Status status='noResults' heading='No applications found' message='Try changing your search query or filters' />

@@ -61,7 +61,7 @@
 - [ ] offline based on browser
 - [x] notifications icon
 - [ ] team page
-- [ ] emails table
+- [x] emails table
 - [ ] find a way to create a link based on the notification
 
 ---

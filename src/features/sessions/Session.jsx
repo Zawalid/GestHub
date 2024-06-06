@@ -76,7 +76,7 @@ export default function Session() {
 }
 
 function ActivitiesList() {
-  const { data: activities, isLoading, error, query, appliedFiltersNumber, page, totalPages } = useOperations();
+  const { data: activities,initialData, isLoading, error, query, appliedFiltersNumber, page, totalPages } = useOperations();
   const [parent] = useAutoAnimate({ duration: 400 });
 
   return (
@@ -94,6 +94,7 @@ function ActivitiesList() {
           error,
           appliedFiltersNumber,
           data: activities,
+          initialData,
           page,
           totalPages,
           query,

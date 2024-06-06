@@ -200,7 +200,7 @@ export const getFile = (data, type) => {
   return file ? `/assets${file}` : null;
 };
 
-export const isAlreadyApplied = (user, offer_id) => user?.applications?.find((d) => d.offer_id === +offer_id);
+
 
 // Filter
 export const getFilter = (data, key, checked) =>

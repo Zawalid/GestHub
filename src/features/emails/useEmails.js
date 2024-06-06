@@ -47,8 +47,5 @@ export function useContactUs() {
   return useMutate({
     queryKey: ['contact'],
     mutationFn: contact,
-    loadingMessage: 'Sending message...',
-    successMessage: 'Message sent successfully',
-    errorMessage: 'Failed to send message',
   });
 }

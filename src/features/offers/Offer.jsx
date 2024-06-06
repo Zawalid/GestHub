@@ -1,4 +1,4 @@
-import { formatDate, isAlreadyApplied } from '@/utils/helpers';
+import { formatDate } from '@/utils/helpers';
 import {
   BsClipboard2Check,
   IoCalendarNumberOutline,
@@ -37,7 +37,7 @@ export default function Offer({ offer, layout }) {
       <Indicator condition={isFavorite && (user?.role === 'user' || !user)} className='-right-[1.5px] bg-yellow-500' />
 
       <Layer condition={visibility === 'Hidden'} icon={<IoEyeOffOutline />} />
-      <Layer condition={isAlreadyApplied(user, id)} icon={<BsClipboard2Check />} />
+      <Layer condition={user?.applications?.find((d) => d.offer_id === +id)} icon={<BsClipboard2Check />} />
 
       <DateLocation {...{ publicationDate, duration, company, city }} />
 
@@ -84,7 +84,7 @@ function Indicator({ condition, className }) {
 
 function DateLocation({ publicationDate, duration, city, company }) {
   return (
-    <div className='flex flex-wrap justify-between gap-2  items-center'>
+    <div className='flex flex-wrap items-center justify-between  gap-2'>
       <div className='flex w-fit items-center gap-2 rounded-md bg-background-tertiary px-2 py-1 text-center  font-medium text-text-secondary'>
         <IoCalendarNumberOutline />
         <div className='divide-x divide-text-secondary text-xs'>

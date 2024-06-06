@@ -1,5 +1,5 @@
 import { useCities, useSectors, useVisibleOffers } from '@/features/offers/useOffers';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Operations } from '../components/shared/Operations/Operations';
 import { getOffersProps } from '@/pages/Offers';
@@ -10,13 +10,15 @@ import ApplicationReview from '@/features/applications/ApplicationReview';
 import OfferOverview from '@/features/offers/OfferOverview';
 import Hero from '@/components/homepage/Hero';
 import OffersList from '@/features/offers/OffersList';
+import NewApplication from '@/features/applications/NewApplication';
 
 export function HomePage() {
   const { settings } = useSettings();
   const { user } = useUser();
   const { sectors } = useSectors();
   const { cities } = useCities();
-  const { offers, isLoading, error } = useVisibleOffers();
+  const { offers, isLoading, error, favorites, onToggleFavorite } = useVisibleOffers();
+  const [isApplying, setIsApplying] = useState(false);
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
@@ -61,12 +63,18 @@ export function HomePage() {
           <OffersList filter={<Operations.Filter togglerClassName='lg:hidden' />} onHomePage={true} />
         </div>
       </Operations>
-      <OfferOverview onHomePage={true} />
+      <OfferOverview
+        onHomePage={true}
+        onApply={() => setIsApplying(true)}
+        isFavorite={(id) => favorites?.includes(id)}
+        onToggleFavorite={onToggleFavorite}
+      />
 
       {user?.role === 'user' && (
         <>
           <Applications />
           <ApplicationReview />
+          <NewApplication isOpen={isApplying} onClose={() => setIsApplying(false)} />
         </>
       )}
     </>

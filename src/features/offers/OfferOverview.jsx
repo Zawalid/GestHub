@@ -10,10 +10,10 @@ import {
   MdDriveFileRenameOutline,
   PiX,
 } from '@/components/ui/Icons';
-import { changeTitle, formatDate, isAlreadyApplied } from '@/utils/helpers';
+import { formatDate } from '@/utils/helpers';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { OfferForm } from './NewOffer';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { OfferSkeleton } from './OffersSkeleton';
 import { FaRegStar } from 'react-icons/fa';
 import { useUser } from '@/hooks/useUser';
@@ -24,16 +24,14 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
   const [isEditing, setIsEditing] = useState(false);
   const { id } = useParams();
   const { user } = useUser();
-  const navigate = useNavigateWithQuery();
   const { offer, isLoading, error } = useOffer(id);
   const { mutate } = useUpdateOffer();
+  const navigate = useNavigateWithQuery();
   const { t } = useTranslation();
   const { title, description, duration, city, publicationDate, company, sector, type, experience, status, skills } =
     offer || {};
 
-  useEffect(() => {
-    changeTitle(title ? title : 'Offers');
-  }, [title]);
+  const isAlreadyApplied = user?.applications?.find((d) => d.offer_id === +id);
 
   const close = () => navigate(onHomePage ? '/' : '/app/offers');
 
@@ -167,19 +165,17 @@ export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite
       </div>
 
       {render()}
-      {onHomePage && (
+      {onHomePage && (user?.role === 'user' || !user) && (
         <div className='z-10 mt-auto flex justify-end gap-3'>
           <Button color='tertiary' onClick={close}>
             {t('actions.close')}
           </Button>
-          {(user?.role === 'user' || !user) && (
-            <Button
-              disabled={isLoading || error || isAlreadyApplied(user, id)}
-              onClick={() => (user ? onApply() : navigate('/login', { state: { source: `/${id}` } }))}
-            >
-              {isAlreadyApplied(user, id) ? t('offers.alreadyApplied') : t('offers.apply')}
-            </Button>
-          )}
+          <Button
+            disabled={isLoading || error || isAlreadyApplied}
+            onClick={() => (user ? onApply() : navigate('/login', { state: { source: `/${id}` } }))}
+          >
+            {isAlreadyApplied ? t('offers.alreadyApplied') : t('offers.apply')}
+          </Button>
         </div>
       )}
     </Modal>

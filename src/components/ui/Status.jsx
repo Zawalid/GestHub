@@ -1,3 +1,6 @@
+import { HiMiniXMark, FiCheck, BsSendFill } from '@/components/ui/Icons';
+import { Button } from '.';
+
 const NoResults = ({ heading, message, size }) => {
   return (
     <>
@@ -57,15 +60,60 @@ const PageNotFound = () => {
   );
 };
 
-export function Status({ status, heading, message, size }) {
-  const props = { heading, message, size };
+const Sending = ({ heading, message }) => {
+  return (
+    <div className='grid flex-1 place-content-center place-items-center text-center'>
+      <div className='mb-3 grid h-14 w-14 place-content-center rounded-full bg-blue-500 shadow-md'>
+        <BsSendFill className='text-2xl text-white' />
+      </div>
+      <div className='mb-1 flex items-baseline gap-1'>
+        <h2 className='text-lg font-bold text-text-primary sm:text-xl'>{heading}</h2>
+        <div className='sending'></div>
+      </div>
+      <p className='text-sm font-medium text-text-secondary'>{message}</p>
+    </div>
+  );
+};
+
+const Sent = ({ heading, message }) => {
+  return (
+    <div className='grid flex-1 place-content-center place-items-center text-center'>
+      <div className='mb-3 grid h-14 w-14 place-content-center rounded-full bg-green-500 shadow-md'>
+        <FiCheck className='text-3xl text-white' />
+      </div>
+      <h2 className='mb-1 text-lg font-bold text-text-primary sm:text-xl'>{heading}</h2>
+      <p className='text-sm font-medium text-text-secondary'>{message}</p>
+    </div>
+  );
+};
+
+const ErrorSending = ({ heading, message, onRetry }) => {
+  return (
+    <div className='grid flex-1 place-content-center place-items-center text-center'>
+      <div className='grid h-14 w-14 place-content-center rounded-full bg-red-500 shadow-md'>
+        <HiMiniXMark className='text-3xl text-white' />
+      </div>
+      <div className='my-3'>
+        <h2 className='mb-1 text-lg font-bold text-text-primary sm:text-xl'>{heading}</h2>
+        <p className='text-sm font-medium text-text-secondary'>{message}</p>
+      </div>
+      <Button onClick={onRetry}>Try Again</Button>
+    </div>
+  );
+};
+
+export function Status({ status, heading, message, size, ...props }) {
+  const prs = { heading, message, size, ...props };
 
   const statuses = {
-    noResults: <NoResults {...props} />,
-    error: <Error {...props} />,
+    noResults: <NoResults {...prs} />,
+    error: <Error {...prs} />,
     loading: <Loading size={size} />,
-    locked: <Locked {...props} />,
+    locked: <Locked {...prs} />,
     pageNotFound: <PageNotFound />,
+    sending: <Sending {...prs} />,
+    sent: <Sent {...prs} />,
+    errorSending: <ErrorSending {...prs} />,
   };
 
   return (
