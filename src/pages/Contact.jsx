@@ -1,10 +1,11 @@
 import { IoMail, BsTelephoneFill, IoLocationSharp, GrMapLocation } from '@/components/ui/Icons';
-import { useContactUs, useSettings } from '@/hooks/useUser';
+import { useSettings } from '@/hooks/useUser';
 import { useForm } from '../hooks';
 import { Button } from '@/components/ui';
 import { SocialMedia, isSet } from '@/components/ui/SocialMedia';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
+import { useContactUs } from '@/features/emails/useEmails';
 
 export function Contact() {
   return (
@@ -35,7 +36,7 @@ function Socials() {
 function ContactForm() {
   const { mutate, isPending } = useContactUs();
   const {
-    options: { formInputs, isValid, handleSubmit },
+    options: { formInputs, isValid, handleSubmit, reset },
   } = useForm({
     defaultValues: {
       fullName: '',
@@ -74,7 +75,10 @@ function ContactForm() {
         },
       },
     ],
-    onSubmit: mutate,
+    onSubmit: (data) => {
+      mutate(data);
+      reset();
+    },
   });
 
   return (
@@ -87,14 +91,14 @@ function ContactForm() {
           Feel free to contact us any time. We&apos;ll get back to you as soon as we can!
         </p>
       </div>
-     <div className='space-y-2'>
-       <div className='grid xs:grid-cols-2 gap-2'>
-         {formInputs['fullName']}
-         {formInputs['email']}
-       </div>
-       {formInputs['subject']}
-       {formInputs['message']}
-     </div>
+      <div className='space-y-2'>
+        <div className='grid gap-2 xs:grid-cols-2'>
+          {formInputs['fullName']}
+          {formInputs['email']}
+        </div>
+        {formInputs['subject']}
+        {formInputs['message']}
+      </div>
       <Button color='secondary' isLoading={isPending} disabled={!isValid} onClick={() => !isPending && handleSubmit()}>
         {isPending ? 'Sending' : 'Send'}
       </Button>
@@ -106,7 +110,8 @@ function ContactInfo() {
   const { settings, isLoading } = useSettings();
 
   return (
-    <div className='flex flex-1 flex-col gap-5 rounded-lg border border-border bg-background-secondary'>
+    <div className='flex flex-1 flex-col gap-5 rounded-lg relative border border-border bg-background-secondary'>
+      <img src="/SVG/contact.svg" alt="" className='absolute w-3/4 top-1/2 left-1/2 -translate-x-1/2 -translate-' />
       <div>
         <Info label='about.phone' isLoading={isLoading} value={settings?.phone} icon={<BsTelephoneFill />} />
         <Info label='about.email' isLoading={isLoading} value={settings?.email} icon={<IoMail />} />
@@ -114,7 +119,7 @@ function ContactInfo() {
       </div>
 
       {isLoading && (
-        <div className='animate-pulse mx-5 mb-5 grid flex-1 place-content-center rounded-lg bg-background-tertiary text-4xl text-text-tertiary'>
+        <div className='mx-5 mb-5 grid flex-1 animate-pulse place-content-center rounded-lg bg-background-tertiary text-4xl text-text-tertiary'>
           <GrMapLocation />
         </div>
       )}
@@ -140,7 +145,7 @@ const Info = ({ isLoading, value, label, icon }) => {
 
   if (isLoading)
     return (
-      <div className='animate-pulse flex items-center gap-4 border-b border-border px-4 py-2'>
+      <div className='flex animate-pulse items-center gap-4 border-b border-border px-4 py-2'>
         <div className='h-10 w-10 rounded-full bg-background-tertiary'></div>
         <div className='flex-1 space-y-1.5'>
           <div className='h-2.5 w-20 bg-background-tertiary'></div>

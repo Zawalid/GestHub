@@ -25,6 +25,7 @@ import {
   Sessions,
   About,
   Contact,
+  Emails,
 } from './pages';
 
 import { ProtectedRoute } from './components/ProtectedRoute';
@@ -47,6 +48,8 @@ const routesElements = {
   users: <Users />,
   sessions: <Sessions />,
   'sessions/:id': <Sessions />,
+  emails: <Emails />,
+  'emails/:id': <Emails />,
 };
 
 export default function App() {

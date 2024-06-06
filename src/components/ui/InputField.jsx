@@ -47,7 +47,7 @@ function Label({ label, message }) {
 
   return (
     <div className='flex items-center gap-2'>
-      <label className='text-sm font-medium text-text-tertiary'>{label}</label>
+      {typeof label === 'string' ? <label className='text-sm font-medium text-text-tertiary'>{label}</label> : label}
       {<ErrorTooltip message={message} />}
     </div>
   );
@@ -124,11 +124,15 @@ export const InputField = forwardRef(
     const icon = showIcon && (icons[name] || icons[type]);
 
     return (
-      <div className={`space-y-1.5 ${parentClassName}`}>
+      <div className={`flex flex-col gap-1.5 ${parentClassName}`}>
         <Label label={label} message={errorMessage} />
         <div
           className={cn(
-            input({ icon: Boolean(customIcon || icon), disabled: props.disabled, readOnly: props.readOnly }),
+            input({
+              icon: Boolean(customIcon || icon),
+              disabled: Boolean(props.disabled),
+              readOnly: Boolean(props.readOnly),
+            }),
             className
           )}
         >

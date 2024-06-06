@@ -56,4 +56,3 @@ export const uploadFile = async (id, file, type) => {
  return await axiosFetch(`files/${id}`, 'POST', formData);
 };
 
-export const contact = async (data) => await axiosFetch('contact', 'POST', data);

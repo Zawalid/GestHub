@@ -89,6 +89,15 @@ export function TableProvider({
   const totalItems = rows?.length;
   const totalPages = Math.ceil(totalItems / limit);
   const appliedFiltersNumber = getAppliedFiltersNumber(filters);
+  const disabled = getIsDisabled({
+    isLoading,
+    error,
+    initialData: data,
+    query,
+    page,
+    totalPages,
+    appliedFiltersNumber,
+  });
 
   const excludedFields = columns.filter((c) => !c.visible).map((c) => c.displayLabel);
 
@@ -204,10 +213,7 @@ export function TableProvider({
     tableColumns,
     columns,
     rows: displayAllData ? rows : rows?.paginate(page, limit),
-    disabled:
-      getIsDisabled({ isLoading, error, initialData: data, query, page, totalPages, appliedFiltersNumber }) ||
-      selected.length > 0 ||
-      isOperating,
+    disabled: disabled || selected.length > 0 || isOperating,
     // Selection
     selected,
     isSelecting: selected.length > 0,
@@ -227,6 +233,7 @@ export function TableProvider({
     totalPages,
     page,
     limit,
+    disabledPagination: disabled,
     onChangeLimit,
     onPaginate,
     // view

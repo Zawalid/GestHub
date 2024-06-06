@@ -28,7 +28,7 @@ export const axiosFetch = async (resource, method, data, headers) => {
       localStorage.removeItem('in');
       location.assign('/login');
     }
-    if (['login', 'register', 'logout', 'password', 'profiles'].some((url) => resource.includes(url))) {
+    if (['login', 'register', 'logout', 'password', 'profiles','emails'].some((url) => resource.includes(url))) {
       throw Error(e.response.data.message || 'Something went wrong. Please try again.');
     }
     throw Error(e.response?.status === 404 ? 'Not found' : getAxiosErrorMessage(e.code));

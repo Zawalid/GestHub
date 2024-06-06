@@ -10,6 +10,7 @@ export const ROUTES = (() => {
     applications: ['applications', 'applications/:id'],
     users: ['users', 'users/:id'],
     sessions: ['sessions'],
+    emails: ['emails', 'emails/:id'],
   };
   const generate = (types) => {
     return Object.keys(routes).reduce(
@@ -20,11 +21,21 @@ export const ROUTES = (() => {
 
   return {
     'super-admin': [
-      ...generate(['admins', 'supervisors', 'projects', 'interns', 'offers', 'applications', 'users', 'sessions']),
+      ...generate([
+        'admins',
+        'supervisors',
+        'projects',
+        'interns',
+        'offers',
+        'applications',
+        'users',
+        'sessions',
+        'emails',
+      ]),
       'projects/new',
       'sessions/:id',
     ],
-    admin: generate(['supervisors', 'projects', 'interns', 'offers', 'applications', 'users', 'sessions']),
+    admin: generate(['supervisors', 'projects', 'interns', 'offers', 'applications', 'users', 'sessions', 'emails']),
     supervisor: generate(['projects', 'sessions']),
     intern: generate(['projects', 'sessions']),
     user: routes.applications,

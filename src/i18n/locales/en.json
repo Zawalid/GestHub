@@ -158,6 +158,7 @@
       "users": "Users",
       "projects": "Projects",
       "sessions": "Sessions",
+      "emails": "Emails",
       "settings": "Settings",
       "logout": "Logout"
     }

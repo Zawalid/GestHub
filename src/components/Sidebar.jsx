@@ -16,8 +16,9 @@ import {
   LuCalendarX,
   RiTeamLine,
   GrUserAdmin,
-  FiUserX ,
-  PiDevices 
+  FiUserX,
+  PiDevices,
+  MdOutlineEmail,
 } from './ui/Icons';
 
 import { ROUTES } from '../utils/constants';
@@ -36,8 +37,9 @@ const routesIcons = {
   offers: <IoBriefcaseOutline />,
   applications: <IoDocumentsOutline />,
   projects: <RxDashboard />,
-  users: <FiUserX  />,
-  sessions : <PiDevices  />
+  users: <FiUserX />,
+  sessions: <PiDevices />,
+  emails: <MdOutlineEmail />,
 };
 
 export default function Sidebar({ openSettings }) {
@@ -65,7 +67,7 @@ export default function Sidebar({ openSettings }) {
 
   return (
     <aside
-      className={`fixed top-0 z-[15] row-span-2 flex h-full flex-col gap-8 overflow-hidden bg-background-secondary pt-3 pb-2 transition-[width] duration-500 md:relative ${
+      className={`fixed top-0 z-[15] row-span-2 flex h-full flex-col gap-8 overflow-hidden bg-background-secondary pb-2 pt-3 transition-[width] duration-500 md:relative ${
         isExpanded ? 'w-full  px-3 md:w-[250px]' : 'w-14 px-2'
       }`}
     >
@@ -81,12 +83,12 @@ export default function Sidebar({ openSettings }) {
           {isExpanded ? <BsLayoutSidebarInset /> : <BsLayoutSidebarInsetReverse />}
         </Button>
       </div>
-      <ul className='space-y-1 overflow-y-auto overflow-x-hidden'>
+      <ul className={`relative space-y-1 overflow-y-auto overflow-x-hidden ${isExpanded ? 'pr-2' : 'no_scrollbar'}`}>
         {ROUTES[user?.role]
           ?.filter((r) => !r.includes('/'))
           .map((route) => (
             <li key={route}>
-              <NavLink to={`/app/${route}`} className='sidebar-element group'>
+              <NavLink to={`/app/${route}`} className='sidebar-element group '>
                 {routesIcons[route]}
                 <span className={spanClass}>{t(`app.sidebar.${route}`)}</span>
               </NavLink>

@@ -4,6 +4,8 @@ import { socials } from '@/components/ui/SocialMedia';
 import { useSettings, useUpdateSettings } from '@/hooks/useUser';
 import { FaCamera } from 'react-icons/fa6';
 import { GrMapLocation } from 'react-icons/gr';
+import { ToolTip } from '@/components/ui';
+import { BsFillInfoCircleFill } from 'react-icons/bs';
 
 export default function General() {
   const { settings } = useSettings();
@@ -56,12 +58,40 @@ export default function General() {
       },
       {
         name: 'maps',
-        label: 'Embedded Google Maps',
+        label: (
+          <>
+            <ToolTip
+              content={
+                <span className='text-xs text-text-secondary'>
+                  To get the embed maps link from Google Maps, please watch this{' '}
+                  <a
+                    href='https://www.youtube.com/watch?v=R7m0e-7JCQk'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='font-bold text-secondary'
+                  >
+                    video
+                  </a>
+                  .
+                </span>
+              }
+              interactive={true}
+            >
+              <span>
+                <BsFillInfoCircleFill className='text-blue-500' />
+              </span>
+            </ToolTip>
+            <label className='text-sm font-medium text-text-tertiary'>Embedded Google Maps</label>
+          </>
+        ),
         type: 'maps',
         placeholder: 'https://www.google.com/maps/embed?',
         rules: {
           pattern: {
-            value: new RegExp('^\\s*(https://www\\.google\\.com/maps/embed\\?).*\\s*$', 'i'),
+            value: new RegExp(
+              '^\\s*(https://www\\.google\\.com/maps/embed\\?|<iframe src="https://www\\.google\\.com/maps/embed\\?).*\\s*$',
+              'i'
+            ),
             message: 'Invalid URL. Please enter a valid Google Maps embed link.',
           },
           required: false,
@@ -92,7 +122,14 @@ export default function General() {
     onSubmit: (data) => {
       const formData = new FormData();
       for (const el in data) {
-        formData.append(el, el === 'appLogo' ? data[el].file : data[el] || '');
+        formData.append(
+          el,
+          (() => {
+            if (el === 'appLogo') return data[el].file;
+            if (el === 'maps') return extractSrc(data[el]);
+            return data[el] || '';
+          })()
+        );
       }
       mutate(formData);
     },
@@ -147,14 +184,14 @@ export default function General() {
           </div>
 
           <div className='relative rounded-lg border border-border p-3'>
-            {(errors?.['maps'] || !getValue('maps') )&& (
+            {(errors?.['maps'] || !getValue('maps')) && (
               <div className='absolute left-0 top-0 grid h-full w-full place-content-center place-items-center gap-1.5 bg-background-secondary'>
                 <GrMapLocation className='text-2xl' />
                 <p className='text-xs font-medium text-text-tertiary'>Invalid maps link. Please check and try again.</p>
               </div>
             )}
             <iframe
-              src={getValue('maps')}
+              src={extractSrc(getValue('maps'))}
               allowFullScreen=''
               loading='lazy'
               referrerPolicy='no-referrer-when-downgrade'
@@ -174,3 +211,9 @@ export default function General() {
     </ModalFormLayout>
   );
 }
+
+const extractSrc = (input) => {
+  if (!input) return null;
+  const iframeMatch = input.match(/<iframe.*?src="(.*?)".*?<\/iframe>/);
+  return iframeMatch ? iframeMatch[1] : input;
+};

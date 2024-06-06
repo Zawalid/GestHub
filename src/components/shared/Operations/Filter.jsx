@@ -12,10 +12,10 @@ import { useOperations } from './useOperations';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 
-export function Filter({ isInDropDown, className, togglerClassName = '', title }) {
+export function Filter({ isExpanded, className, togglerClassName = '', title }) {
   const { appliedFiltersNumber, disabled } = useOperations();
 
-  if (isInDropDown) return <Filters {...{ className, title }} />;
+  if (isExpanded) return <Filters {...{ className, title, isExpanded }} />;
 
   return (
     <DropDown
@@ -46,7 +46,7 @@ export function Filter({ isInDropDown, className, togglerClassName = '', title }
 
 const getExpanded = (filters, value) => Object.keys(filters).reduce((acc, key) => ({ ...acc, [key]: value }), {});
 
-function Filters({ isInDropDown = true, className = '', title }) {
+function Filters({ isExpanded, className = '', title }) {
   const { initialData, filters, onFilter, filterCondition, appliedFiltersNumber, onChangeFilterCondition } =
     useOperations();
   const [expanded, setExpanded] = useState(() => getExpanded(filters, Object.keys(filters).length === 1));
@@ -85,7 +85,7 @@ function Filters({ isInDropDown = true, className = '', title }) {
           </Button>
         </div>
       </div>
-      <div className={`flex flex-1 flex-col gap-2 divide-y divide-border overflow-auto ${isInDropDown ? '' : 'pr-3'}`}>
+      <div className={`flex flex-1 flex-col gap-2 divide-y divide-border overflow-auto ${isExpanded ? 'pr-3' : ''}`}>
         {Object.keys(filters).map((key) => (
           <div className={`flex flex-col pt-2 ${expanded[key] ? 'gap-2 last:pb-2' : ''}`} key={key}>
             <Button

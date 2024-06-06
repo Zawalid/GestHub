@@ -68,7 +68,7 @@ html.theme-transition {
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  @apply h-1 w-1;
+  @apply h-1.5 w-0.5;
 }
 
 ::-webkit-scrollbar-thumb {

@@ -59,6 +59,7 @@ export {
   MdOutlineLocationOn,
   MdOutlineTimelapse,
   MdOutlinePendingActions,
+  MdOutlineEmail,
 } from 'react-icons/md';
 export {
   FaSpinner,
@@ -80,16 +81,23 @@ export {
   FaRegClone,
   FaChevronLeft,
   FaChevronRight,
-  FaRegCalendarCheck ,
-  FaBell
+  FaRegCalendarCheck,
+  FaBell,
 } from 'react-icons/fa6';
-export { LuCalendarX, LuUser, LuUpload, LuClipboardList, LuListTodo, LuPlus,LuTimerReset  } from 'react-icons/lu';
+export { LuCalendarX, LuUser, LuUpload, LuClipboardList, LuListTodo, LuPlus, LuTimerReset } from 'react-icons/lu';
 export { LiaUserTieSolid, LiaClipboardListSolid } from 'react-icons/lia';
 export { FiLogOut, FiSettings, FiPhone, FiCheck, FiUserCheck, FiUserX } from 'react-icons/fi';
 export { RiTeamLine } from 'react-icons/ri';
 export { HiMiniXMark } from 'react-icons/hi2';
 export { RxDashboard, RxViewVertical } from 'react-icons/rx';
-export { TbProgressCheck, TbFileSearch, TbProgress,TbLayoutNavbarExpandFilled,TbLayoutBottombarExpandFilled,TbFilter    } from 'react-icons/tb';
+export {
+  TbProgressCheck,
+  TbFileSearch,
+  TbProgress,
+  TbLayoutNavbarExpandFilled,
+  TbLayoutBottombarExpandFilled,
+  TbFilter,
+} from 'react-icons/tb';
 export { GrUserAdmin, GrMapLocation, GrPowerReset } from 'react-icons/gr';
 export { GoLink, GoUnlink } from 'react-icons/go';
 export { LiaUserPlusSolid, LiaUserMinusSolid, LiaUserEditSolid } from 'react-icons/lia';
