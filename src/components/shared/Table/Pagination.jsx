@@ -2,7 +2,7 @@ import { useTable } from './useTable';
 import { Pagination as P } from '../Pagination';
 
 export function Pagination() {
-  const { totalItems, totalPages, page, limit, onChangeLimit, onPaginate, disabledPagination } = useTable();
+  const { totalItems, totalPages, page, limit, onChangeLimit, onPaginate, disabled } = useTable();
 
   return (
     <P
@@ -13,7 +13,7 @@ export function Pagination() {
         limit,
         onChangeLimit,
         onPaginate,
-        disabled: disabledPagination,
+        disabled,
         className: 'px-6 mt-auto pb-2',
       }}
     />

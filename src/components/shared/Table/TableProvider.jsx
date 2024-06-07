@@ -58,7 +58,6 @@ export function TableProvider({
 }) {
   const [columns, setColumns] = useState(tableColumns);
   const [selected, setSelected] = useState([]);
-  const [isOperating, setIsOperating] = useState(false);
   const [formOptions, setFormOptions] = useState({
     defaultValues: formDefaults,
     fields: formFields,
@@ -77,6 +76,7 @@ export function TableProvider({
   });
   const [filters, setFilters] = useState({});
   const [searchParams, setSearchParams] = useSearchParams();
+
   const query = searchParams.get('search');
   const page = Number(searchParams.get('page')) || 1;
   const limit = Number(searchParams.get('limit')) || PAGE_LIMIT;
@@ -89,15 +89,6 @@ export function TableProvider({
   const totalItems = rows?.length;
   const totalPages = Math.ceil(totalItems / limit);
   const appliedFiltersNumber = getAppliedFiltersNumber(filters);
-  const disabled = getIsDisabled({
-    isLoading,
-    error,
-    initialData: data,
-    query,
-    page,
-    totalPages,
-    appliedFiltersNumber,
-  });
 
   const excludedFields = columns.filter((c) => !c.visible).map((c) => c.displayLabel);
 
@@ -213,14 +204,20 @@ export function TableProvider({
     tableColumns,
     columns,
     rows: displayAllData ? rows : rows?.paginate(page, limit),
-    disabled: disabled || selected.length > 0 || isOperating,
+    disabled: getIsDisabled({
+      isLoading,
+      error,
+      initialData: data,
+      query,
+      page,
+      totalPages,
+      appliedFiltersNumber,
+    }),
     // Selection
     selected,
     isSelecting: selected.length > 0,
     selectedOptions,
     onSelect,
-    isOperating,
-    setIsOperating,
     // search
     query,
     onSearch,
@@ -233,7 +230,6 @@ export function TableProvider({
     totalPages,
     page,
     limit,
-    disabledPagination: disabled,
     onChangeLimit,
     onPaginate,
     // view

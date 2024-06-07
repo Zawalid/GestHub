@@ -8,11 +8,16 @@ import {
 import { useTable } from './useTable';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
+import { useMutationState } from '@tanstack/react-query';
 
 export function Actions({ onUpdate, onDelete, row, actions }) {
-  const { showForm, confirmOptions, resourceName, rows, onPrevPage, formOptions, isSelecting } = useTable();
+  const { showForm, confirmOptions, resourceName, rows, onPrevPage, formOptions } = useTable();
   const navigate = useNavigateWithQuery();
   const { openModal } = useConfirmationModal();
+  const variables = useMutationState({
+    filters: { mutationKey: [`${resourceName.toLocaleLowerCase()}s`], status: 'pending' },
+    select: (mutation) => mutation.state.variables,
+  })?.[0];
 
   const defaultActions = {
     view: {
@@ -71,19 +76,29 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
           <IoEllipsisHorizontalSharp />
         </Button>
       }
-      togglerDisabled={isSelecting}
+      togglerDisabled={(() => {
+        console.log(variables);
+        if (!variables) return false;
+        const id = row.profile_id || row.id;
+        if ((Array.isArray(variables) && variables.includes(id)) || variables.id === id || variables === id)
+          return true;
+      })()}
     >
       {getActions()
-      .filter(action => !action.hidden?.(row))
-      .map((action) => (
-        <DropDown.Option key={action.text}  onClick={(e) => {
-          e.stopPropagation();
-          action.onClick(row);
-        }}>
-          {action.icon}
-          {action.text}
-        </DropDown.Option>
-      ))}
+        .filter((action) => !action.hidden?.(row))
+        .map((action) => (
+          <DropDown.Option
+            key={action.text}
+            onClick={(e) => {
+              e.stopPropagation();
+              action.onClick(row);
+            }}
+          >
+            {action.icon}
+            {action.text}
+          </DropDown.Option>
+        ))}
     </DropDown>
   );
 }
+

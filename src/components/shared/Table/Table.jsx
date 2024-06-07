@@ -109,7 +109,7 @@ function Row({ row, visibleColumns, actions, canView = true, selected, hideRowAc
     if (isSelecting && !hideRowActions) {
       onSelect(row.profile_id || row.id);
     }
-    if (canView && !disabled) {
+    if (canView && !disabled && !isSelecting) {
       navigate(row.id);
     }
   };

@@ -91,12 +91,11 @@ export default function AdminsList() {
       onAdd={addAdmin}
       onUpdate={updateAdmin}
       onDelete={deleteAdmin}
-     
       layoutOptions={{ actions: (def) => [def.edit, def.delete] }}
       selectedOptions={{
         deleteOptions: {
           resourceName: 'admin',
-          onConfirm: (ids,setIsOperating) => deleteAdmins(ids,{ onSettled: () => setIsOperating(false) }),
+          onConfirm: (ids) => deleteAdmins(ids),
         },
       }}
     />

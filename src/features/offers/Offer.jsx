@@ -31,7 +31,7 @@ export default function Offer({ offer, layout }) {
   return (
     <div
       className={`group relative flex w-full cursor-pointer flex-col gap-3 rounded-lg  border border-border bg-background-disabled p-3 shadow-md transition-transform duration-300 hover:scale-95 ${status === 'Urgent' ? 'rounded-tl-none' : ''} ${isFavorite ? 'rounded-tr-none' : ''} ${layout === 'list' ? 'h-fit' : ''}`}
-      onClick={() => navigate(`/${window.location.pathname.includes('/app') ? 'app/' : ''}${id}`)}
+      onClick={() => navigate(`/${window.location.pathname.includes('/app') ? 'app/offers/' : ''}${id}`)}
     >
       <Indicator condition={status === 'Urgent'} className='-left-[1.5px] bg-red-500' />
       <Indicator condition={isFavorite && (user?.role === 'user' || !user)} className='-right-[1.5px] bg-yellow-500' />

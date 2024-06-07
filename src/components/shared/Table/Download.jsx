@@ -4,14 +4,17 @@ import autoTable from 'jspdf-autotable';
 import { MdDownload, PiFilePdf, PiFileCsv, IoChevronForwardOutline } from '../../ui/Icons';
 import { Button, DropDown } from '../../ui';
 import { useTable } from './useTable';
+import { useIsMutating } from '@tanstack/react-query';
+import {  IoDocumentOutline,  IoDocumentsOutline } from 'react-icons/io5';
+import { HiOutlineClipboardDocumentCheck } from 'react-icons/hi2';
 
-const exportAsCsv = (data, config, page) => {
+const exportAsCsv = ({ data, config, page }) => {
   const filename = page ? `${config.filename}-page-${page}` : config.filename;
   const csv = generateCsv(mkConfig({ ...config, filename }))(data);
   download({ ...config, filename })(csv);
 };
 
-const exportAsPdf = (data, config, headers, page) => {
+const exportAsPdf = ({ data, config, headers, page }) => {
   const { filename, tableHeaders } = config;
 
   const tableData = data
@@ -50,7 +53,8 @@ const exportAsPdf = (data, config, headers, page) => {
 
 //* Download
 export function Download() {
-  const { disabled} = useTable();
+  const { resourceName } = useTable();
+  const disabled = useIsMutating({ mutationKey: [`${resourceName.toLocaleLowerCase()}s`] });
 
   return (
     <DropDown
@@ -72,16 +76,28 @@ export function Download() {
 }
 
 function DownloadOption({ type, icon }) {
-  const { data, rows, csvConfig, pdfConfig, columns, page } = useTable();
+  const { data, rows, csvConfig, pdfConfig, columns, page, selected } = useTable();
 
-  const downloadPdf = (data, page) =>
-    exportAsPdf(
-      data,
-      pdfConfig,
-      columns.filter((c) => c.visible),
-      page
-    );
-  const downloadCsv = (data, page) => exportAsCsv(data, csvConfig, page);
+  const download = (downloadType, dataSubset, currentPage = null, selectedRows = null) => {
+    const filteredData = selectedRows
+      ? dataSubset.filter((el) => selectedRows.includes(el.profile_id || el.id))
+      : dataSubset;
+
+    if (downloadType === 'pdf') {
+      exportAsPdf({
+        data: filteredData,
+        config: pdfConfig,
+        headers: columns.filter((c) => c.visible),
+        page: currentPage,
+      });
+    } else if (downloadType === 'csv') {
+      exportAsCsv({
+        data: filteredData,
+        config: csvConfig,
+        page: currentPage,
+      });
+    }
+  };
 
   return (
     <DropDown.NestedMenu
@@ -94,20 +110,17 @@ function DownloadOption({ type, icon }) {
       }
       options={{ placement: 'right-start' }}
     >
-      <DropDown.Option
-        onClick={() => {
-          type === 'pdf' ? downloadPdf(data) : downloadCsv(data);
-        }}
-      >
-        All Pages
+      <DropDown.Option onClick={() => download(type, data)}>
+      <IoDocumentsOutline  /> All Pages
+    </DropDown.Option>
+    <DropDown.Option onClick={() => download(type, rows, page)}>
+      <IoDocumentOutline /> This Page
+    </DropDown.Option>
+    {selected.length > 0 && (
+      <DropDown.Option onClick={() => download(type, rows, null, selected)}>
+        <HiOutlineClipboardDocumentCheck  /> Selected
       </DropDown.Option>
-      <DropDown.Option
-        onClick={() => {
-          type === 'pdf' ? downloadPdf(rows, page) : downloadCsv(rows, page);
-        }}
-      >
-        This Page
-      </DropDown.Option>
+    )}
     </DropDown.NestedMenu>
   );
 }

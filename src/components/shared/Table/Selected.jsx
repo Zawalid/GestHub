@@ -12,7 +12,6 @@ export function Selected() {
     selected,
     selectedOptions: { isOpen, actions, deleteOptions, onClose },
     onSelect,
-    setIsOperating,
   } = useTable();
   const { openModal } = useConfirmationModal();
 
@@ -33,8 +32,7 @@ export function Selected() {
               title: `Delete ${capitalize(deleteOptions.resourceName)}s`,
               confirmText: 'Delete',
               onConfirm: () => {
-                setIsOperating(true);
-                deleteOptions.onConfirm(selected, () => setIsOperating(false));
+                deleteOptions.onConfirm(selected);
                 close();
               },
             }),
@@ -75,10 +73,7 @@ export function Selected() {
                   <Button
                     className={`w-full ${className}`}
                     color={color || 'red'}
-                    onClick={() => {
-                      setIsOperating(true);
-                      onClick(selected, close, setIsOperating);
-                    }}
+                    onClick={() => onClick(selected, close)}
                     disabled={disabled}
                   >
                     {text}

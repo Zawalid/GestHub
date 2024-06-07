@@ -13,7 +13,6 @@ export const getSearchedInterns = (interns, query) => {
     .sort((a, b) => a.firstName.localeCompare(b.firstName))
 };
 export const renderInternsStatus = (isLoading, error, searchedInterns, render, query) => {
-  console.log(searchedInterns)
   if (isLoading) return <Status status='loading' />;
   if (error) return <Status status='error' heading={error?.message} size='small' />;
   if (searchedInterns?.length === 0 && query) return <Status status='noResults' size='small' />;

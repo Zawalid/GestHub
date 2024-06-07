@@ -140,10 +140,7 @@ export const useApproveApplications = () => {
   const approve = (ids, options) =>
     openModal({
       ...getApprovementOptions(true, ids.length).approve,
-      onConfirm: () => {
-        options.onConfirm?.();
-        approvement.mutate(ids, options);
-      },
+      onConfirm: () => approvement.mutate(ids, options),
     });
 
   return { ...approvement, approve };
@@ -184,12 +181,8 @@ export const useRejectApplications = () => {
   const reject = (ids, options) =>
     openModal({
       ...getRejectionOptions(true, ids.length).reject,
-      onConfirm: () => {
-        options.onConfirm?.();
-        rejection.mutate(ids, options);
-      },
+      onConfirm: () => rejection.mutate(ids, options),
     });
 
   return { ...rejection, reject };
 };
-

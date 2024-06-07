@@ -24,7 +24,6 @@ export default function ApplicationsList() {
   const navigate = useNavigateWithQuery();
   const state = useNavigateState();
 
-
   return (
     <TableLayout
       data={applications}
@@ -138,8 +137,8 @@ export default function ApplicationsList() {
             { text: 'Reject', onClick: rejectMultiple, color: 'orange' },
           ].map((el) => ({
             ...el,
-            onClick: (ids, onClose, setIsOperating) => {
-              el.onClick(ids, { onConfirm: () => setIsOperating(true), onSettled: () => setIsOperating(false) });
+            onClick: (ids, onClose) => {
+              el.onClick(ids);
               onClose();
             },
             disabledCondition: (ids, data) => data?.some((app) => ids.includes(app.id) && app.status !== 'Pending'),
@@ -151,7 +150,7 @@ export default function ApplicationsList() {
         ],
         deleteOptions: {
           resourceName: 'application',
-          onConfirm: (ids, setIsOperating) => deleteApplications(ids, { onSettled: () => setIsOperating(false) }),
+          onConfirm: (ids) => deleteApplications(ids),
         },
       }}
     />

@@ -202,7 +202,6 @@ function Dropdown({ type, getValue, setValue }) {
         options={{
           className: 'overflow-auto max-h-[300px] w-[230px]',
           shouldCloseOnClick: false,
-          placement: 'auto-end',
         }}
       >
         <DropDown.Title className='capitalize'>New {type}</DropDown.Title>

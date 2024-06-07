@@ -44,7 +44,7 @@
 - [ ] Remove error message from error screen
 - [ ] Disable react devtools
 - [ ] Add translations to all the content
-- [ ] update home page
+- [x] update home page
 - [x] settings
 - [x] editor for about (TipTap)
 - [x] invalidate projects when updating tasks
@@ -63,6 +63,7 @@
 - [ ] team page
 - [x] emails table
 - [ ] find a way to create a link based on the notification
+- [x] download selected records
 
 ---
 
@@ -85,7 +86,8 @@
  - [x] filters are reset when sorting
  - [ ] navigate with filters/sort with filters/homepage filters
  - [x] table action click propagation
- - [ ] disable delete buttons after clicking
+ - [x] disable delete buttons after clicking
+ - [ ] login expiration time too low
 
 
 ---

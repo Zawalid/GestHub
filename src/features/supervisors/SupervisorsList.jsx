@@ -104,7 +104,7 @@ export default function SupervisorsList() {
       selectedOptions={{
         deleteOptions: {
           resourceName: 'supervisor',
-          onConfirm: (ids, setIsOperating) => deleteSupervisors(ids, { onSettled: () => setIsOperating(false) }),
+          onConfirm: (ids) => deleteSupervisors(ids, ),
         },
       }}
     />

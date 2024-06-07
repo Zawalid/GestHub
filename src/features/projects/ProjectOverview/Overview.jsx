@@ -10,6 +10,7 @@ import { useUser } from '@/hooks/useUser';
 import { TeamMembers } from './TeamMembers';
 import { Details, Progress } from './Details';
 import { Stats } from './Stats';
+import { useIsMutating } from '@tanstack/react-query';
 
 export default function Overview() {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,6 +60,7 @@ function Actions({ id, onEdit, role }) {
   const { openModal } = useConfirmationModal();
   const { mutate } = useDeleteProject();
   const navigate = useNavigate();
+  const disabled = useIsMutating({ mutationKey: ['projects'] });
 
   return (
     <div className='flex gap-1.5'>
@@ -73,11 +75,12 @@ function Actions({ id, onEdit, role }) {
               onConfirm: () => mutate(id, { onSuccess: () => navigate('/app/projects') }),
             });
           }}
+          disabled={disabled}
         >
           <IoTrashOutline />
         </Button>
       )}
-      <Button shape='icon' onClick={onEdit}>
+      <Button shape='icon' onClick={onEdit} disabled={disabled}>
         <MdDriveFileRenameOutline />
       </Button>
     </div>
@@ -87,7 +90,6 @@ function Actions({ id, onEdit, role }) {
 function EditProject({ isOpen, onClose, project }) {
   const { id, subject, description, startDate, endDate, priority, supervisor } = project || {};
   const { mutate } = useUpdateProject();
-
 
   return (
     <Modal

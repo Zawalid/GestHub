@@ -19,6 +19,7 @@ import { FaRegStar } from 'react-icons/fa';
 import { useUser } from '@/hooks/useUser';
 import { useTranslation } from 'react-i18next';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
+import { useIsMutating } from '@tanstack/react-query';
 
 export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite, onApply }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -187,6 +188,8 @@ function Actions({ offer, disabled, onEdit }) {
   const { mutate: deleteOffer } = useDeleteOffer();
   const { mutate: updateOffer } = useUpdateOffer();
   const navigate = useNavigateWithQuery();
+  const isOperating = useIsMutating({ mutationKey: ['offers'] });
+
 
   return (
     <div className='self-end'>
@@ -197,7 +200,7 @@ function Actions({ offer, disabled, onEdit }) {
           </Button>
         }
         options={{ className: 'w-[200px]' }}
-        togglerDisabled={disabled}
+        togglerDisabled={disabled || isOperating}
       >
         <DropDown.Option onClick={onEdit}>
           <MdDriveFileRenameOutline />

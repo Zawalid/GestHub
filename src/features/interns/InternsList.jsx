@@ -101,10 +101,10 @@ export default function InternsList() {
             format: (val, id, isDownload) => {
               const colors = {
                 Completed: 'bg-green-600',
-                Upcoming: 'bg-blue-600',
+                Upcoming: 'bg-teal-600',
                 'Starting Tomorrow': 'bg-yellow-600',
                 'Starting Today': 'bg-orange-600',
-                Ongoing: 'bg-teal-600',
+                Ongoing: 'bg-blue-600',
               };
               return isDownload ? (
                 val
@@ -222,14 +222,8 @@ export default function InternsList() {
             {
               text: 'Generate',
               color: 'secondary',
-              onClick: (ids, onClose, setIsOperating) => {
-                generateAttestations(
-                  ids.map((id) => interns?.find((intern) => intern.profile_id === id)?.id),
-                  {
-                    onConfirm: () => setIsOperating(true),
-                    onSettled: () => setIsOperating(false),
-                  }
-                );
+              onClick: (ids, onClose) => {
+                generateAttestations(ids.map((id) => interns?.find((intern) => intern.profile_id === id)?.id));
                 onClose();
               },
               disabledCondition: (ids, data) =>
@@ -242,7 +236,7 @@ export default function InternsList() {
           ],
           deleteOptions: {
             resourceName: 'intern',
-            onConfirm: (ids, setIsOperating) => deleteInterns(ids, { onSettled: () => setIsOperating(false) }),
+            onConfirm: (ids) => deleteInterns(ids),
           },
         }}
         hideAllRowsActions={user?.role === 'supervisor'}

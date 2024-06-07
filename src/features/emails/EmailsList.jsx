@@ -67,7 +67,7 @@ export default function EmailsList() {
       selectedOptions={{
         deleteOptions: {
           resourceName: 'email',
-          onConfirm: (ids, setIsOperating) => deleteEmails(ids, { onSettled: () => setIsOperating(false) }),
+          onConfirm: (ids) => deleteEmails(ids, ),
         },
       }}
       layoutOptions={{

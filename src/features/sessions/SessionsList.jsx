@@ -214,8 +214,8 @@ export default function SessionsList() {
           {
             text: 'Abort',
             color: 'orange',
-            onClick: (ids, onClose, setIsOperating) => {
-              abortMultiple(ids, { onConfirm: () => setIsOperating(true), onSettled: () => setIsOperating(false) });
+            onClick: (ids, onClose) => {
+              abortMultiple(ids);
               onClose();
             },
             disabledCondition: (ids, data) => data?.some((app) => ids.includes(app.id) && app.status !== 'Online'),
@@ -227,7 +227,7 @@ export default function SessionsList() {
         ],
         deleteOptions: {
           resourceName: 'session',
-          onConfirm: (ids, setIsOperating) => deleteSessions(ids, { onSettled: () => setIsOperating(false) }),
+          onConfirm: (ids) => deleteSessions(ids, ),
         },
       }}
       hideAllRowsActions={user?.role !== 'super-admin'}

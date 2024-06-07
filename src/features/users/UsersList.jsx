@@ -111,11 +111,10 @@ export default function UsersList() {
         pdfFileName: 'Users',
       }}
       onDelete={deleteUser}
-     
       selectedOptions={{
         deleteOptions: {
           resourceName: 'user',
-          onConfirm: (ids, setIsOperating) => deleteUsers(ids, { onSettled: () => setIsOperating(false) }),
+          onConfirm: (ids) => deleteUsers(ids),
         },
       }}
       layoutOptions={{
