@@ -16,6 +16,6 @@ export function ProtectedRoute({ children }) {
   }, [user, isLoading, navigate]);
 
   if (isLoading) return <LoadingScreen />;
-  if (error) return <ErrorScreen />;
+  if (error) return <ErrorScreen error={error} />;
   if (user) return children;
 }

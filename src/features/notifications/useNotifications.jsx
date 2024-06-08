@@ -23,7 +23,6 @@ export const getIcons = (n) => {
     overdueProject: { icon: <FaCalendarXmark />, color: 'bg-red-500' },
     completedProject: { icon: <FaRegCircleCheck />, color: 'bg-green-500' },
     newTask: { icon: <LuListTodo />, color: 'bg-yellow-600' },
-    completedTask: { icon: <FaRegCircleCheck />, color: 'bg-blue-500' },
     overdueTask: { icon: <FaCalendarXmark />, color: 'bg-red-500' },
     acceptedApplication: { icon: <FaRegCircleCheck />, color: 'bg-green-600' },
     endingInternship: { icon: <LuTimerReset />, color: 'bg-teal-500' },

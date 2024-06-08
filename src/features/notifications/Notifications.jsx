@@ -29,7 +29,7 @@ export function Notifications() {
           <img src='/images/no-notifications.png' alt='' className='w-16' />
           <h4 className='font-medium text-text-primary'>No notifications yet</h4>
           <p className='text-center text-xs text-text-secondary'>
-            We&apos;ll notify you once your application has been <br /> processed.
+            We&apos;ll notify you as soon as there&apos;s something new for you.
           </p>
         </div>
       );

@@ -97,20 +97,20 @@
 - [ ] Multiple accounts login
 - [ ] Emailing
 - [x] login sessions
-- [ ] More details about the error
+- [x] More details about the error
 - [ ] create a component for date range only
 - [ ] Add a custom date picker and  date interval
-- [ ] table multi select (context menu of actions)
+- [x] table multi select 
 - [ ] import from file
 - [ ] use slugs instead of ids (projects/offers/interns)
 - [ ] optimistic mutations
 - [ ] virtual lists for performance
-- [ ] handle currently precessed rows 
+- [x] handle currently precessed rows 
 - [x] show errors when submitting instead
 - [ ] control charts dates/filter...
 - [ ] complex dates on calendar (tasks due dates/projects deadlines...)
 - [ ] create a can function to handle permissions 
-- [ ] session activities
+- [x] session activities
 - [ ] trash
 - [ ] activities table 
 - [ ] blocking users
