@@ -4,13 +4,14 @@ import { useSearchParams } from 'react-router-dom';
 import { Operations } from '../components/shared/Operations/Operations';
 import { getOffersProps } from '@/pages/Offers';
 import { changeTitle, getIntervals } from '@/utils/helpers';
-import { useSettings, useUser } from '@/hooks/useUser';
+import {  useUser } from '@/hooks/useUser';
 import Applications from '@/features/applications/Applications';
 import ApplicationReview from '@/features/applications/ApplicationReview';
 import OfferOverview from '@/features/offers/OfferOverview';
 import Hero from '@/components/homepage/Hero';
 import OffersList from '@/features/offers/OffersList';
 import NewApplication from '@/features/applications/NewApplication';
+import { useSettings } from '@/features/settings/useSettings';
 
 export function HomePage() {
   const { settings } = useSettings();

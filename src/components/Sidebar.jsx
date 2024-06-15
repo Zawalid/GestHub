@@ -1,54 +1,25 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
-import {
-  RxDashboard,
-  BsLayoutSidebarInset,
-  BsLayoutSidebarInsetReverse,
-  FiUserCheck,
-  FiLogOut,
-  IoSettingsOutline,
-  IoBriefcaseOutline,
-  IoDocumentsOutline,
-  IoHomeOutline,
-  LiaUserTieSolid,
-  LuCalendarX,
-  RiTeamLine,
-  GrUserAdmin,
-  FiUserX,
-  PiDevices,
-  MdOutlineEmail,
-} from './ui/Icons';
-
-import { ROUTES } from '../utils/constants';
+import { BsLayoutSidebarInset, BsLayoutSidebarInsetReverse, FiLogOut, IoSettingsOutline } from './ui/Icons';
 import { Button } from './ui';
 import { capitalize, changeTitle } from '@/utils/helpers';
-import { useLogout, useUser } from '@/hooks/useUser';
+import { useLogout } from '@/hooks/useUser';
 import { Logo } from './ui/Logo';
 import { useCount } from '@/features/overview/useStats';
-
-const routesIcons = {
-  overview: <IoHomeOutline />,
-  interns: <FiUserCheck />,
-  teams: <RiTeamLine />,
-  supervisors: <LiaUserTieSolid />,
-  admins: <GrUserAdmin size={16} />,
-  absences: <LuCalendarX />,
-  offers: <IoBriefcaseOutline />,
-  applications: <IoDocumentsOutline />,
-  projects: <RxDashboard />,
-  users: <FiUserX />,
-  sessions: <PiDevices />,
-  emails: <MdOutlineEmail />,
-};
+import { useSettings } from '@/features/settings/useSettings';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useRoutes } from '@/hooks/useRoutes';
 
 export default function Sidebar({ openSettings }) {
   const [isExpanded, setIsExpanded] = useState(window.matchMedia('(min-width: 1024px)').matches);
-  const { user } = useUser();
   const { logout, isLoggingOut } = useLogout();
   const { count } = useCount();
+  const { sidebar } = useRoutes();
+  const { settings } = useSettings(true);
   const { t } = useTranslation();
+  const [parent] = useAutoAnimate();
+
   const location = useLocation().pathname.split('/');
 
   const spanClass = `transition-transform origin-left duration-500 text-sm text-text-secondary ${
@@ -85,15 +56,18 @@ export default function Sidebar({ openSettings }) {
           {isExpanded ? <BsLayoutSidebarInset /> : <BsLayoutSidebarInsetReverse />}
         </Button>
       </div>
-      <ul className={`relative space-y-1 overflow-y-auto overflow-x-hidden ${isExpanded ? 'pr-2' : 'no_scrollbar'}`}>
-        {ROUTES[user?.role]
-          ?.filter((r) => !r.includes('/'))
-          .map((route) => (
-            <li key={route}>
-              <NavLink to={`/app/${route}`} className='sidebar-element group '>
-                {routesIcons[route]}
-                <span className={spanClass}>{t(`app.sidebar.${route}`)}</span>
-                {count?.[route] >= 0 && <span className='count justify-self-end text-xs'>{count[route]}</span>}
+      <ul
+        className={`relative space-y-1 overflow-y-auto overflow-x-hidden ${isExpanded ? 'pr-2' : 'no_scrollbar'}`}
+        ref={parent}
+      >
+        {sidebar
+          ?.filter((r) => settings?.showInSideBar.includes(r.name))
+          .map(({ name, icon }) => (
+            <li key={name}>
+              <NavLink to={`/app/${name}`} className='sidebar-element group '>
+                {icon}
+                <span className={spanClass}>{t(`app.sidebar.${name}`)}</span>
+                {count?.[name] >= 0 && settings?.showCount && <span className='count text-xs'>{count[name]}</span>}
               </NavLink>
             </li>
           ))}

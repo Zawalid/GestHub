@@ -1,7 +1,7 @@
 import { useForm, useUploadFile } from '@/hooks/index';
 import { ModalFormLayout } from '@/layouts/index';
 import { socials } from '@/components/ui/SocialMedia';
-import { useSettings, useUpdateSettings } from '@/hooks/useUser';
+import { useSettings, useUpdateSettings } from './useSettings';
 import { FaCamera } from 'react-icons/fa6';
 import { GrMapLocation } from 'react-icons/gr';
 import { ToolTip } from '@/components/ui';

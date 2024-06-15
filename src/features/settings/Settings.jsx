@@ -8,14 +8,15 @@ import Profile from './Profile';
 import Password from './Password';
 import General from './General';
 import About from './About';
+import SideBar from './SideBar';
 
 export default function Settings({ isOpen, onClose }) {
-  const [currentTab, setCurrentTab] = useState('profile');
+  const [currentTab, setCurrentTab] = useState('sidebar');
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [key, setKey] = useState();
 
   useEffect(() => {
-    setCurrentTab('profile');
+    setCurrentTab('sidebar');
     setKey(Math.random());
   }, [isOpen]);
 
@@ -51,6 +52,7 @@ function Content({ currentTab }) {
   const tabs = {
     profile: <Profile />,
     password: <Password />,
+    sidebar : <SideBar />,
     ...(user?.role === 'super-admin' && {
       general: <General />,
       about: <About />,

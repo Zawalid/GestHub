@@ -1,4 +1,4 @@
-import { useSettings } from '@/hooks/useUser';
+import { useSettings } from '@/features/settings/useSettings';
 import { Link } from 'react-router-dom';
 
 export function Logo({ to = '/', className }) {

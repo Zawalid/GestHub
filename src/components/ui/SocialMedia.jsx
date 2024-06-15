@@ -2,7 +2,7 @@
 import { GrYoutube, GrInstagram, GrTwitter, GrLinkedin, GrFacebookOption } from 'react-icons/gr';
 import { Button } from './Button';
 import { useState } from 'react';
-import { useSettings } from '@/hooks/useUser';
+import { useSettings } from '@/features/settings/useSettings';
 
 export const socials = [
   {

@@ -4,7 +4,6 @@ import { Toaster } from 'sonner';
 import { FaSpinner } from 'react-icons/fa6';
 
 import { useTheme } from './hooks/useTheme';
-import { ROUTES } from './utils/constants';
 import './styles/App.css';
 
 import { AppLayout, AuthLayout, HomePageLayout } from './layouts';
@@ -30,6 +29,7 @@ import {
 
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { useUser } from './hooks/useUser';
+import { useRoutes } from './hooks/useRoutes';
 
 const routesElements = {
   overview: <Overview />,
@@ -55,6 +55,7 @@ const routesElements = {
 export default function App() {
   const { theme } = useTheme();
   const { user } = useUser();
+  const { routes } = useRoutes();
   const [parent] = useAutoAnimate({ duration: 300 });
 
   return (
@@ -93,7 +94,7 @@ export default function App() {
               >
                 <Route index element={<Navigate to='/app/overview' replace={true} />} />
                 {/*  Routes of specific role */}
-                {ROUTES[user?.role]?.map((route) => (
+                {routes?.map((route) => (
                   <Route key={route} path={route} element={<ProtectedRoute>{routesElements[route]}</ProtectedRoute>} />
                 ))}
                 <Route path='*' element={<NotFound />} />

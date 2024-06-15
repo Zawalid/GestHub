@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import DOMPurify from 'dompurify';
-import { useSettings } from '@/hooks/useUser';
+import { useSettings } from '@/features/settings/useSettings';
 import { changeTitle } from '@/utils/helpers';
 
 export function About() {

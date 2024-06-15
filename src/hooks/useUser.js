@@ -6,14 +6,8 @@ import {
   register,
   logout,
   getUser,
-  updateProfile,
-  updatePassword,
-  getSettings,
-  updateSettings,
-  uploadFile,
 } from '@/services/usersAPI';
-import { useMutate } from './useMutate';
-import { filterObject, getFile } from '@/utils/helpers';
+import {  getFile } from '@/utils/helpers';
 import { useConfirmationModal } from './useConfirmationModal';
 
 const useRedirect = () => {
@@ -117,69 +111,5 @@ export function useUser(reason) {
     isLoading: isPending,
     error,
   };
-}
-
-export function useSettings() {
-  const { data, error, isPending, isFetching } = useQuery({
-    queryKey: ['settings'],
-    queryFn: getSettings,
-    retry: 1,
-  });
-
-  const settings = data ? { ...data, appLogo: { src: getFile(data, 'appLogo') || '/SVG/logo.svg', file: null } } : null;
-
-  if (settings) localStorage.setItem('settings', JSON.stringify(settings));
-
-  if (isFetching || !settings) {
-    const localSettings = localStorage.getItem('settings');
-    if (localSettings) {
-      return {
-        settings: JSON.parse(localSettings),
-        isLoading: false,
-        error,
-      };
-    }
-  }
-
-  return {
-    settings,
-    isLoading: isPending,
-    error,
-  };
-}
-
-export function useUpdateProfile() {
-  return useMutate({
-    queryKey: ['user', 'update'],
-    mutationFn: ({ id, user }) => {
-      if (Object.keys(filterObject(user, ['avatar', 'cv'], 'exclude')).length) {
-        updateProfile(id, filterObject(user, ['avatar', 'cv'], 'exclude'));
-      }
-      if (user?.avatar) uploadFile(id, user.avatar?.file, 'avatar');
-      if (user?.cv) uploadFile(id, user.cv?.file, 'cv');
-    },
-    loadingMessage: 'Updating profile...',
-    successMessage: 'Profile updated successfully',
-  });
-}
-
-export function useUpdatePassword() {
-  const { user } = useUser();
-  return useMutate({
-    queryKey: ['user', 'updatePassword'],
-    mutationFn: (passwords) => updatePassword(user?.profile_id, passwords),
-    loadingMessage: 'Updating password...',
-    successMessage: 'Password updated successfully',
-  });
-}
-
-export function useUpdateSettings() {
-  return useMutate({
-    queryKey: ['settings', 'update'],
-    mutationFn: updateSettings,
-    loadingMessage: 'Updating settings...',
-    successMessage: 'Settings updated successfully',
-    errorMessage: 'Failed to update settings',
-  });
 }
 

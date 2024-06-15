@@ -3,11 +3,12 @@ import { Button, CheckBox, DropDown } from '../../components/ui';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { MdOutlineSchool } from 'react-icons/md';
-import { useRegister, useSettings } from '@/hooks/useUser';
+import { useRegister } from '@/hooks/useUser';
 import { LEVELS, RULES } from '@/utils/constants';
 import { Radio } from '@/components/ui/Radio';
 import { useEffect } from 'react';
 import { changeTitle } from '@/utils/helpers';
+import { useSettings } from '@/features/settings/useSettings';
 
 export function Register() {
   const { t } = useTranslation();

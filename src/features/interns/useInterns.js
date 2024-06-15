@@ -12,7 +12,7 @@ import {
   getIntern,
   updateIntern,
 } from '@/services/internsAPI';
-import { uploadFile } from '@/services/usersAPI';
+import { uploadFile } from '@/services/settingsAPI';
 import { getFile, getTimelineDates } from '@/utils/helpers';
 import { useQuery } from '@tanstack/react-query';
 

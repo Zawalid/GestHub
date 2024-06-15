@@ -6,7 +6,7 @@ import { useForm } from '@/hooks/index';
 import { ModalFormLayout } from '@/layouts/ModalFormLayout';
 import { useAddOffer, useCities,  useSectors } from './useOffers';
 import { PiCheckBold, HiMiniXMark } from '@/components/ui/Icons';
-import { useSettings } from '@/hooks/useUser';
+import { useSettings } from '@/features/settings/useSettings';
 
 export default function NewOffer() {
   const navigate = useNavigate();

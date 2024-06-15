@@ -1,5 +1,5 @@
 import { useForm } from '@/hooks/useForm';
-import { useUpdatePassword } from '@/hooks/useUser';
+import { useUpdatePassword } from './useSettings';
 import { ModalFormLayout } from '@/layouts';
 import { RULES } from '@/utils/constants';
 

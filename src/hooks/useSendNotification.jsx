@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { useSettings } from './useUser';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui';
+import { useSettings } from '@/features/settings/useSettings';
 
 export const useSendNotification = () => {
   const { settings } = useSettings();

@@ -1,6 +1,6 @@
 import { useForm } from '@/hooks/useForm';
 import { ModalFormLayout } from '@/layouts/ModalFormLayout';
-import { useUpdateProfile, useUser } from '@/hooks/useUser';
+import {  useUser } from '@/hooks/useUser';
 import { File } from '../applications/NewApplication';
 import { AcademicLevel } from '@/pages/auth/Register';
 import { useState } from 'react';
@@ -9,6 +9,7 @@ import { useUploadFile } from '@/hooks/useUploadFile';
 import Avatar from '@/components/ui/Avatar';
 import { Button } from '@/components/ui';
 import { HiMiniXMark } from 'react-icons/hi2';
+import { useUpdateProfile } from './useSettings';
 
 export default function Profile() {
   const [isCvOpen, setIsCvOpen] = useState(false);

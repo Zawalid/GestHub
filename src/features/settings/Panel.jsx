@@ -1,5 +1,5 @@
 import { cloneElement } from 'react';
-import { PiGear, PiLockKey, PiUserCircle } from 'react-icons/pi';
+import { PiGear, PiLockKey, PiSidebar, PiUserCircle } from 'react-icons/pi';
 import { Overlay } from '../../components/ui/Modal';
 import { useUser } from '@/hooks/useUser';
 import { LuInfo } from 'react-icons/lu';
@@ -14,14 +14,28 @@ export function Panel({ isOpen, onClose, currentTab, setCurrentTab }) {
           isOpen ? 'left-0' : '-left-full'
         }`}
       >
-        <Tab tabName='profile' icon={<PiUserCircle />} currentTab={currentTab} setCurrentTab={setCurrentTab} />
-        <Tab tabName='password' icon={<PiLockKey />} currentTab={currentTab} setCurrentTab={setCurrentTab} />
-        {user?.role === 'super-admin' && (
-          <>
-            <Tab tabName='general' icon={<PiGear />} currentTab={currentTab} setCurrentTab={setCurrentTab} />
-            <Tab tabName='about' icon={<LuInfo  />} currentTab={currentTab} setCurrentTab={setCurrentTab} />
-          </>
-        )}
+        {[
+          {
+            name: 'profile',
+            icon: <PiUserCircle />,
+          },
+          {
+            name: 'password',
+            icon: <PiLockKey />,
+          },
+          {
+            name: 'sidebar',
+            icon: <PiSidebar />,
+          },
+          ...(user?.role === 'super-admin'
+            ? [
+                { name: 'general', icon: <PiGear /> },
+                { name: 'about', icon: <LuInfo /> },
+              ]
+            : []),
+        ].map(({ name, icon }) => (
+          <Tab key={name} tabName={name} icon={icon} currentTab={currentTab} setCurrentTab={setCurrentTab} />
+        ))}
       </div>
     </>
   );

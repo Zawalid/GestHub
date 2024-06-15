@@ -1,47 +1,5 @@
 import { DateTime } from 'luxon';
 
-export const ROUTES = (() => {
-  const routes = {
-    admins: ['admins', 'admins/:id'],
-    supervisors: ['supervisors', 'supervisors/:id'],
-    projects: ['projects', 'projects/:id', 'projects/:id/:tab'],
-    interns: ['interns', 'interns/:id'],
-    offers: ['offers', 'offers/:id'],
-    applications: ['applications', 'applications/:id'],
-    users: ['users', 'users/:id'],
-    sessions: ['sessions'],
-    emails: ['emails', 'emails/:id'],
-  };
-  const generate = (types) => {
-    return Object.keys(routes).reduce(
-      (acc, key) => (types.includes(key) ? [...acc, ...routes[key]] : acc),
-      ['overview']
-    );
-  };
-
-  return {
-    'super-admin': [
-      ...generate([
-        'admins',
-        'supervisors',
-        'projects',
-        'interns',
-        'offers',
-        'applications',
-        'users',
-        'sessions',
-        'emails',
-      ]),
-      'projects/new',
-      'sessions/:id',
-    ],
-    admin: generate(['supervisors', 'projects', 'interns', 'offers', 'applications', 'users', 'sessions', 'emails']),
-    supervisor: generate(['projects', 'sessions']),
-    intern: generate(['projects', 'sessions']),
-    user: routes.applications,
-  };
-})();
-
 export const HOMEPAGE_ROUTES = [
   { label: 'home', path: '/' },
   { label: 'contact', path: '/contact' },

@@ -1,6 +1,6 @@
 import Editor, { isContentEmpty } from '@/components/shared/Editor/Editor';
 import { Button } from '@/components/ui';
-import { useSettings, useUpdateSettings } from '@/hooks/useUser';
+import { useSettings, useUpdateSettings } from './useSettings';
 import { useEffect, useState } from 'react';
 
 export default function About() {

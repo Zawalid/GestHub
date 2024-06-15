@@ -2,9 +2,10 @@ import { useForm } from '@/hooks/useForm';
 import { Button } from '../../components/ui';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useLogin, useSettings } from '@/hooks/useUser';
+import { useLogin } from '@/hooks/useUser';
 import { useEffect } from 'react';
 import { changeTitle } from '@/utils/helpers';
+import { useSettings } from '@/features/settings/useSettings';
 
 export function Login() {
   const { t } = useTranslation();

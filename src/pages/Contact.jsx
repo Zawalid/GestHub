@@ -1,5 +1,5 @@
 import { IoMail, BsTelephoneFill, IoLocationSharp, GrMapLocation } from '@/components/ui/Icons';
-import { useSettings } from '@/hooks/useUser';
+import { useSettings } from '@/features/settings/useSettings';
 import { useForm } from '../hooks';
 import { Button, Status } from '@/components/ui';
 import { SocialMedia, isSet } from '@/components/ui/SocialMedia';
