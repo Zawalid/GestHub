@@ -64,6 +64,7 @@
 - [x] emails table
 - [ ] find a way to create a link based on the notification
 - [x] download selected records
+- [ ] disable donwload button when there is no data and keep the search bar visible
 
 ---
 

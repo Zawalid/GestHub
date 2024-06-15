@@ -225,7 +225,7 @@ function Dropdown({ type, getValue, setValue }) {
         </div>
         <DropDown.Title className='capitalize'>Previous {type}s</DropDown.Title>
         {{ sector: sectors, city: cities }[type]?.map((e) => (
-          <DropDown.Option key={e} onClick={() => setValue(type, e)} isCurrent={e === getValue('sector')}>
+          <DropDown.Option key={e} onClick={() => setValue(type, e)} isCurrent={e === getValue(type)}>
             {e}
           </DropDown.Option>
         ))}

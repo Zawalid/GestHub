@@ -26,6 +26,7 @@ import { Button } from './ui';
 import { capitalize, changeTitle } from '@/utils/helpers';
 import { useLogout, useUser } from '@/hooks/useUser';
 import { Logo } from './ui/Logo';
+import { useCount } from '@/features/overview/useStats';
 
 const routesIcons = {
   overview: <IoHomeOutline />,
@@ -46,6 +47,7 @@ export default function Sidebar({ openSettings }) {
   const [isExpanded, setIsExpanded] = useState(window.matchMedia('(min-width: 1024px)').matches);
   const { user } = useUser();
   const { logout, isLoggingOut } = useLogout();
+  const { count } = useCount();
   const { t } = useTranslation();
   const location = useLocation().pathname.split('/');
 
@@ -91,6 +93,7 @@ export default function Sidebar({ openSettings }) {
               <NavLink to={`/app/${route}`} className='sidebar-element group '>
                 {routesIcons[route]}
                 <span className={spanClass}>{t(`app.sidebar.${route}`)}</span>
+                {count?.[route] >= 0 && <span className='count justify-self-end text-xs'>{count[route]}</span>}
               </NavLink>
             </li>
           ))}

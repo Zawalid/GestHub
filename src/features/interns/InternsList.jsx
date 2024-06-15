@@ -119,7 +119,7 @@ export default function InternsList() {
               { value: 'Ongoing', checked: false },
             ],
           },
-          { ...renderProjects },
+          renderProjects,
         ]}
         formFields={[
           {
@@ -219,7 +219,7 @@ export default function InternsList() {
         }}
         selectedOptions={{
           actions: [
-            {
+            { 
               text: 'Generate',
               color: 'secondary',
               onClick: (ids, onClose) => {

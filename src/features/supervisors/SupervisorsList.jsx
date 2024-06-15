@@ -44,7 +44,7 @@ export default function SupervisorsList() {
           visible: true,
           type: 'string',
         },
-        { ...renderProjects },
+        renderProjects,
       ]}
       formFields={[
         {
@@ -99,12 +99,11 @@ export default function SupervisorsList() {
       onAdd={addSupervisor}
       onUpdate={updateSupervisor}
       onDelete={deleteSupervisor}
-     
       layoutOptions={{ actions: (def) => [def.edit, def.delete] }}
       selectedOptions={{
         deleteOptions: {
           resourceName: 'supervisor',
-          onConfirm: (ids) => deleteSupervisors(ids, ),
+          onConfirm: (ids) => deleteSupervisors(ids),
         },
       }}
     />

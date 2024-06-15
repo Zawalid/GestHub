@@ -1,7 +1,7 @@
 @import url(./libraries.css);
 
 .sidebar-element {
-  @apply grid cursor-pointer grid-cols-[30px_auto] items-center rounded-lg  p-3 transition-colors duration-200 hover:bg-background-tertiary;
+  @apply grid cursor-pointer grid-cols-[30px_auto_40px] items-center rounded-lg py-2 px-3 transition-colors duration-200 hover:bg-background-tertiary;
   &.active {
     @apply bg-background-tertiary;
   }
@@ -16,7 +16,7 @@
   }
 
   &:is(:hover, .active) .count {
-    @apply bg-background-primary;
+    @apply bg-background-primary dark:bg-background-tertiary;
   }
 }
 .dropdown-option {

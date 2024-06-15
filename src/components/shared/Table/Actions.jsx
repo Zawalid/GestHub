@@ -11,7 +11,7 @@ import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 import { useMutationState } from '@tanstack/react-query';
 
 export function Actions({ onUpdate, onDelete, row, actions }) {
-  const { showForm, confirmOptions, resourceName, rows, onPrevPage, formOptions } = useTable();
+  const { showForm, confirmOptions, resourceName, rows, page,onPaginate, formOptions } = useTable();
   const navigate = useNavigateWithQuery();
   const { openModal } = useConfirmationModal();
   const variables = useMutationState({
@@ -55,7 +55,7 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
           ...confirmOptions,
           onConfirm: () => {
             onDelete(row.profile_id || row.id);
-            rows?.length === 1 && onPrevPage();
+            rows?.length === 1 && onPaginate(page - 1);
           },
         });
       },
