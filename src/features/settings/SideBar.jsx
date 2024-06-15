@@ -26,8 +26,8 @@ export default function SideBar() {
       <div className='space-y-5'>
         <div>
           <div>
-            <h4 className='font-bold text-text-primary'>Show in sidebar</h4>
-            <p className='mt-2 text-xs text-text-secondary'>Choose what to show in the sidebar.</p>
+            <h4 className='font-bold text-text-secondary'>Show in sidebar</h4>
+            <p className='mt-2 text-xs text-text-tertiary'>Choose what to show in the sidebar.</p>
           </div>
           <div className={`mt-5 grid gap-3 ${sidebar.length > 6 ? 'grid-cols-2' : ''}`}>
             {sidebar.map(({ name, icon }) => (
@@ -51,8 +51,8 @@ export default function SideBar() {
         </div>
         <div className='flex items-center justify-between'>
           <div>
-            <h4 className='font-bold text-text-primary'>Show count</h4>
-            <p className='mt-2 text-xs text-text-secondary'>Show the number of tasks in each list.</p>
+            <h4 className='font-bold text-text-secondary'>Show count</h4>
+            <p className='mt-2 text-xs text-text-tertiary'>Show the number of tasks in each list.</p>
           </div>
           <Switch checked={getValue('showCount')} onChange={(e) => setValue('showCount', e.target.checked)} />
         </div>
@@ -69,7 +69,7 @@ export default function SideBar() {
               </li>
             ))}
           </ul>
-        </div>{' '}
+        </div>
       </div>
     </ModalFormLayout>
   );

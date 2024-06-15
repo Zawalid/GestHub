@@ -8,7 +8,7 @@ import {
   useNotifications,
 } from './useNotifications';
 import { useState } from 'react';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 
 export function Notifications() {
   const { notifications, unreadNotifications, isLoading } = useNotifications();

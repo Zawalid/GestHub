@@ -1,4 +1,4 @@
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 import { cloneElement, useRef } from 'react';
 import { Sort } from './Sort';
 import { useTable } from './useTable';

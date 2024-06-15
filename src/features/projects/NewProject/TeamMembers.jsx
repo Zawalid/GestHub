@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 import { Button, CheckBox, SearchInput, Status, ToolTip } from '@/components/ui';
 import { useInterns } from '../../interns/useInterns';
 import { useEffect, useState } from 'react';

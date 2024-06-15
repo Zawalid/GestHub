@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { FaPlus, PiListBold, RxViewVertical } from '@/components/ui/Icons';
 import { Button, Modal } from '@/components/ui';

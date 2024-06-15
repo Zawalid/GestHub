@@ -9,11 +9,13 @@ import { useTable } from './useTable';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 import { useMutationState } from '@tanstack/react-query';
+import { useSettings } from '@/features/settings/useSettings';
 
 export function Actions({ onUpdate, onDelete, row, actions }) {
-  const { showForm, confirmOptions, resourceName, rows, page,onPaginate, formOptions } = useTable();
+  const { showForm, confirmOptions, resourceName, rows, page, onPaginate, formOptions } = useTable();
   const navigate = useNavigateWithQuery();
   const { openModal } = useConfirmationModal();
+  const { settings } = useSettings(true);
   const variables = useMutationState({
     filters: { mutationKey: [`${resourceName.toLocaleLowerCase()}s`], status: 'pending' },
     select: (mutation) => mutation.state.variables,
@@ -51,13 +53,11 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
       text: 'Delete',
       icon: <IoTrashOutline />,
       onClick: () => {
-        openModal({
-          ...confirmOptions,
-          onConfirm: () => {
-            onDelete(row.profile_id || row.id);
-            rows?.length === 1 && onPaginate(page - 1);
-          },
-        });
+        const onConfirm = () => {
+          onDelete(row.profile_id || row.id);
+          rows?.length === 1 && onPaginate(page - 1);
+        };
+        settings?.deleteConfirmation ? openModal({ ...confirmOptions, onConfirm }) : onConfirm();
       },
     },
   };
@@ -77,7 +77,6 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
         </Button>
       }
       togglerDisabled={(() => {
-        console.log(variables);
         if (!variables) return false;
         const id = row.profile_id || row.id;
         if ((Array.isArray(variables) && variables.includes(id)) || variables.id === id || variables === id)
@@ -101,4 +100,3 @@ export function Actions({ onUpdate, onDelete, row, actions }) {
     </DropDown>
   );
 }
-

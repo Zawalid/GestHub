@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 import { FaPlus } from 'react-icons/fa6';
 import { Operations, renderData } from '@/components/shared/Operations/Operations';
 import { useOperations } from '@/components/shared/Operations/useOperations';

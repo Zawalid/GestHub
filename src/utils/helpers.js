@@ -200,7 +200,11 @@ export const getFile = (data, type) => {
   return file ? `/assets${file}` : null;
 };
 
-
+export const updateUISettings = (settings, type = 'all') => {
+  (type === 'all' || type === 'theme') && document.documentElement.setAttribute('data-theme', settings.theme);
+  (type === 'all' || type === 'animations') &&
+    document.documentElement.setAttribute('data-animations', settings.animations);
+};
 
 // Filter
 export const getFilter = (data, key, checked) =>

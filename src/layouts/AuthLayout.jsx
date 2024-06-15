@@ -3,7 +3,7 @@ import { ThemeSwitcher } from '@/components/ThemeSwitcher';
 import { Button } from '@/components/ui';
 import { Logo } from '@/components/ui/Logo';
 import { useUser } from '@/hooks/useUser';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 import { useEffect } from 'react';
 import { BiHome } from 'react-icons/bi';
 import { Outlet, useNavigate } from 'react-router-dom';

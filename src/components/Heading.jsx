@@ -1,4 +1,4 @@
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 
 export function Heading({ children, count }) {
   const [parent] = useAutoAnimate();

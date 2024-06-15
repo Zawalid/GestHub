@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/Icons';
 import { render } from '../applications/Applications';
 import { STATUS_COLORS } from '@/utils/constants';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 
 export default function Session() {
   const { id } = useParams();

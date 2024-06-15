@@ -11,6 +11,7 @@ import { TeamMembers } from './TeamMembers';
 import { Details, Progress } from './Details';
 import { Stats } from './Stats';
 import { useIsMutating } from '@tanstack/react-query';
+import { useSettings } from '@/features/settings/useSettings';
 
 export default function Overview() {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,6 +61,8 @@ function Actions({ id, onEdit, role }) {
   const { openModal } = useConfirmationModal();
   const { mutate } = useDeleteProject();
   const navigate = useNavigate();
+  const { settings } = useSettings(true);
+
   const disabled = useIsMutating({ mutationKey: ['projects'] });
 
   return (
@@ -68,12 +71,15 @@ function Actions({ id, onEdit, role }) {
         <Button
           shape='icon'
           onClick={() => {
-            openModal({
-              message: 'Are you sure you want to delete this project ?',
-              title: 'Delete Project',
-              confirmText: 'Delete',
-              onConfirm: () => mutate(id, { onSuccess: () => navigate('/app/projects') }),
-            });
+            const onConfirm = () => mutate(id, { onSuccess: () => navigate('/app/projects') });
+            settings?.deleteConfirmation
+              ? openModal({
+                  message: 'Are you sure you want to delete this project ?',
+                  title: 'Delete Project',
+                  confirmText: 'Delete',
+                  onConfirm,
+                })
+              : onConfirm();
           }}
           disabled={disabled}
         >

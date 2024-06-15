@@ -9,7 +9,7 @@ export function CheckBox({ checked, onChange, className = "", ...props }) {
       <input
         type="checkbox"
         className="peer transition-none h-5 w-5 shrink-0 cursor-pointer appearance-none rounded-[4px] border-[1.5px] border-border transition-colors duration-200 disabled:cursor-not-allowed  checked:border-0 checked:bg-primary focus:outline-none"
-        checked={checked}
+        checked={checked || false}
         onChange={onChange}
         {...props}
       />

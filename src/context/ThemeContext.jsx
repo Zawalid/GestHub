@@ -1,3 +1,4 @@
+import { updateUISettings } from '@/utils/helpers';
 import { createContext, useEffect, useState } from 'react';
 
 const getTheme = () => {
@@ -9,10 +10,11 @@ export const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(getTheme);
+  const settings = JSON.parse(localStorage.getItem('local_settings'));
 
-  const changeTheme = (newTheme,firstTime) => {
-    if(theme === newTheme && !firstTime) return 
-    
+  const changeTheme = (newTheme, firstTime) => {
+    if (theme === newTheme && !firstTime) return;
+
     setTheme(newTheme);
     window.localStorage.setItem('theme', newTheme);
     document.documentElement.className = `${newTheme} theme-transition`;
@@ -20,8 +22,10 @@ export function ThemeProvider({ children }) {
   };
 
   useEffect(() => {
-    changeTheme(getTheme(),true);
-  }, []);
+    updateUISettings(settings || { theme: 'orange', animation: true });
+    changeTheme(getTheme(), true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [settings]);
 
   return <ThemeContext.Provider value={{ theme, changeTheme }}>{children}</ThemeContext.Provider>;
 }

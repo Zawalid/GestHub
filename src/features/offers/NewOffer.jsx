@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 import { Button, CheckBox, DropDown, InputField, Modal } from '@/components/ui';
 import { useForm } from '@/hooks/index';
 import { ModalFormLayout } from '@/layouts/ModalFormLayout';

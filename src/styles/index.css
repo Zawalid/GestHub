@@ -17,9 +17,6 @@
     --text-disabled: rgb(187, 187, 187);
     --text-placeholder: rgb(225, 225, 224);
     --border: rgba(0, 0, 0, 0.1);
-    /* --primary: #ffae5c; */
-    --primary: rgb(246, 162, 40);
-    --primary-hover: rgb(204, 138, 62);
 
     color-scheme: light;
   }
@@ -37,11 +34,76 @@
     --text-disabled: rgb(68, 68, 68);
     --text-placeholder: rgb(55, 55, 55);
     --border: rgba(255, 255, 255, 0.1);
-    --primary: rgb(181, 117, 62);
-    --primary-hover: rgb(138, 78, 44);
 
     color-scheme: dark;
   }
+
+  /** Primary Color */
+
+  &.light[data-theme='orange'],
+  button.orange {
+    --primary: rgb(246, 162, 40);
+    --primary-hover: rgb(204, 138, 62);
+  }
+  &.dark[data-theme='orange'],
+  button.orange {
+    --primary: rgb(181, 117, 62);
+    --primary-hover: rgb(138, 78, 44);
+  }
+  &[data-theme='indigo'],
+  button.indigo {
+    --primary: #6366f1;
+    --primary-hover: #4f46e5;
+  }
+
+  &[data-theme='green'],
+  button.green {
+    --primary: #008000;
+    --primary-hover: #006600;
+  }
+
+  &[data-theme='red'],
+  button.red {
+    --primary: #dc3545;
+    --primary-hover: #c82333;
+  }
+
+  &[data-theme='crimson'],
+  button.crimson {
+    --primary: #dc143c;
+    --primary-hover: #b01030;
+  }
+
+  &[data-theme='purple'],
+  button.purple {
+    --primary: #6f42c1;
+    --primary-hover: #5c35b1;
+  }
+
+  &[data-theme='teal'],
+  button.teal {
+    --primary: #008080;
+    --primary-hover: #006666;
+  }
+  &[data-theme='olive'],
+  button.olive {
+    --primary: #3d9970;
+    --primary-hover: #358563;
+  }
+
+  &[data-theme='maroon'],
+  button.maroon {
+    --primary: #85144b;
+    --primary-hover: #701141;
+  }
+
+  &[data-theme='navy'],
+  button.navy {
+    --primary: #000080;
+    --primary-hover: #000066;
+  }
+
+  /** Secondary color */
 
   --secondary: rgb(122, 102, 255);
   --secondary-hover: rgb(99, 71, 204);
@@ -60,29 +122,24 @@ body {
   @apply flex h-full bg-background-primary;
 }
 
-html.theme-transition {
+html:not([data-animations='false']).theme-transition {
   * {
     @apply transition-colors duration-200 !important;
   }
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  @apply h-1.5 w-0.5;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-text-tertiary rounded-md;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-transparent;
-}
-::-webkit-scrollbar-corner {
- @apply bg-transparent
-}
-.no_scrollbar::-webkit-scrollbar {
-  display: none;
+html[data-animations='false'] {
+  *,
+  *::before,
+  *::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -97,4 +154,23 @@ html.theme-transition {
     transition-duration: 0s !important;
     transition-delay: 0s !important;
   }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  @apply h-1.5 w-0.5;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-md bg-text-tertiary;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+::-webkit-scrollbar-corner {
+  @apply bg-transparent;
+}
+.no_scrollbar::-webkit-scrollbar {
+  display: none;
 }

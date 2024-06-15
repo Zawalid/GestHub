@@ -16,6 +16,7 @@ import {
   FaFileContract,
   FaBell,
 } from '@/components/ui/Icons';
+import { useSettings } from '../settings/useSettings';
 
 export const getIcons = (n) => {
   const icons = {
@@ -50,6 +51,7 @@ export function useNotifications() {
     refetchInterval: 10000,
     refetchIntervalInBackground: true,
   });
+  const { settings } = useSettings(true);
 
   const notify = useSendNotification();
 
@@ -63,6 +65,7 @@ export function useNotifications() {
     if (!unreadNotifications?.length) return;
 
     const playSound = () => {
+      if (!settings?.notificationsSound) return;
       try {
         sound.play();
       } catch (error) {
@@ -99,7 +102,7 @@ export function useNotifications() {
         localStorage.setItem('n_ids', JSON.stringify(notifiedIds.length > 20 ? [] : [...notifiedIds, n.id]));
       }
     });
-  }, [unreadNotifications, notify]);
+  }, [unreadNotifications, notify, settings?.notificationsSound]);
 
   return { notifications, unreadNotifications, error, isLoading: isPending };
 }

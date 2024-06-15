@@ -1,6 +1,6 @@
 import { PRIORITY_COLORS, STATUS_COLORS } from '@/utils/constants';
 import { useNavigate } from 'react-router-dom';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 import { ToolTip } from '@/components/ui/ToolTip';
 import { checkIsOverdue, cn, formatDate } from '@/utils/helpers';
 import { useInternsByIds } from '../interns/useInterns';

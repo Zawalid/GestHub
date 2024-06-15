@@ -1,4 +1,4 @@
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 import { Operations, renderData } from '@/components/shared/Operations/Operations';
 import { useOperations } from '@/components/shared/Operations/useOperations';
 import Offer from './Offer';

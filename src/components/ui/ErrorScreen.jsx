@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '.';
+import { changeTitle } from '@/utils/helpers';
 
 export function ErrorScreen({ error }) {
   const [showDetails, setShowDetails] = useState(false);
-  console.log(error);
+
+  useEffect(() => {
+    changeTitle('Something Went Wrong')
+  },[])
 
   return (
     <div className='flex h-screen w-full max-w-screen-xl items-center justify-center bg-background-primary px-4 md:px-8'>

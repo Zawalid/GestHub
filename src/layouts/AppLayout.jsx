@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 import Sidebar from '../components/Sidebar';
 import Settings from '../features/settings/Settings';
 import AppBar from '../components/AppBar';

@@ -20,6 +20,7 @@ import { useUser } from '@/hooks/useUser';
 import { useTranslation } from 'react-i18next';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 import { useIsMutating } from '@tanstack/react-query';
+import { useSettings } from '../settings/useSettings';
 
 export default function OfferOverview({ onHomePage, isFavorite, onToggleFavorite, onApply }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -187,9 +188,9 @@ function Actions({ offer, disabled, onEdit }) {
   const { openModal } = useConfirmationModal();
   const { mutate: deleteOffer } = useDeleteOffer();
   const { mutate: updateOffer } = useUpdateOffer();
+  const { settings } = useSettings(true);
   const navigate = useNavigateWithQuery();
   const isOperating = useIsMutating({ mutationKey: ['offers'] });
-
 
   return (
     <div className='self-end'>
@@ -227,14 +228,17 @@ function Actions({ offer, disabled, onEdit }) {
           )}
         </DropDown.Option>
         <DropDown.Option
-          onClick={() =>
-            openModal({
-              message: 'Are you sure you want to delete this offer ?',
-              title: 'Delete Offer',
-              confirmText: 'Delete',
-              onConfirm: () => deleteOffer(offer?.id, { onSuccess: () => navigate('/app/offers') }),
-            })
-          }
+          onClick={() => {
+            const onConfirm = () => deleteOffer(offer?.id, { onSuccess: () => navigate('/app/offers') });
+            settings?.deleteConfirmation
+              ? openModal({
+                  message: 'Are you sure you want to delete this offer ?',
+                  title: 'Delete Offer',
+                  confirmText: 'Delete',
+                  onConfirm,
+                })
+              : onConfirm();
+          }}
         >
           <IoTrashOutline />
           Delete Offer

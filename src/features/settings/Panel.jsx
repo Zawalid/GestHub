@@ -1,5 +1,5 @@
 import { cloneElement } from 'react';
-import { PiGear, PiLockKey, PiSidebar, PiUserCircle } from 'react-icons/pi';
+import { PiGear, PiLockKey, PiSidebar, PiSliders, PiUserCircle } from 'react-icons/pi';
 import { Overlay } from '../../components/ui/Modal';
 import { useUser } from '@/hooks/useUser';
 import { LuInfo } from 'react-icons/lu';
@@ -22,6 +22,10 @@ export function Panel({ isOpen, onClose, currentTab, setCurrentTab }) {
           {
             name: 'password',
             icon: <PiLockKey />,
+          },
+          {
+            name: 'preferences',
+            icon: <PiSliders />,
           },
           {
             name: 'sidebar',

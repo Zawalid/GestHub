@@ -6,7 +6,7 @@ import { SocialMedia, isSet } from '@/components/ui/SocialMedia';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { useContactUs } from '@/features/emails/useEmails';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 
 export function Contact() {
   return (

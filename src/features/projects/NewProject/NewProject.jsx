@@ -4,7 +4,7 @@ import { cloneElement, useState } from 'react';
 import { BasicInfo } from './BasicInfo';
 import { TeamMembers } from './TeamMembers';
 import { StarterTasks } from './StarterTasks';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 import { Summary } from './Summary';
 import { useAddProject } from '../useProjects';
 import { useLocation, useNavigate } from 'react-router-dom';

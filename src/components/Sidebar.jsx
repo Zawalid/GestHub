@@ -8,7 +8,7 @@ import { useLogout } from '@/hooks/useUser';
 import { Logo } from './ui/Logo';
 import { useCount } from '@/features/overview/useStats';
 import { useSettings } from '@/features/settings/useSettings';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 import { useRoutes } from '@/hooks/useRoutes';
 
 export default function Sidebar({ openSettings }) {

@@ -4,6 +4,7 @@ import { Button, Modal, ToolTip } from '@/components/ui';
 import { useTable } from './useTable';
 import { useConfirmationModal } from '@/hooks/useConfirmationModal';
 import { capitalize } from '@/utils/helpers';
+import { useSettings } from '@/features/settings/useSettings';
 
 export function Selected() {
   const [currentAction, setCurrentAction] = useState(0);
@@ -14,6 +15,7 @@ export function Selected() {
     onSelect,
   } = useTable();
   const { openModal } = useConfirmationModal();
+  const { settings } = useSettings(true);
 
   const close = () => {
     onClose();
@@ -26,16 +28,20 @@ export function Selected() {
         ...actions,
         {
           text: 'Delete',
-          onClick: () =>
-            openModal({
-              message: `Are you sure you want to delete ${selected.length} ${deleteOptions.resourceName.toLowerCase()}(s) ?`,
-              title: `Delete ${capitalize(deleteOptions.resourceName)}s`,
-              confirmText: 'Delete',
-              onConfirm: () => {
-                deleteOptions.onConfirm(selected);
-                close();
-              },
-            }),
+          onClick: () => {
+            const onConfirm = () => {
+              deleteOptions.onConfirm(selected);
+              close();
+            };
+            settings?.deleteConfirmation
+              ? openModal({
+                  message: `Are you sure you want to delete ${selected.length} ${deleteOptions.resourceName.toLowerCase()}(s) ?`,
+                  title: `Delete ${capitalize(deleteOptions.resourceName)}s`,
+                  confirmText: 'Delete',
+                  onConfirm,
+                })
+              : onConfirm();
+          },
         },
       ]
     : actions;

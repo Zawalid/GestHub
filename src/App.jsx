@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 import { Toaster } from 'sonner';
 import { FaSpinner } from 'react-icons/fa6';
 
@@ -30,6 +30,7 @@ import {
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { useUser } from './hooks/useUser';
 import { useRoutes } from './hooks/useRoutes';
+import { useSettings } from './features/settings/useSettings';
 
 const routesElements = {
   overview: <Overview />,
@@ -56,7 +57,9 @@ export default function App() {
   const { theme } = useTheme();
   const { user } = useUser();
   const { routes } = useRoutes();
+  const { settings } = useSettings(true);
   const [parent] = useAutoAnimate({ duration: 300 });
+
 
   return (
     <>
@@ -92,7 +95,7 @@ export default function App() {
                   </ProtectedRoute>
                 }
               >
-                <Route index element={<Navigate to='/app/overview' replace={true} />} />
+                <Route index element={<Navigate to={`/app/${settings?.defaultHomeView}`} replace={true} />} />
                 {/*  Routes of specific role */}
                 {routes?.map((route) => (
                   <Route key={route} path={route} element={<ProtectedRoute>{routesElements[route]}</ProtectedRoute>} />

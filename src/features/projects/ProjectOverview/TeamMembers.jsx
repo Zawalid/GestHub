@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 import { useUpdateProject } from '../useProjects';
 import { Button, Status, ToolTip } from '@/components/ui';
 import {

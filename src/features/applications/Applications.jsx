@@ -3,7 +3,7 @@ import { useApplications } from '@/features/applications/useApplications';
 import { BsClipboard2Check, MdOutlinePendingActions } from '@/components/ui/Icons';
 import { Operations } from '@/components/shared/Operations/Operations';
 import { useOperations } from '@/components/shared/Operations/useOperations';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 import { formatDate } from '@/utils/helpers';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 import { Button, DropDown } from '@/components/ui';
 import { useForm } from '@/hooks/useForm';
 import Task from '../Task';

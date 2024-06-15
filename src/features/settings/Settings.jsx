@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 import { PiArrowRight, PiX } from '@/components/ui/Icons';
 import { Panel } from './Panel';
 import { Button, Modal } from '@/components/ui';
@@ -9,14 +9,15 @@ import Password from './Password';
 import General from './General';
 import About from './About';
 import SideBar from './SideBar';
+import Preferences from './Preferences';
 
 export default function Settings({ isOpen, onClose }) {
-  const [currentTab, setCurrentTab] = useState('sidebar');
+  const [currentTab, setCurrentTab] = useState('preferences');
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [key, setKey] = useState();
 
   useEffect(() => {
-    setCurrentTab('sidebar');
+    setCurrentTab('preferences');
     setKey(Math.random());
   }, [isOpen]);
 
@@ -52,6 +53,7 @@ function Content({ currentTab }) {
   const tabs = {
     profile: <Profile />,
     password: <Password />,
+    preferences : <Preferences />,
     sidebar : <SideBar />,
     ...(user?.role === 'super-admin' && {
       general: <General />,

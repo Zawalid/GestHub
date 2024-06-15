@@ -1,5 +1,5 @@
 import { TableProvider as Table } from '@/components/shared/Table/TableProvider';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 
 const defaultOptions = {
   displayNewRecord: true,

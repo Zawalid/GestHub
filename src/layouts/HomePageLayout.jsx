@@ -1,6 +1,6 @@
 import { Header } from '@/components/homepage/Header';
 import { Outlet } from 'react-router-dom';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@/hooks/useAutoAnimate';
 import { Footer } from '@/components/homepage/Footer';
 
 export function HomePageLayout() {

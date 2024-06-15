@@ -3,18 +3,13 @@ import { getSettings, updatePassword, updateProfile, updateSettings, uploadFile 
 import { filterObject, getFile } from '@/utils/helpers';
 import { useMutate, useUser } from '@/hooks';
 import { useRoutes } from '@/hooks/useRoutes';
+import { useEffect } from 'react';
 
 export function useSettings(local) {
   const { data, error, isPending, isFetching } = useQuery({ queryKey: ['settings'], queryFn: getSettings });
-  const { sidebar } = useRoutes();
 
-  // Fetched settings
   const settings = data ? { ...data, appLogo: { src: getFile(data, 'appLogo') || '/SVG/logo.svg', file: null } } : null;
-  // Settings saved in the local storage
-  const localSettings = JSON.parse(localStorage.getItem('local_settings')) || {
-    showInSideBar: sidebar.map((s) => s.name).toSorted() || [],
-    showCount: false,
-  };
+  const localSettings = useLocalSettings();
 
   if (settings) localStorage.setItem('settings', JSON.stringify(settings));
 
@@ -25,6 +20,34 @@ export function useSettings(local) {
 
   return { settings: local ? localSettings : settings, isLoading: isPending, error };
 }
+
+const useLocalSettings = () => {
+  const { sidebar, routes } = useRoutes();
+  const localSettings = JSON.parse(localStorage.getItem('local_settings'));
+
+  useEffect(() => {
+    if (!localSettings && sidebar.length) {
+      localStorage.setItem(
+        'local_settings',
+        JSON.stringify({
+          notificationsSound: true,
+          deleteConfirmation: true,
+          animations: true,
+          defaultHomeView: 'overview',
+          theme: 'orange',
+          showInSideBar: sidebar.map((s) => s.name).toSorted() || [],
+          showCount: false,
+        })
+      );
+    }
+  }, [localSettings, sidebar]);
+
+  return {
+    ...localSettings,
+    defaultHomeView: routes.includes(localSettings?.defaultHomeView) ? localSettings?.defaultHomeView : 'overview',
+    showInSideBar : localSettings?.showInSideBar || []
+  };
+};
 
 export function useUpdateProfile() {
   return useMutate({
