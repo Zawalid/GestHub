@@ -5,7 +5,7 @@ import { useTable } from './useTable';
 import { CheckBox, Status } from '@/components/ui/';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
-export function Table({ actions, canView, hideRowActions, hiddenActionsContent }) {
+export function Table({ actions, canView, hideRowActions, hiddenActionsContent, newRecord }) {
   const { columns, rows, error, selected, onSelect, isLoading, query, appliedFiltersNumber, data } = useTable();
   const table = useRef();
   const [parent] = useAutoAnimate({ duration: 500 });
@@ -32,6 +32,7 @@ export function Table({ actions, canView, hideRowActions, hiddenActionsContent }
               : 'The page you&apos;re trying to access doesn&apos;t exist.'}
           </p>
         </div>
+        {data?.length === 0 && newRecord && <div className='mx-auto w-fit'>{newRecord}</div>}
       </div>
     );
   }

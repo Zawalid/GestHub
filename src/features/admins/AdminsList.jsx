@@ -17,7 +17,7 @@ export default function AdminsList() {
       isLoading={isLoading}
       error={error}
       columns={[
-        { key: 'id', displayLabel: 'ID', visible: true, type: 'number' },
+        { key: 'id', displayLabel: 'ID', visible: false, type: 'number' },
         {
           key: 'fullName',
           displayLabel: 'Full Name',

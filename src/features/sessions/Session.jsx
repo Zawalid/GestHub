@@ -63,11 +63,11 @@ export default function Session() {
           ],
         }}
         fieldsToSearch={['activity', 'object']}
-        searchQueryKey='s'
-        sortQueryKey='so'
+        searchKey='s'
+        sortKey='so'
         paginationKey='p'
         limitKey='p'
-        directionQueryKey='d'
+        directionKey='d'
       >
         <ActivitiesList />
       </Operations>
@@ -88,7 +88,7 @@ function ActivitiesList() {
         </div>
         <Operations.Search />
       </div>
-      <div className='scroll relative flex-1 space-y-3 overflow-y-auto overflow-x-hidden pr-2' ref={parent}>
+      <div className='scroll relative flex-1 space-y-3 overflow-y-auto overflow-x-hidden pr-2' ref={activities?.length ? parent : null}>
         {render({
           isLoading,
           error,

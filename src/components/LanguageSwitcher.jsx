@@ -21,7 +21,7 @@ export function LanguageSwitcher({ size, layout }) {
         )
       }
     >
-      {['en', 'fr', 'ar'].map((lang) => (
+      {['en', 'fr'].map((lang) => (
         <DropDown.Option key={lang} onClick={() => i18n.changeLanguage(lang)} isCurrent={i18n.language === lang}>
           <span>{t(`header.languages.${lang}`)}</span>
         </DropDown.Option>

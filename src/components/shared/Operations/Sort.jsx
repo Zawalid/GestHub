@@ -49,7 +49,7 @@ export function Sort() {
       ]
         .filter(({ options }) => options?.length > 1)
         .map(({ type, onClick, options }) => (
-          <div key={type}>
+          <div key={type} className='group'>
             <Button
               display='with-icon'
               type='transparent'
@@ -60,7 +60,7 @@ export function Sort() {
                 <PiSortAscending className='text-base' />
               ) : (
                 <MdOutlineSortByAlpha className='text-base' />
-              )}{' '}
+              )}
               <span className='flex-1 text-start'>{type === 'sortBy' ? 'Sort By' : 'Order By'}</span>
               <IoChevronDownOutline
                 className={`transition-transform duration-300 ${expanded[type] ? 'rotate-180' : 'rotate-0'}`}
@@ -79,7 +79,7 @@ export function Sort() {
                 </DropDown.Option>
               ))}
             </div>
-            <DropDown.Divider className='last:hidden' />
+            <DropDown.Divider className='mt-2 group-last:hidden' />
           </div>
         ))}
     </DropDown>

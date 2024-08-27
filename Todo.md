@@ -60,11 +60,11 @@
 - [x] sectors and cities apis 
 - [ ] offline based on browser
 - [x] notifications icon
-- [ ] team page
 - [x] emails table
 - [ ] find a way to create a link based on the notification
 - [x] download selected records
-- [ ] disable donwload button when there is no data and keep the search bar visible
+- [ ] disable download button when there is no data and keep the search bar visible
+- [ ] create a useMethods hook to gather all common methods between table and operations components (same as other project)
 
 ---
 

@@ -40,12 +40,7 @@ export default function InternsList() {
         error={error}
         resourceName='Intern'
         columns={[
-          {
-            key: 'id',
-            displayLabel: 'ID',
-            visible: true,
-            type: 'number',
-          },
+          { key: 'id', displayLabel: 'ID', visible: false, type: 'number' },
           {
             key: 'fullName',
             displayLabel: 'Full Name',
@@ -219,7 +214,7 @@ export default function InternsList() {
         }}
         selectedOptions={{
           actions: [
-            { 
+            {
               text: 'Generate',
               color: 'secondary',
               onClick: (ids, onClose) => {

@@ -1,90 +1,14 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
 import { Search } from './Search';
 import { Sort } from './Sort';
 import { Filter } from './Filter';
 import { Layout } from './Layout';
 import { Pagination } from './Pagination';
 import { OperationsContext } from './useOperations';
-import { getIsoDate } from '@/utils/helpers';
-import { PAGE_LIMIT } from '@/utils/constants';
 import { Status } from '@/components/ui';
+import { useMethods } from '@/hooks/useMethods';
 
-// Array methods
-Array.prototype.customFilter = function (filters, filterCondition) {
-  if (!filters) return this;
-
-  const conditions = Object.entries(filters)
-    .map(([field, filter]) => ({
-      field,
-      value: filter.filter(({ checked }) => checked).map(({ value }) => value),
-    }))
-    .filter(({ value }) => value.length);
-
-  if (!conditions.length) return this;
-
-  return this.filter((el) => {
-    const conditionFn = (c) =>
-      c.value.some((val) => (val.condition ? val.condition(el) : c.value.includes(el[c.field])));
-    return filterCondition === 'AND' ? conditions.every(conditionFn) : conditions.some(conditionFn);
-  });
-};
-
-Array.prototype.customSort = function (sortBy, direction, sortOptions) {
-  if (!sortOptions) return this;
-
-  const stringFields = sortOptions.filter((c) => c.type === 'string').map((c) => c.key);
-  const numberFields = sortOptions.filter((c) => c.type === 'number').map((c) => c.key);
-  const dateFields = sortOptions.filter((c) => c.type === 'date').map((c) => c.key);
-  const customFields = sortOptions.filter((c) => c.type === 'custom').map((c) => c.key);
-
-  return this.toSorted((a, b) => {
-    if (numberFields.includes(sortBy))
-      return direction === 'asc' ? a?.[sortBy] - b?.[sortBy] : b?.[sortBy] - a?.[sortBy];
-
-    if (stringFields.includes(sortBy)) {
-      return direction === 'asc' ? a?.[sortBy]?.localeCompare(b?.[sortBy]) : b?.[sortBy]?.localeCompare(a?.[sortBy]);
-    }
-
-    if (dateFields.includes(sortBy)) {
-      return direction === 'asc'
-        ? getIsoDate(a?.[sortBy]) - getIsoDate(b?.[sortBy])
-        : getIsoDate(b?.[sortBy]) - getIsoDate(a?.[sortBy]);
-    }
-
-    if (customFields.includes(sortBy)) return sortOptions.find((c) => c.key === sortBy)?.fn(a, b, direction);
-  });
-};
-
-Array.prototype.search = function (query, fieldsToSearch) {
-  if (!query || !fieldsToSearch) return this;
-
-  return this.filter((el) => {
-    const valueToSearch = fieldsToSearch.map((field) => el[field]).join(' ');
-    return valueToSearch?.trim().toLowerCase().includes(query?.trim().toLowerCase());
-  });
-};
-
-export const getAppliedFiltersNumber = (filters) => (filter) => {
-  if (filter === 'all')
-    return Object.values(filters)
-      .flat()
-      .filter((f) => f.checked).length;
-
-  if (!filters[filter]) return;
-
-  return Object.values(filters[filter])
-    .flat()
-    .filter((f) => f.checked).length;
-};
-
-export const onFilter = (filters, setFilters, initialFilters) => (key, value, reset) => {
-  if (reset) return setFilters(initialFilters);
-
-  const filter = filters[key].map((f) => (f.value === value ? { ...f, checked: !f.checked } : f));
-  setFilters({ ...filters, [key]: filter });
-};
 
 export const renderData = ({
   isLoading,
@@ -110,23 +34,6 @@ export const getIsDisabled = ({ isLoading, error, initialData, query, page, tota
     isLoading || error || initialData?.length === 0 || (page > totalPages && !query && !appliedFiltersNumber('all'))
   );
 };
-// const constructFilterString = (filters) => {
-//   let filterString = "";
-
-//   Object.keys(filters).forEach((key) => {
-//     const checkedFilters = filters[key]
-//       .filter(({ checked }) => checked)
-//       .map(({ value }) => value)
-//       .join(",");
-
-//     if (checkedFilters)
-//       filterString = `${
-//         filterString ? filterString + "&" : ""
-//       }${key}=${checkedFilters}`;
-//   });
-
-//   return filterString;
-// };
 
 /**
  * Operations component.
@@ -145,9 +52,9 @@ export const getIsDisabled = ({ isLoading, error, initialData, query, page, tota
  * @param {string} props.defaultLayout - The default layout for the Operations component.
  * @param {Array} props.fieldsToSearch - The fields to search the data in.
  * @param {string} paginationKey - The key used for pagination. Default is 'page'.
- * @param {string} searchQueryKey - The key used for search queries. Default is 'search'.
- * @param {string} sortQueryKey - The key used for sorting queries. Default is 'sort'.
- * @param {string} directionQueryKey - The key used for direction queries. Default is 'dir'.
+ * @param {string} searchKey - The key used for search queries. Default is 'search'.
+ * @param {string} sortKey - The key used for sorting queries. Default is 'sort'.
+ * @param {string} directionKey - The key used for direction queries. Default is 'dir'.
  * @param {boolean} showAll - Flag to indicate if all items should be shown. Default is false.
  *
  * @returns {React.ElementType} Returns a OperationsContext.Provider component with the Operations component.
@@ -165,20 +72,34 @@ export function Operations({
   fieldsToSearch,
   paginationKey = 'page',
   limitKey = 'limit',
-  searchQueryKey = 'search',
-  sortQueryKey = 'sort',
-  directionQueryKey = 'dir',
+  searchKey = 'search',
+  sortKey = 'sort',
+  directionKey = 'dir',
   showAll = false,
 }) {
-  const [filters, setFilters] = useState(initialFilters || {});
   const [filterCondition, setFilterCondition] = useState('AND');
   const [layout, setLayout] = useState(defaultLayout, 'grid');
-  const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get(searchQueryKey);
-  const sortBy = searchParams.get(sortQueryKey) || defaultSortBy;
-  const direction = searchParams.get(directionQueryKey) || defaultDirection;
-  const page = Number(searchParams.get(paginationKey)) || 1;
-  const limit = Number(searchParams.get(limitKey)) || PAGE_LIMIT;
+
+  const {
+    query,
+    page,
+    limit,
+    sortBy,
+    direction,
+    filters,
+    onSearch,
+    onPaginate,
+    onChangeLimit,
+    onSort,
+    onOrder,
+    onFilter,
+    appliedFiltersNumber,
+  } = useMethods({
+    defaultSortBy,
+    defaultDirection,
+    defaultFilters: initialFilters,
+    keys: { paginationKey, searchKey, sortKey, directionKey, limitKey },
+  });
 
   const data = initialData
     ?.search(query, fieldsToSearch)
@@ -187,64 +108,18 @@ export function Operations({
 
   const totalItems = data?.length;
   const totalPages = Math.ceil(totalItems / limit);
-  const appliedFiltersNumber = getAppliedFiltersNumber(filters);
 
-  // Clean url
-  useEffect(() => {
-    if (sortBy === defaultSortBy && direction === defaultDirection) {
-      searchParams.delete(sortQueryKey);
-      searchParams.delete(directionQueryKey);
-    }
-    if (!query) searchParams.delete(searchQueryKey);
-    if (page === 1) searchParams.delete(paginationKey);
-    setSearchParams(searchParams);
-  }, [
-    direction,
-    searchParams,
-    sortBy,
-    query,
-    page,
-    setSearchParams,
-    defaultDirection,
-    defaultSortBy,
-    paginationKey,
-    searchQueryKey,
-    sortQueryKey,
-    directionQueryKey,
-  ]);
 
-  useEffect(() => {
-    setFilters(initialFilters);
-  }, [initialFilters]);
+
+  // useEffect(() => {
+  //   setFilters(initialFilters);
+  // }, [initialFilters]);
 
   // Perform operations
-
-  const onSearch = (query) => {
-    searchParams.set(searchQueryKey, query);
-    setSearchParams(searchParams);
-  };
-  const onSort = (key) => {
-    searchParams.set(sortQueryKey, key);
-    setSearchParams(searchParams);
-  };
-  const onOrder = (direction) => {
-    searchParams.set(directionQueryKey, direction);
-    setSearchParams(searchParams);
-  };
 
   const onChangeFilterCondition = () => setFilterCondition((prev) => (prev === 'OR' ? 'AND' : 'OR'));
 
   const onchangeLayout = (layout) => setLayout(layout);
-
-  const onPaginate = (page) => {
-    searchParams.set(paginationKey, page);
-    setSearchParams(searchParams);
-  };
-
-  const onChangeLimit = (limit) => {
-    searchParams.set(limitKey, limit);
-    setSearchParams(searchParams);
-  };
 
   const context = {
     initialData,
@@ -263,7 +138,7 @@ export function Operations({
     filters,
     filterCondition,
     appliedFiltersNumber,
-    onFilter: onFilter(filters, setFilters, initialFilters),
+    onFilter,
     onChangeFilterCondition,
     layout,
     onchangeLayout,

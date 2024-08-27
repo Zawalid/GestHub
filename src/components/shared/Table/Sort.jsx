@@ -11,6 +11,7 @@ export function Sort({ column }) {
   const { sortBy, direction, onSort, onFilter, filters, appliedFiltersNumber } = useTable();
   const sort = (dir) => onSort(column.key, dir);
 
+
   if (column.filter)
     return (
       <DropDown

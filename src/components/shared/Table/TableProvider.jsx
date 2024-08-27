@@ -1,24 +1,16 @@
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
 import { Table } from './Table';
 import { Search } from './Search';
 import { View } from './View';
 import { Pagination } from './Pagination';
 import { Download } from './Download';
-import { PAGE_LIMIT } from '../../../utils/constants';
 import { TableRecord } from './TableRecord';
 import { Actions } from './Actions';
 import { NewRecord } from './NewRecord';
 import { Selected } from './Selected';
 import { TableContext } from './useTable';
-import { getAppliedFiltersNumber, getIsDisabled, onFilter } from '../Operations/Operations';
-
-Array.prototype.paginate = function (page, limit) {
-  const start = (page - 1) * limit;
-  const end = page * limit;
-
-  return this.slice(start, end);
-};
+import { getIsDisabled } from '../Operations/Operations';
+import { useMethods } from '@/hooks/useMethods';
 
 /**
  * TableProvider component.
@@ -57,6 +49,7 @@ export function TableProvider({
   displayAllData,
 }) {
   const [columns, setColumns] = useState(tableColumns);
+  const [hiddenFields, setHiddenFields] = useState(tableColumns.filter((c) => !c.visible).map((c) => c.displayLabel));
   const [selected, setSelected] = useState([]);
   const [formOptions, setFormOptions] = useState({
     defaultValues: formDefaults,
@@ -74,21 +67,29 @@ export function TableProvider({
     actions: defaultSelectedOptions?.actions || [],
     deleteOptions: defaultSelectedOptions?.deleteOptions,
   });
-  const [filters, setFilters] = useState({});
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const query = searchParams.get('search');
-  const page = Number(searchParams.get('page')) || 1;
-  const limit = Number(searchParams.get('limit')) || PAGE_LIMIT;
-  const sortBy = searchParams.get('sort') || defaultSortBy;
-  const direction = searchParams.get('dir') || defaultDirection;
+  const {
+    query,
+    page,
+    limit,
+    sortBy,
+    direction,
+    filters,
+    onSearch,
+    onPaginate,
+    onChangeLimit,
+    onSort,
+    onFilter,
+    appliedFiltersNumber,
+  } = useMethods({
+    defaultSortBy,
+    defaultDirection,
+  });
 
   // Variables
   const rows = data?.search(query, fieldsToSearch).customFilter(filters, 'AND').customSort(sortBy, direction, columns);
 
-  const totalItems = rows?.length;
+  const totalItems = data?.length;
   const totalPages = Math.ceil(totalItems / limit);
-  const appliedFiltersNumber = getAppliedFiltersNumber(filters);
 
   const excludedFields = columns.filter((c) => !c.visible).map((c) => c.displayLabel);
 
@@ -106,46 +107,20 @@ export function TableProvider({
     title: `Delete ${resourceName}`,
     confirmText: 'Delete',
   };
-
-  useEffect(() => {
-    if (page === 1) searchParams.delete('page');
-    if (sortBy === defaultSortBy && direction === defaultDirection) {
-      searchParams.delete('sort');
-      searchParams.delete('dir');
-    }
-    if (!query) searchParams.delete('search');
-    setSearchParams(searchParams);
-  }, [direction, page, searchParams, sortBy, query, setSearchParams, defaultSortBy, defaultDirection]);
-
-  useEffect(() => {
-    setColumns(tableColumns);
-    setFilters(
-      tableColumns
-        .filter((col) => col.filter)
-        .reduce((acc, col) => {
-          acc[col.key] = col.filter;
-          return acc;
-        }, {}) || {}
-    );
-  }, [tableColumns]);
+  console.log(tableColumns, columns);
+  // useEffect(() => {
+  //   setColumns(tableColumns);
+  //   setFilters(
+  //     tableColumns
+  //       .filter((col) => col.filter)
+  //       .reduce((acc, col) => {
+  //         acc[col.key] = col.filter;
+  //         return acc;
+  //       }, {}) || {}
+  //   );
+  // }, [tableColumns]);
 
   // Handlers
-
-  const onSearch = (query) => {
-    searchParams.set('search', query);
-    searchParams.delete('page');
-    setSearchParams(searchParams);
-  };
-
-  const onPaginate = (page) => {
-    searchParams.set('page', page);
-    setSearchParams(searchParams);
-  };
-
-  const onChangeLimit = (limit) => {
-    searchParams.set('limit', limit);
-    setSearchParams(searchParams);
-  };
 
   const onChangeView = (column, showAll) => {
     if (showAll) return setColumns(columns.map((c) => ({ ...c, visible: true })));
@@ -157,12 +132,6 @@ export function TableProvider({
         return c.displayLabel === column ? { ...c, visible } : c;
       })
     );
-  };
-
-  const onSort = (column, direction) => {
-    searchParams.set('sort', column);
-    searchParams.set('dir', direction);
-    setSearchParams(searchParams);
   };
 
   const showForm = (options) => {
@@ -224,7 +193,7 @@ export function TableProvider({
     // filter
     filters,
     appliedFiltersNumber,
-    onFilter: onFilter(filters, setFilters),
+    onFilter,
     // pagination
     totalItems,
     totalPages,
@@ -237,7 +206,7 @@ export function TableProvider({
     // sort
     sortBy,
     direction,
-    onSort,
+    onSort: (column, direction) => onSort(column, direction),
     // download
     csvConfig,
     pdfConfig,
