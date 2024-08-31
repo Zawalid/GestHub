@@ -9,3 +9,5 @@ export const contact = async (data) => await axiosFetch('emails', 'POST', data);
 export const deleteEmail = async (id) => await axiosFetch(`emails/${id}`, 'DELETE');
 
 export const deleteEmails = async (ids) => await axiosFetch(`multiple/emails/delete`, 'POST', { ids });
+
+export const replyToEmail = async (data) => await axiosFetch('emails/reply', 'POST', data);

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Table } from './Table';
 import { Search } from './Search';
 import { View } from './View';
@@ -9,7 +9,6 @@ import { Actions } from './Actions';
 import { NewRecord } from './NewRecord';
 import { Selected } from './Selected';
 import { TableContext } from './useTable';
-import { getIsDisabled } from '../Operations/Operations';
 import { useMethods } from '@/hooks/useMethods';
 
 /**
@@ -38,7 +37,8 @@ export function TableProvider({
   resourceName,
   isLoading,
   error,
-  columns: tableColumns,
+  columns,
+  // : tableColumns
   formFields,
   selectedOptions: defaultSelectedOptions,
   formDefaults,
@@ -48,8 +48,8 @@ export function TableProvider({
   downloadOptions,
   displayAllData,
 }) {
-  const [columns, setColumns] = useState(tableColumns);
-  const [hiddenFields, setHiddenFields] = useState(tableColumns.filter((c) => !c.visible).map((c) => c.displayLabel));
+  // const [columns, setColumns] = useState(tableColumns);
+  const [hiddenColumns, setHiddenColumns] = useState(columns.filter((c) => !c.visible).map((c) => c.displayLabel));
   const [selected, setSelected] = useState([]);
   const [formOptions, setFormOptions] = useState({
     defaultValues: formDefaults,
@@ -74,6 +74,7 @@ export function TableProvider({
     sortBy,
     direction,
     filters,
+    setFilters,
     onSearch,
     onPaginate,
     onChangeLimit,
@@ -91,7 +92,7 @@ export function TableProvider({
   const totalItems = data?.length;
   const totalPages = Math.ceil(totalItems / limit);
 
-  const excludedFields = columns.filter((c) => !c.visible).map((c) => c.displayLabel);
+  const excludedFields = columns.filter((c) => hiddenColumns.includes(c.displayLabel)).map((c) => c.displayLabel);
 
   const csvConfig = {
     filename: downloadOptions?.csvFileName || resourceName,
@@ -107,31 +108,36 @@ export function TableProvider({
     title: `Delete ${resourceName}`,
     confirmText: 'Delete',
   };
-  console.log(tableColumns, columns);
-  // useEffect(() => {
-  //   setColumns(tableColumns);
-  //   setFilters(
-  //     tableColumns
-  //       .filter((col) => col.filter)
-  //       .reduce((acc, col) => {
-  //         acc[col.key] = col.filter;
-  //         return acc;
-  //       }, {}) || {}
-  //   );
-  // }, [tableColumns]);
+
+  useEffect(() => {
+    const filters =
+      columns
+        .filter((col) => col.filter)
+        .reduce((acc, col) => {
+          acc[col.key] = col.filter;
+          return acc;
+        }, {}) || {};
+
+    console.log(columns);
+    setFilters(filters);
+  }, [columns, setFilters]);
 
   // Handlers
 
+  // const onChangeView = (column, showAll) => {
+  //   if (showAll) return setColumns(columns.map((c) => ({ ...c, visible: true })));
+
+  //   setColumns(
+  //     columns.map((c) => {
+  //       const visible = columns.filter((co) => co.visible).length === 1 ? true : !c.visible;
+
+  //       return c.displayLabel === column ? { ...c, visible } : c;
+  //     })
+  //   );
+  // };
   const onChangeView = (column, showAll) => {
-    if (showAll) return setColumns(columns.map((c) => ({ ...c, visible: true })));
-
-    setColumns(
-      columns.map((c) => {
-        const visible = columns.filter((co) => co.visible).length === 1 ? true : !c.visible;
-
-        return c.displayLabel === column ? { ...c, visible } : c;
-      })
-    );
+    if (showAll) return setHiddenColumns([]);
+    setHiddenColumns((prev) => (prev.includes(column) ? prev.filter((c) => c !== column) : [...prev, column]));
   };
 
   const showForm = (options) => {
@@ -170,18 +176,11 @@ export function TableProvider({
     isLoading,
     error,
     // table
-    tableColumns,
+    // tableColumns,
     columns,
     rows: displayAllData ? rows : rows?.paginate(page, limit),
-    disabled: getIsDisabled({
-      isLoading,
-      error,
-      initialData: data,
-      query,
-      page,
-      totalPages,
-      appliedFiltersNumber,
-    }),
+    hiddenColumns,
+    disabled: isLoading || error || data?.length === 0 || (page > totalPages && !query && !appliedFiltersNumber('all')),
     // Selection
     selected,
     isSelecting: selected.length > 0,

@@ -9,7 +9,7 @@ import Menubar, { CustomBubbleMenu } from './Menubar';
 import { useFullScreen } from '@/hooks/useFullScreen';
 import Color from '@tiptap/extension-color';
 import TextStyle from '@tiptap/extension-text-style';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Editor({
   readOnly,
@@ -19,10 +19,11 @@ export default function Editor({
   className,
   fullScreen = true,
   content,
-  onUpdate ,
-  setEditorInstance
+  onUpdate,
+  setEditorInstance,
+  visibleButtons,
 }) {
-  const { element, toggler } = useFullScreen();
+  const { element, toggler } = useFullScreen({ size });
 
   const editor = useEditor({
     extensions: [
@@ -71,7 +72,7 @@ export default function Editor({
       className={`tiptap relative flex h-full flex-1 flex-col gap-1 overflow-auto rounded-lg border border-border bg-background-primary ${className}`}
       ref={element}
     >
-      {readOnly || <Menubar editor={editor} size={size} />}
+      {readOnly || <Menubar editor={editor} size={size} visibleButtons={visibleButtons} />}
       <EditorContent editor={editor} />
       {bubbleMenu && editor && (
         <BubbleMenu
@@ -83,7 +84,7 @@ export default function Editor({
             arrow: false,
           }}
         >
-          <CustomBubbleMenu editor={editor} />
+          <CustomBubbleMenu size={size} editor={editor} />
         </BubbleMenu>
       )}
       {fullScreen && toggler}
@@ -92,9 +93,38 @@ export default function Editor({
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const isContentEmpty = (content) => {
-  if (!content) return true;
-  const div = document.createElement('div');
-  div.innerHTML = content;
-  return div.textContent.trim() === '';
+export const useEditorOptions = (oldContent) => {
+  const [content, setContent] = useState(oldContent || '<p></p>');
+  const [editorInstance, setEditorInstance] = useState(null);
+  const [isChanged, setIsChanged] = useState(false);
+
+  const handleCancel = (callback) => {
+    setContent(oldContent || '<p></p>');
+    if (editorInstance) editorInstance.commands.setContent(oldContent || '');
+    if (callback) callback();
+  };
+
+  const isContentEmpty = (content) => {
+    if (!content) return true;
+    const div = document.createElement('div');
+    div.innerHTML = content;
+    return div.textContent.trim() === '';
+  };
+
+  useEffect(() => {
+    setIsChanged(() => {
+      const isDifferent = content !== (oldContent || '<p></p>');
+      if ((isContentEmpty(content) && isDifferent) || isDifferent) return true;
+      return false;
+    });
+  }, [content, oldContent]);
+
+  return {
+    content,
+    setContent,
+    editorInstance,
+    setEditorInstance,
+    isChanged,
+    handleCancel,
+  };
 };

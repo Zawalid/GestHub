@@ -29,11 +29,7 @@ export const renderData = ({
   return render();
 };
 
-export const getIsDisabled = ({ isLoading, error, initialData, query, page, totalPages, appliedFiltersNumber }) => {
-  return (
-    isLoading || error || initialData?.length === 0 || (page > totalPages && !query && !appliedFiltersNumber('all'))
-  );
-};
+
 
 /**
  * Operations component.
@@ -126,7 +122,7 @@ export function Operations({
     data: showAll ? data : data?.paginate(page, limit),
     isLoading,
     error,
-    disabled: getIsDisabled({ isLoading, error, initialData, query, page, totalPages, appliedFiltersNumber }),
+    disabled: isLoading || error || initialData?.length === 0 || (page > totalPages && !query && !appliedFiltersNumber('all')),
     query,
     onSearch,
     sortBy,

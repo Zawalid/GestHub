@@ -105,19 +105,6 @@ export const useMethods = ({
   const sortBy = searchParams.get(sortKey) || defaultSortBy;
   const direction = searchParams.get(directionKey) || defaultDirection;
 
-  // useEffect(() => {
-  //   setFilters((prev) => {
-  //     const updated = {};
-  //     Object.keys(prev).forEach((key) => {
-  //       updated[key] = prev[key].map((f) => ({
-  //         ...f,
-  //         checked: f.checked || false,
-  //       }));
-  //     });
-  //     return updated;
-  //   });
-  // }, [defaultFilters]);
-
   // Clean up the URL
   useEffect(() => {
     if (page === 1) searchParams.delete(keys.paginationKey);
@@ -204,6 +191,7 @@ export const useMethods = ({
     sortBy,
     direction,
     filters,
+    setFilters,
     onSearch,
     onPaginate,
     onChangeLimit,

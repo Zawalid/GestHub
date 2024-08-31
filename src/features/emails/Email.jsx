@@ -1,16 +1,19 @@
-import { useForm, useNavigateWithQuery } from '@/hooks/index';
-import { useEmail } from './useEmails';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Modal, Status } from '@/components/ui';
-import { useEffect } from 'react';
+import { Button, Modal, Status } from '@/components/ui';
+import { useForm, useNavigateWithQuery } from '@/hooks/index';
+import { useEmail, useReplyToEmail } from './useEmails';
+import { FaReply } from 'react-icons/fa';
+import Editor, { useEditorOptions } from '@/components/shared/Editor/Editor';
 
 export default function Email() {
   const { id } = useParams();
   const { email, isLoading, error } = useEmail(id);
   const navigate = useNavigateWithQuery();
+  const [isOpen, setIsOpen] = useState(false);
 
   const {
-    options: { formInputs, updateValues },
+    options: { formInputs, updateValues, values },
   } = useForm({
     defaultValues: {
       fullName: '',
@@ -62,8 +65,13 @@ export default function Email() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email?.id]);
 
+  const onClose = () => {
+    navigate('/app/emails');
+    setIsOpen(false);
+  };
+
   const render = () => {
-    if (isLoading) return <Status status='loading' />;
+    if (isLoading || !values) return <Status status='loading' />;
     if (error) {
       return (
         <Status
@@ -74,26 +82,129 @@ export default function Email() {
       );
     }
     return (
-      <div className='flex flex-1 flex-col gap-3'>
-        <div className='grid xs:grid-cols-2 gap-3'>
-          {formInputs['fullName']}
-          {formInputs['email']}
+      <>
+        <div className='flex flex-1 flex-col gap-5 p-5'>
+          <div className='flex flex-1 flex-col gap-3'>
+            <div className='grid gap-3 xs:grid-cols-2'>
+              {formInputs['fullName']}
+              {formInputs['email']}
+            </div>
+            {formInputs['subject']}
+            {formInputs['message']}
+          </div>
+          <Button display='with-icon' className='justify-center' onClick={() => setIsOpen(true)}>
+            <FaReply />
+            Reply
+          </Button>
         </div>
-        {formInputs['subject']}
-        {formInputs['message']}
-      </div>
+        <Reply email={email?.email} isOpen={isOpen} onCancel={() => setIsOpen(false)} onClose={onClose} />
+      </>
     );
   };
 
   return (
     <Modal
       isOpen={location.pathname.includes('/emails') && id}
-      className='relative min-h-[400px] overflow-auto p-5 sm:h-fit md:max-h-[600px] md:w-[650px] md:border'
+      className='relative min-h-[400px] overflow-hidden sm:h-fit md:h-[450px] md:w-[650px] md:border'
       closeOnBlur={true}
       closeButton={false}
-      onClose={() => navigate('/app/emails')}
+      onClose={onClose}
     >
       {render()}
     </Modal>
+  );
+}
+
+function Reply({ email, isOpen, onCancel, onClose }) {
+  const [subject, setSubject] = useState('Re: ');
+  const { content: reply, setContent: setReply, isChanged, handleCancel, setEditorInstance } = useEditorOptions();
+  const { mutate, isPending, error, isSuccess, reset } = useReplyToEmail();
+
+  if (isPending) {
+    return (
+      <Status
+        status='sending'
+        heading='Sending Reply'
+        message='Please wait while we process your request.
+    '
+      />
+    );
+  }
+  if (isSuccess) {
+    return <Status status='sent' heading='Reply Sent' message='Your reply was sent successfully.' />;
+  }
+  if (error) {
+    return (
+      <Status
+        status='errorSending'
+        heading='Failed To Send Reply'
+        message='An error occurred while sending your reply.'
+        onRetry={reset}
+      />
+    );
+  }
+  return (
+    <div
+      className={`absolute left-0 top-0 z-10 flex h-full w-full flex-col justify-center gap-5 overflow-auto bg-background-primary p-5 transition-transform duration-500 ${isOpen ? 'translate-y-0' : '-translate-y-full'}`}
+    >
+      <div className='flex flex-1 flex-col gap-3'>
+        <div className='flex w-1/2 items-center gap-3'>
+          <label className='text-sm font-semibold text-text-secondary'>To:</label>
+          <input
+            type='text'
+            className='w-full border-b border-border bg-transparent pb-0.5 text-sm outline-none'
+            value={email}
+            readOnly={true}
+          />
+        </div>
+        <div className='flex w-1/2 items-center gap-3 pb-3'>
+          <label className='text-sm font-semibold text-text-secondary'>Subject:</label>
+          <input
+            type='text'
+            className='w-full border-b border-border bg-transparent pb-0.5 text-sm outline-none'
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+          />
+        </div>
+
+        <Editor
+          content={reply.message}
+          onUpdate={(text) => setReply(text)}
+          size='small'
+          className='flex-1'
+          placeholder='Type your message here...'
+          setEditorInstance={setEditorInstance}
+          visibleButtons={[
+            'bold',
+            'italic',
+            'strike',
+            'underline',
+            'link',
+            'unlink',
+            'text color',
+            'headings',
+            'bullets',
+            'numbered',
+            'horizontal rule',
+            'align left',
+            'align center',
+            'align right',
+          ]}
+        />
+      </div>
+      <div className='flex justify-end gap-3'>
+        <Button color='tertiary' onClick={() => handleCancel(onCancel)}>
+          Cancel
+        </Button>
+        <Button
+          disabled={!isChanged}
+          onClick={() =>
+            mutate({ email, subject, message: reply }, { onSuccess: () => setTimeout(() => onClose(), 3000) })
+          }
+        >
+          Send Reply
+        </Button>
+      </div>
+    </div>
   );
 }

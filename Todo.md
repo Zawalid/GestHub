@@ -95,8 +95,7 @@
 
 
 # Maybe
-- [ ] Multiple accounts login
-- [ ] Emailing
+- [x] Emailing
 - [x] login sessions
 - [x] More details about the error
 - [ ] create a component for date range only
@@ -118,3 +117,11 @@
 - [ ] add a timeline for the activities
 - [ ] persist the table states to local storage (view control/sort...)
 - [ ] Make it PWA
+
+
+<!-- --------------------- -->
+
+# Bugs #2
+
+- [ ] Filter
+- [ ] Editor links

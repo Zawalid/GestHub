@@ -3,7 +3,7 @@ import { BsTable, BsListCheck } from 'react-icons/bs';
 import { Button, CheckBox, DropDown } from '../../ui';
 
 export function View() {
-  const { columns, onChangeView, data, isLoading, disabled } = useTable();
+  const { columns, hiddenColumns, onChangeView, data, isLoading, disabled } = useTable();
 
   if (!isLoading && data?.length === 0) return null;
 
@@ -26,13 +26,17 @@ export function View() {
       </DropDown.Option>
       <DropDown.Divider />
 
-      {columns.map(({ displayLabel, visible }) => {
-        const disabled = visible && columns.filter((c) => c.visible).length === 1;
+      {columns.map(({ displayLabel }) => {
+        const disabled = !hiddenColumns.includes(displayLabel) && columns.length === hiddenColumns.length + 1;
 
         return (
           <DropDown.Option key={displayLabel} className='justify-between' disabled={disabled}>
             {displayLabel}
-            <CheckBox checked={visible} onChange={() => onChangeView(displayLabel)} disabled={disabled} />
+            <CheckBox
+              checked={!hiddenColumns.includes(displayLabel)}
+              onChange={() => onChangeView(displayLabel)}
+              disabled={disabled}
+            />
           </DropDown.Option>
         );
       })}

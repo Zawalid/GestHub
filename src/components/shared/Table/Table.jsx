@@ -6,7 +6,8 @@ import { CheckBox, Status } from '@/components/ui/';
 import { useNavigateWithQuery } from '@/hooks/useNavigateWithQuery';
 
 export function Table({ actions, canView, hideRowActions, hiddenActionsContent, newRecord }) {
-  const { columns, rows, error, selected, onSelect, isLoading, query, appliedFiltersNumber, data } = useTable();
+  const { columns, hiddenColumns, rows, error, selected, onSelect, isLoading, query, appliedFiltersNumber, data } =
+    useTable();
   const table = useRef();
   const [parent] = useAutoAnimate({ duration: 500 });
 
@@ -57,7 +58,7 @@ export function Table({ actions, canView, hideRowActions, hiddenActionsContent, 
             )}
             {rows?.every((row) => hideRowActions?.(row)) && actions && <Column hide={true} />}
             {columns
-              .filter((c) => c.visible)
+              .filter((c) => !hiddenColumns.includes(c.displayLabel))
               .map((column) => (
                 <Column key={column.displayLabel} column={column} />
               ))}
@@ -70,7 +71,7 @@ export function Table({ actions, canView, hideRowActions, hiddenActionsContent, 
             <Row
               key={row.id}
               row={row}
-              visibleColumns={columns.filter((c) => c.visible)}
+              visibleColumns={columns.filter((c) => !hiddenColumns.includes(c.displayLabel))}
               actions={actions}
               hideRowActions={hideRowActions?.(row)}
               hiddenActionsContent={hiddenActionsContent?.(row)}

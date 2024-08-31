@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMutate } from '@/hooks/useMutate';
-import { getAllEmails, deleteEmail, deleteEmails } from '@/services/emailsAPI';
+import { getAllEmails, deleteEmail, deleteEmails, replyToEmail } from '@/services/emailsAPI';
 import { contact } from '@/services/emailsAPI';
 import { getEmail } from '@/services/emailsAPI';
 
@@ -47,5 +47,12 @@ export function useContactUs() {
   return useMutate({
     queryKey: ['contact'],
     mutationFn: contact,
+  });
+}
+
+export function useReplyToEmail() {
+  return useMutate({
+    queryKey: ['emails', 'reply'],
+    mutationFn: replyToEmail,
   });
 }

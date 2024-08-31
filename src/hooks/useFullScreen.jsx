@@ -2,7 +2,7 @@ import { Button } from '@/components/ui';
 import { useRef, useState } from 'react';
 import { MdOutlineFullscreen, MdOutlineFullscreenExit } from 'react-icons/md';
 
-export function useFullScreen() {
+export function useFullScreen({ size } = {}) {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const element = useRef();
 
@@ -37,7 +37,7 @@ export function useFullScreen() {
     toggleFullScreen,
 
     toggler: (
-      <Button onClick={toggleFullScreen} shape='icon' className='absolute bottom-1 right-1 z-10'>
+      <Button onClick={toggleFullScreen} size={size} shape='icon' className='absolute bottom-1 right-1 z-10'>
         {isFullScreen ? <MdOutlineFullscreenExit size={20} /> : <MdOutlineFullscreen size={20} />}
       </Button>
     ),

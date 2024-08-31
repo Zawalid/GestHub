@@ -79,11 +79,11 @@ export function Download() {
 }
 
 function DownloadOption({ type, icon }) {
-  const { data, rows, csvConfig, pdfConfig, columns, page, selected } = useTable();
+  const { data, rows, csvConfig, pdfConfig, columns,hiddenColumns, page, selected } = useTable();
 
   const download = (downloadType, dataSubset, currentPage = null, selectedRows = null) => {
     const filteredData = selectedRows ? dataSubset.filter((el) => selectedRows.includes(el.id)) : dataSubset;
-    const headers = columns.filter((c) => c.visible);
+    const headers = columns.filter((c) => !hiddenColumns.includes(c.displayLabel));
     const data = cleanData(filteredData, headers);
 
     const options = { data, headers, page: currentPage };

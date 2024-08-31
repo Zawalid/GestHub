@@ -1,35 +1,26 @@
-import Editor, { isContentEmpty } from '@/components/shared/Editor/Editor';
+import Editor, { useEditorOptions } from '@/components/shared/Editor/Editor';
 import { Button } from '@/components/ui';
 import { useSettings, useUpdateSettings } from './useSettings';
-import { useEffect, useState } from 'react';
 
 export default function About() {
   const { settings } = useSettings();
-  const [about, setAbout] = useState(settings?.aboutDescription || '<p></p>');
-  const [editorInstance, setEditorInstance] = useState(null);
-  const [isChanged, setIsChanged] = useState(false);
+  const {
+    content: about,
+    setContent: setAbout,
+    isChanged,
+    handleCancel,
+    setEditorInstance,
+  } = useEditorOptions(settings?.aboutDescription);
+
   const { mutate } = useUpdateSettings();
-
-  useEffect(() => {
-    setIsChanged(() => {
-      const isDifferent = about !== (settings?.aboutDescription || '<p></p>');
-      if ((isContentEmpty(about) && isDifferent) || isDifferent) return true;
-      return false;
-    });
-  }, [about, settings?.aboutDescription]);
-
-  const handleCancel = () => {
-    setAbout(settings?.aboutDescription || '<p></p>');
-    if (editorInstance) editorInstance.commands.setContent(settings?.aboutDescription || '');
-  };
 
   return (
     <div className='flex flex-1 flex-col gap-2 overflow-auto' style={{ paddingInline: '20px' }}>
       <Editor
         className='flex-1'
+        content={about}
         onUpdate={(text) => setAbout(text)}
         bubbleMenu={true}
-        content={about}
         setEditorInstance={setEditorInstance}
       />
       <div className='flex justify-end gap-3'>

@@ -186,7 +186,27 @@ const TextColor = ({ editor, size }) => {
   );
 };
 
-export default function Menubar({ editor, size }) {
+export default function Menubar({
+  editor,
+  size,
+  visibleButtons = [
+    'bold',
+    'italic',
+    'strike',
+    'underline',
+    'link',
+    'unlink',
+    'text color',
+    'headings',
+    'bullets',
+    'numbered',
+    'horizontal rule',
+    'align left',
+    'align center',
+    'align right',
+    'other',
+  ],
+}) {
   if (!editor) return null;
 
   const buttons = [
@@ -219,6 +239,7 @@ export default function Menubar({ editor, size }) {
       icon: <FaUnderline />,
     },
     {
+      toolTip: 'Link',
       custom: <AddLink editor={editor} size={size} />,
     },
     {
@@ -229,9 +250,11 @@ export default function Menubar({ editor, size }) {
       icon: <FaLinkSlash />,
     },
     {
+      toolTip: 'Text Color',
       custom: <TextColor editor={editor} size={size} />,
     },
     {
+      toolTip: 'Headings',
       custom: <Headings editor={editor} size={size} />,
     },
     {
@@ -270,6 +293,7 @@ export default function Menubar({ editor, size }) {
       icon: <FaAlignRight />,
     },
     {
+      toolTip: 'Other',
       custom: (
         <div className='flex flex-1 justify-end gap-2'>
           {render(
@@ -301,12 +325,15 @@ export default function Menubar({ editor, size }) {
 
   return (
     <div className='flex w-full gap-2 overflow-auto border-b border-border p-2 transition-[inset] duration-300'>
-      {render(buttons, size)}
+      {render(
+        buttons.filter((button) => visibleButtons.includes(button.toolTip.toLowerCase())),
+        size
+      )}
     </div>
   );
 }
 
-export function CustomBubbleMenu({ editor }) {
+export function CustomBubbleMenu({ size,editor }) {
   if (!editor) return null;
 
   const buttons = [
@@ -346,12 +373,12 @@ export function CustomBubbleMenu({ editor }) {
       icon: <FaCode />,
     },
     {
-      custom: <TextColor editor={editor} />,
+      custom: <TextColor editor={editor} size={size}/>,
     },
     {
-      custom: <Headings editor={editor} />,
+      custom: <Headings editor={editor} size={size}/>,
     },
   ];
 
-  return <div className='flex items-center gap-2 '> {render(buttons)}</div>;
+  return <div className='flex items-center gap-2 '> {render(buttons,size)}</div>;
 }
