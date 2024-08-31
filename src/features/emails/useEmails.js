@@ -12,7 +12,11 @@ export function useEmails() {
     queryFn: getAllEmails,
   });
 
-  return { emails: data, error, isLoading: isPending };
+  return {
+    emails: data?.map((email) => ({ ...email, status: email.isReplied === 'true' ? 'Replied' : 'Not Replied' })),
+    error,
+    isLoading: isPending,
+  };
 }
 
 export function useEmail(id) {

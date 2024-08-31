@@ -18,6 +18,7 @@ import { GoHorizontalRule } from 'react-icons/go';
 import { GrUndo, GrRedo } from 'react-icons/gr';
 import { Button, DropDown, InputField, ToolTip } from '@/components/ui';
 import { PiPlusBold } from 'react-icons/pi';
+import { isValidUrl } from '@/utils/helpers';
 
 const render = (buttons, size) => {
   return buttons.map(({ toolTip, icon, disabled, onClick, active, custom }, i) => {
@@ -35,6 +36,8 @@ const AddLink = ({ editor, size }) => {
   const [url, setUrl] = useState('');
 
   const handleSetLink = (url) => {
+    // invalid
+    if (!isValidUrl(url)) return
     // cancelled
     if (url === null) return;
     // empty
@@ -61,7 +64,7 @@ const AddLink = ({ editor, size }) => {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
             />
-            <Button size='small' color='secondary' onClick={() => handleSubmit} disabled={!/^https?:\/\//.test(url)}>
+            <Button size='small' color='secondary' onClick={handleSubmit} disabled={!isValidUrl(url)}>
               Add
             </Button>
           </form>

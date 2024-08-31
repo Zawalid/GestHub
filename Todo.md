@@ -118,10 +118,4 @@
 - [ ] persist the table states to local storage (view control/sort...)
 - [ ] Make it PWA
 
-
-<!-- --------------------- -->
-
-# Bugs #2
-
-- [ ] Filter
-- [ ] Editor links
+****

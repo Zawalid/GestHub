@@ -36,11 +36,22 @@ export default function EmailsList() {
           format: (val = '') => `${val.slice(0, 15)}${val.slice(10).length ? '...' : ''}`,
         },
         {
-          key: 'message',
-          displayLabel: 'Message',
+          key: 'status',
+          displayLabel: 'Status',
           visible: true,
           type: 'string',
-          format: (val = '') => `${val.slice(0, 30)}${val.slice(20).length ? '...' : ''}`,
+          format: (val, id, isDownload) => {
+            const colors = { Replied: 'bg-green-600', 'Not Replied': 'bg-red-500' };
+            return isDownload ? (
+              val
+            ) : (
+              <span className={`rounded-lg  px-2.5 py-1 text-white ${colors[val]}`}>{val}</span>
+            );
+          },
+          filter: [
+            { value: 'Replied', checked: false },
+            { value: 'Not Replied', checked: false },
+          ],
         },
         {
           key: 'created_at',

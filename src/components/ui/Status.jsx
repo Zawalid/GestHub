@@ -102,7 +102,7 @@ const ErrorSending = ({ heading, message, onRetry }) => {
   );
 };
 
-export function Status({ status, heading, message, size, ...props }) {
+export function Status({ status, heading, message, size, className = '', ...props }) {
   const prs = { heading, message, size, ...props };
 
   const statuses = {
@@ -117,7 +117,9 @@ export function Status({ status, heading, message, size, ...props }) {
   };
 
   return (
-    <div className='absolute left-0 top-0 z-[2] flex h-full w-full flex-col items-center justify-center text-center'>
+    <div
+      className={`absolute left-0 top-0 z-10 flex h-full w-full flex-col items-center justify-center text-center ${className}`}
+    >
       {statuses[status]}
     </div>
   );

@@ -14,7 +14,7 @@ export function useMutate({
   const queryClient = useQueryClient();
   const toastId = useRef(null);
 
-  const { mutate, isPending, error, isSuccess, reset } = useMutation({
+  const { mutate, isPending, error, isSuccess, reset, } = useMutation({
     mutationKey: queryKey,
     mutationFn,
     onMutate: async () => {

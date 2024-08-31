@@ -92,12 +92,23 @@ export default function Email() {
             {formInputs['subject']}
             {formInputs['message']}
           </div>
-          <Button display='with-icon' className='justify-center' onClick={() => setIsOpen(true)}>
-            <FaReply />
-            Reply
+          <Button
+            display='with-icon'
+            className='justify-center'
+            onClick={() => setIsOpen(true)}
+            disabled={email?.isReplied === 'true'}
+          >
+            {email?.isReplied === 'true' ? (
+              'Already Replied'
+            ) : (
+              <>
+                <FaReply />
+                Reply
+              </>
+            )}
           </Button>
         </div>
-        <Reply email={email?.email} isOpen={isOpen} onCancel={() => setIsOpen(false)} onClose={onClose} />
+        <Reply email={email} isOpen={isOpen} onCancel={() => setIsOpen(false)} onClose={onClose} />
       </>
     );
   };
@@ -125,13 +136,20 @@ function Reply({ email, isOpen, onCancel, onClose }) {
       <Status
         status='sending'
         heading='Sending Reply'
-        message='Please wait while we process your request.
-    '
+        message='Please wait while we process your request.'
+        className='bg-background-primary'
       />
     );
   }
   if (isSuccess) {
-    return <Status status='sent' heading='Reply Sent' message='Your reply was sent successfully.' />;
+    return (
+      <Status
+        status='sent'
+        heading='Reply Sent'
+        message='Your reply was sent successfully.'
+        className='bg-background-primary'
+      />
+    );
   }
   if (error) {
     return (
@@ -139,6 +157,7 @@ function Reply({ email, isOpen, onCancel, onClose }) {
         status='errorSending'
         heading='Failed To Send Reply'
         message='An error occurred while sending your reply.'
+        className='bg-background-primary'
         onRetry={reset}
       />
     );
@@ -153,7 +172,7 @@ function Reply({ email, isOpen, onCancel, onClose }) {
           <input
             type='text'
             className='w-full border-b border-border bg-transparent pb-0.5 text-sm outline-none'
-            value={email}
+            value={email?.email}
             readOnly={true}
           />
         </div>
@@ -199,7 +218,10 @@ function Reply({ email, isOpen, onCancel, onClose }) {
         <Button
           disabled={!isChanged}
           onClick={() =>
-            mutate({ email, subject, message: reply }, { onSuccess: () => setTimeout(() => onClose(), 3000) })
+            mutate(
+              { email: email.email, subject, message: reply, email_id: email.id },
+              { onSuccess: () => setTimeout(() => onClose(), 3000) }
+            )
           }
         >
           Send Reply

@@ -175,6 +175,19 @@ export const objectDeepEquals = (a, b) => {
   return true;
 };
 
+export const  isValidUrl = (url) => {
+  const urlPattern = new RegExp(
+    '^(https?:\\/\\/)?' + // optional protocol
+    '((([a-zA-Z0-9\\-]+\\.)+[a-zA-Z]{2,})|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-zA-Z0-9@:%._\\+~#=]*)*' + // port and path
+    '(\\?[;&a-zA-Z0-9@:%_\\+.~#?&//=]*)?' + // query string
+    '(\\#[-a-zA-Z0-9@:%_\\+.~#?&//=]*)?$' // fragment locator
+  );
+
+  return urlPattern.test(url);
+}
+
 export const filterObject = (obj, keys, keysType) => {
   const filtered = {};
   for (const key in obj) {
