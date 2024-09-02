@@ -5,24 +5,33 @@ import { ModalFormLayout } from '@/layouts';
 import { DropDown, Switch } from '@/components/ui';
 import { useRoutes } from '@/hooks/useRoutes';
 import { updateUISettings } from '@/utils/helpers';
+import { toast } from 'sonner';
+import { useEffect } from 'react';
 
-export default function Preferences() {
+export default function Preferences({ currentTab }) {
   const { settings } = useSettings(true);
   const { mutate } = useUpdateSettings(true);
   const { sidebar } = useRoutes();
 
-  const { notificationsSound, deleteConfirmation, animations, defaultHomeView, theme } = settings;
+  const { notificationsSound, deleteConfirmation, animations, defaultHomeView, toastPosition, theme } = settings;
 
   const {
     options: { isUpdated, handleSubmit, reset, getValue, setValue },
   } = useForm({
-    defaultValues: { notificationsSound, deleteConfirmation, animations, defaultHomeView, theme },
+    defaultValues: { notificationsSound, deleteConfirmation, animations, defaultHomeView, toastPosition, theme },
     fields: [],
     onSubmit: (data) => {
       mutate({ ...settings, ...data });
       updateUISettings(data);
     },
   });
+
+  useEffect(() => {
+    return () => {
+      const settings = JSON.parse(localStorage.getItem('local_settings'));
+      updateUISettings(settings);
+    };
+  }, [currentTab]);
 
   return (
     <ModalFormLayout
@@ -100,9 +109,38 @@ export default function Preferences() {
               ))}
           </DropDown>
         </div>
+        <ToastPosition getValue={getValue} setValue={setValue} />
         <Theme getValue={getValue} setValue={setValue} />
       </div>
     </ModalFormLayout>
+  );
+}
+
+function ToastPosition({ getValue, setValue }) {
+  return (
+    <div className='flex items-center justify-between'>
+      <div>
+        <h4 className='font-bold text-text-secondary'>Toast Position</h4>
+        <p className='mt-2 text-xs text-text-tertiary'>Choose where to show the toast notifications.</p>
+      </div>
+      <div className='grid grid-cols-3 gap-2 rounded-lg border border-border bg-background-primary p-2'>
+        {['top-left', 'top-center', 'top-right', 'bottom-left', 'bottom-center', 'bottom-right'].map((position) => (
+          <button
+            key={position}
+            className={`grid h-6 w-6 place-content-center rounded-full border-2 border-border bg-background-primary transition-transform duration-300 ${getValue('toastPosition') === position ? 'scale-105' : 'scale-90 hover:scale-100'}`}
+            onClick={() => {
+              setValue('toastPosition', position);
+              toast.success('Example toast notification', { position, id: 'toast-position' });
+            }}
+          >
+            <span
+              className={`h-3 w-3 rounded-full transition-colors duration-300 ${getValue('toastPosition') === position ? 'bg-primary' : 'bg-background-secondary'}`}
+            ></span>
+            <span className='sr-only'>{position}</span>
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -112,7 +150,7 @@ function Theme({ getValue, setValue }) {
       <h4 className='font-bold text-text-secondary'>Themes</h4>
       <p className='mt-2 text-xs text-text-tertiary'>Choose a theme for your interface.</p>
       <div className='mt-4 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3'>
-        {['indigo', 'green', 'red', 'orange', 'purple', 'teal', 'crimson', 'maroon'].map((theme) => (
+        {['indigo', 'green', 'crimson', 'orange', 'purple', 'teal', 'maroon'].map((theme) => (
           <button
             key={theme}
             className={`theme ${theme} grid h-20 cursor-pointer grid-cols-[50px_auto] gap-1 overflow-hidden rounded-lg border border-border bg-background-primary transition-transform duration-300  ${getValue('theme') === theme ? 'scale-105' : 'scale-90 hover:scale-100'}`}

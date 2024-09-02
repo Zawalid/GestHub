@@ -60,7 +60,6 @@ export default function App() {
   const { settings } = useSettings(true);
   const [parent] = useAutoAnimate({ duration: 300 });
 
-
   return (
     <>
       <div className='h-dvh w-full' ref={parent}>
@@ -108,15 +107,10 @@ export default function App() {
         </BrowserRouter>
       </div>
       <Toaster
-        icons={{
-          loading: <FaSpinner className='animate-spin text-lg text-text-secondary' />,
-        }}
-        position={window.innerWidth < 768 ? 'bottom-center' : 'bottom-right'}
+        icons={{ loading: <FaSpinner className='animate-spin text-lg text-text-secondary' /> }}
+        position={settings?.toastPosition || 'bottom-right'}
         theme={theme}
-        toastOptions={{
-          className: 'sonner-toast',
-          duration: 2000,
-        }}
+        toastOptions={{ className: 'sonner-toast', duration: 2000 }}
       />
     </>
   );

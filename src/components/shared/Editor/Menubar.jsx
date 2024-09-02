@@ -19,6 +19,7 @@ import { GrUndo, GrRedo } from 'react-icons/gr';
 import { Button, DropDown, InputField, ToolTip } from '@/components/ui';
 import { PiPlusBold } from 'react-icons/pi';
 import { isValidUrl } from '@/utils/helpers';
+import { toast } from 'sonner';
 
 const render = (buttons, size) => {
   return buttons.map(({ toolTip, icon, disabled, onClick, active, custom }, i) => {
@@ -37,7 +38,7 @@ const AddLink = ({ editor, size }) => {
 
   const handleSetLink = (url) => {
     // invalid
-    if (!isValidUrl(url)) return
+    if (!isValidUrl(url)) return toast.error('Invalid URL. Please enter a valid URL.');
     // cancelled
     if (url === null) return;
     // empty
@@ -336,7 +337,7 @@ export default function Menubar({
   );
 }
 
-export function CustomBubbleMenu({ size,editor }) {
+export function CustomBubbleMenu({ size, editor }) {
   if (!editor) return null;
 
   const buttons = [
@@ -376,12 +377,12 @@ export function CustomBubbleMenu({ size,editor }) {
       icon: <FaCode />,
     },
     {
-      custom: <TextColor editor={editor} size={size}/>,
+      custom: <TextColor editor={editor} size={size} />,
     },
     {
-      custom: <Headings editor={editor} size={size}/>,
+      custom: <Headings editor={editor} size={size} />,
     },
   ];
 
-  return <div className='flex items-center gap-2 '> {render(buttons,size)}</div>;
+  return <div className='flex items-center gap-2 '> {render(buttons, size)}</div>;
 }

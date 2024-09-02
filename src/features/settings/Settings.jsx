@@ -53,7 +53,7 @@ function Content({ currentTab }) {
   const tabs = {
     profile: <Profile />,
     password: <Password />,
-    preferences : <Preferences />,
+    preferences : <Preferences currentTab={currentTab} />,
     sidebar : <SideBar />,
     ...(user?.role === 'super-admin' && {
       general: <General />,

@@ -34,6 +34,7 @@ const useLocalSettings = () => {
           deleteConfirmation: true,
           animations: true,
           defaultHomeView: 'overview',
+          toastPosition: 'bottom-right',
           theme: 'orange',
           showInSideBar: sidebar.map((s) => s.name).toSorted() || [],
           showCount: false,

@@ -62,11 +62,6 @@
     --primary-hover: #006600;
   }
 
-  &[data-theme='red'],
-  button.red {
-    --primary: #dc3545;
-    --primary-hover: #c82333;
-  }
 
   &[data-theme='crimson'],
   button.crimson {
@@ -102,6 +97,7 @@
     --primary: #000080;
     --primary-hover: #000066;
   }
+
 
   /** Secondary color */
 
