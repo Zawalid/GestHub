@@ -10,10 +10,11 @@ import { ConfirmationModalProvider } from './context/ConfirmationModal';
 
 import { i18n } from './i18n/config.js';
 import './styles/index.css';
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
 const queryClient = new QueryClient();
 
-
+if (process.env.NODE_ENV === 'production') disableReactDevTools();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <ThemeProvider>

@@ -56,8 +56,8 @@ const cleanData = (data, columns) => {
 
 //* Download
 export function Download() {
-  const { resourceName } = useTable();
-  const disabled = useIsMutating({ mutationKey: [`${resourceName.toLocaleLowerCase()}s`] });
+  const { resourceName, rows,isLoading } = useTable();
+  const disabled = useIsMutating({ mutationKey: [`${resourceName.toLocaleLowerCase()}s`] }) || rows?.length === 0 || isLoading;
 
   return (
     <DropDown
@@ -68,9 +68,7 @@ export function Download() {
         </Button>
       }
       togglerDisabled={disabled}
-      options={{
-        className: 'w-40',
-      }}
+      options={{ className: 'w-40' }}
     >
       <DownloadOption type='pdf' icon={<PiFilePdf />} />
       <DownloadOption type='csv' icon={<PiFileCsv />} />
@@ -79,7 +77,7 @@ export function Download() {
 }
 
 function DownloadOption({ type, icon }) {
-  const { data, rows, csvConfig, pdfConfig, columns,hiddenColumns, page, selected } = useTable();
+  const { data, rows, csvConfig, pdfConfig, columns, hiddenColumns, page, selected } = useTable();
 
   const download = (downloadType, dataSubset, currentPage = null, selectedRows = null) => {
     const filteredData = selectedRows ? dataSubset.filter((el) => selectedRows.includes(el.id)) : dataSubset;
@@ -92,7 +90,6 @@ function DownloadOption({ type, icon }) {
     else if (downloadType === 'csv') exportAsCsv({ ...options, config: csvConfig });
   };
 
-  
   return (
     <DropDown.NestedMenu
       toggler={

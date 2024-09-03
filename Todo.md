@@ -41,9 +41,6 @@
 - [x] add count to the heading
 - [x] update user cv
 - [x] send info to applications route
-- [ ] Remove error message from error screen
-- [ ] Disable react devtools
-- [ ] Add translations to all the content
 - [x] update home page
 - [x] settings
 - [x] editor for about (TipTap)
@@ -58,13 +55,15 @@
 - [x] view more ui
 - [x] dashboard stats api (remove team members)
 - [x] sectors and cities apis 
-- [ ] offline based on browser
 - [x] notifications icon
 - [x] emails table
-- [ ] find a way to create a link based on the notification
 - [x] download selected records
-- [ ] disable download button when there is no data and keep the search bar visible
-- [ ] create a useMethods hook to gather all common methods between table and operations components (same as other project)
+- [x] disable download button when there is no data and keep the search bar visible
+- [x] create a useMethods hook to gather all common methods between table and operations components (same as other project)
+- [x] Remove error message from error screen
+- [x] Disable react devtools in production
+- [ ] Add translations to all the content
+- [ ] find a way to create a link based on the notification
 
 ---
 
@@ -85,10 +84,10 @@
  - [x] sort and order dropdown on mobile
  - [x] total personnel overflow on mobile
  - [x] filters are reset when sorting
- - [ ] navigate with filters/sort with filters/homepage filters
+ - [x] navigate with filters/sort with filters/homepage filters
  - [x] table action click propagation
  - [x] disable delete buttons after clicking
- - [ ] login expiration time too low
+ - [x] login expiration time too low
 
 
 ---
@@ -98,19 +97,19 @@
 - [x] Emailing
 - [x] login sessions
 - [x] More details about the error
+- [x] table multi select 
+- [x] handle currently precessed rows 
+- [x] show errors when submitting instead
+- [x] session activities
 - [ ] create a component for date range only
 - [ ] Add a custom date picker and  date interval
-- [x] table multi select 
 - [ ] import from file
 - [ ] use slugs instead of ids (projects/offers/interns)
 - [ ] optimistic mutations
 - [ ] virtual lists for performance
-- [x] handle currently precessed rows 
-- [x] show errors when submitting instead
 - [ ] control charts dates/filter...
 - [ ] complex dates on calendar (tasks due dates/projects deadlines...)
 - [ ] create a can function to handle permissions 
-- [x] session activities
 - [ ] trash
 - [ ] activities table 
 - [ ] blocking users
