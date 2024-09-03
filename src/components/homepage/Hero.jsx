@@ -56,8 +56,8 @@ function Search({ query }) {
           disabled={sector === 'Sector' && city === 'City' && !keyword}
           onClick={() => {
             onSearch(keyword);
-            sector && onFilter('sector', sector);
-            city && onFilter('city', city);
+            sector !== 'Sector' && onFilter('sector', sector);
+            city !== 'City' && onFilter('city', city);
             document.getElementById('offers').scrollIntoView({ behavior: 'smooth' });
           }}
         >

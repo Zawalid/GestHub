@@ -1,10 +1,9 @@
-import { useCities, useSectors, useVisibleOffers } from '@/features/offers/useOffers';
+import { useVisibleOffers } from '@/features/offers/useOffers';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { Operations } from '../components/shared/Operations/Operations';
-import { getOffersProps } from '@/pages/Offers';
-import { changeTitle, getIntervals } from '@/utils/helpers';
-import {  useUser } from '@/hooks/useUser';
+import { useOffersProps } from '@/pages/Offers';
+import { changeTitle } from '@/utils/helpers';
+import { useUser } from '@/hooks/useUser';
 import Applications from '@/features/applications/Applications';
 import ApplicationReview from '@/features/applications/ApplicationReview';
 import OfferOverview from '@/features/offers/OfferOverview';
@@ -16,11 +15,9 @@ import { useSettings } from '@/features/settings/useSettings';
 export function HomePage() {
   const { settings } = useSettings();
   const { user } = useUser();
-  const { sectors } = useSectors();
-  const { cities } = useCities();
   const { offers, isLoading, error, favorites, onToggleFavorite } = useVisibleOffers();
   const [isApplying, setIsApplying] = useState(false);
-  const [searchParams] = useSearchParams();
+  const props = useOffersProps(offers, isLoading, error);
 
   useEffect(() => {
     changeTitle(settings?.appName);
@@ -29,33 +26,15 @@ export function HomePage() {
   return (
     <>
       <Operations
-        {...getOffersProps(offers, isLoading, error)}
-        filters={{
-          sector:
-            sectors?.map((s) => ({
-              value: s,
-              checked: searchParams.get('sector') === s,
-            })) || [],
-          city:
-            cities?.map((s) => ({
-              value: s,
-              checked: searchParams.get('city') === s,
-            })) || [],
-          experience: [
-            { value: 'Expert', checked: false },
-            { value: 'Intermediate', checked: false },
-            { value: 'Beginner', checked: false },
-          ],
-          type: [
-            { value: 'Onsite', checked: false },
-            { value: 'Hybrid', checked: false },
-            { value: 'Remote', checked: false },
-          ],
-          publicationDate: getIntervals('publicationDate', ['past', 'present']),
-          status: [
-            { value: 'Urgent', checked: false },
-            { value: { value: 'Favorite', condition: (offer) => offer.isFavorite }, checked: false },
-          ],
+        {...{
+          ...props,
+          filters: {
+            ...props.filters,
+            status: [
+              { value: 'Urgent', checked: false },
+              { value: { value: 'Favorite', condition: (offer) => offer.isFavorite }, checked: false },
+            ],
+          },
         }}
       >
         <Hero />

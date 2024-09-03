@@ -166,6 +166,7 @@ export const useMethods = ({
       ...filters,
       [key]: filters[key].map((f) => (f.value === value ? { ...f, checked: !f.checked } : f)),
     };
+    console.log(key, value)
     setFilters(updatedFilters);
 
     if (page !== 1) onPaginate(1);

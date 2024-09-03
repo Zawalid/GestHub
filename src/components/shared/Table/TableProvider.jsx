@@ -10,6 +10,7 @@ import { NewRecord } from './NewRecord';
 import { Selected } from './Selected';
 import { TableContext } from './useTable';
 import { useMethods } from '@/hooks/useMethods';
+import { useNavigateState } from '@/hooks/useNavigateWithQuery';
 
 /**
  * TableProvider component.
@@ -85,6 +86,7 @@ export function TableProvider({
     defaultSortBy,
     defaultDirection,
   });
+  const state = useNavigateState();
 
   // Variables
   const rows = data?.search(query, fieldsToSearch).customFilter(filters, 'AND').customSort(sortBy, direction, columns);
@@ -110,31 +112,20 @@ export function TableProvider({
   };
 
   useEffect(() => {
-    const filters =
+    const newFilters =
       columns
-        .filter((col) => col.filter)
+        .filter((col) => col.filter && col.filter.length > 0)
         .reduce((acc, col) => {
           acc[col.key] = col.filter;
           return acc;
         }, {}) || {};
-
-    console.log(columns);
-    setFilters(filters);
-  }, [columns, setFilters]);
+    if (Object.keys(newFilters).length !== Object.keys(filters).length || state?.filter) {
+      setFilters(newFilters);
+    }
+  }, [columns, filters, setFilters, state?.filter]);
 
   // Handlers
 
-  // const onChangeView = (column, showAll) => {
-  //   if (showAll) return setColumns(columns.map((c) => ({ ...c, visible: true })));
-
-  //   setColumns(
-  //     columns.map((c) => {
-  //       const visible = columns.filter((co) => co.visible).length === 1 ? true : !c.visible;
-
-  //       return c.displayLabel === column ? { ...c, visible } : c;
-  //     })
-  //   );
-  // };
   const onChangeView = (column, showAll) => {
     if (showAll) return setHiddenColumns([]);
     setHiddenColumns((prev) => (prev.includes(column) ? prev.filter((c) => c !== column) : [...prev, column]));

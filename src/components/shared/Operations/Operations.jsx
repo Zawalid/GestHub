@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Search } from './Search';
 import { Sort } from './Sort';
 import { Filter } from './Filter';
@@ -89,6 +89,7 @@ export function Operations({
     onSort,
     onOrder,
     onFilter,
+    setFilters,
     appliedFiltersNumber,
   } = useMethods({
     defaultSortBy,
@@ -107,9 +108,9 @@ export function Operations({
 
 
 
-  // useEffect(() => {
-  //   setFilters(initialFilters);
-  // }, [initialFilters]);
+  useEffect(() => {
+    setFilters(initialFilters);
+  }, [initialFilters, setFilters]);
 
   // Perform operations
 
