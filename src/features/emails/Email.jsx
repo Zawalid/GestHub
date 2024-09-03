@@ -117,9 +117,8 @@ export default function Email() {
     <Modal
       isOpen={location.pathname.includes('/emails') && id}
       className='relative min-h-[400px] overflow-hidden sm:h-fit md:h-[450px] md:w-[650px] md:border'
-      closeOnBlur={true}
-      closeButton={false}
       onClose={onClose}
+      closeButton={false}
     >
       {render()}
     </Modal>
