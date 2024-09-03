@@ -117,4 +117,5 @@
 - [ ] persist the table states to local storage (view control/sort...)
 - [x] Make it PWA
 
-****
+**********
+

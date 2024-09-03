@@ -65,7 +65,8 @@ export default defineConfig({
         display: 'standalone',
         background_color: '#FFFFFF',
         theme_color: '#FFFFFF',
-        description: 'GestHub is a system for managing internships/interns and their internship projects',
+        description:
+          'GestHub is your go-to platform for managing internships and interns efficiently. With GestHub, you can easily track internship offers, manage applications, oversee projects, and handle user roles. Our goal is to simplify the internship management process, making it seamless and effective for both administrators and interns.',
       },
       workbox: {
         maximumFileSizeToCacheInBytes: 5000000, // Set the limit to 5MB or adjust as needed
