@@ -115,6 +115,6 @@
 - [ ] blocking users
 - [ ] add a timeline for the activities
 - [ ] persist the table states to local storage (view control/sort...)
-- [ ] Make it PWA
+- [x] Make it PWA
 
 ****

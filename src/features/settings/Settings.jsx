@@ -29,7 +29,7 @@ export default function Settings({ isOpen, onClose }) {
           <Button className='sm:hidden' shape='icon' size='small' onClick={() => setIsPanelOpen(!isPanelOpen)}>
             <PiArrowRight className={isPanelOpen ? 'rotate-180' : ''} />
           </Button>
-          <Button className='sm:hidden' shape='icon' size='small' onClick={onClose}>
+          <Button className='lg:hidden' shape='icon' size='small' onClick={onClose}>
             <PiX />
           </Button>
         </div>
