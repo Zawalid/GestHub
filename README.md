@@ -50,11 +50,15 @@ GestHub is an internships/interns management system designed to streamline the m
 - **Apply for Offers**: Submit applications for job offers and manage them efficiently.
 - **Offer Analytics**: Analyze offers and track application statuses.
 
+![Offers](https://github.com/user-attachments/assets/9d46cae5-9b24-4373-aec7-2b252ce8bb95)
+
 ### Application Management
 - **View Applications**: Display a comprehensive list of applications with detailed information.
 - **Approve/Reject Applications**: Easily approve or reject applications.
 - **Bulk Actions**: Perform bulk actions on applications such as delete, approve, and reject.
 - **Download Application List**: Download the entire list of applications in CSV or PDF format for offline use or reporting.
+
+![Applications](https://github.com/user-attachments/assets/a9bb63f5-a261-48ae-a943-c36d7ec83e47)
 
 
 ### Other Features
