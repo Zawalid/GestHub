@@ -10,8 +10,7 @@ GestHub is an internships/interns management system designed to streamline the m
 - **Intern Overview**: A personalized dashboard for interns with progress tracking.
 - **Supervisor Overview**: A dedicated dashboard for supervisors to manage and track intern progress.
 
-![Overview](https://github.com/user-attachments/assets/dac48819-9a09-40ed-ba3b-fdd9c0957394)
-
+![Overview](https://github.com/user-attachments/assets/2c854bc1-c4b4-43d1-bf64-b6673119ad68)
 
 ### Settings and Customization
 - **Profile**: Manage user information including name, email, and profile picture.
