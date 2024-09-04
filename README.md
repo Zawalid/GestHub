@@ -2,6 +2,15 @@
 
 GestHub is an internships/interns management system designed to streamline the management of internships, interns, and their associated projects. The application provides a comprehensive set of features to manage offers, applications, projects, and user roles, ensuring efficient tracking and administration of internships.
 
+# Screenshots
+
+![Overview](https://github.com/user-attachments/assets/dac48819-9a09-40ed-ba3b-fdd9c0957394)
+![Settings](https://github.com/user-attachments/assets/a4cb61d3-aad6-452c-b0e4-263409a5cc81)
+![Interns](https://github.com/user-attachments/assets/a831e495-d579-4aa4-96c3-1c0e2762753c)
+![Projects](https://github.com/user-attachments/assets/ab85ce56-8be2-4bfa-bb09-15083f14241a)
+![Offers](https://github.com/user-attachments/assets/873bb661-5940-47bc-857f-d488fb0ebb87)
+
+
 ## 🚀 Key Features
 
 ### Intern Management
