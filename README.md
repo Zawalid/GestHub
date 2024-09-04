@@ -2,21 +2,37 @@
 
 GestHub is an internships/interns management system designed to streamline the management of internships, interns, and their associated projects. The application provides a comprehensive set of features to manage offers, applications, projects, and user roles, ensuring efficient tracking and administration of internships.
 
-# Screenshots
-
-![Overview](https://github.com/user-attachments/assets/dac48819-9a09-40ed-ba3b-fdd9c0957394)
-![Settings](https://github.com/user-attachments/assets/a4cb61d3-aad6-452c-b0e4-263409a5cc81)
-![Interns](https://github.com/user-attachments/assets/a831e495-d579-4aa4-96c3-1c0e2762753c)
-![Projects](https://github.com/user-attachments/assets/ab85ce56-8be2-4bfa-bb09-15083f14241a)
-![Offers](https://github.com/user-attachments/assets/873bb661-5940-47bc-857f-d488fb0ebb87)
-
 
 ## 🚀 Key Features
+
+### Dashboard and Analytics
+- **Admin Overview**: A powerful dashboard for administrators with statistics and analytics.
+- **Intern Overview**: A personalized dashboard for interns with progress tracking.
+- **Supervisor Overview**: A dedicated dashboard for supervisors to manage and track intern progress.
+
+![Overview](https://github.com/user-attachments/assets/dac48819-9a09-40ed-ba3b-fdd9c0957394)
+
+
+### Settings and Customization
+- **Profile**: Manage user information including name, email, and profile picture.
+- **Password**: Change and update your password.
+- **Preferences**: Customize user preferences such as notification sound, animations, themes, and more.
+- **Sidebar**: Configure sidebar settings for a personalized navigation experience.
+- **General**: Adjust app settings including name, email, social media links, location, and more.
+- **About**: Update information about the application, including version and credits.
+- **Language Support**: Seamlessly switch between different languages.
+
+![Settings](https://github.com/user-attachments/assets/a4cb61d3-aad6-452c-b0e4-263409a5cc81)
+
 
 ### Intern Management
 - **View Interns**: Display a detailed list of interns.
 - **Search and Filter**: Easily search and filter interns based on various criteria.
-- **Update and Delete**: Modify intern details and remove intern records.
+- **Download**: Easily download the entire list of interns in CSV or PDF format for offline use or reporting.
+- **Create, Update, and Delete**: Create intern profiles, modify intern details, and remove intern records.
+
+![Interns](https://github.com/user-attachments/assets/a831e495-d579-4aa4-96c3-1c0e2762753c)
+
 
 ### Project Management
 - **Create New Projects**: Initiate new projects with steps including Basic Info, Team Members, Starter Tasks, and Summary.
@@ -25,8 +41,12 @@ GestHub is an internships/interns management system designed to streamline the m
 - **Project Overview**: Get a detailed overview of projects, including tasks, team members, and statistics.
 - **Task Management**: Manage tasks for each project using a Kanban board, which can be switched to a table view for different perspectives.
 
+![Projects](https://github.com/user-attachments/assets/ab85ce56-8be2-4bfa-bb09-15083f14241a)
+
+
 ### Offer Management
 - **View Offers**: Display job offers with advanced filtering and sorting options.
+- **Create, Update, and Delete Offers**: Create new job offers, update existing ones, and delete offers as needed.
 - **Apply for Offers**: Submit applications for job offers and manage them efficiently.
 - **Offer Analytics**: Analyze offers and track application statuses.
 
@@ -34,20 +54,16 @@ GestHub is an internships/interns management system designed to streamline the m
 - **View Applications**: Display a comprehensive list of applications with detailed information.
 - **Approve/Reject Applications**: Easily approve or reject applications.
 - **Bulk Actions**: Perform bulk actions on applications such as delete, approve, and reject.
+- **Download Application List**: Download the entire list of applications in CSV or PDF format for offline use or reporting.
 
-### User Management
-- **Role-Based Access**: Manage user roles and permissions with ease.
-- **User-Specific Views**: Provide tailored views and functionalities based on user roles (e.g., admin, user).
 
-### Dashboard and Analytics
-- **Admin Overview**: A powerful dashboard for administrators with statistics and analytics.
-- **Intern Overview**: A personalized dashboard for interns with progress tracking.
-- **Supervisor Overview**: A dedicated dashboard for supervisors to manage and track intern progress.
+### Other Features
+- **User Management**: Manage user roles and permissions with ease, and provide tailored views and functionalities based on user roles (e.g., admin, user).
+- **Session and Activity Tracking**: Monitor user sessions and track activities for better oversight.
+- **Email Notifications**: Send automated email notifications to keep users informed.
+- **Additional Functionalities**: Various other features to enhance the overall user experience and operational efficiency.
 
-### Settings and Customization
-- **Theme Management**: Switch effortlessly between light and dark themes.
-- **Language Support**: Seamlessly switch between different languages.
-- **User Preferences**: Customize user preferences and settings to enhance the user experience.
+
 
 ## 🛠️ Technical Stack
 
@@ -57,6 +73,7 @@ GestHub is an internships/interns management system designed to streamline the m
 - **Routing**: Powered by React Router for smooth navigation.
 - **Build Tool**: Vite for fast building and bundling.
 - **PWA**: Enhanced with Vite PWA plugin for Progressive Web App capabilities.
+- **Backend**: An API developed using Laravel, providing a robust and scalable backend.
 
 ---
 
